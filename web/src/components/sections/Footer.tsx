@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { homeContent } from "@/content/home";
 import { getContactHref, getScheduleAuditUrl } from "@/lib/public-urls";
+import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
 import { SmartLink } from "@/components/ui/SmartLink";
 
@@ -17,9 +18,7 @@ export function Footer() {
       <Container>
         <div className="flex flex-col gap-10 md:flex-row md:justify-between">
           <div>
-            <p className="font-display text-xl font-semibold text-[var(--foreground)]">
-              {homeContent.brand}
-            </p>
+            <BrandMark className="align-middle" />
             <p className="mt-2 max-w-sm text-sm text-[var(--muted)]">
               {homeContent.tagline}
             </p>

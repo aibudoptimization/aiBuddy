@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { homeContent } from "@/content/home";
 import { getContactHref, getScheduleAuditUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
 
 const nav = [
@@ -24,9 +24,14 @@ export function Header() {
       <Container className="flex h-16 items-center justify-between gap-6">
         <Link
           href="#top"
-          className="font-display text-lg font-semibold tracking-tight text-[var(--foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]"
+          className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]"
         >
-          {homeContent.brand}
+          <span className="hidden sm:inline-flex">
+            <BrandMark />
+          </span>
+          <span className="inline-flex sm:hidden">
+            <BrandMark compact />
+          </span>
         </Link>
 
         <nav

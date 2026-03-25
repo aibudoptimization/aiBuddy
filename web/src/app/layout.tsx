@@ -21,22 +21,22 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   ),
   title: {
-    default: "aiBuddy — Web design & automation",
-    template: "%s · aiBuddy",
+    default: "WorkflowWonder — Web design & automation",
+    template: "%s · WorkflowWonder",
   },
   description:
     "Premium web design and workflow automation. Schedule an audit or get in touch.",
   openGraph: {
-    title: "aiBuddy — Web design & automation",
+    title: "WorkflowWonder — Web design & automation",
     description:
       "Premium web design and workflow automation for teams that outgrow brittle tools.",
     locale: "en",
     type: "website",
-    siteName: "aiBuddy",
+    siteName: "WorkflowWonder",
   },
   twitter: {
     card: "summary_large_image",
-    title: "aiBuddy — Web design & automation",
+    title: "WorkflowWonder — Web design & automation",
     description:
       "Premium web design and workflow automation for teams that outgrow brittle tools.",
   },

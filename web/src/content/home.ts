@@ -1,5 +1,5 @@
 export const homeContent = {
-  brand: "aiBuddy",
+  brand: "WorkflowWonder",
   tagline: "Web design & automation for teams that outgrow brittle tools.",
   hero: {
     headline: "Design that converts. Automation that lasts.",
@@ -50,7 +50,7 @@ export const homeContent = {
     ],
   },
   differentiators: {
-    title: "Why aiBuddy",
+    title: "Why WorkflowWonder",
     points: [
       {
         title: "Premium execution",
