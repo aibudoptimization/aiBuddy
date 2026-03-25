@@ -11,6 +11,7 @@ Landing and marketing site for **aiBuddy** — web design and automation service
 
 - [Frontend implementation plan](./IMPLEMENTATION_PLANS/FRONTEND_IMPLEMENTATION_PLAN.md)
 - [Repo & Vercel setup](./IMPLEMENTATION_PLANS/REPO_AND_VERCEL_SETUP_PLAN.md)
+- [Custom domain (wfwonder.com)](./IMPLEMENTATION_PLANS/CUSTOM_DOMAIN_IMPL_PLAN.md)
 
 ## App
 
@@ -27,7 +28,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Vercel
 
-Set **Root Directory** to `web`. Configure env vars from `web/.env.example` (`NEXT_PUBLIC_*`).
+Set **Root Directory** to `web`. Configure env vars from `web/.env.example` (`NEXT_PUBLIC_*`). Production custom domain: **wfwonder.com** — see [CUSTOM_DOMAIN_IMPL_PLAN.md](./IMPLEMENTATION_PLANS/CUSTOM_DOMAIN_IMPL_PLAN.md) and [issue #1](https://github.com/aibudoptimization/aiBuddy/issues/1).
 
 ## Stack
 
