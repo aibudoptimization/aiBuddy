@@ -40,6 +40,18 @@ export const metadata: Metadata = {
     description:
       "Premium web design and workflow automation for teams that outgrow brittle tools.",
   },
+  icons: {
+    icon: [
+      { url: "/brand/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      {
+        url: "/brand/wfwonder-logo-cal-512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+    ],
+    shortcut: "/brand/favicon-32x32.png",
+    apple: "/brand/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
