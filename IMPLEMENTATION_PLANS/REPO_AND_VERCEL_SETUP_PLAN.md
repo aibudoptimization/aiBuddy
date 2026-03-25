@@ -149,6 +149,7 @@ Record the chosen tier in the repo **README** (one short paragraph) so future yo
 - At registrar: **A/AAAA** or **CNAME** per Vercel’s instructions.
 - Enable **HTTPS** (automatic on Vercel once DNS propagates).
 - Track as a separate **issue** if not blocking v1.
+- **wfwonder.com:** step-by-step checklist in [CUSTOM_DOMAIN_IMPL_PLAN.md](./CUSTOM_DOMAIN_IMPL_PLAN.md) ([issue #1](https://github.com/aibudoptimization/aiBuddy/issues/1)).
 
 ---
 
