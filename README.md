@@ -1,6 +1,6 @@
-# aiBuddy
+# WorkflowWonder
 
-Landing and marketing site for **aiBuddy** — web design and automation services.
+Landing and marketing site for **WorkflowWonder** — web design and automation services.
 
 ## Repo
 
@@ -12,6 +12,7 @@ Landing and marketing site for **aiBuddy** — web design and automation service
 - [Frontend implementation plan](./IMPLEMENTATION_PLANS/FRONTEND_IMPLEMENTATION_PLAN.md)
 - [Repo & Vercel setup](./IMPLEMENTATION_PLANS/REPO_AND_VERCEL_SETUP_PLAN.md)
 - [Custom domain (wfwonder.com)](./IMPLEMENTATION_PLANS/CUSTOM_DOMAIN_IMPL_PLAN.md)
+- [Rebrand implementation plan](./IMPLEMENTATION_PLANS/REBRAND_IMPL_PLAN.md)
 
 ## App
 
