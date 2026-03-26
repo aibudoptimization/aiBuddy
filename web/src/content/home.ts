@@ -94,7 +94,7 @@ export const homeContent = {
   footer: {
     rights: "All rights reserved.",
     legal: [
-      { label: "Privacy", href: "#" },
+      { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "#" },
     ],
     social: [

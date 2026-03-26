@@ -7,6 +7,7 @@ import {
   getCalBookingUrlFromEnv,
   isCalEmbedEnabledFromEnv,
 } from "@/lib/cal/config";
+import { trackCalTelemetry } from "@/lib/cal/events";
 import { openCalSchedulePopup } from "@/lib/cal/open-schedule-popup";
 
 type Variant = "primary" | "secondary" | "link";
@@ -27,15 +28,6 @@ type CalScheduleAuditButtonProps = {
   children: ReactNode;
 };
 
-function redirectToBookingWithDebug(bookingUrl: string, error: unknown): void {
-  // Temporary diagnostic log; remove after popup behavior is confirmed in production.
-  console.info("[cal-embed] popup failed, redirecting to booking URL", {
-    bookingUrl,
-    error,
-  });
-  window.location.assign(bookingUrl);
-}
-
 export function CalScheduleAuditButton({
   variant,
   className = "",
@@ -44,16 +36,24 @@ export function CalScheduleAuditButton({
   const bookingUrl = getCalBookingUrlFromEnv();
   const embed = isCalEmbedEnabledFromEnv();
 
+  const trackClick = () =>
+    trackCalTelemetry("schedule_cta_click", {
+      source: "cal_schedule_button",
+      variant,
+      embedEnabled: embed,
+      bookingUrl: bookingUrl ?? "#book-audit",
+    });
+
   if (!bookingUrl) {
     if (variant === "link") {
       return (
-        <SmartLink href="#book-audit" className={className}>
+        <SmartLink href="#book-audit" className={className} onClick={trackClick}>
           {children}
         </SmartLink>
       );
     }
     return (
-      <ButtonLink href="#book-audit" variant={variant} className={className}>
+      <ButtonLink href="#book-audit" variant={variant} className={className} onClick={trackClick}>
         {children}
       </ButtonLink>
     );
@@ -62,13 +62,13 @@ export function CalScheduleAuditButton({
   if (!embed) {
     if (variant === "link") {
       return (
-        <SmartLink href={bookingUrl} className={className}>
+        <SmartLink href={bookingUrl} className={className} onClick={trackClick}>
           {children}
         </SmartLink>
       );
     }
     return (
-      <ButtonLink href={bookingUrl} variant={variant} className={className} external>
+      <ButtonLink href={bookingUrl} variant={variant} className={className} external onClick={trackClick}>
         {children}
       </ButtonLink>
     );
@@ -82,10 +82,30 @@ export function CalScheduleAuditButton({
         className={cn}
         onClick={() => {
           void (async () => {
+            trackClick();
+            trackCalTelemetry("cal_modal_open_attempt", {
+              source: "cal_schedule_button",
+              variant,
+              embedEnabled: embed,
+              bookingUrl,
+            });
             try {
               await openCalSchedulePopup(bookingUrl);
-            } catch (error) {
-              redirectToBookingWithDebug(bookingUrl, error);
+              trackCalTelemetry("cal_modal_open_success", {
+                source: "cal_schedule_button",
+                variant,
+                embedEnabled: embed,
+                bookingUrl,
+              });
+            } catch {
+              trackCalTelemetry("cal_fallback_redirect", {
+                source: "cal_schedule_button",
+                variant,
+                embedEnabled: embed,
+                bookingUrl,
+                reason: "modal_open_failed",
+              });
+              window.location.assign(bookingUrl);
             }
           })();
         }}
@@ -103,10 +123,30 @@ export function CalScheduleAuditButton({
       className={cn}
       onClick={() => {
         void (async () => {
+          trackClick();
+          trackCalTelemetry("cal_modal_open_attempt", {
+            source: "cal_schedule_button",
+            variant,
+            embedEnabled: embed,
+            bookingUrl,
+          });
           try {
             await openCalSchedulePopup(bookingUrl);
-          } catch (error) {
-            redirectToBookingWithDebug(bookingUrl, error);
+            trackCalTelemetry("cal_modal_open_success", {
+              source: "cal_schedule_button",
+              variant,
+              embedEnabled: embed,
+              bookingUrl,
+            });
+          } catch {
+            trackCalTelemetry("cal_fallback_redirect", {
+              source: "cal_schedule_button",
+              variant,
+              embedEnabled: embed,
+              bookingUrl,
+              reason: "modal_open_failed",
+            });
+            window.location.assign(bookingUrl);
           }
         })();
       }}
