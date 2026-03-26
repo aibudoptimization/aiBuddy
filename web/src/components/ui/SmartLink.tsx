@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-const linkClass =
+export const smartLinkClassName =
   "text-[var(--foreground)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]";
 
 type SmartLinkProps = {
@@ -11,7 +11,7 @@ type SmartLinkProps = {
 };
 
 export function SmartLink({ href, children, className = "" }: SmartLinkProps) {
-  const cn = `${linkClass} ${className}`.trim();
+  const cn = `${smartLinkClassName} ${className}`.trim();
 
   if (href.startsWith("http") || href.startsWith("mailto:")) {
     return (

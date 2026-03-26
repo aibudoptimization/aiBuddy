@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { getContactHref, getScheduleAuditUrl } from "@/lib/public-urls";
+import { getContactHref, getScheduleAuditHeaderUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
@@ -16,7 +16,7 @@ const nav = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const scheduleHref = getScheduleAuditUrl();
+  const scheduleHref = getScheduleAuditHeaderUrl();
   const contactHref = getContactHref();
 
   return (

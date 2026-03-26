@@ -1,10 +1,10 @@
 import { homeContent } from "@/content/home";
-import { getContactHref, getScheduleAuditUrl } from "@/lib/public-urls";
+import { getContactHref } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { CalScheduleAuditButton } from "@/components/cal/CalScheduleAuditButton";
 import { Container } from "@/components/ui/Container";
 
 export function Hero() {
-  const scheduleHref = getScheduleAuditUrl();
   const contactHref = getContactHref();
 
   return (
@@ -35,9 +35,9 @@ export function Hero() {
           {homeContent.hero.sub}
         </p>
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <ButtonLink href={scheduleHref} variant="primary" className="min-h-12 px-6 py-3 text-sm">
+          <CalScheduleAuditButton variant="primary" className="min-h-12 px-6 py-3 text-sm">
             Schedule an audit
-          </ButtonLink>
+          </CalScheduleAuditButton>
           <ButtonLink href={contactHref} variant="secondary" className="min-h-12 px-6 py-3 text-sm">
             Get in touch
           </ButtonLink>

@@ -1,10 +1,10 @@
 import { homeContent } from "@/content/home";
-import { getContactHref, getScheduleAuditUrl } from "@/lib/public-urls";
+import { getContactHref } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { CalScheduleAuditButton } from "@/components/cal/CalScheduleAuditButton";
 import { Container } from "@/components/ui/Container";
 
 export function CtaBand() {
-  const scheduleHref = getScheduleAuditUrl();
   const contactHref = getContactHref();
 
   return (
@@ -25,9 +25,9 @@ export function CtaBand() {
             {homeContent.cta.sub}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href={scheduleHref} variant="primary" className="min-h-12 px-6 py-3">
+            <CalScheduleAuditButton variant="primary" className="min-h-12 px-6 py-3">
               Schedule an audit
-            </ButtonLink>
+            </CalScheduleAuditButton>
             <ButtonLink href={contactHref} variant="secondary" className="min-h-12 px-6 py-3">
               Get in touch
             </ButtonLink>

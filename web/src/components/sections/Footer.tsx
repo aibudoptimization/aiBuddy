@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { homeContent } from "@/content/home";
-import { getContactHref, getScheduleAuditUrl } from "@/lib/public-urls";
+import { getContactHref } from "@/lib/public-urls";
+import { CalScheduleAuditButton } from "@/components/cal/CalScheduleAuditButton";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
 import { SmartLink } from "@/components/ui/SmartLink";
@@ -8,8 +9,6 @@ import { SmartLink } from "@/components/ui/SmartLink";
 export function Footer() {
   const year = new Date().getFullYear();
   const contactHref = getContactHref();
-  const scheduleHref = getScheduleAuditUrl();
-
   return (
     <footer
       id="contact"
@@ -30,7 +29,7 @@ export function Footer() {
               </p>
               <ul className="mt-3 space-y-2 text-sm">
                 <li>
-                  <SmartLink href={scheduleHref}>Schedule audit</SmartLink>
+                  <CalScheduleAuditButton variant="link">Schedule audit</CalScheduleAuditButton>
                 </li>
                 <li>
                   <SmartLink href={contactHref}>Contact</SmartLink>
