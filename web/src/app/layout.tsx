@@ -16,11 +16,25 @@ const displayFont = Cormorant_Garamond({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000";
+function metadataBaseUrl(): URL {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const fallback = "http://localhost:3000";
+  if (!raw) return new URL(fallback);
+  const normalized =
+    raw.startsWith("http://") || raw.startsWith("https://")
+      ? raw
+      : raw.startsWith("localhost") || raw.startsWith("127.0.0.1")
+        ? `http://${raw}`
+        : `https://${raw}`;
+  try {
+    return new URL(normalized);
+  } catch {
+    return new URL(fallback);
+  }
+}
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: metadataBaseUrl(),
   title: {
     default: "WorkflowWonder — Web design & automation",
     template: "%s · WorkflowWonder",
