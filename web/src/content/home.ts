@@ -99,7 +99,8 @@ export const homeContent = {
     ],
   },
   faq: {
-    title: "Common questions",
+    kicker: "FAQ",
+    heading: "Frequently asked questions",
     items: [
       {
         q: "What happens on the audit call?",
@@ -118,10 +119,6 @@ export const homeContent = {
         a: "Book an audit or send a note with what you’re trying to fix. We reply with two or three concrete options.",
       },
     ],
-  },
-  cta: {
-    title: "Ready when you are",
-    sub: "Choose a time for an audit, or write us a short note—whichever fits your day.",
   },
   footer: {
     rights: "All rights reserved.",

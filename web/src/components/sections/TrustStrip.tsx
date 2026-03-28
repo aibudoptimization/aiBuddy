@@ -24,8 +24,8 @@ export function TrustStrip() {
           {comparison.subtitle}
         </p>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)]/40 p-6 sm:p-8">
+        <div className="mt-12 grid min-w-0 gap-6 sm:grid-cols-2">
+          <div className="min-w-0 rounded-2xl border border-[var(--border)] bg-[var(--background)]/40 p-6 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
               {comparison.otherLabel}
             </p>
@@ -41,8 +41,8 @@ export function TrustStrip() {
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-elevated)]/60 p-6 shadow-[0_0_0_1px_var(--glow-1)] sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+          <div className="min-w-0 rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-elevated)]/60 p-6 shadow-[0_0_0_1px_var(--glow-1)] sm:p-8">
+            <p className="font-display text-lg font-semibold tracking-tight text-[var(--foreground)]">
               {comparison.usLabel}
             </p>
             <ul className="mt-6 space-y-4">

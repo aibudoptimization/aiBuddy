@@ -54,7 +54,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden border-b border-[var(--border)] py-20 sm:py-24"
+      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden border-b border-[var(--border)] py-16 sm:py-20"
       aria-labelledby="hero-heading"
     >
       <div
@@ -81,7 +81,7 @@ export function Hero() {
           </p>
           <div className="hero-in hero-in-delay-3 mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <CalScheduleAuditButton variant="primary" className="min-h-12 px-6 py-3 text-sm">
-              Schedule an audit
+              Get started
             </CalScheduleAuditButton>
             <ButtonLink href={contactHref} variant="secondary" className="min-h-12 px-6 py-3 text-sm">
               Get in touch

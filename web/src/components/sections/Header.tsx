@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getScheduleAuditHeaderUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { BrandMark } from "@/components/brand/BrandMark";
@@ -18,23 +18,65 @@ const nav = [
 const navLinkClass =
   "relative inline-flex py-1 text-sm text-[var(--muted)] transition-colors motion-safe:duration-200 hover:text-[var(--foreground)] after:pointer-events-none after:absolute after:left-0 after:bottom-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-[var(--accent)] after:opacity-80 after:transition-transform motion-safe:after:duration-300 motion-safe:after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)] focus-visible:after:scale-x-100";
 
+const SCROLL_HIDE_AFTER = 48;
+const DELTA_THRESHOLD = 8;
+
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hiddenByScroll, setHiddenByScroll] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const lastScrollY = useRef(0);
   const scheduleHref = getScheduleAuditHeaderUrl();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 10);
+
+      if (reduceMotion || open) {
+        setHiddenByScroll(false);
+        lastScrollY.current = y;
+        return;
+      }
+
+      if (y < 16) {
+        setHiddenByScroll(false);
+        lastScrollY.current = y;
+        return;
+      }
+
+      const delta = y - lastScrollY.current;
+      if (y > SCROLL_HIDE_AFTER && delta > DELTA_THRESHOLD) {
+        setHiddenByScroll(true);
+      } else if (delta < -DELTA_THRESHOLD) {
+        setHiddenByScroll(false);
+      }
+      lastScrollY.current = y;
+    };
+
+    lastScrollY.current = window.scrollY;
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [open, reduceMotion]);
+
+  const hideBar = hiddenByScroll && !open && !reduceMotion;
 
   return (
     <header
       className={[
         "sticky top-0 z-50 border-b backdrop-saturate-150",
-        "transition-[border-color,box-shadow,background-color,backdrop-filter] motion-safe:duration-300 motion-safe:ease-out",
+        "transition-[border-color,box-shadow,background-color,backdrop-filter,transform] motion-safe:duration-300 motion-safe:ease-out",
+        hideBar ? "-translate-y-full" : "translate-y-0",
         scrolled
           ? "border-[var(--border-strong)] bg-[var(--background)]/78 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.45),0_0_0_1px_var(--glow-1)] backdrop-blur-xl"
           : "border-[var(--border)] bg-[var(--background)]/88 shadow-none backdrop-blur-md",

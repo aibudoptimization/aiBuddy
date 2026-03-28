@@ -15,13 +15,18 @@ export function Faq() {
       aria-labelledby="faq-heading"
     >
       <Container>
-        <h2
-          id="faq-heading"
-          className="text-3xl font-medium tracking-tight text-[var(--foreground)] sm:text-4xl"
-        >
-          {homeContent.faq.title}
-        </h2>
-        <div className="mt-12 max-w-3xl divide-y divide-[var(--border)]">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+            {homeContent.faq.kicker}
+          </p>
+          <h2
+            id="faq-heading"
+            className="mt-3 text-2xl font-medium tracking-tight text-[var(--foreground)] sm:text-3xl"
+          >
+            {homeContent.faq.heading}
+          </h2>
+        </div>
+        <div className="mx-auto mt-12 max-w-3xl divide-y divide-[var(--border)]">
           {homeContent.faq.items.map((item, index) => {
             const open = openIndex === index;
             const panelId = `${baseId}-panel-${index}`;

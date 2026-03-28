@@ -79,7 +79,8 @@ export default function RootLayout({
       lang="en"
       className={`${bodyFont.variable} ${displayFont.variable} h-full scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col antialiased">
+      <body className="relative min-h-full flex flex-col antialiased">
+        <div className="page-bg-sheen" aria-hidden />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-[var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--accent-foreground)]"
