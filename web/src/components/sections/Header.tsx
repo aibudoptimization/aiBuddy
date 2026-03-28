@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getContactHref, getScheduleAuditHeaderUrl } from "@/lib/public-urls";
+import { getScheduleAuditHeaderUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
 
 const nav = [
   { label: "Services", href: "#services" },
+  { label: "Estimate", href: "#calculator" },
   { label: "Process", href: "#process" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
@@ -21,7 +22,6 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const scheduleHref = getScheduleAuditHeaderUrl();
-  const contactHref = getContactHref();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -33,11 +33,11 @@ export function Header() {
   return (
     <header
       className={[
-        "sticky top-0 z-50 border-b bg-[var(--background)]/85 backdrop-blur-md backdrop-saturate-150",
-        "transition-[border-color,box-shadow,background-color] motion-safe:duration-300 motion-safe:ease-out",
+        "sticky top-0 z-50 border-b backdrop-saturate-150",
+        "transition-[border-color,box-shadow,background-color,backdrop-filter] motion-safe:duration-300 motion-safe:ease-out",
         scrolled
-          ? "border-[var(--border-strong)] shadow-[0_8px_32px_-8px_rgba(0,0,0,0.45),0_0_0_1px_var(--glow-1)]"
-          : "border-[var(--border)] shadow-none",
+          ? "border-[var(--border-strong)] bg-[var(--background)]/78 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.45),0_0_0_1px_var(--glow-1)] backdrop-blur-xl"
+          : "border-[var(--border)] bg-[var(--background)]/88 shadow-none backdrop-blur-md",
       ].join(" ")}
     >
       <Container className="flex h-16 items-center justify-between gap-6">
@@ -64,12 +64,14 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <ButtonLink href={contactHref} variant="ghost" className="px-3 py-2 text-sm">
-            Get in touch
-          </ButtonLink>
-          <ButtonLink href={scheduleHref} variant="primary" className="px-4 py-2 text-sm">
-            Schedule audit
+        <div className="hidden md:flex">
+          <ButtonLink
+            href={scheduleHref}
+            variant="primary"
+            className="rounded-full px-5 py-2.5 text-sm"
+            external={scheduleHref.startsWith("http")}
+          >
+            Get started
           </ButtonLink>
         </div>
 
@@ -119,22 +121,15 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            <div className="flex flex-col gap-2 border-t border-[var(--border)] pt-4">
-              <ButtonLink
-                href={contactHref}
-                variant="secondary"
-                className="w-full"
-                onClick={() => setOpen(false)}
-              >
-                Get in touch
-              </ButtonLink>
+            <div className="border-t border-[var(--border)] pt-4">
               <ButtonLink
                 href={scheduleHref}
                 variant="primary"
-                className="w-full"
+                className="w-full rounded-full py-3 text-sm"
+                external={scheduleHref.startsWith("http")}
                 onClick={() => setOpen(false)}
               >
-                Schedule audit
+                Get started
               </ButtonLink>
             </div>
           </Container>

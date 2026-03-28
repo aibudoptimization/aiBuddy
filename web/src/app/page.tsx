@@ -1,6 +1,7 @@
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { TrustStrip } from "@/components/sections/TrustStrip";
+import { ValueCalculator } from "@/components/sections/ValueCalculator";
 import { Services } from "@/components/sections/Services";
 import { Process } from "@/components/sections/Process";
 import { Differentiators } from "@/components/sections/Differentiators";
@@ -15,6 +16,7 @@ export default function Home() {
       <main id="main-content" className="flex-1">
         <Hero />
         <TrustStrip />
+        <ValueCalculator />
         <Services />
         <Process />
         <Differentiators />
