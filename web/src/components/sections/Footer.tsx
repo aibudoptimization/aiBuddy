@@ -16,8 +16,8 @@ export function Footer() {
   const contactHref = getContactHref();
 
   return (
-    <footer id="contact" className="scroll-mt-24 border-t border-[var(--border)] bg-[var(--background)]">
-      <div className="border-b border-[var(--border)] bg-gradient-to-b from-[var(--surface)]/90 via-[var(--surface)]/50 to-[var(--background)] py-16 sm:py-24">
+    <footer id="contact" className="scroll-mt-24 bg-[var(--background)]">
+      <div className="bg-[var(--background)] py-24 sm:py-32">
         <Container>
           <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-xl">
@@ -40,7 +40,7 @@ export function Footer() {
         </Container>
       </div>
 
-      <div className="bg-[var(--surface)] py-14 sm:py-16">
+      <div className="border-t border-[var(--border)] bg-[var(--background)] py-20 sm:py-24">
         <Container>
           <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
             <div className="lg:col-span-1">

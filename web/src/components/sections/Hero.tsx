@@ -54,7 +54,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden border-b border-[var(--border)] py-16 sm:py-20"
+      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden border-b border-[var(--border)] py-24 sm:py-32"
       aria-labelledby="hero-heading"
     >
       <div

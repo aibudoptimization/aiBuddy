@@ -7,7 +7,7 @@ export function TrustStrip() {
   return (
     <section
       id="about"
-      className="scroll-mt-24 border-b border-[var(--border)] bg-[var(--surface)] py-16 sm:py-20"
+      className="scroll-mt-24 border-b border-[var(--border)] bg-[var(--background)] py-24 sm:py-32"
       aria-labelledby="trust-comparison-heading"
     >
       <Container>

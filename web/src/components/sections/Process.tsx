@@ -6,7 +6,7 @@ export function Process() {
   return (
     <section
       id="process"
-      className="scroll-mt-24 border-y border-[var(--border)] bg-[var(--surface)] py-20 sm:py-28"
+      className="scroll-mt-24 border-b border-[var(--border)] bg-[var(--background)] py-24 sm:py-32"
       aria-labelledby="process-heading"
     >
       <Container>
