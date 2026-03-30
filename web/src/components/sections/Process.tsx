@@ -1,11 +1,12 @@
 import { homeContent } from "@/content/home";
+import { CalScheduleAuditButton } from "@/components/cal/CalScheduleAuditButton";
 import { Container } from "@/components/ui/Container";
 
 export function Process() {
   return (
     <section
       id="process"
-      className="scroll-mt-24 border-y border-[var(--border)] bg-[var(--surface)] py-20 sm:py-28"
+      className="scroll-mt-24 border-b border-[var(--border)] bg-[var(--background)] py-24 sm:py-32"
       aria-labelledby="process-heading"
     >
       <Container>
@@ -30,6 +31,12 @@ export function Process() {
             </li>
           ))}
         </ol>
+        <div className="mt-14 flex flex-col items-start gap-4 border-t border-[var(--border)] pt-12 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-md text-sm text-[var(--muted)]">{homeContent.process.ctaSub}</p>
+          <CalScheduleAuditButton variant="primary" className="min-h-12 rounded-full px-6 py-3 text-sm">
+            {homeContent.process.ctaLabel}
+          </CalScheduleAuditButton>
+        </div>
       </Container>
     </section>
   );

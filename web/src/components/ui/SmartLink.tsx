@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { MouseEventHandler, ReactNode } from "react";
 
 export const smartLinkClassName =
-  "text-[var(--foreground)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]";
+  "cursor-pointer text-[var(--foreground)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]";
 
 type SmartLinkProps = {
   href: string;

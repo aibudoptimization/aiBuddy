@@ -9,6 +9,35 @@ export const homeContent = {
   trust: {
     title: "Trusted by operators who care about craft",
     items: ["Strategy-led delivery", "Documentation-first handoffs", "Senior-friendly collaboration"],
+    comparison: {
+      title: "Why teams choose a different kind of partner",
+      subtitle:
+        "Same budget window, different outcomes—clarity, ownership, and systems that survive the handoff.",
+      otherLabel: "Typical project flow",
+      usLabel: "WorkflowWonder",
+      other: [
+        "Scope that drifts as deadlines tighten",
+        "Knowledge stuck in chats and one person’s head",
+        "Launch day support, then radio silence",
+      ],
+      us: [
+        "Written plan with milestones you can track",
+        "Documentation-first so your team can operate it",
+        "Senior-led collaboration without the theater",
+      ],
+    },
+  },
+  calculator: {
+    title: "What manual glue work may be costing you",
+    sub: "Indicative only—adjust the sliders to reflect your reality.",
+    teamLabel: "People involved in repetitive workflows",
+    hoursLabel: "Hours per person per week on manual steps",
+    rateLabel: "Average loaded hourly cost",
+    currency: "$",
+    resultIntro: "Rough monthly time cost",
+    reclaimLine:
+      "Well-designed automation and clearer handoffs often reclaim a large share of this over time—not as magic, but as momentum.",
+    footnote: "Not financial advice; for discussion on a call.",
   },
   services: {
     title: "What we do",
@@ -48,6 +77,9 @@ export const homeContent = {
         body: "You get working systems plus the context your team needs to own them.",
       },
     ],
+    ctaLabel: "Get started",
+    ctaSub:
+      "Ready to map your next milestone? Start with a short audit—we’ll outline scope and sequencing.",
   },
   differentiators: {
     title: "Why WorkflowWonder",
@@ -67,7 +99,8 @@ export const homeContent = {
     ],
   },
   faq: {
-    title: "Common questions",
+    kicker: "FAQ",
+    heading: "Frequently asked questions",
     items: [
       {
         q: "What happens on the audit call?",
@@ -87,12 +120,19 @@ export const homeContent = {
       },
     ],
   },
-  cta: {
-    title: "Ready when you are",
-    sub: "Choose a time for an audit, or write us a short note—whichever fits your day.",
-  },
   footer: {
     rights: "All rights reserved.",
+    ctaTitle: "Ready for calmer, clearer operations?",
+    ctaSub:
+      "Book a short audit or send a note—we’ll reply with practical next steps, not a generic pitch deck.",
+    aboutLabel: "About us",
+    pages: [
+      { label: "Services", href: "#services" },
+      { label: "Estimate", href: "#calculator" },
+      { label: "Process", href: "#process" },
+      { label: "FAQ", href: "#faq" },
+      { label: "Contact", href: "#contact" },
+    ],
     legal: [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "#" },
