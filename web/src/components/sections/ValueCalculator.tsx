@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { homeContent } from "@/content/home";
-import { CalScheduleAuditButton } from "@/components/cal/CalScheduleAuditButton";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 
 const WEEKS_PER_MONTH = 4.33;
@@ -117,9 +117,9 @@ export function ValueCalculator() {
               <p className="mt-6 text-sm leading-relaxed text-[var(--muted)]">{c.reclaimLine}</p>
               <p className="mt-3 text-xs text-[var(--muted)]">{c.footnote}</p>
               <div className="mt-8">
-                <CalScheduleAuditButton variant="primary" className="min-h-12 w-full px-6 py-3 text-sm sm:w-auto">
-                  Schedule an audit
-                </CalScheduleAuditButton>
+                <ButtonLink href="/getstarted" variant="primary" className="min-h-12 w-full px-6 py-3 text-sm sm:w-auto">
+                  Get started
+                </ButtonLink>
               </div>
             </div>
           </div>

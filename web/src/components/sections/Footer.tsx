@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { homeContent } from "@/content/home";
 import { getContactHref } from "@/lib/public-urls";
-import { CalScheduleAuditButton } from "@/components/cal/CalScheduleAuditButton";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
@@ -29,9 +28,9 @@ export function Footer() {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <CalScheduleAuditButton variant="primary" className="min-h-12 rounded-full px-8 py-3 text-sm">
-                Schedule an audit
-              </CalScheduleAuditButton>
+              <ButtonLink href="/getstarted" variant="primary" className="min-h-12 rounded-full px-8 py-3 text-sm">
+                Get started
+              </ButtonLink>
               <ButtonLink href="#about" variant="secondary" className="min-h-12 rounded-full px-8 py-3 text-sm">
                 {homeContent.footer.aboutLabel}
               </ButtonLink>
@@ -79,9 +78,9 @@ export function Footer() {
               <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">Start</p>
               <ul className="mt-4 space-y-3 text-sm">
                 <li>
-                  <CalScheduleAuditButton variant="link" className="text-[var(--foreground)]">
-                    Schedule audit
-                  </CalScheduleAuditButton>
+                  <SmartLink href="/getstarted" className="text-[var(--foreground)]">
+                    Get started
+                  </SmartLink>
                 </li>
                 <li>
                   <SmartLink href={contactHref}>Get in touch</SmartLink>

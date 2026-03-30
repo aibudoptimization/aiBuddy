@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { getScheduleAuditHeaderUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
@@ -27,8 +26,6 @@ export function Header() {
   const [hiddenByScroll, setHiddenByScroll] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const lastScrollY = useRef(0);
-  const scheduleHref = getScheduleAuditHeaderUrl();
-
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sync = () => setReduceMotion(mq.matches);
@@ -108,10 +105,9 @@ export function Header() {
 
         <div className="hidden md:flex">
           <ButtonLink
-            href={scheduleHref}
+            href="/getstarted"
             variant="primary"
             className="rounded-full px-5 py-2.5 text-sm"
-            external={scheduleHref.startsWith("http")}
           >
             Get started
           </ButtonLink>
@@ -165,10 +161,9 @@ export function Header() {
             ))}
             <div className="border-t border-[var(--border)] pt-4">
               <ButtonLink
-                href={scheduleHref}
+                href="/getstarted"
                 variant="primary"
                 className="w-full rounded-full py-3 text-sm"
-                external={scheduleHref.startsWith("http")}
                 onClick={() => setOpen(false)}
               >
                 Get started
