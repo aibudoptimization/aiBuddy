@@ -23,7 +23,6 @@ export function getContactHref(): string {
 }
 
 export function getN8nFormUrl(): string {
-  const url = process.env.NEXT_PUBLIC_N8N_FORM_URL?.trim();
-  if (url) return url;
-  return "https://aibuddyopt.app.n8n.cloud/form/fcb32890-4c02-400c-a8aa-a838191ab54e";
+  // Route through server so CTA redirects always honor current env config.
+  return "/start";
 }
