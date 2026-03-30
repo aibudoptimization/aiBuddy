@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { homeContent } from "@/content/home";
-import { getContactHref } from "@/lib/public-urls";
+import { getContactHref, getN8nFormUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 
 export function Hero() {
   const contactHref = getContactHref();
+  const formHref = getN8nFormUrl();
   const sectionRef = useRef<HTMLElement>(null);
   const [scrollFade, setScrollFade] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -79,7 +80,7 @@ export function Hero() {
             {homeContent.hero.sub}
           </p>
           <div className="hero-in hero-in-delay-3 mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <ButtonLink href="/getstarted" variant="primary" className="min-h-12 px-6 py-3 text-sm">
+            <ButtonLink href={formHref} variant="primary" className="min-h-12 px-6 py-3 text-sm">
               Get started
             </ButtonLink>
             <ButtonLink href={contactHref} variant="secondary" className="min-h-12 px-6 py-3 text-sm">

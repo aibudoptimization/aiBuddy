@@ -1,8 +1,11 @@
 import { homeContent } from "@/content/home";
+import { getN8nFormUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 
 export function Process() {
+  const formHref = getN8nFormUrl();
+
   return (
     <section
       id="process"
@@ -33,7 +36,7 @@ export function Process() {
         </ol>
         <div className="mt-14 flex flex-col items-start gap-4 border-t border-[var(--border)] pt-12 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-md text-sm text-[var(--muted)]">{homeContent.process.ctaSub}</p>
-          <ButtonLink href="/getstarted" variant="primary" className="min-h-12 rounded-full px-6 py-3 text-sm">
+          <ButtonLink href={formHref} variant="primary" className="min-h-12 rounded-full px-6 py-3 text-sm">
             Get started
           </ButtonLink>
         </div>

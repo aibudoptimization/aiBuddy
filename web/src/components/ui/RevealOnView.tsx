@@ -53,6 +53,17 @@ export function RevealOnView({ children, className = "" }: RevealOnViewProps) {
     return () => obs.disconnect();
   }, [reduceMotion]);
 
+  useEffect(() => {
+    if (reduceMotion || revealed) return;
+
+    // Safety fallback: if IO misses after a route transition, show content anyway.
+    const timer = window.setTimeout(() => {
+      setRevealed(true);
+    }, 1200);
+
+    return () => window.clearTimeout(timer);
+  }, [reduceMotion, revealed]);
+
   return (
     <div
       ref={ref}

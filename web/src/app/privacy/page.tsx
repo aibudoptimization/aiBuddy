@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
+import { getN8nFormUrl } from "@/lib/public-urls";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
+  const formHref = getN8nFormUrl();
+
   return (
     <>
       <header className="border-b border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-md">
@@ -20,7 +23,7 @@ export default function PrivacyPage() {
           >
             <BrandMark />
           </Link>
-          <ButtonLink href="/getstarted" variant="primary" className="px-4 py-2 text-sm">
+          <ButtonLink href={formHref} variant="primary" className="px-4 py-2 text-sm">
             Get started
           </ButtonLink>
         </Container>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { homeContent } from "@/content/home";
-import { getContactHref } from "@/lib/public-urls";
+import { getContactHref, getN8nFormUrl } from "@/lib/public-urls";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
@@ -13,6 +13,7 @@ function isExternal(href: string) {
 export function Footer() {
   const year = new Date().getFullYear();
   const contactHref = getContactHref();
+  const formHref = getN8nFormUrl();
 
   return (
     <footer id="contact" className="scroll-mt-24 bg-[var(--background)]">
@@ -28,7 +29,7 @@ export function Footer() {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <ButtonLink href="/getstarted" variant="primary" className="min-h-12 rounded-full px-8 py-3 text-sm">
+              <ButtonLink href={formHref} variant="primary" className="min-h-12 rounded-full px-8 py-3 text-sm">
                 Get started
               </ButtonLink>
               <ButtonLink href="#about" variant="secondary" className="min-h-12 rounded-full px-8 py-3 text-sm">
@@ -78,7 +79,7 @@ export function Footer() {
               <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">Start</p>
               <ul className="mt-4 space-y-3 text-sm">
                 <li>
-                  <SmartLink href="/getstarted" className="text-[var(--foreground)]">
+                  <SmartLink href={formHref} className="text-[var(--foreground)]">
                     Get started
                   </SmartLink>
                 </li>

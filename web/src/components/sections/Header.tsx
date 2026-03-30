@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { getN8nFormUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
@@ -21,6 +22,7 @@ const SCROLL_HIDE_AFTER = 48;
 const DELTA_THRESHOLD = 8;
 
 export function Header() {
+  const formHref = getN8nFormUrl();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hiddenByScroll, setHiddenByScroll] = useState(false);
@@ -104,11 +106,7 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex">
-          <ButtonLink
-            href="/getstarted"
-            variant="primary"
-            className="rounded-full px-5 py-2.5 text-sm"
-          >
+          <ButtonLink href={formHref} variant="primary" className="rounded-full px-5 py-2.5 text-sm">
             Get started
           </ButtonLink>
         </div>
@@ -161,7 +159,7 @@ export function Header() {
             ))}
             <div className="border-t border-[var(--border)] pt-4">
               <ButtonLink
-                href="/getstarted"
+                href={formHref}
                 variant="primary"
                 className="w-full rounded-full py-3 text-sm"
                 onClick={() => setOpen(false)}
