@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
-import { getScheduleAuditUrl } from "@/lib/public-urls";
+import { getN8nFormUrl } from "@/lib/public-urls";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
-  const scheduleHref = getScheduleAuditUrl();
+  const formHref = getN8nFormUrl();
 
   return (
     <>
@@ -23,8 +23,8 @@ export default function PrivacyPage() {
           >
             <BrandMark />
           </Link>
-          <ButtonLink href={scheduleHref} variant="primary" className="px-4 py-2 text-sm">
-            Schedule audit
+          <ButtonLink href={formHref} variant="primary" className="px-4 py-2 text-sm">
+            Get started
           </ButtonLink>
         </Container>
       </header>

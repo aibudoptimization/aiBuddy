@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { getScheduleAuditHeaderUrl } from "@/lib/public-urls";
+import { getN8nFormUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
@@ -22,13 +22,12 @@ const SCROLL_HIDE_AFTER = 48;
 const DELTA_THRESHOLD = 8;
 
 export function Header() {
+  const formHref = getN8nFormUrl();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hiddenByScroll, setHiddenByScroll] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const lastScrollY = useRef(0);
-  const scheduleHref = getScheduleAuditHeaderUrl();
-
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sync = () => setReduceMotion(mq.matches);
@@ -107,12 +106,7 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex">
-          <ButtonLink
-            href={scheduleHref}
-            variant="primary"
-            className="rounded-full px-5 py-2.5 text-sm"
-            external={scheduleHref.startsWith("http")}
-          >
+          <ButtonLink href={formHref} variant="primary" className="rounded-full px-5 py-2.5 text-sm">
             Get started
           </ButtonLink>
         </div>
@@ -165,10 +159,9 @@ export function Header() {
             ))}
             <div className="border-t border-[var(--border)] pt-4">
               <ButtonLink
-                href={scheduleHref}
+                href={formHref}
                 variant="primary"
                 className="w-full rounded-full py-3 text-sm"
-                external={scheduleHref.startsWith("http")}
                 onClick={() => setOpen(false)}
               >
                 Get started
