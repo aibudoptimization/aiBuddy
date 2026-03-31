@@ -127,7 +127,7 @@ export const homeContent = {
       "Book a short audit or send a note—we’ll reply with practical next steps, not a generic pitch deck.",
     aboutLabel: "About us",
     pages: [
-      { label: "Services", href: "#services" },
+      { label: "Services", href: "/services" },
       { label: "Estimate", href: "#calculator" },
       { label: "Process", href: "#process" },
       { label: "FAQ", href: "#faq" },

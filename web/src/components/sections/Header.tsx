@@ -8,7 +8,7 @@ import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
 
 const nav = [
-  { label: "Services", href: "#services" },
+  { label: "Services", href: "/services" },
   { label: "Estimate", href: "#calculator" },
   { label: "Process", href: "#process" },
   { label: "FAQ", href: "#faq" },
