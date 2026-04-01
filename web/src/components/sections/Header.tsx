@@ -83,7 +83,7 @@ export function Header() {
     >
       <Container className="flex h-16 items-center justify-between gap-6">
         <Link
-          href="#top"
+          href="/"
           className="rounded-sm transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out hover:opacity-95 motion-safe:hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]"
         >
           <span className="hidden sm:inline-flex">
