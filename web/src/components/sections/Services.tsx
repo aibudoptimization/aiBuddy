@@ -5,7 +5,7 @@ export function Services() {
   return (
     <section
       id="services"
-      className="scroll-mt-24 border-b border-[var(--border)] bg-[var(--background)] py-24 sm:py-32"
+      className="scroll-mt-24 border-b border-[var(--border)] py-24 sm:py-32"
       aria-labelledby="services-heading"
     >
       <Container>

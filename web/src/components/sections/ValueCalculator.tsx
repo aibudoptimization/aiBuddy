@@ -34,7 +34,7 @@ export function ValueCalculator() {
   return (
     <section
       id="calculator"
-      className="scroll-mt-24 border-b border-[var(--border)] bg-[var(--background)] py-24 sm:py-32"
+      className="scroll-mt-24 border-b border-[var(--border)] py-24 sm:py-32"
       aria-labelledby="calculator-heading"
     >
       <Container>

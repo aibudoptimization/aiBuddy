@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/Container";
 export function Differentiators() {
   return (
     <section
-      className="border-b border-[var(--border)] bg-[var(--background)] py-24 sm:py-32"
+      className="border-b border-[var(--border)] py-24 sm:py-32"
       aria-labelledby="why-heading"
     >
       <Container>

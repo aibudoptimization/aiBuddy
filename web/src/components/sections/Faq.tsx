@@ -11,7 +11,7 @@ export function Faq() {
   return (
     <section
       id="faq"
-      className="scroll-mt-24 border-b border-[var(--border)] bg-[var(--background)] py-24 sm:py-32"
+      className="scroll-mt-24 border-b border-[var(--border)] py-24 sm:py-32"
       aria-labelledby="faq-heading"
     >
       <Container>

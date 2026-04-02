@@ -132,7 +132,7 @@ export function ServicesPageContent() {
 
   return (
     <main id="main-content" className="flex-1">
-      <section className="border-b border-[var(--border)] bg-[var(--background)] py-20 sm:py-24" aria-label="Services">
+      <section className="border-b border-[var(--border)] py-20 sm:py-24" aria-label="Services">
         <Container>
           <div className="mx-auto w-full max-w-4xl">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">Services</p>

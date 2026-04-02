@@ -14,6 +14,9 @@
   --ring: #e6cc6a;
   --glow-1: rgba(197, 160, 40, 0.19);
   --glow-2: rgba(120, 140, 200, 0.14);
+  /* Structural page grid (option C): hairlines only, low contrast */
+  --page-grid-line: rgba(255, 255, 255, 0.038);
+  --page-grid-size: 44px;
 }
 
 @theme inline {
@@ -178,6 +181,18 @@
   .page-bg-sheen::before {
     animation: none;
   }
+}
+
+.page-bg-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--page-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--page-grid-line) 1px, transparent 1px);
+  background-size: var(--page-grid-size) var(--page-grid-size);
+  background-position: center top;
+  pointer-events: none;
 }
 
 body {
