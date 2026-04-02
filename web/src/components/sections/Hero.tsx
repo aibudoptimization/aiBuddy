@@ -114,8 +114,6 @@ export function Hero() {
           }}
           aria-hidden
         />
-        <div className="hero-glow-orb absolute -left-1/4 top-0 z-[2] h-[400px] w-[400px] rounded-full bg-[var(--glow-1)] opacity-[0.18] blur-2xl motion-reduce:opacity-[0.12]" />
-        <div className="hero-glow-orb-alt absolute -right-1/4 bottom-0 z-[2] h-[360px] w-[360px] rounded-full bg-[var(--glow-2)] opacity-[0.15] blur-2xl motion-reduce:opacity-[0.12]" />
       </div>
 
       <Container className="relative z-10">

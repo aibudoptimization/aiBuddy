@@ -13,7 +13,6 @@
   --accent-foreground: #0a0a0b;
   --ring: #e6cc6a;
   --glow-1: rgba(197, 160, 40, 0.19);
-  --glow-2: rgba(120, 140, 200, 0.14);
   /* Structural page grid (option C): hairlines only, low contrast */
   --page-grid-line: rgba(255, 255, 255, 0.038);
   --page-grid-size: 44px;
@@ -46,19 +45,6 @@
   }
 }
 
-@keyframes hero-glow-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  40% {
-    transform: translate3d(3%, -2.5%, 0) scale(1.05);
-  }
-  70% {
-    transform: translate3d(-2.5%, 2%, 0) scale(0.97);
-  }
-}
-
 .hero-in {
   animation: hero-fade-up 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -79,16 +65,6 @@
   animation-delay: 0.34s;
 }
 
-.hero-glow-orb {
-  animation: hero-glow-drift 26s ease-in-out infinite;
-  will-change: transform;
-}
-
-.hero-glow-orb-alt {
-  animation: hero-glow-drift 34s ease-in-out infinite reverse;
-  will-change: transform;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero-in,
   .hero-in-delay-1,
@@ -98,12 +74,6 @@
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
-  }
-
-  .hero-glow-orb,
-  .hero-glow-orb-alt {
-    animation: none !important;
-    will-change: auto;
   }
 }
 
@@ -138,49 +108,12 @@
   }
 }
 
-@keyframes page-bg-drift {
-  0%,
-  100% {
-    transform: scale(1) translate3d(0, 0, 0);
-  }
-  40% {
-    transform: scale(1.05) translate3d(2.5%, -2%, 0);
-  }
-  65% {
-    transform: scale(1.02) translate3d(-2%, 1.5%, 0);
-  }
-}
-
 .page-bg-sheen {
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 110% 75% at 18% -5%, var(--glow-1), transparent 52%),
-    radial-gradient(ellipse 95% 65% at 88% 105%, var(--glow-2), transparent 48%);
-  opacity: 0.85;
-}
-
-.page-bg-sheen::before {
-  content: "";
-  position: absolute;
-  inset: -25% -15%;
-  background: inherit;
-  transform-origin: 50% 50%;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .page-bg-sheen::before {
-    animation: page-bg-drift 52s ease-in-out infinite;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-bg-sheen::before {
-    animation: none;
-  }
 }
 
 .page-bg-sheen::after {
