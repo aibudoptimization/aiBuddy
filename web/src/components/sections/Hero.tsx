@@ -6,10 +6,13 @@ import { getContactHref, getN8nFormUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 
+const HERO_VIDEO_SRC = "/video/hero-background.mp4";
+
 export function Hero() {
   const contactHref = getContactHref();
   const formHref = getN8nFormUrl();
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [scrollFade, setScrollFade] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -42,6 +45,18 @@ export function Hero() {
     };
   }, [reduceMotion]);
 
+  useEffect(() => {
+    if (reduceMotion) return;
+    const v = videoRef.current;
+    if (!v) return;
+    const p = v.play();
+    if (p !== undefined) {
+      void p.catch(() => {
+        /* autoplay may be deferred; muted + playsInline usually succeeds */
+      });
+    }
+  }, [reduceMotion]);
+
   const contentStyle =
     reduceMotion === true
       ? undefined
@@ -61,11 +76,29 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden
       >
-        <div className="hero-glow-orb absolute -left-1/4 top-0 h-[480px] w-[480px] rounded-full bg-[var(--glow-1)] opacity-[0.32] blur-3xl motion-reduce:opacity-20" />
-        <div className="hero-glow-orb-alt absolute -right-1/4 bottom-0 h-[420px] w-[420px] rounded-full bg-[var(--glow-2)] opacity-[0.28] blur-3xl motion-reduce:opacity-20" />
+        {!reduceMotion ? (
+          <video
+            ref={videoRef}
+            className="absolute inset-0 z-0 h-full min-h-full w-full min-w-full object-cover object-center"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            tabIndex={-1}
+          >
+            <source src={HERO_VIDEO_SRC} type="video/mp4" />
+          </video>
+        ) : null}
+        <div
+          className="absolute inset-0 z-[1] bg-[color-mix(in_oklab,var(--background)_72%,transparent)]"
+          aria-hidden
+        />
+        <div className="hero-glow-orb absolute -left-1/4 top-0 z-[2] h-[480px] w-[480px] rounded-full bg-[var(--glow-1)] opacity-[0.32] blur-3xl motion-reduce:opacity-20" />
+        <div className="hero-glow-orb-alt absolute -right-1/4 bottom-0 z-[2] h-[420px] w-[420px] rounded-full bg-[var(--glow-2)] opacity-[0.28] blur-3xl motion-reduce:opacity-20" />
       </div>
 
-      <Container className="relative">
+      <Container className="relative z-10">
         <div style={contentStyle}>
           <p className="hero-in mb-4 max-w-2xl text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
             {homeContent.tagline}
