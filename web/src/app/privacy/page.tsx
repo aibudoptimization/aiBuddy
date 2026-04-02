@@ -15,7 +15,7 @@ export default function PrivacyPage() {
 
   return (
     <>
-      <header className="border-b border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-md">
+      <header className="border-b border-[var(--border)] bg-[var(--background)]/52 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-[1.55]">
         <Container className="flex h-16 items-center justify-between gap-4">
           <Link
             href="/"

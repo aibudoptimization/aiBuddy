@@ -73,12 +73,12 @@ export function Header() {
   return (
     <header
       className={[
-        "sticky top-0 z-50 border-b backdrop-saturate-150",
+        "sticky top-0 z-50 border-b backdrop-saturate-[1.55]",
         "transition-[border-color,box-shadow,background-color,backdrop-filter,transform] motion-safe:duration-300 motion-safe:ease-out",
         hideBar ? "-translate-y-full" : "translate-y-0",
         scrolled
-          ? "border-[var(--border-strong)] bg-[var(--background)]/78 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.45),0_0_0_1px_var(--glow-1)] backdrop-blur-xl"
-          : "border-[var(--border)] bg-[var(--background)]/88 shadow-none backdrop-blur-md",
+          ? "border-[var(--border-strong)] bg-[var(--background)]/58 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.45),0_0_0_1px_var(--glow-1),inset_0_1px_0_0_rgba(255,255,255,0.07)] backdrop-blur-2xl"
+          : "border-[var(--border)] bg-[var(--background)]/48 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl",
       ].join(" ")}
     >
       <Container className="flex h-16 items-center justify-between gap-6">
@@ -139,7 +139,7 @@ export function Header() {
       <div
         id="mobile-nav"
         className={[
-          "grid overflow-hidden border-t border-[var(--border)] bg-[var(--background)]/95 backdrop-blur-md transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden",
+          "grid overflow-hidden border-t border-[var(--border)] bg-[var(--background)]/72 backdrop-blur-xl backdrop-saturate-[1.55] transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden",
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         ].join(" ")}
         inert={!open}
