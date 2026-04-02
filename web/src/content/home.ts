@@ -40,20 +40,35 @@ export const homeContent = {
     footnote: "Not financial advice; for discussion on a call.",
   },
   services: {
-    title: "What we do",
+    title: "Our Services",
     intro: "Two disciplines, one accountable partner—from first impression to repeatable workflows.",
     pillars: [
       {
-        name: "Web design",
-        description:
-          "Brand-aligned sites and product marketing pages with editorial typography, resilient layout systems, and performance budgets baked in.",
-        bullets: ["UX & visual design", "Design systems & components", "Launch & iteration"],
+        name: "Web design & development",
+        points: [
+          {
+            title: "UX & visual design",
+            body: "Data-informed user flows and high-fidelity interfaces built on a foundation of accessibility and cognitive ease. We design for clarity, ensuring your product's value is communicated without friction.",
+          },
+          {
+            title: "Design systems & components",
+            body: "We develop comprehensive, logic-based Figma libraries and modular component sets. This creates a single source of truth that bridges the gap between design and development, eliminating technical debt.",
+          },
+          {
+            title: "Launch & iteration",
+            body: "Managed deployment with a focus on technical SEO and Core Web Vitals. Post-launch, we utilize heatmaps and performance telemetry to iterate on the system, ensuring long-term architectural health.",
+          },
+        ],
       },
       {
         name: "Automation",
         description:
           "Integrations, internal tools, and workflow design that remove copy-paste and keep data flowing where it should.",
-        bullets: ["Process mapping", "APIs & no/low-code where fit", "Monitoring & handoff docs"],
+        points: [
+          { title: "Process mapping" },
+          { title: "APIs & no/low-code where fit" },
+          { title: "Monitoring & handoff docs" },
+        ],
       },
     ],
   },

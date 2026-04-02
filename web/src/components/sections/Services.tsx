@@ -27,17 +27,29 @@ export function Services() {
               <h3 className="text-2xl font-medium text-[var(--foreground)]">
                 {pillar.name}
               </h3>
-              <p className="mt-4 text-[var(--muted)] leading-relaxed">
-                {pillar.description}
-              </p>
-              <ul className="mt-6 space-y-2 text-sm text-[var(--foreground)]">
-                {pillar.bullets.map((b) => (
-                  <li key={b} className="flex gap-2">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />
-                    <span>{b}</span>
-                  </li>
+              {"description" in pillar && pillar.description ? (
+                <p className="mt-4 text-[var(--muted)] leading-relaxed">
+                  {pillar.description}
+                </p>
+              ) : null}
+              <div className="mt-6 space-y-8">
+                {pillar.points.map((point) => (
+                  <div key={point.title}>
+                    <h4 className="flex gap-2 text-sm font-semibold text-[var(--foreground)]">
+                      <span
+                        className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]"
+                        aria-hidden
+                      />
+                      <span>{point.title}</span>
+                    </h4>
+                    {"body" in point && point.body ? (
+                      <p className="mt-2 pl-3.5 text-sm leading-relaxed text-[var(--muted)] sm:pl-4">
+                        {point.body}
+                      </p>
+                    ) : null}
+                  </div>
                 ))}
-              </ul>
+              </div>
             </article>
           ))}
         </div>
