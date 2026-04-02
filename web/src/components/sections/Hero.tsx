@@ -6,7 +6,8 @@ import { getContactHref, getN8nFormUrl } from "@/lib/public-urls";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 
-const HERO_VIDEO_SRC = "/video/hero-background.mp4";
+const HERO_VIDEO_SRC = "/video/hero-background.mp4?v=3";
+const HERO_VIDEO_PLAYBACK_RATE = 0.75;
 
 export function Hero() {
   const contactHref = getContactHref();
@@ -49,12 +50,21 @@ export function Hero() {
     if (reduceMotion) return;
     const v = videoRef.current;
     if (!v) return;
+
+    const applyPlaybackRate = () => {
+      v.playbackRate = HERO_VIDEO_PLAYBACK_RATE;
+    };
+    applyPlaybackRate();
+    v.addEventListener("loadedmetadata", applyPlaybackRate);
+
     const p = v.play();
     if (p !== undefined) {
       void p.catch(() => {
         /* autoplay may be deferred; muted + playsInline usually succeeds */
       });
     }
+
+    return () => v.removeEventListener("loadedmetadata", applyPlaybackRate);
   }, [reduceMotion]);
 
   const contentStyle =
@@ -77,25 +87,35 @@ export function Hero() {
         aria-hidden
       >
         {!reduceMotion ? (
-          <video
-            ref={videoRef}
-            className="absolute inset-0 z-0 h-full min-h-full w-full min-w-full object-cover object-center"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            tabIndex={-1}
-          >
-            <source src={HERO_VIDEO_SRC} type="video/mp4" />
-          </video>
+          <div className="absolute inset-0 z-0 overflow-hidden bg-[var(--background)]">
+            <video
+              ref={videoRef}
+              className="absolute left-1/2 top-1/2 block min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 scale-[1.08] object-cover object-center"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              tabIndex={-1}
+            >
+              <source src={HERO_VIDEO_SRC} type="video/mp4" />
+            </video>
+          </div>
         ) : null}
         <div
-          className="absolute inset-0 z-[1] bg-[color-mix(in_oklab,var(--background)_72%,transparent)]"
+          className="absolute inset-0 z-[1] bg-[color-mix(in_oklab,var(--background)_52%,transparent)]"
           aria-hidden
         />
-        <div className="hero-glow-orb absolute -left-1/4 top-0 z-[2] h-[480px] w-[480px] rounded-full bg-[var(--glow-1)] opacity-[0.32] blur-3xl motion-reduce:opacity-20" />
-        <div className="hero-glow-orb-alt absolute -right-1/4 bottom-0 z-[2] h-[420px] w-[420px] rounded-full bg-[var(--glow-2)] opacity-[0.28] blur-3xl motion-reduce:opacity-20" />
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[min(50dvh,58%)]"
+          style={{
+            background:
+              "linear-gradient(to top, var(--background) 0%, color-mix(in oklab, var(--background) 72%, transparent) 38%, transparent 100%)",
+          }}
+          aria-hidden
+        />
+        <div className="hero-glow-orb absolute -left-1/4 top-0 z-[2] h-[400px] w-[400px] rounded-full bg-[var(--glow-1)] opacity-[0.18] blur-2xl motion-reduce:opacity-[0.12]" />
+        <div className="hero-glow-orb-alt absolute -right-1/4 bottom-0 z-[2] h-[360px] w-[360px] rounded-full bg-[var(--glow-2)] opacity-[0.15] blur-2xl motion-reduce:opacity-[0.12]" />
       </div>
 
       <Container className="relative z-10">
