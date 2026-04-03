@@ -47,27 +47,36 @@ export const homeContent = {
         name: "Web design & development",
         points: [
           {
-            title: "UX & visual design",
-            body: "Data-informed user flows and high-fidelity interfaces built on a foundation of accessibility and cognitive ease. We design for clarity, ensuring your product's value is communicated without friction.",
+            title: "Easy-to-Use Visual Design",
+            body: "We create websites that look great and feel natural to use. We map out exactly how a customer moves through your site to make sure they never get lost or frustrated. By focusing on clarity, we guarantee your visitors understand exactly what you offer the moment they arrive.",
           },
           {
-            title: "Design systems & components",
-            body: "We develop comprehensive, logic-based Figma libraries and modular component sets. This creates a single source of truth that bridges the gap between design and development, eliminating technical debt.",
+            title: "Organized Building Blocks",
+            body: "We build a master \"toolkit\" of digital parts for your brand. This ensures every page on your site looks and acts the same way. It's a smarter way to build because it prevents technical messes and makes it much faster (and cheaper) to add new features or make changes in the future.",
           },
           {
-            title: "Launch & iteration",
-            body: "Managed deployment with a focus on technical SEO and Core Web Vitals. Post-launch, we utilize heatmaps and performance telemetry to iterate on the system, ensuring long-term architectural health.",
+            title: "Launch, Visibility, and Growth",
+            body: "We handle the technical side of your launch, focusing on SEO (getting found on search engines like Google), GEO (appearing in AI-powered search results), and AEO (being the top answer for voice assistants and AI chats). We make sure your site loads fast and stays healthy. Once live, we watch how people actually use the site and make improvements based on real data to ensure your business keeps growing.",
           },
         ],
       },
       {
-        name: "Automation",
+        name: "Automated Workflows",
         description:
-          "Integrations, internal tools, and workflow design that remove copy-paste and keep data flowing where it should.",
+          "Stop letting repetitive tasks stall your growth and drain your team's creativity. We build intelligent, self-operating systems that bridge the gap between your apps, ensuring your business runs like clockwork even while you sleep.",
         points: [
-          { title: "Process mapping" },
-          { title: "APIs & no/low-code where fit" },
-          { title: "Monitoring & handoff docs" },
+          {
+            title: "Agentic AI",
+            body: "Go beyond simple triggers with smart systems that can analyze data and make informed decisions on your behalf. These autonomous agents handle complex problem-solving and task execution, acting as a tireless digital extension of your team.",
+          },
+          {
+            title: "Custom Workflows",
+            body: "Every business has a unique rhythm, so we build tailored pathways designed specifically for your internal logic. We map out your manual \"messy\" steps and turn them into a streamlined, private engine that fits your exact operational needs.",
+          },
+          {
+            title: "Socials Automation",
+            body: "Maintain a consistent online presence without spending all day behind a screen. From auto-posting content to intelligently responding to inquiries, we ensure your brand stays active and engaged across all platforms effortlessly.",
+          },
         ],
       },
     ],

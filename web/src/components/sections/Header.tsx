@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { getN8nFormUrl } from "@/lib/public-urls";
+import { primaryNavLinkClass } from "@/lib/primary-nav-link-class";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/Container";
@@ -14,9 +15,6 @@ const nav = [
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ] as const;
-
-const navLinkClass =
-  "relative inline-flex py-1 text-sm text-[var(--muted)] transition-colors motion-safe:duration-200 hover:text-[var(--foreground)] after:pointer-events-none after:absolute after:left-0 after:bottom-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-[var(--accent)] after:opacity-80 after:transition-transform motion-safe:after:duration-300 motion-safe:after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)] focus-visible:after:scale-x-100";
 
 const SCROLL_HIDE_AFTER = 48;
 const DELTA_THRESHOLD = 8;
@@ -99,7 +97,7 @@ export function Header() {
           aria-label="Primary"
         >
           {nav.map((item) => (
-            <Link key={item.href} href={item.href} className={navLinkClass}>
+            <Link key={item.href} href={item.href} className={primaryNavLinkClass}>
               {item.label}
             </Link>
           ))}

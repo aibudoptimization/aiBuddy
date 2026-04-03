@@ -1,7 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Container } from "@/components/ui/Container";
+import { SERVICES_PAGE_SERVICE_QUERY } from "@/lib/services-page-deep-link";
 
 const services = [
   {
@@ -123,7 +125,23 @@ function ServicePanel({ serviceId, heading }: { serviceId: ServiceId; heading: s
 }
 
 export function ServicesPageContent() {
-  const [activeService, setActiveService] = useState<ServiceId>(services[0].id);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const activeService = useMemo((): ServiceId => {
+    const raw = searchParams.get(SERVICES_PAGE_SERVICE_QUERY);
+    if (!raw) return services[0].id;
+    const match = services.find((s) => s.id === raw);
+    return match ? match.id : services[0].id;
+  }, [searchParams]);
+
+  const selectService = (id: ServiceId) => {
+    const q = new URLSearchParams(searchParams.toString());
+    q.set(SERVICES_PAGE_SERVICE_QUERY, id);
+    const qs = q.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+  };
 
   const activeItem = useMemo(
     () => services.find((service) => service.id === activeService) ?? services[0],
@@ -159,7 +177,7 @@ export function ServicesPageContent() {
                     role="tab"
                     aria-selected={selected}
                     aria-controls={panelId}
-                    onClick={() => setActiveService(service.id)}
+                    onClick={() => selectService(service.id)}
                     className={[
                       "min-h-12 rounded-lg px-4 py-3 text-sm font-semibold tracking-wide transition-[background-color,color,border-color,box-shadow] motion-safe:duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]",
                       selected

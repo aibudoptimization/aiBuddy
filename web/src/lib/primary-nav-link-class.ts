@@ -1,0 +1,3 @@
+/** Matches primary desktop nav links in `Header` (typography + underline accent). */
+export const primaryNavLinkClass =
+  "relative inline-flex py-1 text-sm text-[var(--muted)] transition-colors motion-safe:duration-200 hover:text-[var(--foreground)] after:pointer-events-none after:absolute after:left-0 after:bottom-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-[var(--accent)] after:opacity-80 after:transition-transform motion-safe:after:duration-300 motion-safe:after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)] focus-visible:after:scale-x-100";
