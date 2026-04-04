@@ -1,9 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { useCallback, useEffect, useRef } from "react";
 import { primaryNavLinkClass } from "@/lib/primary-nav-link-class";
 import {
   AUTOMATED_WORKFLOWS_TAB_ID,
   servicesPageDeepLink,
 } from "@/lib/services-page-deep-link";
+
+/** Lower = more lag behind the cursor (0.06–0.14 feels natural). */
+const GLOW_SMOOTHING = 0.09;
+const GLOW_IDLE_EPS2 = 0.36;
 
 const VIDEO_SRC = "/services/automated-workflows-bg.mp4";
 
@@ -20,8 +27,100 @@ type AutomatedWorkflowsServiceCardProps = {
 };
 
 export function AutomatedWorkflowsServiceCard({ pillar }: AutomatedWorkflowsServiceCardProps) {
+  const articleRef = useRef<HTMLElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef({ x: 0, y: 0 });
+  const posRef = useRef({ x: 0, y: 0 });
+  const rafRef = useRef<number | null>(null);
+  const hoveringRef = useRef(false);
+
+  const applyGlowStyle = useCallback((x: number, y: number) => {
+    const el = glowRef.current;
+    if (!el) return;
+    el.style.background = `radial-gradient(380px circle at ${x}px ${y}px, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08) 38%, transparent 58%)`;
+  }, []);
+
+  const scheduleGlowFrame = useCallback(() => {
+    if (rafRef.current !== null) return;
+    const step = () => {
+      if (!hoveringRef.current) {
+        rafRef.current = null;
+        return;
+      }
+      const t = targetRef.current;
+      const p = posRef.current;
+      const dx = t.x - p.x;
+      const dy = t.y - p.y;
+      if (dx * dx + dy * dy < GLOW_IDLE_EPS2) {
+        rafRef.current = null;
+        return;
+      }
+      p.x += dx * GLOW_SMOOTHING;
+      p.y += dy * GLOW_SMOOTHING;
+      applyGlowStyle(p.x, p.y);
+      rafRef.current = requestAnimationFrame(step);
+    };
+    rafRef.current = requestAnimationFrame(step);
+  }, [applyGlowStyle]);
+
+  const setTargetFromClient = useCallback(
+    (clientX: number, clientY: number) => {
+      const el = articleRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const x = clientX - r.left;
+      const y = clientY - r.top;
+      targetRef.current = { x, y };
+      if (!hoveringRef.current) return;
+      if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        posRef.current = { x, y };
+        applyGlowStyle(x, y);
+        return;
+      }
+      scheduleGlowFrame();
+    },
+    [applyGlowStyle, scheduleGlowFrame],
+  );
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
   return (
-    <article className="relative isolate flex flex-col overflow-hidden rounded-lg border border-[var(--border)] shadow-lg shadow-black/25">
+    <article
+      ref={articleRef}
+      onMouseMove={(e) => setTargetFromClient(e.clientX, e.clientY)}
+      onMouseEnter={(e) => {
+        hoveringRef.current = true;
+        const el = articleRef.current;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        targetRef.current = { x, y };
+        posRef.current = { x, y };
+        applyGlowStyle(x, y);
+        if (rafRef.current !== null) {
+          cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+        }
+        if (typeof window === "undefined" || !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          scheduleGlowFrame();
+        }
+      }}
+      onMouseLeave={() => {
+        hoveringRef.current = false;
+        if (rafRef.current !== null) {
+          cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+        }
+        const glowEl = glowRef.current;
+        if (glowEl) glowEl.style.background = "";
+      }}
+      className="group relative isolate flex flex-col overflow-hidden rounded-lg border border-[var(--border)] shadow-lg shadow-black/25"
+    >
       <div
         className="absolute inset-0 z-0 hidden bg-[var(--surface)] motion-reduce:block"
         aria-hidden
@@ -46,6 +145,11 @@ export function AutomatedWorkflowsServiceCard({ pillar }: AutomatedWorkflowsServ
       />
       <div
         className="absolute inset-0 z-[2] bg-white/[0.04] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.12)]"
+        aria-hidden
+      />
+      <div
+        ref={glowRef}
+        className="pointer-events-none absolute inset-0 z-[3] opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-hover:opacity-100"
         aria-hidden
       />
       <div className="relative z-[4] flex flex-col p-8">
