@@ -122,9 +122,9 @@ function ServiceMedia({
 
   if (isAutomatedWorkflows) {
     return (
-      <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-inner shadow-black/20">
+      <>
         <video
-          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          className="aspect-video w-full object-cover motion-reduce:hidden"
           src={AUTOMATED_WORKFLOWS_VIDEO_SRC}
           muted
           loop
@@ -134,29 +134,27 @@ function ServiceMedia({
           aria-label="Automation and workflow visualization"
         />
         <div
-          className="absolute inset-0 hidden flex-col items-center justify-center gap-2 bg-[var(--surface-elevated)] px-4 text-center text-sm text-[var(--muted)] motion-reduce:flex"
+          className="hidden aspect-video w-full flex-col items-center justify-center gap-2 bg-[var(--surface-elevated)] px-4 text-center text-sm text-[var(--muted)] motion-reduce:flex"
           role="img"
           aria-label="Video preview hidden when reduced motion is preferred"
         >
           <span className="font-medium text-[var(--foreground)]">Automated workflows</span>
           <span>Preview video is disabled when reduced motion is on.</span>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-inner shadow-black/20">
-      <Image
-        src={WEB_DESIGN_HERO_SRC}
-        alt={`${heading}: interface layout and design craft`}
-        width={960}
-        height={540}
-        className="h-full w-full object-cover object-left-top"
-        priority
-        sizes="(min-width: 1024px) 40vw, 100vw"
-      />
-    </div>
+    <Image
+      src={WEB_DESIGN_HERO_SRC}
+      alt={`${heading}: interface layout and design craft`}
+      width={960}
+      height={540}
+      className="aspect-video w-full object-cover object-left-top"
+      priority
+      sizes="(min-width: 1024px) 40vw, 100vw"
+    />
   );
 }
 
