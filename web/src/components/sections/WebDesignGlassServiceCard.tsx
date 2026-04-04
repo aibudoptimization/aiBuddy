@@ -38,7 +38,7 @@ export function WebDesignGlassServiceCard({
   const applyGlowStyle = useCallback((x: number, y: number) => {
     const el = glowRef.current;
     if (!el) return;
-    el.style.background = `radial-gradient(380px circle at ${x}px ${y}px, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08) 38%, transparent 58%)`;
+    el.style.background = `radial-gradient(190px circle at ${x}px ${y}px, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08) 38%, transparent 58%)`;
   }, []);
 
   const scheduleGlowFrame = useCallback(() => {
@@ -120,43 +120,37 @@ export function WebDesignGlassServiceCard({
         const glowEl = glowRef.current;
         if (glowEl) glowEl.style.background = "";
       }}
-      className="group relative isolate flex flex-col overflow-hidden rounded-lg border border-[var(--border)] shadow-lg shadow-black/25"
+      className="group relative isolate z-0 flex flex-col overflow-hidden rounded-lg border border-[var(--border)] shadow-lg shadow-black/25 transition-[transform,box-shadow,border-color] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:scale-[1.017] motion-reduce:hover:scale-100 hover:border-white/30 hover:shadow-[0_0_0_2px_rgba(255,255,255,0.32),0_0_0_3px_rgba(230,204,106,0.38),0_22px_50px_-14px_rgba(0,0,0,0.58)]"
     >
       <div
-        className="absolute inset-0 z-0 bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: `url(${imageSrc})`,
-          /* cover = always fills card (no N/S letterboxing); position biases crop away from BR watermark */
-          backgroundPosition: "22% 48%",
-        }}
+        className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
         aria-hidden
-      />
-      <div
-        className="absolute inset-0 z-[1] bg-gradient-to-br from-black/55 via-black/40 to-black/60"
-        aria-hidden
-      />
-      {/* Masks typical bottom-right stock watermark; blends with gradient */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_120%_80%_at_100%_100%,rgba(10,10,12,0.92)_0%,rgba(10,10,12,0.35)_42%,transparent_72%)]"
-        aria-hidden
-      />
-      <div
-        className="absolute inset-0 z-[2] bg-white/[0.04] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.12)]"
-        aria-hidden
-      />
-      <div
-        ref={glowRef}
-        className="pointer-events-none absolute inset-0 z-[3] opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-hover:opacity-100"
-        aria-hidden
-      />
-      <div className="relative z-[4] flex flex-col p-8">
+      >
+        <div
+          className="pointer-events-none absolute inset-0 z-0 bg-cover bg-no-repeat"
+          style={{
+            backgroundImage: `url(${imageSrc})`,
+            /* cover = always fills card (no N/S letterboxing); position biases crop away from BR watermark */
+            backgroundPosition: "22% 48%",
+          }}
+        />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-br from-black/55 via-black/40 to-black/60" />
+        {/* Masks typical bottom-right stock watermark; blends with gradient */}
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_120%_80%_at_100%_100%,rgba(10,10,12,0.92)_0%,rgba(10,10,12,0.35)_42%,transparent_72%)]" />
+        <div className="pointer-events-none absolute inset-0 z-[2] bg-white/[0.04] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.12)]" />
+        <div
+          ref={glowRef}
+          className="pointer-events-none absolute inset-0 z-[3] opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-hover:opacity-100"
+        />
+      </div>
+      <div className="relative z-[4] flex flex-col overflow-hidden rounded-lg bg-black/[0.06] p-8 text-pretty backdrop-blur-[2px] motion-reduce:backdrop-blur-none motion-reduce:bg-black/[0.12]">
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
-          <h3 className="min-w-0 flex-1 text-2xl font-medium text-[var(--foreground)] [text-shadow:0_1px_18px_rgba(0,0,0,0.45)]">
+          <h3 className="min-w-0 flex-1 text-2xl font-semibold tracking-tight text-[#faf9f7] [text-shadow:0_0_28px_rgba(0,0,0,0.92),0_1px_2px_rgba(0,0,0,0.72)]">
             {pillar.name}
           </h3>
           <Link
             href={servicesPageDeepLink(WEB_DESIGN_DEVELOPMENT_TAB_ID)}
-            className={`${primaryNavLinkClass} shrink-0 [text-shadow:0_1px_14px_rgba(0,0,0,0.35)]`}
+            className={`${primaryNavLinkClass} shrink-0 !text-[#dcd8d2] hover:!text-[#faf9f7] [text-shadow:0_0_18px_rgba(0,0,0,0.9)]`}
           >
             View service
           </Link>
@@ -164,7 +158,7 @@ export function WebDesignGlassServiceCard({
         <div className="mt-6 space-y-8">
           {pillar.points.map((point) => (
             <div key={point.title}>
-              <h4 className="flex gap-2 text-sm font-semibold text-[var(--foreground)] [text-shadow:0_1px_14px_rgba(0,0,0,0.4)]">
+              <h4 className="flex gap-2 text-sm font-semibold tracking-tight text-[#f3f2ef] [text-shadow:0_0_20px_rgba(0,0,0,0.9),0_1px_1px_rgba(0,0,0,0.55)]">
                 <span
                   className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]"
                   aria-hidden
@@ -172,7 +166,7 @@ export function WebDesignGlassServiceCard({
                 <span>{point.title}</span>
               </h4>
               {point.body ? (
-                <p className="mt-2 pl-3.5 text-sm leading-relaxed text-[var(--muted)] [text-shadow:0_1px_12px_rgba(0,0,0,0.5)] sm:pl-4">
+                <p className="mt-2 pl-3.5 text-sm leading-[1.65] text-[#e4e1db] [text-shadow:0_0_16px_rgba(0,0,0,0.88)] sm:pl-4">
                   {point.body}
                 </p>
               ) : null}
