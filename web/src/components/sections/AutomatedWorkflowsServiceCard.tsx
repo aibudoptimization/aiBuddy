@@ -152,27 +152,27 @@ export function AutomatedWorkflowsServiceCard({ pillar }: AutomatedWorkflowsServ
         className="pointer-events-none absolute inset-0 z-[3] opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-hover:opacity-100"
         aria-hidden
       />
-      <div className="relative z-[4] flex flex-col p-8">
+      <div className="relative z-[4] flex flex-col p-8 text-pretty">
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
-          <h3 className="min-w-0 flex-1 text-2xl font-medium text-[var(--foreground)] [text-shadow:0_1px_18px_rgba(0,0,0,0.45)]">
+          <h3 className="min-w-0 flex-1 text-2xl font-semibold tracking-tight text-[#faf9f7] [text-shadow:0_0_28px_rgba(0,0,0,0.92),0_1px_2px_rgba(0,0,0,0.72)]">
             {pillar.name}
           </h3>
           <Link
             href={servicesPageDeepLink(AUTOMATED_WORKFLOWS_TAB_ID)}
-            className={`${primaryNavLinkClass} shrink-0 [text-shadow:0_1px_14px_rgba(0,0,0,0.35)]`}
+            className={`${primaryNavLinkClass} shrink-0 !text-[#dcd8d2] hover:!text-[#faf9f7] [text-shadow:0_0_18px_rgba(0,0,0,0.9)]`}
           >
             View service
           </Link>
         </div>
         {pillar.description ? (
-          <p className="mt-4 text-[var(--muted)] leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
+          <p className="mt-4 max-w-prose text-base leading-relaxed text-[#e4e1db] [text-shadow:0_0_16px_rgba(0,0,0,0.88)]">
             {pillar.description}
           </p>
         ) : null}
         <div className="mt-6 space-y-8">
           {pillar.points.map((point) => (
             <div key={point.title}>
-              <h4 className="flex gap-2 text-sm font-semibold text-[var(--foreground)] [text-shadow:0_1px_14px_rgba(0,0,0,0.4)]">
+              <h4 className="flex gap-2 text-sm font-semibold tracking-tight text-[#f3f2ef] [text-shadow:0_0_20px_rgba(0,0,0,0.9),0_1px_1px_rgba(0,0,0,0.55)]">
                 <span
                   className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]"
                   aria-hidden
@@ -180,7 +180,7 @@ export function AutomatedWorkflowsServiceCard({ pillar }: AutomatedWorkflowsServ
                 <span>{point.title}</span>
               </h4>
               {typeof point.body === "string" ? (
-                <p className="mt-2 pl-3.5 text-sm leading-relaxed text-[var(--muted)] [text-shadow:0_1px_12px_rgba(0,0,0,0.5)] sm:pl-4">
+                <p className="mt-2 pl-3.5 text-sm leading-[1.65] text-[#e4e1db] [text-shadow:0_0_16px_rgba(0,0,0,0.88)] sm:pl-4">
                   {point.body}
                 </p>
               ) : null}
