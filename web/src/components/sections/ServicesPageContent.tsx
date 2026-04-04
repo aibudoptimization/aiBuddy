@@ -7,7 +7,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { getN8nFormUrl, getScheduleAuditUrl } from "@/lib/public-urls";
-import { SERVICES_PAGE_SERVICE_QUERY } from "@/lib/services-page-deep-link";
+import {
+  SERVICES_PAGE_BASE_PATH,
+  SERVICES_PAGE_SERVICE_QUERY,
+  serviceIdFromPathname,
+  servicePathForTabId,
+} from "@/lib/services-page-deep-link";
 
 const services = [
   {
@@ -252,9 +257,7 @@ function WebDesignPanel({ heading }: { heading: string }) {
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] p-6 sm:p-8">
-          <ServiceMedia serviceId="web-design-development" heading={heading} />
-        </div>
+        <ServiceMedia serviceId="web-design-development" heading={heading} />
       </div>
     </article>
   );
@@ -394,9 +397,7 @@ function AutomatedWorkflowsPanel({ heading }: { heading: string }) {
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] p-6 sm:p-8">
-          <ServiceMedia serviceId="automated-workflows" heading={heading} />
-        </div>
+        <ServiceMedia serviceId="automated-workflows" heading={heading} />
       </div>
     </article>
   );
@@ -409,20 +410,24 @@ export function ServicesPageContent() {
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const activeService = useMemo((): ServiceId => {
-    const raw = searchParams.get(SERVICES_PAGE_SERVICE_QUERY);
-    if (!raw) return services[0].id;
-    const match = services.find((s) => s.id === raw);
-    return match ? match.id : services[0].id;
-  }, [searchParams]);
+    const fromPath = serviceIdFromPathname(pathname);
+    if (fromPath) return fromPath;
+    const base = pathname.replace(/\/$/, "") || "/";
+    if (base === SERVICES_PAGE_BASE_PATH) {
+      const raw = searchParams.get(SERVICES_PAGE_SERVICE_QUERY);
+      if (raw) {
+        const match = services.find((s) => s.id === raw);
+        if (match) return match.id;
+      }
+    }
+    return services[0].id;
+  }, [pathname, searchParams]);
 
   const selectService = useCallback(
     (id: ServiceId) => {
-      const q = new URLSearchParams(searchParams.toString());
-      q.set(SERVICES_PAGE_SERVICE_QUERY, id);
-      const qs = q.toString();
-      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+      router.replace(servicePathForTabId(id), { scroll: false });
     },
-    [pathname, router, searchParams],
+    [router],
   );
 
   const focusTabIndex = useCallback((index: number) => {

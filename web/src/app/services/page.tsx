@@ -1,48 +1,34 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { Header } from "@/components/sections/Header";
-import { Footer } from "@/components/sections/Footer";
 import { ServicesPageContent } from "@/components/sections/ServicesPageContent";
-import { Container } from "@/components/ui/Container";
+import { ServicesPageFallback } from "@/components/sections/ServicesPageFallback";
+import {
+  AUTOMATED_WORKFLOWS_TAB_ID,
+  SERVICES_AUTOMATION_PATH,
+  SERVICES_PAGE_SERVICE_QUERY,
+  SERVICES_WEB_DESIGN_PATH,
+  WEB_DESIGN_DEVELOPMENT_TAB_ID,
+} from "@/lib/services-page-deep-link";
 
 export const metadata: Metadata = {
   title: "Services",
-  description: "Explore WorkflowWonder services for web design, development, and automation.",
+  description:
+    "WorkflowWonder services: web design and development, plus automated workflows and agentic integrations for your stack.",
 };
 
-function ServicesPageFallback() {
-  return (
-    <main id="main-content" className="flex-1">
-      <section
-        className="border-b border-[var(--border)] py-20 sm:py-24"
-        aria-label="Services"
-        aria-busy="true"
-      >
-        <Container>
-          <div className="mx-auto w-full max-w-4xl animate-pulse">
-            <div className="h-3 w-20 rounded bg-[var(--border-strong)] sm:h-3.5" />
-            <div className="mt-4 h-10 w-[min(100%,20rem)] rounded-lg bg-[var(--border-strong)] sm:h-12" />
-            <div className="mt-3 h-3 w-full max-w-xl rounded bg-[var(--border)] sm:h-3.5" />
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="h-12 rounded-lg bg-[var(--surface-elevated)]" />
-              <div className="h-12 rounded-lg bg-[var(--surface-elevated)]" />
-            </div>
-            <div className="mt-8 min-h-[28rem] rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)]/60" />
-          </div>
-        </Container>
-      </section>
-    </main>
-  );
-}
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-export default function ServicesPage() {
+export default async function ServicesPage({ searchParams }: { searchParams: SearchParams }) {
+  const sp = await searchParams;
+  const raw = sp[SERVICES_PAGE_SERVICE_QUERY];
+  const q = typeof raw === "string" ? raw : undefined;
+  if (q === WEB_DESIGN_DEVELOPMENT_TAB_ID) redirect(SERVICES_WEB_DESIGN_PATH);
+  if (q === AUTOMATED_WORKFLOWS_TAB_ID) redirect(SERVICES_AUTOMATION_PATH);
+
   return (
-    <>
-      <Header />
-      <Suspense fallback={<ServicesPageFallback />}>
-        <ServicesPageContent />
-      </Suspense>
-      <Footer />
-    </>
+    <Suspense fallback={<ServicesPageFallback />}>
+      <ServicesPageContent />
+    </Suspense>
   );
 }
