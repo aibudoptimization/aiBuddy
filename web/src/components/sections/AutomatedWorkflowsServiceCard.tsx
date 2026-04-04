@@ -152,7 +152,7 @@ export function AutomatedWorkflowsServiceCard({ pillar }: AutomatedWorkflowsServ
         className="pointer-events-none absolute inset-0 z-[3] opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-hover:opacity-100"
         aria-hidden
       />
-      <div className="relative z-[4] flex flex-col p-8 text-pretty">
+      <div className="relative z-[4] flex flex-col rounded-lg border border-white/[0.07] bg-black/20 p-8 text-pretty shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-sm motion-reduce:backdrop-blur-none motion-reduce:bg-black/35">
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
           <h3 className="min-w-0 flex-1 text-2xl font-semibold tracking-tight text-[#faf9f7] [text-shadow:0_0_28px_rgba(0,0,0,0.92),0_1px_2px_rgba(0,0,0,0.72)]">
             {pillar.name}
