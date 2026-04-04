@@ -152,6 +152,8 @@ export const homeContent = {
     aboutLabel: "About us",
     pages: [
       { label: "Services", href: "/services" },
+      { label: "Web design & development", href: "/services?service=web-design-development" },
+      { label: "Automated workflows", href: "/services?service=automated-workflows" },
       { label: "Estimate", href: "#calculator" },
       { label: "Process", href: "#process" },
       { label: "FAQ", href: "#faq" },

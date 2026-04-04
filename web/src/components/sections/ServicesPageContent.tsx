@@ -1,8 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
+import Image from "next/image";
+import type { KeyboardEvent, ReactNode } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
+import { getN8nFormUrl, getScheduleAuditUrl } from "@/lib/public-urls";
 import { SERVICES_PAGE_SERVICE_QUERY } from "@/lib/services-page-deep-link";
 
 const services = [
@@ -21,255 +25,377 @@ const services = [
 type ServiceId = (typeof services)[number]["id"];
 
 const AUTOMATED_WORKFLOWS_VIDEO_SRC = "/services/automated-workflows-bg.mp4";
+const WEB_DESIGN_HERO_SRC = "/services/web-design-hero.svg";
 
-function ServicePanel({ serviceId, heading }: { serviceId: ServiceId; heading: string }) {
-  const isWebDesign = serviceId === "web-design-development";
+const detailsSummaryClass =
+  "flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-base font-medium text-[var(--foreground)] [&::-webkit-details-marker]:hidden";
+
+const detailsPanelClass =
+  "mt-3 space-y-3 border-t border-[var(--border)] pt-3 text-base leading-relaxed text-[var(--muted)]";
+
+function ServiceAccordion({ title, id, children }: { title: string; id?: string; children: ReactNode }) {
+  return (
+    <details
+      id={id}
+      className="group rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)]/80 px-4 py-3 open:shadow-sm open:shadow-black/10"
+    >
+      <summary className={detailsSummaryClass}>
+        <span>{title}</span>
+        <span
+          aria-hidden
+          className="text-xs text-[var(--muted)] transition-transform duration-200 group-open:rotate-180"
+        >
+          ▼
+        </span>
+      </summary>
+      <div className={detailsPanelClass}>{children}</div>
+    </details>
+  );
+}
+
+function SectionTitle({ children }: { children: ReactNode }) {
+  return <h3 className="pt-2 text-xl font-medium text-[var(--foreground)]">{children}</h3>;
+}
+
+function AtAGlance({
+  who,
+  deliverables,
+  timeline,
+}: {
+  who: string;
+  deliverables: string;
+  timeline: string;
+}) {
+  return (
+    <dl className="mt-5 grid gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)]/50 p-4 sm:grid-cols-3 sm:gap-6 sm:p-5">
+      <div>
+        <dt className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">Who it&apos;s for</dt>
+        <dd className="mt-1.5 text-sm leading-relaxed text-[var(--foreground)] sm:text-base">{who}</dd>
+      </div>
+      <div>
+        <dt className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">What you get</dt>
+        <dd className="mt-1.5 text-sm leading-relaxed text-[var(--foreground)] sm:text-base">{deliverables}</dd>
+      </div>
+      <div className="sm:col-span-1">
+        <dt className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">Typical timeline</dt>
+        <dd className="mt-1.5 text-sm leading-relaxed text-[var(--foreground)] sm:text-base">{timeline}</dd>
+      </div>
+    </dl>
+  );
+}
+
+function BulletList({ items }: { items: string[] }) {
+  return (
+    <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+
+function FaqBlock({ items }: { items: { q: string; a: string }[] }) {
+  return (
+    <div className="space-y-3">
+      {items.map((item) => (
+        <ServiceAccordion key={item.q} title={item.q}>
+          <p>{item.a}</p>
+        </ServiceAccordion>
+      ))}
+    </div>
+  );
+}
+
+function ServiceMedia({
+  serviceId,
+  heading,
+}: {
+  serviceId: ServiceId;
+  heading: string;
+}) {
   const isAutomatedWorkflows = serviceId === "automated-workflows";
+
+  if (isAutomatedWorkflows) {
+    return (
+      <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-inner shadow-black/20">
+        <video
+          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          src={AUTOMATED_WORKFLOWS_VIDEO_SRC}
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="metadata"
+          aria-label="Automation and workflow visualization"
+        />
+        <div
+          className="absolute inset-0 hidden flex-col items-center justify-center gap-2 bg-[var(--surface-elevated)] px-4 text-center text-sm text-[var(--muted)] motion-reduce:flex"
+          role="img"
+          aria-label="Video preview hidden when reduced motion is preferred"
+        >
+          <span className="font-medium text-[var(--foreground)]">Automated workflows</span>
+          <span>Preview video is disabled when reduced motion is on.</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-inner shadow-black/20">
+      <Image
+        src={WEB_DESIGN_HERO_SRC}
+        alt={`${heading}: interface layout and design craft`}
+        width={960}
+        height={540}
+        className="h-full w-full object-cover object-left-top"
+        priority
+        sizes="(min-width: 1024px) 40vw, 100vw"
+      />
+    </div>
+  );
+}
+
+function WebDesignPanel({ heading }: { heading: string }) {
+  const ctaHref = getN8nFormUrl();
 
   return (
     <article className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm shadow-black/20 sm:p-8">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start">
         <div>
           <h2 className="text-3xl font-medium tracking-tight text-[var(--foreground)] sm:text-4xl">{heading}</h2>
-          {isWebDesign ? (
-            <div className="mt-5 space-y-4 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-              <p>
-                Think of us as the architects and the builders of your digital home, all under one roof.
-              </p>
-              <p>
-                As a Full-Service Web Agency, we provide a cohesive, end-to-end digital strategy where the beauty of
-                the design and the power of the code are developed in total harmony.
-              </p>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+            Strategy, UX, UI, and production-grade engineering in one accountable team—so your site stays fast,
+            maintainable, and aligned with how you actually sell.
+          </p>
 
-              <h3 className="pt-2 text-lg font-medium text-[var(--color-white)] [background-clip:unset] [-webkit-background-clip:unset]">
-                Our &quot;Full-Stack&quot; Approach
-              </h3>
-              <p>
-                We do not just hand you a folder of images; we deliver a high-performing business tool. Here is how
-                we handle your project from start to finish:
-              </p>
+          <AtAGlance
+            who="Teams launching or refreshing a marketing site, product surface, or CMS-backed experience."
+            deliverables="UX direction, visual design, front-end build, CMS and integrations, launch hardening."
+            timeline="Small sites often ship in a few weeks; larger builds run in phased milestones after discovery."
+          />
 
-              <h4 className="pt-2 text-lg font-medium text-[var(--foreground)]">
-                🎨 Phase 1: Strategy &amp; Visual Identity
-              </h4>
-              <p>Before a single line of code is written, we focus on the User Experience (UX).</p>
+          <div className="mt-6">
+            <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
+              Get an estimate
+            </ButtonLink>
+          </div>
+
+          <SectionTitle>What you get</SectionTitle>
+          <BulletList
+            items={[
+              "A written plan with milestones you can track—not a vague “phase” deck.",
+              "Design and code built together to avoid expensive rework between handoffs.",
+              "SEO-aware structure, performance discipline, and documentation your team can operate.",
+            ]}
+          />
+
+          <SectionTitle>How we work</SectionTitle>
+          <p className="text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+            Expand each stage for detail. On smaller engagements, we still follow the same sequence—just with a tighter
+            footprint.
+          </p>
+          <div className="mt-4 space-y-3">
+            <ServiceAccordion title="Strategy & visual identity" id="web-strategy">
+              <p>Discovery on goals and audience, UI design aligned to your brand, and a clickable prototype before build.</p>
               <ul className="list-disc space-y-1 pl-5">
-                <li>Discovery: We dive into your business goals and target audience.</li>
-                <li>UI Design: We create stunning, modern interfaces that reflect your brand.</li>
-                <li>
-                  Prototyping: You will get a clickable model of your site so you can &quot;feel&quot; the navigation before we
-                  build it.
-                </li>
+                <li>Discovery workshops and success metrics</li>
+                <li>Interface design and design system cues</li>
+                <li>Prototype for navigation and key flows</li>
               </ul>
-
-              <h4 className="pt-2 text-lg font-medium text-[var(--foreground)]">🛠️ Phase 2: Technical Engineering</h4>
-              <p>Once the design is perfected, our development team breathes life into it.</p>
+            </ServiceAccordion>
+            <ServiceAccordion title="Build & engineering" id="web-build">
+              <p>Responsive front-end, secure CMS and integrations, and technical SEO foundations from day one.</p>
               <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  Front-End Excellence: We ensure your site is lightning-fast and responsive across phones, tablets,
-                  and desktop monitors.
-                </li>
-                <li>
-                  Back-End Logic: We build the secure databases, CMS (Content Management Systems), and integrations
-                  that make your business run.
-                </li>
-                <li>
-                  SEO Foundations: We code with search engines in mind from day one, so you are not invisible on
-                  Google.
-                </li>
+                <li>Fast, accessible UI across devices</li>
+                <li>CMS, APIs, and business logic your operators can trust</li>
+                <li>Structured data and crawl-friendly implementation where it matters</li>
               </ul>
-
-              <h4 className="pt-2 text-lg font-medium text-[var(--foreground)]">🚀 Phase 3: Launch &amp; Optimization</h4>
-              <p>We do not just &quot;hit go&quot; and disappear.</p>
+            </ServiceAccordion>
+            <ServiceAccordion title="Launch & optimization" id="web-launch">
+              <p>QA, deployment, and ongoing care so launches stay stable—not “hands off at go-live.”</p>
               <ul className="list-disc space-y-1 pl-5">
-                <li>Testing: We break the site so your customers do not have to.</li>
-                <li>Deployment: We handle hosting, security certificates, and domain setup.</li>
-                <li>Maintenance: We provide ongoing support to keep your site secure and updated.</li>
+                <li>Testing, performance checks, and launch checklist</li>
+                <li>Hosting, TLS, and domain coordination</li>
+                <li>Maintenance options for security and content velocity</li>
               </ul>
+            </ServiceAccordion>
+          </div>
 
-              <h3 className="pt-2 text-xl font-medium text-[var(--foreground)]">Why Choose a Full-Service Partner?</h3>
-              <p>&quot;Design is not just what it looks like and feels like. Design is how it works.&quot; - Steve Jobs</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  One Point of Contact: You do not have to play middleman between a confused designer and a frustrated
-                  developer.
-                </li>
-                <li>
-                  Cost Efficiency: We avoid expensive rework that happens when separate design and development teams
-                  are misaligned.
-                </li>
-                <li>
-                  Faster Speed-to-Market: Our integrated workflow helps move from concept to launch much faster than a
-                  fragmented team.
-                </li>
-              </ul>
+          <SectionTitle>FAQ</SectionTitle>
+          <FaqBlock
+            items={[
+              {
+                q: "Do we own the CMS and content?",
+                a: "Yes. You keep admin access, exports, and clear documentation. We avoid lock-in patterns and explain trade-offs before you commit to a platform.",
+              },
+              {
+                q: "Can you integrate with our stack?",
+                a: "We routinely connect sites to CRMs, analytics, booking tools, and internal APIs. We propose the smallest reliable integration path for your governance model.",
+              },
+              {
+                q: "What if we only need design or only development?",
+                a: "We still recommend a short alignment pass so specs match reality. If you already have designs or an engineering team, we can scope a focused engagement—tell us what you have in flight.",
+              },
+            ]}
+          />
 
-              <p>We do not just build websites; we build the most important employee your company will ever have.</p>
+          <div className="mt-10 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)]/40 p-6">
+            <p className="text-base font-medium text-[var(--foreground)]">Ready to scope your site?</p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+              Share goals and constraints—we&apos;ll reply with a practical estimate or a short list of options.
+            </p>
+            <div className="mt-4">
+              <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
+                Get an estimate
+              </ButtonLink>
             </div>
-          ) : isAutomatedWorkflows ? (
-            <div className="mt-5 space-y-4 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-              <p className="text-xl font-medium leading-snug text-[var(--foreground)] sm:text-2xl">
-                Elevate Your Operations with Agentic Intelligence
-              </p>
-              <p>
-                In a world that never sleeps, manual processes aren&apos;t just slow—they&apos;re a bottleneck to your
-                next level of growth. At WorkflowWonder, we don&apos;t just &quot;connect apps&quot;; we build digital
-                ecosystems that think, adapt, and execute.
-              </p>
-
-              <h3 className="pt-2 text-xl font-medium text-[var(--foreground)]">Our Core Solutions</h3>
-
-              <h4 className="pt-2 text-lg font-medium text-[var(--foreground)]">
-                🤖 Agentic AI: The Future of Autonomy
-              </h4>
-              <p>
-                Standard automation follows a straight line (If A, then B). Agentic AI follows a goal. Our agents are
-                powered by advanced Large Language Models (LLMs) that act as &quot;Digital Employees.&quot;
-              </p>
-              <ul className="list-disc space-y-2 pl-5">
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Reasoning capability:</span> They don&apos;t
-                  just move data; they analyze it to decide the next best action.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Autonomous problem solving:</span> If a task
-                  hits a snag, the agent pivots and finds a solution without pinging you for help.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Continuous learning:</span> These systems
-                  refine their accuracy based on your feedback and historical data.
-                </li>
-              </ul>
-
-              <h4 className="pt-2 text-lg font-medium text-[var(--foreground)]">
-                ⚙️ Automated Workflows (iPaaS)
-              </h4>
-              <p>
-                We eliminate the &quot;Copy-Paste Tax.&quot; By integrating your existing tech stack (Slack, CRM, Email,
-                ERP), we create a seamless flow of information.
-              </p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">24/7 execution:</span> Your business moves at
-                  the speed of light, even when your team is offline.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Error elimination:</span> Remove the risk of
-                  human fatigue and data entry mistakes.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Focus restoration:</span> Give your team their
-                  creativity back by offloading the &quot;busy work.&quot;
-                </li>
-              </ul>
-
-              <h4 className="pt-2 text-lg font-medium text-[var(--foreground)]">
-                🛠️ Custom Workflows &amp; Private Engines
-              </h4>
-              <p>
-                Your &quot;secret sauce&quot; is in your internal logic. We take your most complex, messy manual
-                processes and codify them into a private, secure engine.
-              </p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Tailored logic:</span> Built specifically for
-                  your unique business rhythm and proprietary rules.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Privacy first:</span> We prioritize secure data
-                  handling to ensure your operational intelligence stays within your walls.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Scalability:</span> Systems designed to handle
-                  10 tasks today and 10,000 tomorrow without breaking a sweat.
-                </li>
-              </ul>
-
-              <h4 className="pt-2 text-lg font-medium text-[var(--foreground)]">
-                📱 Intelligent Socials &amp; Engagement
-              </h4>
-              <p>Social media is a conversation, not a broadcast. We automate the noise so you can focus on the signal.</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Smart response:</span> Agents that can
-                  distinguish between a support query, a lead, and a casual comment.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Content orchestration:</span> Automated
-                  scheduling that adapts to engagement patterns.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Brand consistency:</span> Maintaining your
-                  unique voice across every platform, effortlessly.
-                </li>
-              </ul>
-
-              <h3 className="pt-2 text-xl font-medium text-[var(--foreground)]">The Transformation Journey</h3>
-              <ul className="list-disc space-y-2 pl-5">
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Audit:</span> We map your current &quot;manual
-                  mess&quot; and identify high-impact automation opportunities.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Architect:</span> We design a custom agentic
-                  framework that fits your specific tech stack.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Activate:</span> We deploy your autonomous
-                  agents and workflows in a controlled environment.
-                </li>
-                <li>
-                  <span className="font-medium text-[var(--foreground)]">Accelerate:</span> We monitor and optimize,
-                  ensuring your digital workforce is delivering maximum ROI.
-                </li>
-              </ul>
-
-              <blockquote className="border-l-2 border-[var(--accent)] pl-4 pt-2 text-[var(--foreground)]">
-                &quot;The goal isn&apos;t to replace humans; it&apos;s to make humans unblockable.&quot;
-              </blockquote>
-
-              <p className="pt-2 font-medium text-[var(--foreground)]">
-                Ready to build your tireless digital extension?
-              </p>
-            </div>
-          ) : (
-            <>
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-                [Lorem ipsum placeholder text]
-              </p>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-                [Lorem ipsum placeholder text]
-              </p>
-            </>
-          )}
+          </div>
         </div>
-        <div className="rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] p-8 text-center">
-          {isAutomatedWorkflows ? (
-            <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-inner shadow-black/20">
-              <video
-                className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
-                src={AUTOMATED_WORKFLOWS_VIDEO_SRC}
-                muted
-                loop
-                playsInline
-                autoPlay
-                preload="metadata"
-                aria-label="Automation and workflow visualization"
-              />
-              <div
-                className="absolute inset-0 hidden flex-col items-center justify-center gap-2 bg-[var(--surface-elevated)] px-4 text-center text-sm text-[var(--muted)] motion-reduce:flex"
-                role="img"
-                aria-label="Video preview hidden when reduced motion is preferred"
-              >
-                <span className="font-medium text-[var(--foreground)]">Automated workflows</span>
-                <span>Preview video is disabled when reduced motion is on.</span>
-              </div>
+
+        <div className="rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] p-6 sm:p-8">
+          <ServiceMedia serviceId="web-design-development" heading={heading} />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function AutomatedWorkflowsPanel({ heading }: { heading: string }) {
+  const ctaHref = getScheduleAuditUrl();
+
+  return (
+    <article className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm shadow-black/20 sm:p-8">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start">
+        <div>
+          <h2 className="text-3xl font-medium tracking-tight text-[var(--foreground)] sm:text-4xl">{heading}</h2>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+            Agent-assisted workflows and integrations that remove copy-paste tax—without sacrificing governance,
+            observability, or human judgment where it matters.
+          </p>
+
+          <AtAGlance
+            who="Operators drowning in manual handoffs between CRM, inbox, spreadsheets, and line-of-business tools."
+            deliverables="Workflow audit, architecture, implementation, monitoring, and documentation for your team."
+            timeline="Pilots can land quickly; program-scale automation is usually phased after we map risk and ROI."
+          />
+
+          <div className="mt-6">
+            <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
+              Book an audit
+            </ButtonLink>
+          </div>
+
+          <SectionTitle>What you get</SectionTitle>
+          <BulletList
+            items={[
+              "Goal-driven automation: agents and workflows that handle exceptions with guardrails—not brittle if-this-then-that only.",
+              "Stack-aware integration across the tools you already pay for (CRM, comms, ERP, data stores).",
+              "Clear runbooks so your team can operate, extend, and audit what runs in production.",
+            ]}
+          />
+
+          <SectionTitle>How we work</SectionTitle>
+          <p className="text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+            Core solution areas and the journey we take from messy manual work to measured automation.
+          </p>
+          <div className="mt-4 space-y-3">
+            <ServiceAccordion title="Agentic AI & digital employees">
+              <p>
+                LLM-powered agents that pursue outcomes: triage, draft, classify, and escalate with policies you
+                control.
+              </p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Reasoning over unstructured input—not just field mapping</li>
+                <li>Fallback paths when confidence is low or policy blocks an action</li>
+                <li>Feedback loops to improve accuracy over time</li>
+              </ul>
+            </ServiceAccordion>
+            <ServiceAccordion title="Automated workflows (iPaaS)">
+              <p>Reliable orchestration across SaaS APIs so data moves 24/7 without keyboard macros.</p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Scheduled and event-driven runs with retries and alerting</li>
+                <li>Reduced human error on high-volume repetitive steps</li>
+                <li>More focus for creative and customer-facing work</li>
+              </ul>
+            </ServiceAccordion>
+            <ServiceAccordion title="Custom workflows & private engines">
+              <p>When your logic is proprietary, we encode it in a private, reviewable system—not a black box.</p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Tailored rules for your operating rhythm</li>
+                <li>Security-first handling of sensitive operational data</li>
+                <li>Scaling from tens to thousands of tasks without re-architecture surprises</li>
+              </ul>
+            </ServiceAccordion>
+            <ServiceAccordion title="Intelligent socials & engagement">
+              <p>Automation that preserves brand voice while cutting noise—routing, drafts, and schedules you approve.</p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Intent detection: support vs. lead vs. casual engagement</li>
+                <li>Adaptive scheduling informed by engagement signals</li>
+                <li>Consistent tone guardrails across channels</li>
+              </ul>
+            </ServiceAccordion>
+          </div>
+
+          <div className="mt-6 space-y-3">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[var(--muted)]">Engagement path</p>
+            <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+              <li>
+                <span className="font-medium text-[var(--foreground)]">Audit:</span> map manual work and prioritize
+                high-impact wins.
+              </li>
+              <li>
+                <span className="font-medium text-[var(--foreground)]">Architect:</span> design agents and integrations
+                for your stack and policies.
+              </li>
+              <li>
+                <span className="font-medium text-[var(--foreground)]">Activate:</span> deploy in a controlled
+                environment with observability.
+              </li>
+              <li>
+                <span className="font-medium text-[var(--foreground)]">Accelerate:</span> monitor, tune, and expand
+                based on measured ROI.
+              </li>
+            </ul>
+          </div>
+
+          <blockquote className="mt-6 border-l-2 border-[var(--accent)] pl-4 text-[var(--foreground)]">
+            &quot;The goal isn&apos;t to replace humans; it&apos;s to make humans unblockable.&quot;
+          </blockquote>
+
+          <SectionTitle>FAQ</SectionTitle>
+          <FaqBlock
+            items={[
+              {
+                q: "How do you approach AI safety and governance?",
+                a: "We start with data boundaries, human-in-the-loop steps for high-risk actions, logging, and kill switches. Scope and policies are documented before we widen autonomy.",
+              },
+              {
+                q: "Will this work with our existing integrations?",
+                a: "Usually yes—we prefer official APIs and supported connectors. We surface limitations early and propose staged rollouts when vendors or compliance add constraints.",
+              },
+              {
+                q: "What does an audit include?",
+                a: "A concise map of current manual flows, quick-win candidates, and a phased recommendation with effort/risk notes—so you can decide what to fund next.",
+              },
+            ]}
+          />
+
+          <div className="mt-10 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)]/40 p-6">
+            <p className="text-base font-medium text-[var(--foreground)]">Want a second opinion on your automation roadmap?</p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+              Book a short audit—we&apos;ll give candid feedback and next steps, even if we&apos;re not the right long-term
+              partner.
+            </p>
+            <div className="mt-4">
+              <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
+                Book an audit
+              </ButtonLink>
             </div>
-          ) : (
-            <div className="flex min-h-52 items-center justify-center rounded-lg border border-dashed border-[var(--border-strong)] bg-[var(--background)]/35 p-6 text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
-              Service image placeholder
-            </div>
-          )}
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] p-6 sm:p-8">
+          <ServiceMedia serviceId="automated-workflows" heading={heading} />
         </div>
       </div>
     </article>
@@ -280,6 +406,7 @@ export function ServicesPageContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const activeService = useMemo((): ServiceId => {
     const raw = searchParams.get(SERVICES_PAGE_SERVICE_QUERY);
@@ -288,16 +415,41 @@ export function ServicesPageContent() {
     return match ? match.id : services[0].id;
   }, [searchParams]);
 
-  const selectService = (id: ServiceId) => {
-    const q = new URLSearchParams(searchParams.toString());
-    q.set(SERVICES_PAGE_SERVICE_QUERY, id);
-    const qs = q.toString();
-    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
-  };
+  const selectService = useCallback(
+    (id: ServiceId) => {
+      const q = new URLSearchParams(searchParams.toString());
+      q.set(SERVICES_PAGE_SERVICE_QUERY, id);
+      const qs = q.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
 
-  const activeItem = useMemo(
-    () => services.find((service) => service.id === activeService) ?? services[0],
-    [activeService],
+  const focusTabIndex = useCallback((index: number) => {
+    const el = tabRefs.current[index];
+    if (el) queueMicrotask(() => el.focus());
+  }, []);
+
+  const onTabKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        event.preventDefault();
+        const dir = event.key === "ArrowRight" ? 1 : -1;
+        const next = (index + dir + services.length) % services.length;
+        selectService(services[next].id);
+        focusTabIndex(next);
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        selectService(services[0].id);
+        focusTabIndex(0);
+      } else if (event.key === "End") {
+        event.preventDefault();
+        const last = services.length - 1;
+        selectService(services[last].id);
+        focusTabIndex(last);
+      }
+    },
+    [focusTabIndex, selectService],
   );
 
   return (
@@ -307,8 +459,8 @@ export function ServicesPageContent() {
           <div className="mx-auto w-full max-w-4xl">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">Services</p>
             <h1 className="mt-4 text-4xl font-medium tracking-tight text-[var(--foreground)] sm:text-5xl">What we offer</h1>
-            <p className="mt-3 max-w-2xl text-xs leading-relaxed text-[var(--muted)]/70 sm:text-sm">
-              Use the toggle to switch between service details. Only one service panel is visible at a time.
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+              Pick a track—build a high-performing web experience, or automate the operational glue between your tools.
             </p>
 
             <div
@@ -316,7 +468,7 @@ export function ServicesPageContent() {
               aria-label="Service selection"
               className="mt-4 grid w-full grid-cols-1 gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-2 sm:grid-cols-2"
             >
-              {services.map((service) => {
+              {services.map((service, index) => {
                 const selected = service.id === activeService;
                 const tabId = `${service.id}-tab`;
                 const panelId = `${service.id}-panel`;
@@ -324,12 +476,17 @@ export function ServicesPageContent() {
                 return (
                   <button
                     key={service.id}
+                    ref={(el) => {
+                      tabRefs.current[index] = el;
+                    }}
                     id={tabId}
                     type="button"
                     role="tab"
+                    tabIndex={selected ? 0 : -1}
                     aria-selected={selected}
                     aria-controls={panelId}
                     onClick={() => selectService(service.id)}
+                    onKeyDown={(e) => onTabKeyDown(e, index)}
                     className={[
                       "min-h-12 rounded-lg px-4 py-3 text-sm font-semibold tracking-wide transition-[background-color,color,border-color,box-shadow] motion-safe:duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]",
                       selected
@@ -354,15 +511,19 @@ export function ServicesPageContent() {
                   id={panelId}
                   role="tabpanel"
                   aria-labelledby={tabId}
-                  style={{ display: selected ? "block" : "none" }}
-                  className={selected ? "mt-8 animate-[hero-fade-up_420ms_cubic-bezier(0.22,1,0.36,1)_both]" : ""}
+                  hidden={!selected}
+                  className={selected ? "mt-8 animate-[hero-fade-up_420ms_cubic-bezier(0.22,1,0.36,1)_both]" : "mt-8"}
                 >
-                  <ServicePanel serviceId={service.id} heading={service.heading} />
+                  {selected ? (
+                    service.id === "web-design-development" ? (
+                      <WebDesignPanel heading={service.heading} />
+                    ) : (
+                      <AutomatedWorkflowsPanel heading={service.heading} />
+                    )
+                  ) : null}
                 </div>
               );
             })}
-
-            <p className="mt-5 text-sm text-[var(--muted)]">Currently viewing: {activeItem.label}</p>
           </div>
         </Container>
       </section>
