@@ -37,7 +37,7 @@ export function AutomatedWorkflowsServiceCard({ pillar }: AutomatedWorkflowsServ
   const applyGlowStyle = useCallback((x: number, y: number) => {
     const el = glowRef.current;
     if (!el) return;
-    el.style.background = `radial-gradient(380px circle at ${x}px ${y}px, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08) 38%, transparent 58%)`;
+    el.style.background = `radial-gradient(190px circle at ${x}px ${y}px, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08) 38%, transparent 58%)`;
   }, []);
 
   const scheduleGlowFrame = useCallback(() => {
