@@ -122,37 +122,28 @@ export function AutomatedWorkflowsServiceCard({ pillar }: AutomatedWorkflowsServ
       className="group relative isolate flex flex-col overflow-hidden rounded-lg border border-[var(--border)] shadow-lg shadow-black/25"
     >
       <div
-        className="absolute inset-0 z-0 hidden bg-[var(--surface)] motion-reduce:block"
+        className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
         aria-hidden
-      />
-      <video
-        className="absolute inset-0 z-0 h-full w-full object-cover motion-reduce:hidden"
-        src={VIDEO_SRC}
-        muted
-        loop
-        playsInline
-        autoPlay
-        preload="metadata"
-        aria-hidden
-      />
-      <div
-        className="absolute inset-0 z-[1] bg-gradient-to-br from-black/55 via-black/40 to-black/60"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_120%_80%_at_100%_100%,rgba(10,10,12,0.92)_0%,rgba(10,10,12,0.35)_42%,transparent_72%)]"
-        aria-hidden
-      />
-      <div
-        className="absolute inset-0 z-[2] bg-white/[0.04] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.12)]"
-        aria-hidden
-      />
-      <div
-        ref={glowRef}
-        className="pointer-events-none absolute inset-0 z-[3] opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-hover:opacity-100"
-        aria-hidden
-      />
-      <div className="relative z-[4] flex flex-col rounded-lg border border-white/[0.07] bg-black/20 p-8 text-pretty shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-sm motion-reduce:backdrop-blur-none motion-reduce:bg-black/35">
+      >
+        <div className="pointer-events-none absolute inset-0 z-0 hidden bg-[var(--surface)] motion-reduce:block" />
+        <video
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full rounded-lg object-cover motion-reduce:hidden"
+          src={VIDEO_SRC}
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="metadata"
+        />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-br from-black/55 via-black/40 to-black/60" />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_120%_80%_at_100%_100%,rgba(10,10,12,0.92)_0%,rgba(10,10,12,0.35)_42%,transparent_72%)]" />
+        <div className="pointer-events-none absolute inset-0 z-[2] bg-white/[0.04] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.12)]" />
+        <div
+          ref={glowRef}
+          className="pointer-events-none absolute inset-0 z-[3] opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-hover:opacity-100"
+        />
+      </div>
+      <div className="relative z-[4] flex flex-col overflow-hidden rounded-lg bg-black/[0.06] p-8 text-pretty backdrop-blur-[2px] motion-reduce:backdrop-blur-none motion-reduce:bg-black/[0.12]">
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
           <h3 className="min-w-0 flex-1 text-2xl font-semibold tracking-tight text-[#faf9f7] [text-shadow:0_0_28px_rgba(0,0,0,0.92),0_1px_2px_rgba(0,0,0,0.72)]">
             {pillar.name}
