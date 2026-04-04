@@ -119,7 +119,7 @@ export function AutomatedWorkflowsServiceCard({ pillar }: AutomatedWorkflowsServ
         const glowEl = glowRef.current;
         if (glowEl) glowEl.style.background = "";
       }}
-      className="group relative isolate z-0 flex flex-col overflow-hidden rounded-lg border border-[var(--border)] shadow-lg shadow-black/25 transition-[transform,box-shadow,border-color] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:scale-[1.017] motion-reduce:hover:scale-100 hover:border-[var(--border-strong)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.12),0_22px_50px_-14px_rgba(0,0,0,0.58),0_0_48px_-6px_rgba(197,160,40,0.14)]"
+      className="group relative isolate z-0 flex flex-col overflow-hidden rounded-lg border border-[var(--border)] shadow-lg shadow-black/25 transition-[transform,box-shadow,border-color] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:scale-[1.017] motion-reduce:hover:scale-100 hover:border-white/30 hover:shadow-[0_0_0_2px_rgba(255,255,255,0.32),0_0_0_3px_rgba(230,204,106,0.38),0_22px_50px_-14px_rgba(0,0,0,0.58),0_0_72px_-4px_rgba(197,160,40,0.28)]"
     >
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
