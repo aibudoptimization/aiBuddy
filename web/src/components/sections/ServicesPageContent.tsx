@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import type { KeyboardEvent, ReactNode } from "react";
 import { useCallback, useMemo, useRef } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -28,9 +27,6 @@ const services = [
 ] as const;
 
 type ServiceId = (typeof services)[number]["id"];
-
-const AUTOMATED_WORKFLOWS_VIDEO_SRC = "/services/automated-workflows-bg.mp4";
-const WEB_DESIGN_HERO_SRC = "/services/web-design-hero.svg";
 
 const detailsSummaryClass =
   "flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-base font-medium text-[var(--foreground)] [&::-webkit-details-marker]:hidden";
@@ -111,151 +107,100 @@ function FaqBlock({ items }: { items: { q: string; a: string }[] }) {
   );
 }
 
-function ServiceMedia({
-  serviceId,
-  heading,
-}: {
-  serviceId: ServiceId;
-  heading: string;
-}) {
-  const isAutomatedWorkflows = serviceId === "automated-workflows";
-
-  if (isAutomatedWorkflows) {
-    return (
-      <>
-        <video
-          className="aspect-video w-full object-cover motion-reduce:hidden"
-          src={AUTOMATED_WORKFLOWS_VIDEO_SRC}
-          muted
-          loop
-          playsInline
-          autoPlay
-          preload="metadata"
-          aria-label="Automation and workflow visualization"
-        />
-        <div
-          className="hidden aspect-video w-full flex-col items-center justify-center gap-2 bg-[var(--surface-elevated)] px-4 text-center text-sm text-[var(--muted)] motion-reduce:flex"
-          role="img"
-          aria-label="Video preview hidden when reduced motion is preferred"
-        >
-          <span className="font-medium text-[var(--foreground)]">Automated workflows</span>
-          <span>Preview video is disabled when reduced motion is on.</span>
-        </div>
-      </>
-    );
-  }
-
-  return (
-    <Image
-      src={WEB_DESIGN_HERO_SRC}
-      alt={`${heading}: interface layout and design craft`}
-      width={960}
-      height={540}
-      className="aspect-video w-full object-cover object-left-top"
-      priority
-      sizes="(min-width: 1024px) 40vw, 100vw"
-    />
-  );
-}
-
 function WebDesignPanel({ heading }: { heading: string }) {
   const ctaHref = getN8nFormUrl();
 
   return (
     <article className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm shadow-black/20 sm:p-8">
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start">
-        <div>
-          <h2 className="text-3xl font-medium tracking-tight text-[var(--foreground)] sm:text-4xl">{heading}</h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-            Strategy, UX, UI, and production-grade engineering in one accountable team—so your site stays fast,
-            maintainable, and aligned with how you actually sell.
+      <div>
+        <h2 className="text-3xl font-medium tracking-tight text-[var(--foreground)] sm:text-4xl">{heading}</h2>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+          Strategy, UX, UI, and production-grade engineering in one accountable team—so your site stays fast,
+          maintainable, and aligned with how you actually sell.
+        </p>
+
+        <AtAGlance
+          who="Teams launching or refreshing a marketing site, product surface, or CMS-backed experience."
+          deliverables="UX direction, visual design, front-end build, CMS and integrations, launch hardening."
+          timeline="Small sites often ship in a few weeks; larger builds run in phased milestones after discovery."
+        />
+
+        <div className="mt-6">
+          <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
+            Get an estimate
+          </ButtonLink>
+        </div>
+
+        <SectionTitle>What you get</SectionTitle>
+        <BulletList
+          items={[
+            "A written plan with milestones you can track—not a vague “phase” deck.",
+            "Design and code built together to avoid expensive rework between handoffs.",
+            "SEO-aware structure, performance discipline, and documentation your team can operate.",
+          ]}
+        />
+
+        <SectionTitle>How we work</SectionTitle>
+        <p className="text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+          Expand each stage for detail. On smaller engagements, we still follow the same sequence—just with a tighter
+          footprint.
+        </p>
+        <div className="mt-4 space-y-3">
+          <ServiceAccordion title="Strategy & visual identity" id="web-strategy">
+            <p>Discovery on goals and audience, UI design aligned to your brand, and a clickable prototype before build.</p>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>Discovery workshops and success metrics</li>
+              <li>Interface design and design system cues</li>
+              <li>Prototype for navigation and key flows</li>
+            </ul>
+          </ServiceAccordion>
+          <ServiceAccordion title="Build & engineering" id="web-build">
+            <p>Responsive front-end, secure CMS and integrations, and technical SEO foundations from day one.</p>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>Fast, accessible UI across devices</li>
+              <li>CMS, APIs, and business logic your operators can trust</li>
+              <li>Structured data and crawl-friendly implementation where it matters</li>
+            </ul>
+          </ServiceAccordion>
+          <ServiceAccordion title="Launch & optimization" id="web-launch">
+            <p>QA, deployment, and ongoing care so launches stay stable—not “hands off at go-live.”</p>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>Testing, performance checks, and launch checklist</li>
+              <li>Hosting, TLS, and domain coordination</li>
+              <li>Maintenance options for security and content velocity</li>
+            </ul>
+          </ServiceAccordion>
+        </div>
+
+        <SectionTitle>FAQ</SectionTitle>
+        <FaqBlock
+          items={[
+            {
+              q: "Do we own the CMS and content?",
+              a: "Yes. You keep admin access, exports, and clear documentation. We avoid lock-in patterns and explain trade-offs before you commit to a platform.",
+            },
+            {
+              q: "Can you integrate with our stack?",
+              a: "We routinely connect sites to CRMs, analytics, booking tools, and internal APIs. We propose the smallest reliable integration path for your governance model.",
+            },
+            {
+              q: "What if we only need design or only development?",
+              a: "We still recommend a short alignment pass so specs match reality. If you already have designs or an engineering team, we can scope a focused engagement—tell us what you have in flight.",
+            },
+          ]}
+        />
+
+        <div className="mt-10 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)]/40 p-6">
+          <p className="text-base font-medium text-[var(--foreground)]">Ready to scope your site?</p>
+          <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+            Share goals and constraints—we&apos;ll reply with a practical estimate or a short list of options.
           </p>
-
-          <AtAGlance
-            who="Teams launching or refreshing a marketing site, product surface, or CMS-backed experience."
-            deliverables="UX direction, visual design, front-end build, CMS and integrations, launch hardening."
-            timeline="Small sites often ship in a few weeks; larger builds run in phased milestones after discovery."
-          />
-
-          <div className="mt-6">
+          <div className="mt-4">
             <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
               Get an estimate
             </ButtonLink>
           </div>
-
-          <SectionTitle>What you get</SectionTitle>
-          <BulletList
-            items={[
-              "A written plan with milestones you can track—not a vague “phase” deck.",
-              "Design and code built together to avoid expensive rework between handoffs.",
-              "SEO-aware structure, performance discipline, and documentation your team can operate.",
-            ]}
-          />
-
-          <SectionTitle>How we work</SectionTitle>
-          <p className="text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-            Expand each stage for detail. On smaller engagements, we still follow the same sequence—just with a tighter
-            footprint.
-          </p>
-          <div className="mt-4 space-y-3">
-            <ServiceAccordion title="Strategy & visual identity" id="web-strategy">
-              <p>Discovery on goals and audience, UI design aligned to your brand, and a clickable prototype before build.</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Discovery workshops and success metrics</li>
-                <li>Interface design and design system cues</li>
-                <li>Prototype for navigation and key flows</li>
-              </ul>
-            </ServiceAccordion>
-            <ServiceAccordion title="Build & engineering" id="web-build">
-              <p>Responsive front-end, secure CMS and integrations, and technical SEO foundations from day one.</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Fast, accessible UI across devices</li>
-                <li>CMS, APIs, and business logic your operators can trust</li>
-                <li>Structured data and crawl-friendly implementation where it matters</li>
-              </ul>
-            </ServiceAccordion>
-            <ServiceAccordion title="Launch & optimization" id="web-launch">
-              <p>QA, deployment, and ongoing care so launches stay stable—not “hands off at go-live.”</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Testing, performance checks, and launch checklist</li>
-                <li>Hosting, TLS, and domain coordination</li>
-                <li>Maintenance options for security and content velocity</li>
-              </ul>
-            </ServiceAccordion>
-          </div>
-
-          <SectionTitle>FAQ</SectionTitle>
-          <FaqBlock
-            items={[
-              {
-                q: "Do we own the CMS and content?",
-                a: "Yes. You keep admin access, exports, and clear documentation. We avoid lock-in patterns and explain trade-offs before you commit to a platform.",
-              },
-              {
-                q: "Can you integrate with our stack?",
-                a: "We routinely connect sites to CRMs, analytics, booking tools, and internal APIs. We propose the smallest reliable integration path for your governance model.",
-              },
-              {
-                q: "What if we only need design or only development?",
-                a: "We still recommend a short alignment pass so specs match reality. If you already have designs or an engineering team, we can scope a focused engagement—tell us what you have in flight.",
-              },
-            ]}
-          />
-
-          <div className="mt-10 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)]/40 p-6">
-            <p className="text-base font-medium text-[var(--foreground)]">Ready to scope your site?</p>
-            <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-              Share goals and constraints—we&apos;ll reply with a practical estimate or a short list of options.
-            </p>
-            <div className="mt-4">
-              <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
-                Get an estimate
-              </ButtonLink>
-            </div>
-          </div>
         </div>
-
-        <ServiceMedia serviceId="web-design-development" heading={heading} />
       </div>
     </article>
   );
@@ -266,136 +211,132 @@ function AutomatedWorkflowsPanel({ heading }: { heading: string }) {
 
   return (
     <article className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm shadow-black/20 sm:p-8">
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start">
-        <div>
-          <h2 className="text-3xl font-medium tracking-tight text-[var(--foreground)] sm:text-4xl">{heading}</h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-            Agent-assisted workflows and integrations that remove copy-paste tax—without sacrificing governance,
-            observability, or human judgment where it matters.
+      <div>
+        <h2 className="text-3xl font-medium tracking-tight text-[var(--foreground)] sm:text-4xl">{heading}</h2>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+          Agent-assisted workflows and integrations that remove copy-paste tax—without sacrificing governance,
+          observability, or human judgment where it matters.
+        </p>
+
+        <AtAGlance
+          who="Operators drowning in manual handoffs between CRM, inbox, spreadsheets, and line-of-business tools."
+          deliverables="Workflow audit, architecture, implementation, monitoring, and documentation for your team."
+          timeline="Pilots can land quickly; program-scale automation is usually phased after we map risk and ROI."
+        />
+
+        <div className="mt-6">
+          <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
+            Book an audit
+          </ButtonLink>
+        </div>
+
+        <SectionTitle>What you get</SectionTitle>
+        <BulletList
+          items={[
+            "Goal-driven automation: agents and workflows that handle exceptions with guardrails—not brittle if-this-then-that only.",
+            "Stack-aware integration across the tools you already pay for (CRM, comms, ERP, data stores).",
+            "Clear runbooks so your team can operate, extend, and audit what runs in production.",
+          ]}
+        />
+
+        <SectionTitle>How we work</SectionTitle>
+        <p className="text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+          Core solution areas and the journey we take from messy manual work to measured automation.
+        </p>
+        <div className="mt-4 space-y-3">
+          <ServiceAccordion title="Agentic AI & digital employees">
+            <p>
+              LLM-powered agents that pursue outcomes: triage, draft, classify, and escalate with policies you
+              control.
+            </p>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>Reasoning over unstructured input—not just field mapping</li>
+              <li>Fallback paths when confidence is low or policy blocks an action</li>
+              <li>Feedback loops to improve accuracy over time</li>
+            </ul>
+          </ServiceAccordion>
+          <ServiceAccordion title="Automated workflows (iPaaS)">
+            <p>Reliable orchestration across SaaS APIs so data moves 24/7 without keyboard macros.</p>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>Scheduled and event-driven runs with retries and alerting</li>
+              <li>Reduced human error on high-volume repetitive steps</li>
+              <li>More focus for creative and customer-facing work</li>
+            </ul>
+          </ServiceAccordion>
+          <ServiceAccordion title="Custom workflows & private engines">
+            <p>When your logic is proprietary, we encode it in a private, reviewable system—not a black box.</p>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>Tailored rules for your operating rhythm</li>
+              <li>Security-first handling of sensitive operational data</li>
+              <li>Scaling from tens to thousands of tasks without re-architecture surprises</li>
+            </ul>
+          </ServiceAccordion>
+          <ServiceAccordion title="Intelligent socials & engagement">
+            <p>Automation that preserves brand voice while cutting noise—routing, drafts, and schedules you approve.</p>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>Intent detection: support vs. lead vs. casual engagement</li>
+              <li>Adaptive scheduling informed by engagement signals</li>
+              <li>Consistent tone guardrails across channels</li>
+            </ul>
+          </ServiceAccordion>
+        </div>
+
+        <div className="mt-6 space-y-3">
+          <p className="text-sm font-semibold uppercase tracking-widest text-[var(--muted)]">Engagement path</p>
+          <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+            <li>
+              <span className="font-medium text-[var(--foreground)]">Audit:</span> map manual work and prioritize
+              high-impact wins.
+            </li>
+            <li>
+              <span className="font-medium text-[var(--foreground)]">Architect:</span> design agents and integrations
+              for your stack and policies.
+            </li>
+            <li>
+              <span className="font-medium text-[var(--foreground)]">Activate:</span> deploy in a controlled
+              environment with observability.
+            </li>
+            <li>
+              <span className="font-medium text-[var(--foreground)]">Accelerate:</span> monitor, tune, and expand
+              based on measured ROI.
+            </li>
+          </ul>
+        </div>
+
+        <blockquote className="mt-6 border-l-2 border-[var(--accent)] pl-4 text-[var(--foreground)]">
+          &quot;The goal isn&apos;t to replace humans; it&apos;s to make humans unblockable.&quot;
+        </blockquote>
+
+        <SectionTitle>FAQ</SectionTitle>
+        <FaqBlock
+          items={[
+            {
+              q: "How do you approach AI safety and governance?",
+              a: "We start with data boundaries, human-in-the-loop steps for high-risk actions, logging, and kill switches. Scope and policies are documented before we widen autonomy.",
+            },
+            {
+              q: "Will this work with our existing integrations?",
+              a: "Usually yes—we prefer official APIs and supported connectors. We surface limitations early and propose staged rollouts when vendors or compliance add constraints.",
+            },
+            {
+              q: "What does an audit include?",
+              a: "A concise map of current manual flows, quick-win candidates, and a phased recommendation with effort/risk notes—so you can decide what to fund next.",
+            },
+          ]}
+        />
+
+        <div className="mt-10 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)]/40 p-6">
+          <p className="text-base font-medium text-[var(--foreground)]">Want a second opinion on your automation roadmap?</p>
+          <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+            Book a short audit—we&apos;ll give candid feedback and next steps, even if we&apos;re not the right long-term
+            partner.
           </p>
-
-          <AtAGlance
-            who="Operators drowning in manual handoffs between CRM, inbox, spreadsheets, and line-of-business tools."
-            deliverables="Workflow audit, architecture, implementation, monitoring, and documentation for your team."
-            timeline="Pilots can land quickly; program-scale automation is usually phased after we map risk and ROI."
-          />
-
-          <div className="mt-6">
+          <div className="mt-4">
             <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
               Book an audit
             </ButtonLink>
           </div>
-
-          <SectionTitle>What you get</SectionTitle>
-          <BulletList
-            items={[
-              "Goal-driven automation: agents and workflows that handle exceptions with guardrails—not brittle if-this-then-that only.",
-              "Stack-aware integration across the tools you already pay for (CRM, comms, ERP, data stores).",
-              "Clear runbooks so your team can operate, extend, and audit what runs in production.",
-            ]}
-          />
-
-          <SectionTitle>How we work</SectionTitle>
-          <p className="text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-            Core solution areas and the journey we take from messy manual work to measured automation.
-          </p>
-          <div className="mt-4 space-y-3">
-            <ServiceAccordion title="Agentic AI & digital employees">
-              <p>
-                LLM-powered agents that pursue outcomes: triage, draft, classify, and escalate with policies you
-                control.
-              </p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Reasoning over unstructured input—not just field mapping</li>
-                <li>Fallback paths when confidence is low or policy blocks an action</li>
-                <li>Feedback loops to improve accuracy over time</li>
-              </ul>
-            </ServiceAccordion>
-            <ServiceAccordion title="Automated workflows (iPaaS)">
-              <p>Reliable orchestration across SaaS APIs so data moves 24/7 without keyboard macros.</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Scheduled and event-driven runs with retries and alerting</li>
-                <li>Reduced human error on high-volume repetitive steps</li>
-                <li>More focus for creative and customer-facing work</li>
-              </ul>
-            </ServiceAccordion>
-            <ServiceAccordion title="Custom workflows & private engines">
-              <p>When your logic is proprietary, we encode it in a private, reviewable system—not a black box.</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Tailored rules for your operating rhythm</li>
-                <li>Security-first handling of sensitive operational data</li>
-                <li>Scaling from tens to thousands of tasks without re-architecture surprises</li>
-              </ul>
-            </ServiceAccordion>
-            <ServiceAccordion title="Intelligent socials & engagement">
-              <p>Automation that preserves brand voice while cutting noise—routing, drafts, and schedules you approve.</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Intent detection: support vs. lead vs. casual engagement</li>
-                <li>Adaptive scheduling informed by engagement signals</li>
-                <li>Consistent tone guardrails across channels</li>
-              </ul>
-            </ServiceAccordion>
-          </div>
-
-          <div className="mt-6 space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-widest text-[var(--muted)]">Engagement path</p>
-            <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-              <li>
-                <span className="font-medium text-[var(--foreground)]">Audit:</span> map manual work and prioritize
-                high-impact wins.
-              </li>
-              <li>
-                <span className="font-medium text-[var(--foreground)]">Architect:</span> design agents and integrations
-                for your stack and policies.
-              </li>
-              <li>
-                <span className="font-medium text-[var(--foreground)]">Activate:</span> deploy in a controlled
-                environment with observability.
-              </li>
-              <li>
-                <span className="font-medium text-[var(--foreground)]">Accelerate:</span> monitor, tune, and expand
-                based on measured ROI.
-              </li>
-            </ul>
-          </div>
-
-          <blockquote className="mt-6 border-l-2 border-[var(--accent)] pl-4 text-[var(--foreground)]">
-            &quot;The goal isn&apos;t to replace humans; it&apos;s to make humans unblockable.&quot;
-          </blockquote>
-
-          <SectionTitle>FAQ</SectionTitle>
-          <FaqBlock
-            items={[
-              {
-                q: "How do you approach AI safety and governance?",
-                a: "We start with data boundaries, human-in-the-loop steps for high-risk actions, logging, and kill switches. Scope and policies are documented before we widen autonomy.",
-              },
-              {
-                q: "Will this work with our existing integrations?",
-                a: "Usually yes—we prefer official APIs and supported connectors. We surface limitations early and propose staged rollouts when vendors or compliance add constraints.",
-              },
-              {
-                q: "What does an audit include?",
-                a: "A concise map of current manual flows, quick-win candidates, and a phased recommendation with effort/risk notes—so you can decide what to fund next.",
-              },
-            ]}
-          />
-
-          <div className="mt-10 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)]/40 p-6">
-            <p className="text-base font-medium text-[var(--foreground)]">Want a second opinion on your automation roadmap?</p>
-            <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-              Book a short audit—we&apos;ll give candid feedback and next steps, even if we&apos;re not the right long-term
-              partner.
-            </p>
-            <div className="mt-4">
-              <ButtonLink href={ctaHref} variant="primary" className="min-h-12 px-6 py-3">
-                Book an audit
-              </ButtonLink>
-            </div>
-          </div>
         </div>
-
-        <ServiceMedia serviceId="automated-workflows" heading={heading} />
       </div>
     </article>
   );
