@@ -1,4 +1,5 @@
 import { Bot, LayoutTemplate, Rocket, Share2, Workflow } from "lucide-react"
+import { Link } from "react-router-dom"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -84,7 +85,7 @@ export function ServicesSection() {
                     </CardDescription>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm" nativeButton={false} render={<a href="#contact" />}>
+                <Button variant="ghost" size="sm" nativeButton={false} render={<Link to="/services/web-design" />}>
                   View
                 </Button>
               </div>
@@ -117,7 +118,7 @@ export function ServicesSection() {
                     </CardDescription>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm" nativeButton={false} render={<a href="#contact" />}>
+                <Button variant="ghost" size="sm" nativeButton={false} render={<Link to="/services/automation" />}>
                   View
                 </Button>
               </div>

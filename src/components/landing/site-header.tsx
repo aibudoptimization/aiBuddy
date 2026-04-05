@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Menu } from "lucide-react"
+import { Link } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -11,11 +12,11 @@ import {
 } from "@/components/ui/sheet"
 
 const nav = [
-  { href: "#services", label: "Services" },
-  { href: "#estimate", label: "Estimate" },
-  { href: "#process", label: "Process" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "Contact" },
+  { to: "/services", label: "Services" },
+  { to: "/#estimate", label: "Estimate" },
+  { to: "/#process", label: "Process" },
+  { to: "/#faq", label: "FAQ" },
+  { to: "/#contact", label: "Contact" },
 ] as const
 
 export function SiteHeader() {
@@ -24,30 +25,30 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/5">
       <div className="glass-strong mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <a
-          href="#top"
+        <Link
+          to="/"
           className="font-heading text-base font-semibold tracking-tight text-foreground"
         >
           Workflow<span className="text-primary">Wonder</span>
-        </a>
+        </Link>
 
         <nav
           className="hidden items-center gap-1 md:flex"
           aria-label="Primary"
         >
           {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
+            <Link
+              key={item.to}
+              to={item.to}
               className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button nativeButton={false} render={<a href="#contact" />} size="sm">
+          <Button nativeButton={false} render={<Link to="/#contact" />} size="sm">
             Get started
           </Button>
 
@@ -64,18 +65,18 @@ export function SiteHeader() {
               </SheetHeader>
               <nav className="flex flex-col gap-1 px-4 pb-6" aria-label="Mobile">
                 {nav.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
+                  <Link
+                    key={item.to}
+                    to={item.to}
                     onClick={() => setOpen(false)}
                     className="rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-white/5"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
                 <Button
                   nativeButton={false}
-                  render={<a href="#contact" />}
+                  render={<Link to="/#contact" />}
                   className="mt-2"
                   onClick={() => setOpen(false)}
                 >

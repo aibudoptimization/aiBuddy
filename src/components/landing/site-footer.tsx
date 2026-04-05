@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom"
+
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
 const pages = [
-  { href: "#services", label: "Services" },
-  { href: "#estimate", label: "Estimate" },
-  { href: "#process", label: "Process" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "Contact" },
+  { to: "/services", label: "Services" },
+  { to: "/#estimate", label: "Estimate" },
+  { to: "/#process", label: "Process" },
+  { to: "/#faq", label: "FAQ" },
+  { to: "/#contact", label: "Contact" },
 ] as const
 
 export function SiteFooter() {
@@ -58,13 +60,13 @@ export function SiteFooter() {
             </p>
             <ul className="mt-3 space-y-2 text-sm">
               {pages.map((p) => (
-                <li key={p.href}>
-                  <a
-                    href={p.href}
+                <li key={p.to}>
+                  <Link
+                    to={p.to}
                     className="text-foreground/80 hover:text-primary"
                   >
                     {p.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
