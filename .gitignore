@@ -1,11 +1,11 @@
 # Dependencies
 node_modules/
 
-# Next.js (legacy `web/` app)
+# Next.js
 .next/
 out/
 
-# Vite
+# Build output
 dist
 dist-ssr
 *.local
