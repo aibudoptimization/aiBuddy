@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;}
+  *{box-sizing:border-box;}
+  ::selection{background:rgba(75,250,200,0.25);}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; min-height:100vh; background:var(--bg,#07070b); color:var(--fg,#f4f3f7); font-family:'Schibsted Grotesk',system-ui,sans-serif; -webkit-font-smoothing:antialiased; --grid:minmax(0,720px);">
+
+  <header style="position:relative; z-index:3; display:flex; align-items:center; justify-content:space-between; padding:24px clamp(22px,5vw,64px); background:var(--panel,rgba(9,8,12,0.7)); border-bottom:1px solid var(--line,rgba(244,243,247,0.09)); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);">
+    <a href="Workflow%20Wonder%20website.dc.html" style="display:flex; align-items:center; gap:9px; font-size:18px; font-weight:700; letter-spacing:-0.03em; color:var(--fg,#f4f3f7); text-decoration:none;">
+      <span>Workflow</span>
+      <span style="flex:none; width:7px; height:7px; border-radius:999px; background:var(--accent,#4bfac8); box-shadow:0 0 12px var(--accent,#4bfac8);"></span>
+      <span>Wonder</span>
+    </a>
+    <a href="Blog%20Index.dc.html" style="font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.04em; color:var(--muted,rgba(244,243,247,0.7)); text-decoration:none; display:inline-flex; align-items:center; gap:8px;" style-hover="color:var(--fg,#f4f3f7);"><span>←</span> Tous les articles</a>
+  </header>
+
+  <section style="position:relative; overflow:hidden; background:#07070b; color:#f4f3f7; border-bottom:1px solid rgba(244,243,247,0.08);">
+    <canvas ref="{{ heroRef }}" style="position:absolute; inset:0; width:100%; height:100%; display:block; z-index:0; opacity:0.9;"></canvas>
+    <div style="position:absolute; inset:0; z-index:1; background:radial-gradient(125% 105% at 80% 14%, rgba(7,7,11,0) 18%, rgba(7,7,11,0.82) 76%), linear-gradient(180deg, rgba(7,7,11,0.42), rgba(7,7,11,0.94));"></div>
+    <div style="position:relative; z-index:2; max-width:980px; margin:0 auto; padding:clamp(40px,8vh,86px) clamp(22px,5vw,64px) clamp(40px,7vh,72px);">
+      <div style="display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(244,243,247,0.66); margin-bottom:26px;">
+        <span style="width:7px; height:7px; border-radius:999px; background:var(--accent,#4bfac8); box-shadow:0 0 12px var(--accent,#4bfac8);"></span>{{ cat }}
+      </div>
+      <h1 style="margin:0; font-family:'Schibsted Grotesk',sans-serif; font-weight:600; letter-spacing:-0.03em; line-height:1.04; font-size:clamp(32px,5.4vw,58px); color:#f4f3f7; max-width:17ch; text-wrap:balance;">{{ title }}</h1>
+      <p style="margin:22px 0 0; max-width:560px; font-size:clamp(16px,1.5vw,20px); line-height:1.55; color:rgba(244,243,247,0.72);">{{ dek }}</p>
+      <div style="display:flex; flex-wrap:wrap; gap:16px; margin-top:30px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; color:rgba(244,243,247,0.52);">
+        <span>{{ date }}</span><span style="opacity:0.4;">·</span><span>{{ read }} de lecture</span><span style="opacity:0.4;">·</span><span>{{ author }}</span>
+      </div>
+    </div>
+  </section>
+
+  <main style="position:relative; z-index:2; background:var(--bg,#07070b); min-height:60vh; padding:clamp(38px,6vh,66px) clamp(22px,5vw,64px) clamp(60px,10vh,112px);">
+    <article style="max-width:1040px; margin:0 auto; display:grid; grid-template-columns:var(--grid,minmax(0,720px)); justify-content:center; gap:var(--cgap,0) 56px;">
+
+      <sc-if value="{{ showToc }}" hint-placeholder-val="{{ false }}">
+        <aside style="display:var(--toc,none);">
+          <div style="position:sticky; top:86px;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--faint,rgba(244,243,247,0.44)); margin-bottom:14px;">Sommaire</div>
+            <nav style="display:flex; flex-direction:column; gap:11px; border-left:1px solid var(--cardline,rgba(244,243,247,0.1)); padding-left:16px;">
+              <sc-for list="{{ toc }}" as="ti" hint-placeholder-count="5">
+                <a href="#{{ ti.id }}" style="font-size:13px; line-height:1.4; color:var(--muted,rgba(244,243,247,0.7)); text-decoration:none;" style-hover="color:var(--accent,#4bfac8);">{{ ti.t }}</a>
+              </sc-for>
+            </nav>
+          </div>
+        </aside>
+      </sc-if>
+
+      <div style="min-width:0;">
+        <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="18">
+
+          <sc-if value="{{ b.isH2 }}" hint-placeholder-val="{{ false }}">
+            <h2 id="{{ b.id }}" style="scroll-margin-top:84px; margin:50px 0 16px; font-family:var(--headfont,'Schibsted Grotesk',sans-serif); font-weight:600; letter-spacing:-0.02em; line-height:1.14; font-size:var(--h2,32px); color:var(--fg,#f4f3f7);">{{ b.t }}</h2>
+          </sc-if>
+
+          <sc-if value="{{ b.isH3 }}" hint-placeholder-val="{{ false }}">
+            <h3 style="margin:34px 0 10px; font-family:var(--headfont,'Schibsted Grotesk',sans-serif); font-weight:600; font-size:var(--h3,20px); letter-spacing:-0.01em; color:var(--fg,#f4f3f7);">{{ b.t }}</h3>
+          </sc-if>
+
+          <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0 0 20px; font-family:var(--bodyfont,'Schibsted Grotesk',sans-serif); font-size:var(--body,18px); line-height:var(--lh,1.7); color:var(--muted,rgba(244,243,247,0.78));">{{ b.t }}</p>
+          </sc-if>
+
+          <sc-if value="{{ b.isPull }}" hint-placeholder-val="{{ false }}">
+            <blockquote style="margin:32px 0; padding:4px 0 4px 22px; border-left:2px solid var(--accent,#4bfac8); font-family:var(--headfont,'Schibsted Grotesk',sans-serif); font-size:clamp(20px,2.4vw,28px); line-height:1.32; letter-spacing:-0.01em; color:var(--fg,#f4f3f7); font-weight:500;">{{ b.t }}</blockquote>
+          </sc-if>
+
+          <sc-if value="{{ b.isUl }}" hint-placeholder-val="{{ false }}">
+            <ul style="margin:4px 0 24px; padding:0; list-style:none; display:flex; flex-direction:column; gap:13px;">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="4">
+                <li style="display:flex; gap:13px; font-family:var(--bodyfont,'Schibsted Grotesk',sans-serif); font-size:var(--body,18px); line-height:1.55; color:var(--muted,rgba(244,243,247,0.78));">
+                  <span style="flex:none; margin-top:0.62em; width:6px; height:6px; border-radius:999px; background:var(--accent,#4bfac8); box-shadow:0 0 8px var(--accent,#4bfac8);"></span>
+                  <span><sc-if value="{{ it.hasLead }}" hint-placeholder-val="{{ false }}"><strong style="color:var(--fg,#f4f3f7); font-weight:600;">{{ it.lead }}</strong></sc-if>{{ it.t }}</span>
+                </li>
+              </sc-for>
+            </ul>
+          </sc-if>
+
+          <sc-if value="{{ b.isSteps }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:6px 0 24px; display:flex; flex-direction:column; gap:14px;">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="3">
+                <div style="display:flex; gap:15px; align-items:flex-start;">
+                  <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:999px; border:1px solid var(--accent,#4bfac8); color:var(--accent,#4bfac8); font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500;">{{ it.n }}</span>
+                  <span style="font-family:var(--bodyfont,'Schibsted Grotesk',sans-serif); font-size:var(--body,18px); line-height:1.5; color:var(--muted,rgba(244,243,247,0.78)); padding-top:3px;"><sc-if value="{{ it.hasLead }}" hint-placeholder-val="{{ false }}"><strong style="color:var(--fg,#f4f3f7); font-weight:600;">{{ it.lead }}</strong></sc-if>{{ it.t }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ b.isStats }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin:18px 0 30px;">
+              <sc-for list="{{ b.items }}" as="st" hint-placeholder-count="3">
+                <div style="padding:22px 22px 20px; border-radius:18px; background:var(--card,rgba(255,255,255,0.03)); border:1px solid var(--cardline,rgba(244,243,247,0.1));">
+                  <div style="font-family:'Schibsted Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1; font-size:clamp(28px,3.6vw,40px); color:var(--accent,#4bfac8);">{{ st.v }}</div>
+                  <div style="margin-top:10px; font-family:var(--bodyfont,'Schibsted Grotesk',sans-serif); font-size:14.5px; line-height:1.45; color:var(--muted,rgba(244,243,247,0.78));">{{ st.l }}</div>
+                  <sc-if value="{{ st.hasS }}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--faint,rgba(244,243,247,0.44));">{{ st.s }}</div></sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ b.isTable }}" hint-placeholder-val="{{ false }}">
+            <div style="overflow-x:auto; margin:12px 0 28px; border:1px solid var(--cardline,rgba(244,243,247,0.1)); border-radius:16px;">
+              <table style="width:100%; border-collapse:collapse; font-family:var(--bodyfont,'Schibsted Grotesk',sans-serif); min-width:520px;">
+                <thead>
+                  <tr>
+                    <sc-for list="{{ b.cols }}" as="c" hint-placeholder-count="3">
+                      <th style="text-align:left; padding:14px 18px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--faint,rgba(244,243,247,0.5)); border-bottom:1px solid var(--cardline,rgba(244,243,247,0.1)); background:var(--card,rgba(255,255,255,0.03));">{{ c }}</th>
+                    </sc-for>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ b.rows }}" as="r" hint-placeholder-count="3">
+                    <tr>
+                      <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="3">
+                        <td style="padding:15px 18px; font-size:15px; line-height:1.4; color:var(--muted,rgba(244,243,247,0.78)); border-top:1px solid var(--cardline,rgba(244,243,247,0.08)); vertical-align:top;">
+                          <sc-if value="{{ cell.head }}" hint-placeholder-val="{{ false }}"><span style="color:var(--accent,#4bfac8); font-weight:600; font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;">{{ cell.t }}</span></sc-if>
+                          <sc-if value="{{ cell.notHead }}" hint-placeholder-val="{{ true }}">{{ cell.t }}</sc-if>
+                        </td>
+                      </sc-for>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ b.isSources }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:48px 0 0; padding-top:24px; border-top:1px solid var(--cardline,rgba(244,243,247,0.1));">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--faint,rgba(244,243,247,0.44)); margin-bottom:16px;">Sources</div>
+              <div style="display:flex; flex-direction:column; gap:9px;">
+                <sc-for list="{{ b.items }}" as="src" hint-placeholder-count="5">
+                  <a href="{{ src.href }}" target="_blank" rel="noopener" style="font-size:14px; color:var(--muted,rgba(244,243,247,0.7)); text-decoration:none; display:inline-flex; gap:9px; align-items:baseline;" style-hover="color:var(--accent,#4bfac8);"><span style="color:var(--accent,#4bfac8);">↗</span><span>{{ src.t }}</span></a>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+        </sc-for>
+
+        <div style="margin-top:46px; padding-top:26px; border-top:1px solid var(--cardline,rgba(244,243,247,0.1)); display:flex; flex-wrap:wrap; gap:12px;">
+          <sc-for list="{{ more }}" as="m" hint-placeholder-count="2">
+            <a href="{{ m.href }}" style="display:flex; flex-direction:column; gap:6px; flex:1 1 240px; padding:20px 22px; border-radius:16px; background:var(--card,rgba(255,255,255,0.03)); border:1px solid var(--cardline,rgba(244,243,247,0.1)); text-decoration:none; transition:border-color .25s;" style-hover="border-color:var(--accent,#4bfac8);">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--faint,rgba(244,243,247,0.5));">Lire ensuite · {{ m.cat }}</span>
+              <span style="font-family:var(--headfont,'Schibsted Grotesk',sans-serif); font-size:16px; font-weight:600; letter-spacing:-0.01em; line-height:1.25; color:var(--fg,#f4f3f7);">{{ m.title }}</span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer style="position:relative; z-index:2; background:var(--panel,rgba(9,8,12,0.74)); border-top:1px solid var(--line,rgba(244,243,247,0.08));">
+    <div style="max-width:1040px; margin:0 auto; padding:38px clamp(22px,5vw,64px); display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between;">
+      <a href="Workflow%20Wonder%20website.dc.html" style="display:flex; align-items:center; gap:9px; font-size:16px; font-weight:700; letter-spacing:-0.03em; color:var(--fg,#f4f3f7); text-decoration:none;"><span>Workflow</span><span style="flex:none; width:6px; height:6px; border-radius:999px; background:var(--accent,#4bfac8);"></span><span>Wonder</span></a>
+      <a href="Blog%20Index.dc.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted,rgba(244,243,247,0.7)); text-decoration:none;" style-hover="color:var(--fg,#f4f3f7);">← Tous les articles</a>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--faint,rgba(244,243,247,0.44));">© 2026 Workflow Wonder</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1200, &quot;height&quot;: 860 },
+  &quot;post&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], &quot;default&quot;: &quot;a&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;layout&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;edito&quot;, &quot;focus&quot;, &quot;magazine&quot;], &quot;default&quot;: &quot;focus&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  heroRef = React.createRef();
+  state = { post: 'a', layout: 'focus' };
+
+  componentDidMount() {
+    this.scenes = [];
+    this.data = this.buildData();
+    let post = '';
+    try {
+      const u = new URL(location.href);
+      post = (u.searchParams.get('post') || '').toLowerCase();
+      if (!['a','b','c'].includes(post)) {
+        const h = (location.hash || '').replace(/[^a-c]/gi, '').toLowerCase();
+        post = ['a','b','c'].includes(h) ? h : '';
+      }
+    } catch (e) {}
+    if (!['a','b','c'].includes(post)) post = (['a','b','c'].includes(this.props.post) ? this.props.post : 'a');
+    let layout = 'focus';
+    this.setColors(this.data[post]);
+    this.setState({ post, layout }, () => { this.applyTheme(); this.initScenes(); });
+    this._loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this._loop);
+    this._onResize = () => (this.scenes || []).forEach(s => this.sizeScene(s));
+    window.addEventListener('resize', this._onResize);
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    (this.scenes || []).forEach(s => s.ro && s.ro.disconnect());
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  setLayout(l) {
+    try { localStorage.setItem('ww-article-layout', l); } catch (e) {}
+    this.setState({ layout: l }, () => { this.applyTheme(); requestAnimationFrame(() => (this.scenes||[]).forEach(s => this.sizeScene(s))); });
+  }
+
+  // ---------- color helpers ----------
+  hexToRgb(hex) {
+    let h = (hex || '#4bfac8').replace('#', '');
+    if (h.length === 3) h = h.split('').map(x => x + x).join('');
+    const n = parseInt(h, 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+  rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    let hh = 0, s = 0, l = (mx + mn) / 2;
+    if (mx !== mn) {
+      const d = mx - mn;
+      s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+      if (mx === r) hh = (g - b) / d + (g < b ? 6 : 0);
+      else if (mx === g) hh = (b - r) / d + 2;
+      else hh = (r - g) / d + 4;
+      hh /= 6;
+    }
+    return { h: hh * 360, s, l };
+  }
+  setColors(p) {
+    const rgb = this.hexToRgb(p.accent);
+    this.aRgb = `${rgb.r},${rgb.g},${rgb.b}`;
+    this.aHsl = this.rgbToHsl(rgb.r, rgb.g, rgb.b);
+  }
+
+  // ---------- theming ----------
+  applyTheme() {
+    const r = this.rootRef.current; if (!r) return;
+    const p = this.data[this.state.post];
+    const T = {
+      edito: {
+        bg: '#f5f3ec', panel: 'rgba(245,243,236,0.88)', fg: '#1a1a22', muted: '#4c4c55', faint: '#8a8a92',
+        line: 'rgba(20,20,30,0.10)', card: '#ffffff', cardline: 'rgba(20,20,30,0.08)',
+        headfont: "'Schibsted Grotesk',system-ui,sans-serif", bodyfont: "'Newsreader',Georgia,serif",
+        h1: 'clamp(36px,6vw,62px)', h2: 'clamp(27px,3.6vw,40px)', h3: '21px', body: '19px', lh: '1.78', grid: 'minmax(0,720px)'
+      },
+      focus: {
+        bg: '#07070b', panel: 'rgba(9,8,12,0.78)', fg: '#f4f3f7', muted: 'rgba(244,243,247,0.76)', faint: 'rgba(244,243,247,0.44)',
+        line: 'rgba(244,243,247,0.09)', card: 'rgba(255,255,255,0.03)', cardline: 'rgba(244,243,247,0.09)',
+        headfont: "'Schibsted Grotesk',system-ui,sans-serif", bodyfont: "'Schibsted Grotesk',system-ui,sans-serif",
+        h1: 'clamp(34px,5.5vw,56px)', h2: 'clamp(26px,3.2vw,36px)', h3: '20px', body: '17px', lh: '1.72', grid: 'minmax(0,720px)'
+      },
+      magazine: {
+        bg: '#08080d', panel: 'rgba(9,8,12,0.78)', fg: '#f4f3f7', muted: 'rgba(244,243,247,0.78)', faint: 'rgba(244,243,247,0.46)',
+        line: 'rgba(244,243,247,0.09)', card: 'rgba(255,255,255,0.04)', cardline: 'rgba(244,243,247,0.11)',
+        headfont: "'Schibsted Grotesk',system-ui,sans-serif", bodyfont: "'Schibsted Grotesk',system-ui,sans-serif",
+        h1: 'clamp(40px,7vw,74px)', h2: 'clamp(30px,4.4vw,48px)', h3: '23px', body: '18px', lh: '1.72', grid: 'minmax(0,880px)'
+      }
+    };
+    const th = T[this.state.layout] || T.edito;
+    Object.keys(th).forEach(k => r.style.setProperty('--' + k, th[k]));
+    r.style.setProperty('--accent', p.accent);
+    if (this.state.layout === 'focus') {
+      r.style.setProperty('--grid', '232px minmax(0,680px)');
+      r.style.setProperty('--cgap', '0');
+      r.style.setProperty('--toc', 'block');
+    } else {
+      r.style.setProperty('--cgap', '0');
+      r.style.setProperty('--toc', 'none');
+    }
+  }
+
+  // ---------- canvas scenes ----------
+  addScene(canvas, motif) {
+    if (!canvas) return null;
+    const ctx = canvas.getContext('2d');
+    const s = { canvas, ctx, motif, w: 1, h: 1 };
+    this.sizeScene(s);
+    if (motif === 'flow') this.initFlow(s);
+    else if (motif === 'aurora') this.initAurora(s);
+    const ro = new ResizeObserver(() => { this.sizeScene(s); if (motif === 'flow' && (!s.nodes || s.nodes.length < 2)) this.initFlow(s); });
+    ro.observe(canvas); s.ro = ro;
+    this.scenes.push(s);
+    return s;
+  }
+  initScenes() {
+    (this.scenes || []).forEach(s => s.ro && s.ro.disconnect());
+    this.scenes = [];
+    const p = this.data[this.state.post];
+    this.addScene(this.heroRef.current, p.motif);
+  }
+  sizeScene(s) {
+    if (!s || !s.canvas) return;
+    const r = s.canvas.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    s.w = Math.max(1, r.width); s.h = Math.max(1, r.height);
+    s.canvas.width = s.w * dpr; s.canvas.height = s.h * dpr;
+    s.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  initFlow(s) {
+    const n = Math.min(70, Math.max(22, Math.floor(s.w * s.h / 16000)));
+    s.nodes = Array.from({ length: n }, () => ({ x: Math.random() * s.w, y: Math.random() * s.h, bx: (Math.random() - 0.5) * 0.18, by: (Math.random() - 0.5) * 0.18, r: Math.random() * 1.4 + 0.6 }));
+  }
+  initAurora(s) {
+    s.blobs = Array.from({ length: 5 }, (_, i) => ({ sx: 0.18 + Math.random() * 0.14, sy: 0.14 + Math.random() * 0.14, px: Math.random() * 6.28, py: Math.random() * 6.28, hue: (i - 2) * 26, rad: 0.42 + Math.random() * 0.3, a: 0.16 + Math.random() * 0.08 }));
+    s.specks = Array.from({ length: 22 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.4 + 0.4, ph: Math.random() * 6.28, sp: 0.2 + Math.random() * 0.5 }));
+  }
+  loop(t) {
+    (this.scenes || []).forEach(s => {
+      if (s.motif === 'flow') this.drawFlow(s, t);
+      else if (s.motif === 'aurora') this.drawAurora(s, t);
+      else this.drawGrid(s, t);
+    });
+    this.raf = requestAnimationFrame(this._loop);
+  }
+  drawFlow(s, t) {
+    const ctx = s.ctx, w = s.w, h = s.h, rgb = this.aRgb || '75,250,200', ns = s.nodes || [];
+    ctx.clearRect(0, 0, w, h);
+    const F = 0.42, a1 = 0.0015, tt = t * 0.00018;
+    for (const p of ns) {
+      const sx = p.x * a1, sy = p.y * a1;
+      const vx = Math.sin(sy + tt) * Math.cos(sx * 1.2 - tt * 0.6);
+      const vy = -Math.sin(sx - tt * 0.8) * Math.cos(sy * 1.2 + tt * 0.5);
+      p.x += vx * F + p.bx; p.y += vy * F + p.by;
+      if (p.x < -8) p.x += w + 16; else if (p.x > w + 8) p.x -= w + 16;
+      if (p.y < -8) p.y += h + 16; else if (p.y > h + 8) p.y -= h + 16;
+    }
+    const max = Math.min(150, w * 0.16);
+    ctx.lineWidth = 1;
+    for (let i = 0; i < ns.length; i++) for (let j = i + 1; j < ns.length; j++) {
+      const a = ns[i], b = ns[j]; const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < max) { ctx.strokeStyle = `rgba(${rgb},${(1 - d / max) * 0.4})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+    }
+    for (const p of ns) { ctx.fillStyle = `rgba(${rgb},0.66)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
+  }
+  drawAurora(s, t) {
+    const ctx = s.ctx, w = s.w, h = s.h, hsl = this.aHsl || { h: 255, s: 1, l: 0.74 };
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    for (const b of (s.blobs || [])) {
+      const cx = w * (0.5 + 0.34 * Math.sin(t * 0.0001 * (1 + b.sx) + b.px));
+      const cy = h * (0.5 + 0.32 * Math.cos(t * 0.0001 * (1 + b.sy) + b.py));
+      const R = Math.min(w, h) * b.rad * 1.3;
+      const hue = (hsl.h + b.hue + 360) % 360;
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+      g.addColorStop(0, `hsla(${hue}, ${Math.round(hsl.s * 90)}%, 68%, ${b.a})`);
+      g.addColorStop(1, `hsla(${hue}, ${Math.round(hsl.s * 90)}%, 60%, 0)`);
+      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    for (const sp of (s.specks || [])) {
+      const yy = (sp.y + t * 0.00002 * sp.sp) % 1;
+      const al = 0.22 + 0.22 * Math.sin(t * 0.001 * sp.sp + sp.ph);
+      ctx.fillStyle = `hsla(${(hsl.h + 20) % 360}, 60%, 84%, ${al})`;
+      ctx.beginPath(); ctx.arc(sp.x * w, yy * h, sp.r, 0, 6.2832); ctx.fill();
+    }
+  }
+  drawGrid(s, t) {
+    const ctx = s.ctx, w = s.w, h = s.h, rgb = this.aRgb || '106,168,255';
+    ctx.clearRect(0, 0, w, h);
+    const vp = h * 0.4, cx = w / 2;
+    const hg = ctx.createRadialGradient(cx, vp, 0, cx, vp, w * 0.55);
+    hg.addColorStop(0, `rgba(${rgb},0.13)`); hg.addColorStop(1, `rgba(${rgb},0)`);
+    ctx.fillStyle = hg; ctx.fillRect(0, 0, w, h);
+    const cols = 14, spread = w * 0.09; ctx.lineWidth = 1;
+    for (let i = -cols; i <= cols; i++) {
+      ctx.strokeStyle = `rgba(${rgb},${0.14 - Math.abs(i) / cols * 0.09})`;
+      ctx.beginPath(); ctx.moveTo(cx + i * spread, h); ctx.lineTo(cx, vp); ctx.stroke();
+    }
+    const rows = 20, scroll = (t * 0.00018) % 1;
+    for (let k = 0; k < rows; k++) {
+      const f = (k + scroll) / rows; const pp = Math.pow(f, 2.6); const y = vp + (h - vp) * pp;
+      const al = Math.min(0.3, pp * 0.42);
+      ctx.strokeStyle = `rgba(${rgb},${al})`;
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+    }
+  }
+
+  // ---------- content ----------
+  buildData() {
+    const P = t => ({ k: 'p', t });
+    const H2 = t => ({ k: 'h2', t });
+    const H3 = t => ({ k: 'h3', t });
+    const PULL = t => ({ k: 'pull', t });
+    const UL = items => ({ k: 'ul', items });
+    const STEPS = items => ({ k: 'steps', items });
+    const STATS = items => ({ k: 'stats', items });
+    const TABLE = (cols, rows) => ({ k: 'table', cols, rows });
+    const SOURCES = items => ({ k: 'sources', items });
+
+    const A = {
+      slug: 'a', cat: 'Automatisation', motif: 'flow', accent: '#4bfac8',
+      title: `L'automatisation et l'IA pour générer des leads : qui en bénéficie le plus ?`,
+      dek: `Le piège du « tout-à-la-main », et comment l'automatisation génère des leads, même quand vous dormez.`,
+      date: `12 mars 2026`, read: `5 min`, author: `Workflow Wonder`,
+      blocks: [
+        P(`Vous avez de la traction. Vos clients parlent de vous en bien. Les demandes entrent, mais entre répondre aux courriels, préparer les soumissions, livrer vos projets et faire le suivi des prospects, la journée est finie avant même d'avoir commencé.`),
+        P(`C'est ce qu'on appelle le piège du « tout-à-la-main ». Et c'est exactement là que l'automatisation et l'intelligence artificielle changent la donne.`),
+        H2(`Qu'est-ce qu'un flux de travail automatisé, concrètement ?`),
+        P(`Un flux de travail automatisé est une séquence d'actions déclenchées sans intervention humaine. Quelqu'un remplit un formulaire sur votre site → il reçoit automatiquement un courriel de bienvenue personnalisé → son nom s'ajoute à votre CRM → vous recevez une alerte pour le relancer au bon moment.`),
+        PULL(`Pas de copier-coller. Pas d'onglets ouverts. Pas d'oublis.`),
+        P(`Combinée à l'IA, cette logique devient encore plus puissante : le système ne fait pas que transmettre de l'information, il l'analyse, la trie, la priorise et personnalise les réponses en fonction du profil de chaque prospect.`),
+        H2(`Comment l'automatisation génère des leads, même quand vous dormez`),
+        H3(`1. La capture et la qualification automatique`),
+        P(`Un formulaire de contact intelligent peut poser les bonnes questions et, en quelques secondes, qualifier un prospect : est-il prêt à acheter ? Quel est son budget ? Quel problème cherche-t-il à résoudre ? Ces données alimentent directement votre CRM, sans que vous leviez le petit doigt.`),
+        H3(`2. Le nurturing sans effort`),
+        P(`La majorité des prospects ne sont pas prêts à acheter du premier coup. L'automatisation maintient le contact, par courriel, par SMS ou via vos réseaux sociaux, de façon cohérente et personnalisée, jusqu'au moment où ils passent à l'action. Une séquence bien conçue peut fonctionner pendant des mois, 24 h/24.`),
+        H3(`3. Le suivi systématique`),
+        P(`Combien de leads avez-vous perdus parce que vous avez oublié de rappeler quelqu'un ? L'automatisation élimine ce risque. Les rappels, les relances et les propositions sortent exactement au bon moment, sans effort de votre part.`),
+        H3(`4. La personnalisation à grande échelle`),
+        P(`L'IA peut analyser le comportement de vos visiteurs (pages consultées, temps passé, actions effectuées) et adapter les messages en conséquence. Un prospect qui consulte une page produit reçoit un contenu différent de celui qui télécharge un guide ou demande une soumission.`),
+        H2(`Les chiffres parlent d'eux-mêmes`),
+        P(`Les données récentes confirment ce que nos clients vivent sur le terrain :`),
+        STATS([
+          { v: `91 %`, l: `des PME utilisant l'IA rapportent une hausse de leurs revenus`, s: `Salesforce, 2025` },
+          { v: `+83 %`, l: `les entreprises en croissance sont plus susceptibles d'avoir adopté l'IA`, s: `McKinsey` },
+          { v: `250 %`, l: `de retour sur investissement moyen de l'automatisation IA sur 18 mois`, s: `Click Vision` },
+          { v: `39 → 55 %`, l: `l'adoption de l'IA chez les petites entreprises, de 2024 à 2025`, s: `USM Systems` }
+        ]),
+        P(`Ne pas agir maintenant, c'est laisser vos concurrents prendre de l'avance.`),
+        H2(`Qui bénéficie le plus de l'automatisation et de l'IA ?`),
+        P(`L'automatisation n'est pas réservée aux grandes entreprises avec des équipes TI. En fait, c'est souvent le contraire : ce sont les petites structures qui ont le plus à gagner.`),
+        H3(`Le solopreneur ou le professionnel autonome`),
+        P(`Quand vous êtes seul à tout faire, vendre, livrer, facturer, communiquer, l'automatisation agit comme un bras droit virtuel. Elle libère des heures chaque semaine pour vous concentrer sur ce que vous faites le mieux.`),
+        H3(`La petite équipe de 2 à 10 personnes`),
+        P(`À ce stade, l'enjeu n'est pas de trouver des clients : c'est de gérer le volume sans embaucher à tout-va. L'automatisation vous permet de scaler vos opérations sans nécessairement grossir votre masse salariale.`),
+        H3(`L'entreprise qui a de la traction mais manque de systèmes`),
+        P(`Vous générez des revenus, mais tout repose sur vous. Les processus vivent dans votre tête. L'automatisation transforme ce savoir-faire implicite en systèmes reproductibles, et vous sortez du goulot d'étranglement.`),
+        H3(`Les secteurs qui profitent le plus`),
+        UL([
+          { lead: `Services professionnels`, t: ` (consultants, comptables, coachs, avocats) : suivi de clients, prise de rendez-vous, relances.` },
+          { lead: `Commerce de détail et e-commerce`, t: ` : abandon de panier, fidélisation, gestion des stocks.` },
+          { lead: `Agences et studios créatifs`, t: ` : onboarding clients, gestion de projets, facturation.` },
+          { lead: `Immobilier et courtage`, t: ` : qualification de leads, suivi de prospects, relances automatiques.` },
+          { lead: `Restauration et hôtellerie`, t: ` : réservations, fidélisation, gestion des avis.` }
+        ]),
+        H2(`Par où commencer ?`),
+        P(`Bonne nouvelle : vous n'avez pas besoin de tout automatiser d'un coup. Commencez par identifier le processus qui vous coûte le plus de temps ou qui génère le plus d'oublis. Souvent, c'est :`),
+        UL([
+          { t: `La réponse aux nouvelles demandes de contact.` },
+          { t: `Le suivi post-soumission.` },
+          { t: `La facturation et les rappels de paiement.` }
+        ]),
+        P(`Un seul flux de travail bien conçu peut récupérer des heures par semaine, et des revenus qui s'échappaient sans que vous le sachiez.`),
+        SOURCES([
+          { t: `Small Business AI Statistics 2026, AdAI News`, href: `https://adai.news/resources/statistics/small-business-ai-statistics-2026/` },
+          { t: `65+ AI Lead Generation Statistics 2026, Click Vision`, href: `https://click-vision.com/ai-lead-generation-statistics` },
+          { t: `The State of AI in 2025, McKinsey & Company`, href: `https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai` },
+          { t: `Small Business AI Adoption Statistics 2025, USM Systems`, href: `https://usmsystems.com/small-business-ai-adoption-statistics/` },
+          { t: `AI Workflow Automation in 2026, Botpress`, href: `https://botpress.com/blog/ai-workflow-automation` }
+        ])
+      ]
+    };
+
+    const B = {
+      slug: 'b', cat: 'Agents IA', motif: 'aurora', accent: '#8b7cff',
+      title: `Le support 24/7 : l'avantage concurrentiel que vos concurrents n'ont pas`,
+      dek: `Pourquoi un assistant disponible en permanence capture les leads que vous perdez chaque soir.`,
+      date: `4 février 2026`, read: `5 min`, author: `Workflow Wonder`,
+      blocks: [
+        P(`Il est 22 h 47. Un client potentiel vient de visiter votre site. Il a une question simple sur vos tarifs. Il veut juste une confirmation avant de cliquer sur « Envoyer une demande ».`),
+        P(`Mais il n'y a personne. Alors il ferme l'onglet.`),
+        P(`Le lendemain matin, quand vous arrivez au bureau, ce lead n'existe plus. Il a trouvé une réponse ailleurs.`),
+        P(`Ce scénario se répète chaque soir, chaque fin de semaine, chaque jour férié, pour chaque entreprise qui n'a pas de support disponible en dehors des heures de bureau. Et le coût silencieux de ces occasions manquées s'accumule bien plus vite qu'on ne le pense.`),
+        H2(`Le problème des heures d'ouverture dans une économie toujours connectée`),
+        P(`Vos clients, eux, n'ont pas d'heures d'ouverture. Ils consultent leur téléphone le soir, magasinent le dimanche, comparent des fournisseurs pendant leur lunch. Le comportement d'achat a changé, mais beaucoup de petites entreprises offrent encore un service qui s'arrête à 17 h.`),
+        P(`Résultat : vous perdez des clients non pas parce que vous offrez un mauvais service, mais parce que vous n'étiez tout simplement pas là au bon moment.`),
+        H2(`Ce que le support 24/7 change concrètement`),
+        H3(`Vous capturez les leads que vous perdriez autrement`),
+        P(`Un assistant virtuel bien configuré peut répondre aux questions fréquentes, qualifier les prospects, prendre des rendez-vous et collecter des coordonnées, à n'importe quelle heure. Ce n'est pas un simple chatbot qui répond « Je ne comprends pas votre question ». C'est un système intelligent qui guide le visiteur vers la bonne action au bon moment.`),
+        H3(`Vous réduisez les frictions dans le parcours d'achat`),
+        P(`L'une des principales raisons pour lesquelles un prospect abandonne ? Il a une question et personne pour y répondre. Un support disponible en permanence élimine cette friction. La réponse arrive immédiatement, la confiance s'installe, et la conversion suit.`),
+        H3(`Vous libérez votre équipe des questions répétitives`),
+        P(`Combien de fois par semaine répondez-vous aux mêmes questions ? « Quels sont vos délais ? », « Acceptez-vous les cartes de crédit ? », « Desservez-vous ma région ? » Ces questions ont toutes une réponse connue. Un système automatisé les gère à votre place, et votre équipe se concentre sur les conversations à valeur ajoutée.`),
+        H3(`Vous améliorez l'expérience client globale`),
+        P(`Un client qui obtient une réponse en 2 minutes à 23 h ne l'oublie pas. C'est le genre de détail qui génère des avis 5 étoiles, des recommandations et de la fidélité. L'expérience client, c'est l'ensemble des interactions, même les plus petites.`),
+        H2(`Les chiffres qui devraient vous convaincre`),
+        P(`Ce n'est pas anecdotique. Les données sont claires :`),
+        STATS([
+          { v: `74 %`, l: `des entreprises citent la disponibilité 24/7 comme la principale raison d'adopter un chatbot IA`, s: `Chatmaxima, 2026` },
+          { v: `92 %`, l: `rapportent une amélioration de la satisfaction client après un assistant virtuel`, s: `Master of Code` },
+          { v: `6 h → 4 min`, l: `le temps de réponse moyen, grâce au support IA`, s: `Freshworks` },
+          { v: `11 → 2 min`, l: `Klarna a réduit son temps de résolution moyen avec l'IA`, s: `Klarna` },
+          { v: `3,50 $`, l: `de retour pour chaque dollar investi dans le support IA`, s: `Fullview` }
+        ]),
+        P(`Pour une petite entreprise, ces gains ne sont pas marginaux. Ils peuvent représenter des dizaines de leads récupérés par mois, et des milliers de dollars en revenus supplémentaires.`),
+        H2(`Mais est-ce que ça remplace le contact humain ?`),
+        P(`Non, et c'est précisément pour ça que ça fonctionne bien.`),
+        P(`L'objectif du support automatisé n'est pas de remplacer vos conversations humaines. C'est de les préparer. Le système qualifie, informe et filtre. Quand vous ou votre équipe entrez en scène, le prospect est déjà informé, engagé, et souvent prêt à décider.`),
+        PULL(`Vous passez moins de temps à expliquer les bases, et plus de temps à fermer des ventes.`),
+        H2(`Ce que ça donne dans la pratique`),
+        P(`Voici quelques exemples concrets de ce qu'un support 24/7 peut faire pour une PME québécoise :`),
+        UL([
+          { lead: `Pour un consultant ou coach`, t: ` : répondre aux questions sur vos services, proposer des créneaux de consultation, envoyer automatiquement votre brochure ou portfolio.` },
+          { lead: `Pour un commerce local`, t: ` : informer sur les heures, les produits disponibles, les promotions, et rediriger vers votre boutique en ligne.` },
+          { lead: `Pour une agence ou studio`, t: ` : qualifier les nouvelles demandes selon le type de projet, le budget et les délais, avant même que vous ne lisiez le courriel.` },
+          { lead: `Pour un prestataire de services`, t: ` : gérer les demandes de soumission, confirmer les rendez-vous, envoyer des rappels et réduire les no-shows.` }
+        ]),
+        H2(`La compétition dort. Vous, non.`),
+        P(`Le support 24/7 n'est plus un luxe réservé aux grandes marques. Les outils existent aujourd'hui pour l'implanter dans n'importe quelle PME, à un coût accessible, en quelques semaines.`),
+        P(`La question n'est plus « est-ce que c'est pour moi ? ». C'est « combien de leads est-ce que je perds chaque semaine parce que je n'ai pas encore fait ça ? »`),
+        SOURCES([
+          { t: `AI Customer Support Statistics 2026, ChatMaxima`, href: `https://chatmaxima.com/blog/ai-customer-support-statistics/` },
+          { t: `AI in Customer Service Statistics 2026, Master of Code`, href: `https://masterofcode.com/blog/ai-in-customer-service-statistics` },
+          { t: `How AI is Unlocking ROI in Customer Service, Freshworks`, href: `https://www.freshworks.com/How-AI-is-unlocking-ROI-in-customer-service/` },
+          { t: `65+ Chatbot Statistics for Customer Service Teams, Zoom`, href: `https://www.zoom.com/en/blog/chatbot-statistics/` },
+          { t: `80+ AI Customer Service Statistics & Trends 2025, Fullview`, href: `https://www.fullview.io/blog/ai-customer-service-stats` }
+        ])
+      ]
+    };
+
+    const C = {
+      slug: 'c', cat: 'Visibilité', motif: 'grid', accent: '#6aa8ff',
+      title: `Votre site web, le SEO, le GEO et l'AEO : la fondation invisible de votre croissance`,
+      dek: `Trois couches d'une même stratégie de visibilité, des résultats Google aux réponses de ChatGPT.`,
+      date: `21 janvier 2026`, read: `7 min`, author: `Workflow Wonder`,
+      blocks: [
+        P(`En 2026, si quelqu'un cherche vos services et qu'il ne vous trouve pas en ligne, vous n'existez pas, peu importe à quel point vous êtes bon dans ce que vous faites.`),
+        P(`C'est une réalité difficile à accepter pour beaucoup d'entrepreneurs québécois qui ont bâti leur réputation sur le bouche-à-oreille. Ces canaux fonctionnent encore. Mais ils ne suffisent plus à eux seuls pour soutenir une croissance réelle.`),
+        P(`Votre présence numérique, à commencer par votre site web, est aujourd'hui votre outil de développement des affaires le plus puissant. Et avec l'essor de l'IA dans la recherche en ligne, les règles du jeu ont changé.`),
+        H2(`Un site web professionnel : bien plus qu'une carte d'affaires en ligne`),
+        P(`Trop souvent, les entrepreneurs voient leur site comme une obligation, un endroit où mettre leur numéro de téléphone et quelques photos. En réalité, un site bien conçu est un vendeur qui travaille pour vous 24 h/24, 7 jours sur 7, sans pause ni congé.`),
+        H3(`La crédibilité, d'abord`),
+        STATS([{ v: `81 %`, l: `des consommateurs font des recherches en ligne avant d'effectuer un achat`, s: `Marketing LTB, 2026` }]),
+        P(`Si votre site est inexistant, mal conçu ou obsolète, la décision est prise avant même que vous ayez eu la chance de parler au prospect. Un site professionnel ne vous rend pas crédible : il confirme une crédibilité que vous méritez déjà.`),
+        H3(`Votre meilleur outil de conversion`),
+        P(`Parmi tous les outils numériques disponibles, réseaux sociaux, Google Maps, annuaires, le site web est celui que les PME identifient comme le plus utile, loin devant Facebook et Google Business. Pourquoi ? Parce que c'est le seul espace que vous contrôlez complètement : votre message, votre image de marque, vos offres, vos appels à l'action.`),
+        H3(`Une présence qui travaille même sans vous`),
+        P(`Combiné à des outils d'automatisation, votre site peut capturer des leads, répondre aux questions, envoyer des propositions et prendre des rendez-vous, même quand vous êtes en rendez-vous, en vacances ou endormi.`),
+        H2(`Le SEO : être trouvé avant vos concurrents`),
+        P(`Le référencement naturel (SEO) regroupe les stratégies qui permettent à votre site d'apparaître dans les premiers résultats de Google quand un client potentiel cherche ce que vous offrez. Quelqu'un tape « comptable à Québec » ou « traiteur événementiel Montréal », est-ce vous qui apparaissez, ou votre concurrent ?`),
+        P(`Le SEO repose sur trois piliers fondamentaux :`),
+        STEPS([
+          { n: `1`, lead: `Le contenu pertinent`, t: ` : articles de blogue, pages de services, études de cas, du contenu qui répond aux vraies questions de vos clients.` },
+          { n: `2`, lead: `L'autorité du site`, t: ` : des liens provenant d'autres sites reconnus qui valident votre expertise aux yeux de Google.` },
+          { n: `3`, lead: `La performance technique`, t: ` : un site rapide, sécurisé, accessible sur mobile et bien structuré pour être indexé correctement.` }
+        ]),
+        P(`Le SEO prend du temps, c'est un investissement à moyen et long terme. Mais contrairement à la publicité payante, les résultats organiques ne disparaissent pas quand vous arrêtez de payer.`),
+        H2(`Le GEO : être cité par l'IA`),
+        P(`Voici la grande nouveauté de 2025-2026 : vos clients ne cherchent plus seulement sur Google. Ils posent des questions directement à ChatGPT, Claude, Perplexity ou Gemini, et ces outils répondent en citant des sources.`),
+        P(`Le GEO (Generative Engine Optimization) est l'art d'optimiser votre contenu pour que les grands modèles de langage vous citent comme source fiable. Concrètement : si quelqu'un demande à ChatGPT « Quelle agence web recommandes-tu pour les PME au Québec ? », est-ce que votre nom apparaît dans la réponse ?`),
+        STATS([{ v: `31,3 %`, l: `de la population américaine utilisera la recherche par IA générative en 2026`, s: `eMarketer` }]),
+        P(`Pour y être visible, votre contenu doit :`),
+        UL([
+          { t: `Être structuré de façon claire (titres, sous-titres, listes, données précises).` },
+          { t: `Citer des sources reconnues et vérifiables.` },
+          { t: `Répondre directement aux questions que vos clients posent.` },
+          { t: `Démontrer une expertise réelle sur votre domaine.` }
+        ]),
+        P(`Le GEO ne remplace pas le SEO, il le complète. Les entreprises les mieux positionnées dans les réponses IA sont celles qui ont déjà un contenu SEO solide.`),
+        H2(`L'AEO : dominer les réponses instantanées`),
+        P(`L'AEO (Answer Engine Optimization) vous permet d'apparaître dans les encadrés de réponse rapide de Google, les featured snippets et AI Overviews qui s'affichent désormais en tête de la majorité des recherches.`),
+        STATS([{ v: `~50 %`, l: `des recherches Google affichent désormais un AI Overview en tête de page`, s: `Jasper AI, 2026` }]),
+        P(`L'AEO consiste à structurer votre contenu pour répondre précisément aux questions de vos clients, sous un format que Google et les moteurs IA peuvent extraire et mettre en avant. Des exemples de questions auxquelles vous devriez répondre sur votre site :`),
+        UL([
+          { t: `« Combien coûte un déménagement résidentiel à Québec ? »` },
+          { t: `« Quel est le meilleur restaurant pour un souper d'affaires à Montréal ? »` },
+          { t: `« Quels sont vos délais pour une réparation d'électroménager ? »` }
+        ]),
+        P(`Si vous répondez à ces questions mieux que vos concurrents, c'est vous qui apparaissez. Aussi simple, et aussi stratégique, que ça.`),
+        H2(`SEO + GEO + AEO : trois couches, une seule stratégie`),
+        P(`Ces trois approches ne sont pas des options distinctes, ce sont trois couches d'une même stratégie de visibilité en ligne.`),
+        TABLE([`Stratégie`, `Objectif`, `Canal`], [
+          [`SEO`, `Apparaître dans les résultats organiques`, `Moteurs de recherche traditionnels`],
+          [`AEO`, `Être cité dans les réponses instantanées`, `Google AI Overviews, recherche vocale`],
+          [`GEO`, `Être cité par les IA génératives`, `ChatGPT, Claude, Gemini, Perplexity`]
+        ]),
+        P(`Un contenu bien fait peut performer sur les trois canaux simultanément. C'est ça, l'avantage compétitif d'une stratégie de contenu intelligente.`),
+        H2(`Ce que ça veut dire pour vous, concrètement`),
+        P(`Si vous êtes un solopreneur ou une petite équipe au Québec, voici ce qu'une bonne stratégie web peut faire :`),
+        UL([
+          { lead: `Générer des leads qualifiés passivement`, t: `, des gens qui vous trouvent parce qu'ils ont un besoin réel.` },
+          { lead: `Bâtir votre autorité`, t: ` dans votre secteur, même face à des concurrents plus grands.` },
+          { lead: `Réduire votre dépendance`, t: ` à la publicité payante et au bouche-à-oreille seul.` },
+          { lead: `Être visible dans l'écosystème IA`, t: `, là où vos clients de demain vont chercher leurs réponses.` }
+        ]),
+        STATS([{ v: `228 000`, l: `petites entreprises au Québec, la plupart ont un site, peu ont une vraie stratégie`, s: `ISDE, Gouv. du Canada, 2025` }]),
+        SOURCES([
+          { t: `Key Small Business Statistics 2025, ISDE Canada`, href: `https://ised-isde.canada.ca/site/sme-research-statistics/en/key-small-business-statistics/key-small-business-statistics-2025` },
+          { t: `Small Business Website Statistics 2026, Marketing LTB`, href: `https://marketingltb.com/blog/statistics/small-business-website-statistics/` },
+          { t: `Why Every Quebec SMB Needs a Website in 2025, ELR Agency`, href: `https://www.elragency.com/blog/why-every-quebec-smb-needs-a-website-in-2025` },
+          { t: `GEO vs AEO vs SEO Guide 2026, Jasper AI`, href: `https://www.jasper.ai/blog/geo-aeo` },
+          { t: `FAQ on GEO and AEO 2026, eMarketer`, href: `https://www.emarketer.com/content/faq-on-geo-aeo--where-ai-search-seo-overlap-2026` }
+        ])
+      ]
+    };
+
+    return { a: A, b: B, c: C };
+  }
+
+  mapBlocks(blocks) {
+    let hc = 0;
+    return (blocks || []).map(b => {
+      const v = { t: b.t || '', id: '' };
+      v.isP = b.k === 'p'; v.isPull = b.k === 'pull';
+      v.isH2 = b.k === 'h2'; v.isH3 = b.k === 'h3';
+      v.isUl = b.k === 'ul'; v.isSteps = b.k === 'steps';
+      v.isStats = b.k === 'stats'; v.isTable = b.k === 'table'; v.isSources = b.k === 'sources';
+      if (b.k === 'h2') { hc++; v.id = 's' + hc; }
+      if (b.k === 'ul' || b.k === 'steps') v.items = (b.items || []).map(it => ({ lead: it.lead || '', hasLead: !!it.lead, t: it.t || '', n: it.n || '' }));
+      if (b.k === 'stats') v.items = (b.items || []).map(it => ({ v: it.v, l: it.l, s: it.s || '', hasS: !!it.s }));
+      if (b.k === 'sources') v.items = b.items || [];
+      if (b.k === 'table') { v.cols = b.cols || []; v.rows = (b.rows || []).map(r => ({ cells: r.map((c, i) => ({ t: c, head: i === 0, notHead: i !== 0 })) })); }
+      return v;
+    });
+  }
+  tocOf(blocks) {
+    let hc = 0; const o = [];
+    (blocks || []).forEach(b => { if (b.k === 'h2') { hc++; o.push({ t: b.t, id: 's' + hc }); } });
+    return o;
+  }
+
+  renderVals() {
+    const data = this.data || this.buildData();
+    const post = this.state.post || 'a';
+    const p = data[post];
+    const seg = on => `font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; padding:7px 14px; border-radius:999px; cursor:pointer; border:1px solid ${on ? 'transparent' : 'var(--cardline,rgba(244,243,247,0.14))'}; background:${on ? (p.accent || '#4bfac8') : 'transparent'}; color:${on ? '#07070b' : 'var(--muted,rgba(244,243,247,0.62))'}; font-weight:${on ? 600 : 400}; transition:all .2s;`;
+    const segs = [['edito', 'Édito'], ['focus', 'Focus'], ['magazine', 'Magazine']].map(([id, l]) => ({ l, style: seg(this.state.layout === id), onClick: () => this.setLayout(id) }));
+    const order = ['a', 'b', 'c'];
+    const more = order.filter(s => s !== post).map(s => ({ cat: data[s].cat, title: data[s].title, href: 'Article.dc.html?post=' + s }));
+    return {
+      rootRef: this.rootRef, heroRef: this.heroRef,
+      cat: p.cat, title: p.title, dek: p.dek, date: p.date, read: p.read, author: p.author,
+      blocks: this.mapBlocks(p.blocks), toc: this.tocOf(p.blocks), segs, more,
+      showToc: this.state.layout === 'focus'
+    };
+  }
+}
+</script>
+</body>
+</html>

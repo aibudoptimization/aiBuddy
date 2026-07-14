@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#07070b;}
+  @keyframes bgSheen{0%{background-position:180% 0;}100%{background-position:-180% 0;}}
+  @keyframes bgPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.45;transform:scale(0.7);}}
+  .bg-sheen{background:linear-gradient(100deg, rgba(244,243,247,0.55) 0%, rgba(244,243,247,0.55) 38%, #ffffff 50%, rgba(244,243,247,0.55) 62%, rgba(244,243,247,0.55) 100%); background-size:220% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; animation:bgSheen 6s linear infinite;}
+  .bg-pill{position:relative; overflow:hidden; z-index:0;}
+  .bg-pill::before{content:""; position:absolute; inset:0; background:var(--c,#4bfac8); transform:scaleX(0); transform-origin:center; transition:transform .42s cubic-bezier(.7,0,.2,1); z-index:-1;}
+  .bg-pill:hover::before{transform:scaleX(1);}
+  .bg-pill:hover{color:#07070b !important;}
+</style>
+</helmet>
+<div style="position:relative; width:100%; min-height:100vh; background:#07070b; color:#f4f3f7; font-family:'Schibsted Grotesk',system-ui,sans-serif; -webkit-font-smoothing:antialiased; padding:0 0 120px; box-sizing:border-box;">
+
+  <!-- ambient glow -->
+  <div style="position:absolute; top:0; left:0; right:0; height:760px; z-index:0; pointer-events:none; background:radial-gradient(120% 80% at 50% -10%, rgba(75,250,200,0.09), rgba(7,7,11,0) 60%);"></div>
+
+  <div style="position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 clamp(28px,5vw,64px);">
+
+    <!-- ===== COVER ===== -->
+    <section data-screen-label="Cover" style="padding:clamp(80px,12vh,140px) 0 clamp(60px,9vh,96px);">
+      <div style="display:flex; align-items:center; gap:10px; font-size:22px; font-weight:700; letter-spacing:-0.03em; margin-bottom:clamp(48px,8vh,88px);">
+        <span>Workflow</span>
+        <span style="flex:none; width:8px; height:8px; border-radius:999px; background:#4bfac8; box-shadow:0 0 14px rgba(75,250,200,0.85);"></span>
+        <span>Wonder</span>
+      </div>
+      <div style="display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(244,243,247,0.6); margin-bottom:26px;">
+        <span style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.7);"></span>
+        <span>Guide de marque · v1.0 · 2026</span>
+      </div>
+      <h1 style="margin:0; font-weight:600; letter-spacing:-0.035em; line-height:0.98; font-size:clamp(46px,8vw,104px);">Le système <span class="bg-sheen">de marque</span>.</h1>
+      <p style="max-width:600px; margin:30px 0 0; font-size:clamp(16px,1.4vw,20px); line-height:1.55; color:rgba(244,243,247,0.7);">Tout ce qu'il faut, couleurs, typographie, ton et mouvement, pour qu'un humain ou un agent reproduise Workflow Wonder à l'identique.</p>
+    </section>
+
+    <!-- ===== 01 ESSENCE ===== -->
+    <section data-screen-label="Essence" style="padding:clamp(52px,8vh,84px) 0; border-top:1px solid rgba(244,243,247,0.08);">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:40px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">01</span>
+        <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(28px,3.6vw,44px);">Essence</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:40px 56px;">
+        <div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Positionnement</span>
+          <p style="margin:14px 0 0; font-size:20px; line-height:1.5; color:#f4f3f7; font-weight:500;">Automatisation et agents IA pour les entrepreneurs du Québec qui veulent libérer du temps et faire grandir leur activité.</p>
+        </div>
+        <div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Public</span>
+          <p style="margin:14px 0 0; font-size:16px; line-height:1.6; color:rgba(244,243,247,0.7);">Solopreneurs et petites équipes du Québec. Des gens occupés, peu techniques, qui jugent au résultat : du temps repris, pas du jargon.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:44px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <span style="display:inline-flex; width:32px; height:32px; border-radius:9px; background:rgba(75,250,200,0.14); border:1px solid rgba(75,250,200,0.3); align-items:center; justify-content:center; margin-bottom:16px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4bfac8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
+          <h3 style="margin:0 0 7px; font-size:17px; font-weight:600; letter-spacing:-0.01em;">Gain de temps</h3>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.6);">La promesse centrale. Chaque livraison rend des heures.</p>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <span style="display:inline-flex; width:32px; height:32px; border-radius:9px; background:rgba(75,250,200,0.14); border:1px solid rgba(75,250,200,0.3); align-items:center; justify-content:center; margin-bottom:16px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4bfac8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"></path><circle cx="12" cy="12" r="9"></circle></svg></span>
+          <h3 style="margin:0 0 7px; font-size:17px; font-weight:600; letter-spacing:-0.01em;">Propriété totale</h3>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.6);">« C'est 100 % à vous. » Le code, les accès, tout se transfère.</p>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <span style="display:inline-flex; width:32px; height:32px; border-radius:9px; background:rgba(75,250,200,0.14); border:1px solid rgba(75,250,200,0.3); align-items:center; justify-content:center; margin-bottom:16px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4bfac8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></span>
+          <h3 style="margin:0 0 7px; font-size:17px; font-weight:600; letter-spacing:-0.01em;">Transparence</h3>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.6);">Tout est documenté, bâti sur vos propres comptes. Rien de caché.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 02 LOGO ===== -->
+    <section data-screen-label="Logo" style="padding:clamp(52px,8vh,84px) 0; border-top:1px solid rgba(244,243,247,0.08);">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:40px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">02</span>
+        <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(28px,3.6vw,44px);">Logo &amp; signature</h2>
+      </div>
+
+      <div style="border:1px solid rgba(244,243,247,0.1); border-radius:20px; background:radial-gradient(90% 120% at 50% 0%, rgba(75,250,200,0.06), rgba(7,7,11,0) 62%); padding:clamp(40px,7vw,72px); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+        <div style="display:flex; align-items:center; gap:14px; font-size:clamp(28px,5vw,52px); font-weight:700; letter-spacing:-0.035em;">
+          <span>Workflow</span>
+          <span style="flex:none; width:13px; height:13px; border-radius:999px; background:#4bfac8; box-shadow:0 0 22px rgba(75,250,200,0.85); animation:bgPulse 2.6s ease-in-out infinite;"></span>
+          <span>Wonder</span>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <h3 style="margin:0 0 10px; font-size:16px; font-weight:600;">La signature : le point</h3>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:rgba(244,243,247,0.62);">Un point lumineux sépare les deux mots. C'est l'élément de marque réutilisable : on le retrouve dans les puces, les sur-titres et les indicateurs « en direct ». Toujours rond, jamais un losange ou un carré.</p>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <h3 style="margin:0 0 10px; font-size:16px; font-weight:600;">Construction</h3>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:rgba(244,243,247,0.62);">« Workflow » + point + « Wonder », poids 700, interlettrage -0.035em. Le point fait environ 25 % de la hauteur de x. Espace de protection minimal autour du logo : la largeur d'un « o ».</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px;">
+        <div style="border:1px solid rgba(75,250,200,0.22); border-radius:16px; padding:22px 22px; background:rgba(75,250,200,0.03);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#4bfac8;">À faire</span>
+          <ul style="margin:14px 0 0; padding-left:18px; font-size:14px; line-height:1.7; color:rgba(244,243,247,0.7);">
+            <li>Toujours sur fond sombre (#07070b)</li>
+            <li>Point dans la couleur de l'accent actif</li>
+            <li>Le glow doux du point fait partie de l'identité</li>
+          </ul>
+        </div>
+        <div style="border:1px solid rgba(255,122,107,0.22); border-radius:16px; padding:22px 22px; background:rgba(255,122,107,0.03);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#ff7a6b;">À éviter</span>
+          <ul style="margin:14px 0 0; padding-left:18px; font-size:14px; line-height:1.7; color:rgba(244,243,247,0.7);">
+            <li>Remplacer le point par un losange ou une icône</li>
+            <li>Logo sur fond clair ou photo chargée</li>
+            <li>Étirer, incliner ou re-spacer le wordmark</li>
+          </ul>
+        </div>
+      </div>
+
+      <span style="display:block; margin-top:30px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Favicon &amp; icône d'app</span>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:14px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px; display:flex; align-items:center; gap:20px;">
+          <div style="flex:none; display:flex; gap:14px; align-items:flex-end;">
+            <div style="position:relative; width:64px; height:64px; border-radius:14px; background:#07070b; display:flex; align-items:center; justify-content:center;">
+              <span style="position:absolute; width:40px; height:40px; border-radius:999px; background:rgba(75,250,200,0.18);"></span>
+              <span style="position:absolute; width:26px; height:26px; border-radius:999px; background:rgba(75,250,200,0.32);"></span>
+              <span style="position:relative; width:16px; height:16px; border-radius:999px; background:#4bfac8;"></span>
+            </div>
+            <div style="position:relative; width:28px; height:28px; border-radius:7px; background:#07070b; display:flex; align-items:center; justify-content:center;">
+              <span style="position:absolute; width:17px; height:17px; border-radius:999px; background:rgba(75,250,200,0.2);"></span>
+              <span style="position:relative; width:7px; height:7px; border-radius:999px; background:#4bfac8;"></span>
+            </div>
+          </div>
+          <p style="margin:0; font-size:13.5px; line-height:1.55; color:rgba(244,243,247,0.62);">Le point lumineux, seul, sur la tuile encre. C'est l'asset de marque réduit à son essence : lisible jusqu'à 16 px, là où le wordmark ne le serait pas.</p>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <h3 style="margin:0 0 10px; font-size:16px; font-weight:600;">Fichiers fournis</h3>
+          <ul style="margin:0; padding-left:18px; font-size:13.5px; line-height:1.75; color:rgba(244,243,247,0.66);">
+            <li><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#4bfac8;">favicon.svg</span> · vecteur, primaire</li>
+            <li><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#4bfac8;">favicon-32.png</span> · fallback</li>
+            <li><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#4bfac8;">apple-touch-icon.png</span> · 180 px</li>
+            <li><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#4bfac8;">icon-512.png</span> · PWA / Android</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 03 COLOR ===== -->
+    <section data-screen-label="Couleur" style="padding:clamp(52px,8vh,84px) 0; border-top:1px solid rgba(244,243,247,0.08);">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:14px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">03</span>
+        <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(28px,3.6vw,44px);">Couleur</h2>
+      </div>
+      <p style="margin:0 0 34px; max-width:560px; font-size:15px; line-height:1.6; color:rgba(244,243,247,0.6);">Une base sombre quasi noire, du texte blanc cassé, et quatre accents, un par service. Le teal est la couleur signature par défaut.</p>
+
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Base</span>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:14px 0 36px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; overflow:hidden;"><div style="height:84px; background:#07070b; border-bottom:1px solid rgba(244,243,247,0.08);"></div><div style="padding:12px 14px;"><div style="font-size:14px; font-weight:600;">Encre</div><div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.5); margin-top:3px;">#07070B</div></div></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; overflow:hidden;"><div style="height:84px; background:#0c0c12; border-bottom:1px solid rgba(244,243,247,0.08);"></div><div style="padding:12px 14px;"><div style="font-size:14px; font-weight:600;">Panneau</div><div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.5); margin-top:3px;">#0C0C12</div></div></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; overflow:hidden;"><div style="height:84px; background:#f4f3f7; border-bottom:1px solid rgba(244,243,247,0.08);"></div><div style="padding:12px 14px;"><div style="font-size:14px; font-weight:600;">Neige</div><div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.5); margin-top:3px;">#F4F3F7</div></div></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; overflow:hidden;"><div style="height:84px; background:rgba(244,243,247,0.1); border-bottom:1px solid rgba(244,243,247,0.08);"></div><div style="padding:12px 14px;"><div style="font-size:14px; font-weight:600;">Filet</div><div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.5); margin-top:3px;">snow / 10%</div></div></div>
+      </div>
+
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Accents · un par service</span>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:14px 0 36px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; overflow:hidden;"><div style="height:96px; background:#4bfac8;"></div><div style="padding:14px 16px;"><div style="font-size:15px; font-weight:600;">Teal · signature</div><div style="font-size:13px; color:rgba(244,243,247,0.55); margin-top:2px;">Automatisation des workflows</div><div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.5); margin-top:8px;">#4BFAC8</div></div></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; overflow:hidden;"><div style="height:96px; background:#8b7cff;"></div><div style="padding:14px 16px;"><div style="font-size:15px; font-weight:600;">Iris</div><div style="font-size:13px; color:rgba(244,243,247,0.55); margin-top:2px;">Agents &amp; assistants IA</div><div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.5); margin-top:8px;">#8B7CFF</div></div></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; overflow:hidden;"><div style="height:96px; background:#f0a94e;"></div><div style="padding:14px 16px;"><div style="font-size:15px; font-weight:600;">Ambre</div><div style="font-size:13px; color:rgba(244,243,247,0.55); margin-top:2px;">Sites &amp; boutiques en ligne</div><div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.5); margin-top:8px;">#F0A94E</div></div></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; overflow:hidden;"><div style="height:96px; background:#6aa8ff;"></div><div style="padding:14px 16px;"><div style="font-size:15px; font-weight:600;">Ciel</div><div style="font-size:13px; color:rgba(244,243,247,0.55); margin-top:2px;">Visibilité · Journal</div><div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.5); margin-top:8px;">#6AA8FF</div></div></div>
+      </div>
+
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Palette étendue · variété des démos seulement</span>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;">
+        <div style="display:flex; align-items:center; gap:9px; padding:8px 14px 8px 9px; border:1px solid rgba(244,243,247,0.1); border-radius:999px;"><span style="width:18px; height:18px; border-radius:999px; background:#ff7a6b;"></span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(244,243,247,0.7);">#FF7A6B</span></div>
+        <div style="display:flex; align-items:center; gap:9px; padding:8px 14px 8px 9px; border:1px solid rgba(244,243,247,0.1); border-radius:999px;"><span style="width:18px; height:18px; border-radius:999px; background:#7bd88f;"></span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(244,243,247,0.7);">#7BD88F</span></div>
+        <div style="display:flex; align-items:center; gap:9px; padding:8px 14px 8px 9px; border:1px solid rgba(244,243,247,0.1); border-radius:999px;"><span style="width:18px; height:18px; border-radius:999px; background:#c084fc;"></span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(244,243,247,0.7);">#C084FC</span></div>
+        <div style="display:flex; align-items:center; gap:9px; padding:8px 14px 8px 9px; border:1px solid rgba(244,243,247,0.1); border-radius:999px;"><span style="width:18px; height:18px; border-radius:999px; background:#f472b6;"></span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(244,243,247,0.7);">#F472B6</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 04 TYPE ===== -->
+    <section data-screen-label="Typographie" style="padding:clamp(52px,8vh,84px) 0; border-top:1px solid rgba(244,243,247,0.08);">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:14px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">04</span>
+        <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(28px,3.6vw,44px);">Typographie</h2>
+      </div>
+      <p style="margin:0 0 34px; max-width:560px; font-size:15px; line-height:1.6; color:rgba(244,243,247,0.6);">Deux familles. Une grotesque pour tout le contenu, une mono pour les sur-titres et métadonnées.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-bottom:30px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:28px 26px;">
+          <div style="font-size:52px; font-weight:600; letter-spacing:-0.03em; line-height:1;">Ag</div>
+          <div style="margin-top:18px; font-size:18px; font-weight:600;">Schibsted Grotesk</div>
+          <div style="font-size:13.5px; color:rgba(244,243,247,0.55); margin-top:5px; line-height:1.55;">Titres, corps, interface. Poids 400 / 500 / 600 / 700. Titres en 600, interlettrage négatif.</div>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:28px 26px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:52px; font-weight:500; line-height:1;">Ag</div>
+          <div style="margin-top:18px; font-size:18px; font-weight:600;">JetBrains Mono</div>
+          <div style="font-size:13.5px; color:rgba(244,243,247,0.55); margin-top:5px; line-height:1.55;">Sur-titres, tags, prix, métadonnées. MAJUSCULES, interlettrage 0.12 à 0.22em.</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:clamp(26px,4vw,40px); display:flex; flex-direction:column; gap:26px;">
+        <div style="display:flex; align-items:baseline; gap:20px; flex-wrap:wrap;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,243,247,0.4); width:88px; flex:none;">H1 · 98/600</span><span style="font-size:clamp(34px,5vw,68px); font-weight:600; letter-spacing:-0.035em; line-height:0.98;">Automatisez vos tâches</span></div>
+        <div style="display:flex; align-items:baseline; gap:20px; flex-wrap:wrap; border-top:1px solid rgba(244,243,247,0.07); padding-top:24px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,243,247,0.4); width:88px; flex:none;">H2 · 52/600</span><span style="font-size:clamp(26px,3.4vw,40px); font-weight:600; letter-spacing:-0.03em;">Plus de temps pour votre croissance</span></div>
+        <div style="display:flex; align-items:baseline; gap:20px; flex-wrap:wrap; border-top:1px solid rgba(244,243,247,0.07); padding-top:24px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,243,247,0.4); width:88px; flex:none;">H3 · 22/600</span><span style="font-size:22px; font-weight:600; letter-spacing:-0.02em;">Agents &amp; assistants IA</span></div>
+        <div style="display:flex; align-items:baseline; gap:20px; flex-wrap:wrap; border-top:1px solid rgba(244,243,247,0.07); padding-top:24px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,243,247,0.4); width:88px; flex:none;">Corps · 16/400</span><span style="font-size:16px; font-weight:400; line-height:1.6; color:rgba(244,243,247,0.7); max-width:520px;">Workflows automatisés et agents IA pour les entrepreneurs qui veulent libérer du temps et faire grandir leur activité.</span></div>
+        <div style="display:flex; align-items:baseline; gap:20px; flex-wrap:wrap; border-top:1px solid rgba(244,243,247,0.07); padding-top:24px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,243,247,0.4); width:88px; flex:none;">Mono · sur-titre</span><span style="font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(244,243,247,0.62);">Automatisation IA</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 05 VOICE ===== -->
+    <section data-screen-label="Voix" style="padding:clamp(52px,8vh,84px) 0; border-top:1px solid rgba(244,243,247,0.08);">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:14px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">05</span>
+        <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(28px,3.6vw,44px);">Voix &amp; ton</h2>
+      </div>
+      <p style="margin:0 0 34px; max-width:600px; font-size:15px; line-height:1.6; color:rgba(244,243,247,0.6);">Français du Québec, vouvoiement. Clair, confiant, orienté bénéfice. On parle de temps repris et de croissance, jamais de jargon technique.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:18px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:22px 22px;"><h3 style="margin:0 0 8px; font-size:15px; font-weight:600;">Clair avant tout</h3><p style="margin:0; font-size:13.5px; line-height:1.6; color:rgba(244,243,247,0.6);">Phrases courtes. Un bénéfice concret par idée. Si un mot peut sauter, il saute.</p></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:22px 22px;"><h3 style="margin:0 0 8px; font-size:15px; font-weight:600;">Honnête</h3><p style="margin:0; font-size:13.5px; line-height:1.6; color:rgba(244,243,247,0.6);">Pas de promesse qu'on ne tient pas. On dit « si possible », on assume les limites.</p></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:22px 22px;"><h3 style="margin:0 0 8px; font-size:15px; font-weight:600;">Chaleureux, pro</h3><p style="margin:0; font-size:13.5px; line-height:1.6; color:rgba(244,243,247,0.6);">On vouvoie, on reste proche. Confiant sans être vendeur ni corporatif.</p></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div style="border:1px solid rgba(75,250,200,0.22); border-radius:16px; padding:24px 22px; background:rgba(75,250,200,0.03);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#4bfac8;">On écrit</span>
+          <div style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+            <p style="margin:0; font-size:15px; line-height:1.5; color:#f4f3f7;">« On donne vie à votre présence en ligne. »</p>
+            <p style="margin:0; font-size:15px; line-height:1.5; color:#f4f3f7;">« Décrivez-nous le vôtre, on revient sous 24 h. »</p>
+            <p style="margin:0; font-size:15px; line-height:1.5; color:#f4f3f7;">« C'est 100 % à vous. »</p>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(255,122,107,0.22); border-radius:16px; padding:24px 22px; background:rgba(255,122,107,0.03);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#ff7a6b;">On évite</span>
+          <div style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+            <p style="margin:0; font-size:15px; line-height:1.5; color:rgba(244,243,247,0.55);">« Solutions digitales clé en main innovantes. »</p>
+            <p style="margin:0; font-size:15px; line-height:1.5; color:rgba(244,243,247,0.55);">Le tiret cadratin —, banni de tous les textes.</p>
+            <p style="margin:0; font-size:15px; line-height:1.5; color:rgba(244,243,247,0.55);">Tutoyer, ou promettre « jamais de gabarit ».</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:18px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; padding:18px 20px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Ponctuation</span><p style="margin:9px 0 0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.72);">Espace insécable avant : ; ! ? et devant les unités. Jamais de —, virgule ou point à la place.</p></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; padding:18px 20px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Devise</span><p style="margin:9px 0 0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.72);">CAD, symbole après le nombre avec insécable : 250 $, 1 000 $ CAD.</p></div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:14px; padding:18px 20px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Prix</span><p style="margin:9px 0 0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.72);">Toujours « à partir de ». Sur devis pour le sur-mesure, jamais de prix fixe.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== 06 MOTION ===== -->
+    <section data-screen-label="Mouvement" style="padding:clamp(52px,8vh,84px) 0; border-top:1px solid rgba(244,243,247,0.08);">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:14px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">06</span>
+        <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(28px,3.6vw,44px);">Mouvement</h2>
+      </div>
+      <p style="margin:0 0 34px; max-width:600px; font-size:15px; line-height:1.6; color:rgba(244,243,247,0.6);">Le mouvement est calme et utile. Il révèle, il ne décore pas. Courbe maison : cubic-bezier(.16, 1, .3, 1).</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <h3 style="margin:0 0 8px; font-size:16px; font-weight:600;">Révélation à l'entrée</h3>
+          <p style="margin:0 0 14px; font-size:13.5px; line-height:1.55; color:rgba(244,243,247,0.6);">Les titres montent derrière un masque ; le reste apparaît en fondu décalé de ~0.14 s.</p>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#4bfac8; background:rgba(75,250,200,0.06); border:1px solid rgba(75,250,200,0.16); border-radius:8px; padding:8px 11px;">translateY(112%) → 0 · 1s</div>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <h3 style="margin:0 0 8px; font-size:16px; font-weight:600;">Reflet sur les sur-titres</h3>
+          <p style="margin:0 0 14px; font-size:13.5px; line-height:1.55; color:rgba(244,243,247,0.6);">Un éclat blanc traverse lentement les libellés mono, de gauche à droite.</p>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.18em; text-transform:uppercase;" class="bg-sheen">Reflet en direct</div>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <h3 style="margin:0 0 8px; font-size:16px; font-weight:600;">Remplissage des boutons</h3>
+          <p style="margin:0 0 16px; font-size:13.5px; line-height:1.55; color:rgba(244,243,247,0.6);">Au survol, l'accent grandit depuis le centre ; le texte passe en encre. Survolez :</p>
+          <a href="#" class="bg-pill" style="--c:#4bfac8; display:inline-flex; align-items:center; gap:10px; color:#4bfac8; font-weight:600; font-size:14.5px; padding:13px 24px; border-radius:999px; text-decoration:none; border:1.5px solid #4bfac8; transition:color .35s ease;">Démarrer un projet</a>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:24px 22px;">
+          <h3 style="margin:0 0 8px; font-size:16px; font-weight:600;">Décor vivant</h3>
+          <p style="margin:0 0 14px; font-size:13.5px; line-height:1.55; color:rgba(244,243,247,0.6);">Réseaux de particules, grilles en perspective, aurores teintées de teal. Toujours derrière l'en-tête, jamais sous le texte courant.</p>
+          <div style="height:54px; border-radius:8px; background:radial-gradient(80% 120% at 50% 0%, rgba(75,250,200,0.22), rgba(7,7,11,0) 70%); border:1px solid rgba(75,250,200,0.14);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 07 COMPONENTS ===== -->
+    <section data-screen-label="Composants" style="padding:clamp(52px,8vh,84px) 0; border-top:1px solid rgba(244,243,247,0.08);">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:14px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">07</span>
+        <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(28px,3.6vw,44px);">Composants</h2>
+      </div>
+      <p style="margin:0 0 34px; max-width:600px; font-size:15px; line-height:1.6; color:rgba(244,243,247,0.6);">Peu d'éléments, répétés partout. Coins arrondis 14 à 18 px, filets à 10 % de blanc, survols à 3 % de blanc.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:26px 24px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Sur-titre</span>
+          <div style="margin-top:18px; display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,243,247,0.6);"><span style="width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.7);"></span>Démos · prototypes</div>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:26px 24px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Boutons</span>
+          <div style="margin-top:18px; display:flex; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="bg-pill" style="--c:#4bfac8; display:inline-flex; color:#4bfac8; font-weight:600; font-size:14px; padding:12px 22px; border-radius:999px; text-decoration:none; border:1.5px solid #4bfac8; transition:color .35s ease;">Principal</a>
+            <a href="#" style="display:inline-flex; color:#f4f3f7; font-weight:500; font-size:14px; padding:12px 22px; border-radius:999px; text-decoration:none; border:1px solid rgba(244,243,247,0.16);">Secondaire</a>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:26px 24px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Puce de liste</span>
+          <div style="margin-top:18px; display:flex; flex-direction:column; gap:11px;">
+            <div style="display:flex; align-items:center; gap:11px; font-size:14.5px; color:rgba(244,243,247,0.82);"><span style="flex:none; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span>Emails automatisés</div>
+            <div style="display:flex; align-items:center; gap:11px; font-size:14.5px; color:rgba(244,243,247,0.82);"><span style="flex:none; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span>Synchronisation CRM</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:0; overflow:hidden;">
+          <div style="padding:26px 24px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Carte service</span></div>
+          <div style="padding:0 24px 24px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;"><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#8b7cff;">02</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.32);">IA</span></div>
+            <h3 style="margin:0 0 8px; font-size:19px; font-weight:600; letter-spacing:-0.02em;">Agents &amp; assistants IA</h3>
+            <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.62);">Des agents qui comprennent, décident et génèrent.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1600}}"></script>
+</body>
+</html>

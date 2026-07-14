@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#07070b;}
+  @keyframes wwRise { from { transform: translateY(112%); } to { transform: translateY(0); } }
+  @keyframes wwUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+  @keyframes wwShine { 0%{background-position:0% 50%;} 100%{background-position:200% 50%;} }
+  @keyframes wwBlend { 0%{background-position:180% 0;} 100%{background-position:-180% 0;} }
+  @keyframes wwBlink { 0%,55%{opacity:1;} 56%,100%{opacity:0;} }
+  .ww-cta-fill{position:relative; overflow:hidden; z-index:0;}
+  .ww-cta-fill::before{content:""; position:absolute; inset:0; background:var(--ww-accent,#4bfac8); transform:scaleX(0); transform-origin:center; transition:transform .42s cubic-bezier(.7,0,.2,1); z-index:-1;}
+  .ww-cta-fill:hover::before{transform:scaleX(1);}
+  .ww-cta-fill:hover{color:#07070b !important; box-shadow:0 8px 30px rgba(var(--ww-accent-rgb,75,250,200),0.3);}
+  .ww-si-track{display:flex; gap:14px; will-change:transform; transition:transform .55s cubic-bezier(.22,.61,.36,1);}
+  .ww-si-card{flex:0 0 calc((100% - 28px)/3); box-sizing:border-box;}
+  @media (max-width:880px){ .ww-si-card{flex:0 0 calc((100% - 14px)/2);} }
+  @media (max-width:560px){ .ww-si-card{flex:0 0 100%;} }
+  .ww-faq summary{list-style:none; outline:none;}
+  .ww-faq summary::-webkit-details-marker{display:none;}
+  .ww-faq .ww-chev{transition:transform .28s cubic-bezier(.16,1,.3,1);}
+  .ww-faq details[open] .ww-chev{transform:rotate(45deg);}
+  .ww-faq details[open] .ww-q{color:#fff;}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; width:100%; background:#07070b; color:#f4f3f7; font-family:'Schibsted Grotesk',system-ui,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <canvas ref="{{ canvasRef }}" style="position:fixed; inset:0; width:100%; height:100%; display:block; z-index:0;"></canvas>
+
+  <div style="position:fixed; inset:0; z-index:1; pointer-events:none; background:radial-gradient(120% 90% at 18% 28%, rgba(7,7,11,0) 30%, rgba(7,7,11,0.5) 100%), linear-gradient(180deg, rgba(7,7,11,0.55) 0%, rgba(7,7,11,0) 22%, rgba(7,7,11,0) 60%, rgba(7,7,11,0.55) 100%);"></div>
+
+  <canvas ref="{{ globeRef }}" style="position:absolute; top:0; right:clamp(-80px,-2vw,0px); width:min(58vw,720px); height:100vh; z-index:2; pointer-events:none;"></canvas>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:6; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:space-between; padding:30px clamp(28px,5vw,72px);">
+    <div style="display:flex; align-items:center; gap:9px; font-size:18px; font-weight:700; letter-spacing:-0.03em;">
+      <span>Workflow</span>
+      <span data-accent="bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 12px rgba(75,250,200,0.8);"></span>
+      <span>Wonder</span>
+    </div>
+    <nav style="display:flex; align-items:center; gap:clamp(18px,2.4vw,38px); font-size:14.5px; color:rgba(244,243,247,0.66);">
+      <div onMouseEnter="{{ navEnter }}" onMouseLeave="{{ navLeave }}" style="position:relative;">
+        <span onClick="{{ navToggle }}" style="display:inline-flex; align-items:center; gap:6px; color:inherit; cursor:pointer;">
+          Services
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="{{ navChevStyle }}"><path d="M5 9l7 7 7-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </span>
+        <div style="{{ navPanelStyle }}">
+          <div style="min-width:312px; background:rgba(12,12,18,0.97); border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:8px; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 60px rgba(0,0,0,0.5); display:flex; flex-direction:column; gap:2px;">
+            <a href="Service%20Animation%20Workflow.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(75,250,200,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.8);"></span>Automatisation des workflows</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Workflows · agents · relais</span>
+            </a>
+            <a href="Service%20Agents%20IA.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(139,124,255,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.8);"></span>Agents &amp; assistants IA</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Agents · IA · décision</span>
+            </a>
+            <a href="Service%20Sites%20Boutiques.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(240,169,78,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#f0a94e; box-shadow:0 0 9px rgba(240,169,78,0.8);"></span>Sites &amp; boutiques en ligne</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Sites · boutiques · e-commerce</span>
+            </a>
+            <a href="Blog%20Index.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(106,168,255,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#6aa8ff; box-shadow:0 0 9px rgba(106,168,255,0.8);"></span>Visibilité &amp; performance</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Articles · Journal</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <a href="#" style="color:inherit; text-decoration:none;">Approche</a>
+      <a href="#" data-accent="border" style="color:#f4f3f7; text-decoration:none; border:1px solid rgba(244,243,247,0.18); padding:9px 18px; border-radius:999px;">Discutons</a>
+    </nav>
+  </header>
+
+  <main style="position:relative; z-index:2; display:flex; flex-direction:column; justify-content:center; min-height:100vh; box-sizing:border-box; padding:clamp(122px,14vh,156px) clamp(28px,5vw,72px) clamp(56px,8vh,90px); max-width:980px;">
+    <div style="overflow:hidden; margin-bottom:26px;">
+      <div data-accent="dot-wrap" style="display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(244,243,247,0.62); opacity:0; animation:wwUp .8s cubic-bezier(.16,1,.3,1) .05s forwards;">
+        <span data-accent="bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.7);"></span>
+        <span>Automatisation IA</span>
+        <span style="display:inline-flex; align-items:center; gap:5px;">
+          <svg width="10" height="12" viewBox="0 0 24 28" fill="none" style="flex:none;"><path d="M12 1.5 C6 1.5 1.6 6 1.6 11.8 c0 7.6 10.4 14.7 10.4 14.7 s10.4 -7.1 10.4 -14.7 C22.4 6 18 1.5 12 1.5 Z" stroke="currentColor" stroke-width="2.2"></path><circle cx="12" cy="11.8" r="3.2" fill="currentColor"></circle></svg>
+          {{ city }}, QC
+        </span>
+      </div>
+    </div>
+
+    <h1 style="margin:0; font-weight:600; letter-spacing:-0.035em; line-height:0.98; font-size:clamp(42px,7vw,98px);">
+      <span style="display:block; overflow:hidden; padding-bottom:0.04em;">
+        <span style="display:block; transform:translateY(112%); animation:wwRise 1s cubic-bezier(.16,1,.3,1) .12s forwards;">{{ line1 }}</span>
+      </span>
+      <span style="display:block; overflow:hidden; padding-bottom:0.04em;">
+        <span style="display:block; transform:translateY(112%); animation:wwRise 1s cubic-bezier(.16,1,.3,1) .26s forwards;">{{ line2pre }} <span data-accent="grad" style="background-image:linear-gradient(100deg,#8b7cff,#c08bff,#8b7cff); background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; animation:wwShine 6s linear infinite;">{{ accentWord }}</span>{{ line2post }}</span>
+      </span>
+    </h1>
+
+    <p style="max-width:540px; margin:30px 0 0; font-size:clamp(16px,1.35vw,19px); line-height:1.55; color:rgba(244,243,247,0.7); opacity:0; animation:wwUp .9s cubic-bezier(.16,1,.3,1) .5s forwards;">Basé à <span data-accent="text" style="color:#4bfac8; font-weight:600;">{{ city }}</span>, au service des entrepreneurs du Québec. {{ sub }}</p>
+
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-top:40px; opacity:0; animation:wwUp .9s cubic-bezier(.16,1,.3,1) .64s forwards;">
+      <a href="#" class="ww-cta-fill" style="display:inline-flex; align-items:center; gap:10px; color:var(--ww-accent,#4bfac8); font-weight:600; font-size:15.5px; padding:15px 26px; border-radius:999px; text-decoration:none; background:transparent; border:1.5px solid var(--ww-accent,#4bfac8); transition:color .35s ease, box-shadow .35s ease;">{{ cta1 }}</a>
+      <a href="#" style="display:inline-flex; align-items:center; gap:10px; color:#f4f3f7; font-weight:500; font-size:15.5px; padding:15px 24px; border-radius:999px; text-decoration:none; border:1px solid rgba(244,243,247,0.16);">{{ cta2 }}</a>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:28px; margin-top:54px; opacity:0; animation:wwUp .9s cubic-bezier(.16,1,.3,1) .8s forwards;">
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Automatisation · Agents IA</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Gain de temps</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Croissance business</span>
+    </div>
+  </main>
+
+  <section style="position:relative; z-index:2; padding:clamp(70px,11vh,150px) clamp(28px,5vw,72px) clamp(40px,7vh,90px); max-width:1180px; margin:0 auto; box-sizing:border-box;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:48px;">
+      <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; line-height:1.0; font-size:clamp(30px,4.2vw,52px); max-width:640px;">Moins de tâches répétitives.<br>Plus de temps pour votre croissance.</h2>
+      <canvas ref="{{ labelRef }}" style="display:block; align-self:flex-end; height:17px;"></canvas>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(440px,1fr)); gap:18px;">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="4">
+        <a data-card href="{{ s.href }}" style="background:transparent; border:none; border-radius:0; padding:30px 28px; transition:background .3s; display:flex; flex-direction:column; text-decoration:none; color:inherit;" style-hover="background:rgba(255,255,255,0.03);">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+            <span data-accent="text" style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">{{ s.no }}</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.32);">{{ s.tag }}</span>
+          </div>
+          <h3 style="margin:0 0 10px; font-weight:600; font-size:22px; letter-spacing:-0.02em;">{{ s.title }}</h3>
+          <p style="margin:0 0 22px; font-size:14.5px; line-height:1.55; color:rgba(244,243,247,0.62);">{{ s.desc }}</p>
+          <div style="display:flex; flex-direction:column; gap:11px; margin-top:auto; padding-top:20px; border-top:1px solid rgba(244,243,247,0.07);">
+            <sc-for list="{{ s.items }}" as="it" hint-placeholder-count="3">
+              <div style="display:flex; align-items:center; gap:11px; font-size:14.5px; color:rgba(244,243,247,0.82);">
+                <span data-accent="bg" style="flex:none; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span>
+                <span>{{ it.t }}</span>
+                <sc-if value="{{ it.soon }}" hint-placeholder-val="{{ false }}">
+                  <span style="flex:none; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; padding:2px 8px; border-radius:999px; border:1px solid rgba(244,243,247,0.2); color:rgba(244,243,247,0.5);">Bientôt</span>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ s.cta }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; align-items:center; gap:8px; margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:#4bfac8;">{{ s.cta }} <span style="font-size:14px;">→</span></div>
+          </sc-if>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="position:relative; z-index:2; padding:clamp(40px,7vh,90px) clamp(28px,5vw,72px) clamp(50px,8vh,100px); max-width:1180px; margin:0 auto; box-sizing:border-box;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:18px;">
+      <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; line-height:1.0; font-size:clamp(30px,4.2vw,52px); max-width:680px;">Pensé pour les entrepreneurs<br>prêts à passer à l'échelle.</h2>
+      <canvas ref="{{ labelRef2 }}" style="display:block; align-self:flex-end; height:17px;"></canvas>
+    </div>
+    <p style="margin:0 0 48px; max-width:620px; font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:rgba(244,243,247,0.6);">Notre meilleur partenaire de travail : un solopreneur ou une petite équipe du Québec qui a déjà de la traction, et qui sent que le « tout-à-la-main » commence à freiner sa croissance.</p>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:#4bfac8;">Vous êtes au bon endroit si…</div>
+      <div style="display:flex; gap:10px;">
+        <button onClick="{{ siPrev }}" aria-label="Précédent" style="{{ siPrevStyle }}" style-hover="background:rgba(255,255,255,0.07); border-color:rgba(244,243,247,0.32);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <button onClick="{{ siNext }}" aria-label="Suivant" style="{{ siNextStyle }}" style-hover="background:rgba(255,255,255,0.07); border-color:rgba(244,243,247,0.32);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      </div>
+    </div>
+    <div ref="{{ siVpRef }}" onPointerDown="{{ siDown }}" style="overflow:hidden; margin-bottom:20px; cursor:grab; touch-action:pan-y; user-select:none; -webkit-user-select:none;" style-active="cursor:grabbing;">
+      <div ref="{{ siTrackRef }}" class="ww-si-track" style="{{ siTrackTransform }}">
+        <div class="ww-si-card" data-card style="display:flex; gap:16px; padding:24px 24px; border-radius:14px; border:1px solid rgba(244,243,247,0.09); background:rgba(255,255,255,0.02); transition:background .3s, border-color .3s;" style-hover="background:rgba(255,255,255,0.045); border-color:rgba(244,243,247,0.16);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8; flex:none;">01</span>
+          <p style="margin:0; font-size:15.5px; line-height:1.5; color:rgba(244,243,247,0.82);">Vous passez trop d'heures sur des tâches répétitives qu'un système pourrait gérer seul.</p>
+        </div>
+        <div class="ww-si-card" data-card style="display:flex; gap:16px; padding:24px 24px; border-radius:14px; border:1px solid rgba(244,243,247,0.09); background:rgba(255,255,255,0.02); transition:background .3s, border-color .3s;" style-hover="background:rgba(255,255,255,0.045); border-color:rgba(244,243,247,0.16);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8; flex:none;">02</span>
+          <p style="margin:0; font-size:15.5px; line-height:1.5; color:rgba(244,243,247,0.82);">Votre activité grandit plus vite que votre capacité à tout suivre à la main.</p>
+        </div>
+        <div class="ww-si-card" data-card style="display:flex; gap:16px; padding:24px 24px; border-radius:14px; border:1px solid rgba(244,243,247,0.09); background:rgba(255,255,255,0.02); transition:background .3s, border-color .3s;" style-hover="background:rgba(255,255,255,0.045); border-color:rgba(244,243,247,0.16);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8; flex:none;">03</span>
+          <p style="margin:0; font-size:15.5px; line-height:1.5; color:rgba(244,243,247,0.82);">Vous voulez intégrer l'IA dans votre business, sans savoir par où commencer.</p>
+        </div>
+        <div class="ww-si-card" data-card style="display:flex; gap:16px; padding:24px 24px; border-radius:14px; border:1px solid rgba(244,243,247,0.09); background:rgba(255,255,255,0.02); transition:background .3s, border-color .3s;" style-hover="background:rgba(255,255,255,0.045); border-color:rgba(244,243,247,0.16);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8; flex:none;">04</span>
+          <p style="margin:0; font-size:15.5px; line-height:1.5; color:rgba(244,243,247,0.82);">Vos outils ne se parlent pas, vous copiez-collez sans arrêt d'un onglet à l'autre.</p>
+        </div>
+        <div class="ww-si-card" data-card style="display:flex; gap:16px; padding:24px 24px; border-radius:14px; border:1px solid rgba(244,243,247,0.09); background:rgba(255,255,255,0.02); transition:background .3s, border-color .3s;" style-hover="background:rgba(255,255,255,0.045); border-color:rgba(244,243,247,0.16);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8; flex:none;">05</span>
+          <p style="margin:0; font-size:15.5px; line-height:1.5; color:rgba(244,243,247,0.82);">Vous voulez un site ou une boutique qui travaille vraiment pour vous, pas juste une vitrine.</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:7px; align-items:center; margin-bottom:54px;">
+      <sc-for list="{{ siDots }}" as="dot" hint-placeholder-count="3">
+        <button onClick="{{ dot.on }}" aria-label="Aller à la diapositive" style="{{ dot.style }}"></button>
+      </sc-for>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px;">
+      <div style="border:1px solid rgba(75,250,200,0.28); background:rgba(75,250,200,0.04); border-radius:18px; padding:32px 30px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+          <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#4bfac8;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17.5 L19 6.5" stroke="#07070b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <h3 style="margin:0; font-size:18px; font-weight:600; letter-spacing:-0.02em;">C'est fait pour vous</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span><span>Solopreneur ou petite équipe (2 à 10 personnes)</span></div>
+          <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span><span>Déjà un peu de volume et de revenus à optimiser</span></div>
+          <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span><span>Prêt à investir pour récupérer du temps</span></div>
+          <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span><span>Ouvert au changement, avec une vision long terme</span></div>
+        </div>
+      </div>
+      <div style="border:1px solid rgba(244,243,247,0.09); border-radius:18px; padding:32px 30px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+          <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; border:1px solid rgba(244,243,247,0.22);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M6 6 L18 18 M18 6 L6 18" stroke="rgba(244,243,247,0.4)" stroke-width="3" stroke-linecap="round"></path></svg></span>
+          <h3 style="margin:0; font-size:18px; font-weight:600; letter-spacing:-0.02em; color:rgba(244,243,247,0.7);">Ce n'est pas (encore) pour vous</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:rgba(244,243,247,0.5);"><span style="flex:none; margin-top:10px; width:9px; height:1px; background:rgba(244,243,247,0.3);"></span><span>Grande entreprise aux processus lourds et figés</span></div>
+          <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:rgba(244,243,247,0.5);"><span style="flex:none; margin-top:10px; width:9px; height:1px; background:rgba(244,243,247,0.3);"></span><span>Projet sans budget ni revenus encore à automatiser</span></div>
+          <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:rgba(244,243,247,0.5);"><span style="flex:none; margin-top:10px; width:9px; height:1px; background:rgba(244,243,247,0.3);"></span><span>Recherche avant tout le prestataire le moins cher</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="position:relative; z-index:2; padding:clamp(30px,6vh,70px) clamp(28px,5vw,72px) clamp(50px,8vh,90px); margin:0 auto; box-sizing:border-box; text-align:center;">
+    <h2 style="margin:0 0 38px; font-weight:600; letter-spacing:-0.02em; font-size:clamp(22px,2.6vw,30px); color:#f4f3f7;">On se connecte à vos outils</h2>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:20px 40px;">
+      <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="31">
+        <span style="display:inline-flex; align-items:center; gap:9px; font-size:clamp(17px,1.8vw,21px); font-weight:500; letter-spacing:-0.01em; color:rgba(244,243,247,0.42); transition:color .2s; cursor:default;" style-hover="color:#f4f3f7;">
+          <sc-if value="{{ tool.path }}" hint-placeholder-val="{{ false }}">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="flex:none; display:block;"><path d="{{ tool.path }}"></path></svg>
+          </sc-if>
+          <span>{{ tool.name }}</span>
+        </span>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="position:relative; z-index:2; padding:clamp(40px,7vh,90px) clamp(28px,5vw,72px) clamp(50px,8vh,100px); max-width:1180px; margin:0 auto; box-sizing:border-box;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:18px;">
+      <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; line-height:1.0; font-size:clamp(30px,4.2vw,52px); max-width:680px;">On bâtit. Vous possédez.</h2>
+      <canvas ref="{{ labelRef3 }}" style="display:block; align-self:flex-end; height:17px;"></canvas>
+    </div>
+    <p style="margin:0 0 52px; max-width:640px; font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:rgba(244,243,247,0.65);">De la première ligne de code jusqu'à la remise des clés, tout est pensé pour que vous restiez propriétaire, comme une maison qu'on construit pour vous, sur votre terrain.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0;">
+      <div style="position:relative; padding:0 22px 0 0;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;"><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">01</span><span style="flex:1; height:1px; background:linear-gradient(90deg,#4bfac8,rgba(75,250,200,0.15));"></span></div>
+        <h3 style="margin:0 0 8px; font-size:18px; font-weight:600; letter-spacing:-0.02em;">On construit sur vos comptes</h3>
+        <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.6);">Tout est mis en place depuis vos propres accès, votre compte Google, vos outils, vos données.</p>
+      </div>
+      <div style="position:relative; padding:0 22px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;"><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">02</span><span style="flex:1; height:1px; background:linear-gradient(90deg,#4bfac8,rgba(75,250,200,0.15));"></span></div>
+        <h3 style="margin:0 0 8px; font-size:18px; font-weight:600; letter-spacing:-0.02em;">On documente tout</h3>
+        <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.6);">Chaque automatisation, chaque système est documenté clairement, pour que rien ne dépende de notre mémoire.</p>
+      </div>
+      <div style="position:relative; padding:0 22px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;"><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">03</span><span style="flex:1; height:1px; background:linear-gradient(90deg,#4bfac8,rgba(75,250,200,0.15));"></span></div>
+        <h3 style="margin:0 0 8px; font-size:18px; font-weight:600; letter-spacing:-0.02em;">On vous remet les clés</h3>
+        <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.6);">Accès complets, code, documentation : tout vous est transféré. On reste pour l'hébergement, par confort, pas par contrainte.</p>
+      </div>
+      <div style="position:relative; padding:0 0 0 22px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;"><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#4bfac8;">04</span><span style="flex:1; height:1px; background:rgba(75,250,200,0.15);"></span></div>
+        <h3 style="margin:0 0 8px; font-size:18px; font-weight:600; letter-spacing:-0.02em;">C'est 100 % à vous</h3>
+        <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,243,247,0.6);">Vous pouvez tout reprendre, l'héberger vous-même et continuer à le faire tourner. Sans nous, si vous le souhaitez.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:46px; font-size:clamp(17px,1.8vw,22px); font-weight:600; letter-spacing:-0.02em; color:#f4f3f7;">Zéro dépendance. <span style="color:rgba(244,243,247,0.55); font-weight:400;">Votre système vous suit partout, avec ou sans nous.</span></div>
+  </section>
+
+  <section style="position:relative; z-index:2; padding:clamp(40px,7vh,90px) clamp(28px,5vw,72px) clamp(50px,8vh,100px); max-width:1180px; margin:0 auto; box-sizing:border-box;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:18px;">
+      <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; line-height:1.0; font-size:clamp(30px,4.2vw,52px); max-width:680px;">Combien ça coûte ?<br>Ça commence par une consultation. Gratuite.</h2>
+      <canvas ref="{{ labelRef4 }}" style="display:block; align-self:flex-end; height:17px;"></canvas>
+    </div>
+    <p style="margin:0 0 30px; max-width:660px; font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:rgba(244,243,247,0.65);">Chaque projet est unique, alors plutôt qu'un prix tout fait, on part d'une consultation gratuite pour comprendre vos besoins. Vous repartez avec un plan d'action clair, et un devis détaillé sous 24&nbsp;h. <span data-accent="text" style="color:#4bfac8;">Sans engagement.</span></p>
+
+    <div style="margin:0 0 40px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.42); margin-bottom:16px;">Quelques repères, pour situer</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px;">
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:22px 22px; display:flex; flex-direction:column; gap:5px;">
+          <span style="font-size:14.5px; font-weight:600; letter-spacing:-0.01em; color:#f4f3f7;">Automatisation · template</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(244,243,247,0.45); margin-top:6px;">à partir de</span>
+          <span style="font-size:27px; font-weight:600; letter-spacing:-0.02em; color:#4bfac8;">250&nbsp;$<span style="font-size:14px; font-weight:500; color:rgba(244,243,247,0.4); margin-left:2px;">CA</span></span>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:22px 22px; display:flex; flex-direction:column; gap:5px;">
+          <span style="font-size:14.5px; font-weight:600; letter-spacing:-0.01em; color:#f4f3f7;">Page événement</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(244,243,247,0.45); margin-top:6px;">à partir de</span>
+          <span style="font-size:27px; font-weight:600; letter-spacing:-0.02em; color:#4bfac8;">500&nbsp;$<span style="font-size:14px; font-weight:500; color:rgba(244,243,247,0.4); margin-left:2px;">CA</span></span>
+        </div>
+        <div style="border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:22px 22px; display:flex; flex-direction:column; gap:5px;">
+          <span style="font-size:14.5px; font-weight:600; letter-spacing:-0.01em; color:#f4f3f7;">Landing page</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(244,243,247,0.45); margin-top:6px;">à partir de</span>
+          <span style="font-size:27px; font-weight:600; letter-spacing:-0.02em; color:#4bfac8;">1&nbsp;000&nbsp;$<span style="font-size:14px; font-weight:500; color:rgba(244,243,247,0.4); margin-left:2px;">CA</span></span>
+        </div>
+        <div style="border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:22px 22px; display:flex; flex-direction:column; gap:5px; background:rgba(139,124,255,0.05);">
+          <span style="font-size:14.5px; font-weight:600; letter-spacing:-0.01em; color:#f4f3f7;">Agents IA &amp; sur mesure</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(244,243,247,0.45); margin-top:6px;">selon le projet</span>
+          <span style="font-size:27px; font-weight:600; letter-spacing:-0.02em; color:#8b7cff;">Sur devis</span>
+        </div>
+      </div>
+      <p style="margin:18px 0 0; max-width:680px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.6);"><span style="color:#f4f3f7; font-weight:600;">Ce sont des points de départ.</span> Plus le projet est complexe et personnalisé, plus l'investissement grandit, le prix exact, c'est après la consultation gratuite.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; margin-bottom:46px;">
+      <div style="border:1px solid rgba(75,250,200,0.28); background:rgba(75,250,200,0.04); border-radius:18px; padding:34px 32px; display:flex; flex-direction:column;">
+        <span style="display:inline-flex; align-self:flex-start; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#07070b; background:#4bfac8; padding:6px 12px; border-radius:999px; margin-bottom:22px;">Consultation gratuite · sans engagement</span>
+        <h3 style="margin:0 0 10px; font-size:20px; font-weight:600; letter-spacing:-0.02em;">Ce que vous obtenez</h3>
+        <div style="display:flex; flex-direction:column; gap:13px; margin-bottom:28px;">
+          <div style="display:flex; align-items:center; gap:11px; font-size:15px; color:rgba(244,243,247,0.85);"><span data-accent="bg" style="flex:none; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span>Un plan d'action clair &amp; priorisé</div>
+          <div style="display:flex; align-items:center; gap:11px; font-size:15px; color:rgba(244,243,247,0.85);"><span data-accent="bg" style="flex:none; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span>Des recommandations concrètes</div>
+          <div style="display:flex; align-items:center; gap:11px; font-size:15px; color:rgba(244,243,247,0.85);"><span data-accent="bg" style="flex:none; width:5px; height:5px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.7);"></span>Un devis détaillé sous 24&nbsp;h</div>
+        </div>
+        <a href="#" data-accent="bg" style="margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:10px; background:#4bfac8; color:#07070b; font-weight:600; font-size:15.5px; padding:14px 26px; border-radius:999px; text-decoration:none;">Réservez votre consultation gratuite <span style="font-size:17px;">→</span></a>
+      </div>
+
+      <div style="border:1px solid rgba(244,243,247,0.1); border-radius:18px; padding:34px 32px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.42);">Ce qui fait varier votre devis</span>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px 22px; margin-top:22px;">
+          <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.4; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8;"></span>Les outils &amp; abonnements nécessaires</div>
+          <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.4; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8;"></span>La taille de votre entreprise</div>
+          <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.4; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8;"></span>Le volume de données à traiter</div>
+          <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.4; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8;"></span>L'usage de l'IA (tokens &amp; modèle)</div>
+          <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.4; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8;"></span>Le niveau de personnalisation</div>
+          <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.4; color:rgba(244,243,247,0.82);"><span data-accent="bg" style="flex:none; margin-top:7px; width:5px; height:5px; border-radius:999px; background:#4bfac8;"></span>Le contenu déjà en place</div>
+        </div>
+        <div style="margin-top:24px; padding-top:22px; border-top:1px solid rgba(244,243,247,0.08); font-size:14.5px; line-height:1.55; color:rgba(244,243,247,0.7);"><span style="color:#4bfac8; font-weight:600;">Bonne nouvelle :</span> plus vous avez déjà de matière, une marque, un site, des données, plus le projet est simple, et moins il coûte. <span style="color:#f4f3f7;">Revamper un site existant revient moins cher que repartir de zéro.</span></div>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:14px;">
+      <div style="flex:1 1 240px; display:flex; gap:12px; padding:20px 22px; border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(244,243,247,0.07);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#4bfac8; flex:none;">01</span>
+        <div><div style="font-size:15px; font-weight:600; margin-bottom:4px;">Options de paiement flexibles</div><div style="font-size:13.5px; line-height:1.5; color:rgba(244,243,247,0.55);">On s'adapte à votre réalité, versements échelonnés selon le projet.</div></div>
+      </div>
+      <div style="flex:1 1 240px; display:flex; gap:12px; padding:20px 22px; border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(244,243,247,0.07);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#4bfac8; flex:none;">02</span>
+        <div><div style="font-size:15px; font-weight:600; margin-bottom:4px;">Vos abonnements, payés en direct</div><div style="font-size:13.5px; line-height:1.5; color:rgba(244,243,247,0.55);">Outils &amp; tokens IA réglés depuis vos comptes, aucune marge cachée.</div></div>
+      </div>
+      <div style="flex:1 1 240px; display:flex; gap:12px; padding:20px 22px; border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(244,243,247,0.07);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#4bfac8; flex:none;">03</span>
+        <div><div style="font-size:15px; font-weight:600; margin-bottom:4px;">Maintenance &amp; support en option</div><div style="font-size:13.5px; line-height:1.5; color:rgba(244,243,247,0.55);">Un accompagnement continu, seulement si vous le voulez.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="position:relative; z-index:2; padding:clamp(40px,7vh,90px) clamp(28px,5vw,72px) clamp(40px,7vh,90px); max-width:1180px; margin:0 auto; box-sizing:border-box;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:38px;">
+      <h2 style="margin:0; font-weight:600; letter-spacing:-0.03em; line-height:1.0; font-size:clamp(30px,4.2vw,52px); max-width:640px;">Le Journal</h2>
+      <a href="Blog%20Index.dc.html" style="font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.06em; color:rgba(244,243,247,0.6); text-decoration:none; display:inline-flex; align-items:center; gap:8px;" style-hover="color:#f4f3f7;">Tous les articles <span style="font-size:14px;">→</span></a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:16px;">
+      <a href="Article.dc.html?post=a" style="display:flex; flex-direction:column; gap:14px; padding:28px 26px; border:1px solid rgba(244,243,247,0.1); border-radius:18px; text-decoration:none; color:inherit; transition:border-color .3s;" style-hover="border-color:rgba(75,250,200,0.4);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:#4bfac8;">Automatisation · 5 min</span>
+        <h3 style="margin:0; font-weight:600; font-size:19px; letter-spacing:-0.02em; line-height:1.25; text-wrap:balance;">L'automatisation et l'IA pour générer des leads : qui en bénéficie le plus ?</h3>
+        <p style="margin:0; font-size:14px; line-height:1.5; color:rgba(244,243,247,0.6);">Comment l'automatisation génère des leads, même quand vous dormez.</p>
+      </a>
+      <a href="Article.dc.html?post=b" style="display:flex; flex-direction:column; gap:14px; padding:28px 26px; border:1px solid rgba(244,243,247,0.1); border-radius:18px; text-decoration:none; color:inherit; transition:border-color .3s;" style-hover="border-color:rgba(139,124,255,0.45);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:#8b7cff;">Agents IA · 5 min</span>
+        <h3 style="margin:0; font-weight:600; font-size:19px; letter-spacing:-0.02em; line-height:1.25; text-wrap:balance;">Le support 24/7 : l'avantage concurrentiel que vos concurrents n'ont pas</h3>
+        <p style="margin:0; font-size:14px; line-height:1.5; color:rgba(244,243,247,0.6);">Capturez les leads que vous perdez chaque soir, après la fermeture.</p>
+      </a>
+      <a href="Article.dc.html?post=c" style="display:flex; flex-direction:column; gap:14px; padding:28px 26px; border:1px solid rgba(244,243,247,0.1); border-radius:18px; text-decoration:none; color:inherit; transition:border-color .3s;" style-hover="border-color:rgba(106,168,255,0.45);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:#6aa8ff;">Visibilité · 7 min</span>
+        <h3 style="margin:0; font-weight:600; font-size:19px; letter-spacing:-0.02em; line-height:1.25; text-wrap:balance;">Votre site web, le SEO, le GEO et l'AEO : la fondation invisible de votre croissance</h3>
+        <p style="margin:0; font-size:14px; line-height:1.5; color:rgba(244,243,247,0.6);">Des résultats Google aux réponses de ChatGPT : trois couches, une stratégie.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer style="position:relative; z-index:2; border-top:1px solid rgba(244,243,247,0.08); background:rgba(9,8,12,0.74); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,8vh,88px) clamp(28px,5vw,72px) 30px; box-sizing:border-box;">
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:clamp(24px,2.4vw,36px); align-items:stretch; padding-bottom:clamp(48px,6vh,70px); margin-bottom:clamp(48px,6vh,70px); border-bottom:1px solid rgba(244,243,247,0.08);">
+
+        <div style="position:relative; overflow:hidden; border:1px solid rgba(139,124,255,0.28); border-radius:24px; padding:clamp(34px,3.4vw,48px); display:flex; flex-direction:column; background:linear-gradient(165deg, rgba(139,124,255,0.12), rgba(18,16,26,0.4) 52%);">
+          <div style="position:absolute; top:-40%; right:-25%; width:75%; height:90%; background:radial-gradient(circle, rgba(139,124,255,0.3), rgba(139,124,255,0) 68%); pointer-events:none;"></div>
+          <div style="position:relative; display:inline-flex; align-self:flex-start; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(244,243,247,0.7); padding:7px 13px; border:1px solid rgba(244,243,247,0.16); border-radius:999px; margin-bottom:26px;">
+            <span data-accent="bg" style="width:6px; height:6px; border-radius:999px; background:#4bfac8; box-shadow:0 0 10px rgba(75,250,200,0.8);"></span> Consultation gratuite · sans engagement
+          </div>
+          <h2 style="position:relative; margin:0; font-weight:600; letter-spacing:-0.03em; line-height:1.0; font-size:clamp(30px,3.4vw,46px);">Prêt à gagner<br>du temps ?</h2>
+          <p style="position:relative; margin:18px 0 0; max-width:400px; font-size:16px; line-height:1.55; color:rgba(244,243,247,0.7);">Parlons de votre activité. On revient vers vous sous 24&nbsp;h avec une première piste d'automatisation concrète.</p>
+          <div style="position:relative; display:flex; flex-wrap:wrap; align-items:center; gap:14px 22px; margin-top:auto; padding-top:32px;">
+            <a href="#" class="ww-cta-fill" style="display:inline-flex; align-items:center; gap:10px; color:var(--ww-accent,#4bfac8); font-weight:600; font-size:16px; padding:16px 28px; border-radius:999px; text-decoration:none; background:transparent; border:1.5px solid var(--ww-accent,#4bfac8); white-space:nowrap; transition:color .35s ease, box-shadow .35s ease;">Parlons-en</a>
+            <a href="mailto:bonjour@workflowwonder.com" data-accent="text" style="display:inline-flex; align-items:center; gap:8px; font-size:15px; color:#8b7cff; text-decoration:none;" style-hover="color:#fff;">ou écrivez-nous</a>
+          </div>
+        </div>
+
+        <div class="ww-faq" style="display:flex; flex-direction:column;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.18em; text-transform:uppercase; color:#4bfac8;">FAQ</span>
+            <span style="flex:1; height:1px; background:rgba(244,243,247,0.1);"></span>
+          </div>
+          <details open style="border-bottom:1px solid rgba(244,243,247,0.08);">
+            <summary style="display:flex; align-items:center; justify-content:space-between; gap:18px; padding:19px 2px; cursor:pointer;">
+              <span class="ww-q" style="font-size:16px; font-weight:600; letter-spacing:-0.01em; color:rgba(244,243,247,0.86);">Combien de temps prend un projet ?</span>
+              <span class="ww-chev" data-accent="text" style="flex:none; font-size:20px; line-height:1; font-weight:300; color:#4bfac8;">+</span>
+            </summary>
+            <p class="ww-a" style="margin:0; padding:0 2px 22px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.62);">La plupart des projets sont livrés en 2 à 6 semaines selon leur ampleur. Vous recevez un échéancier clair dès la consultation.</p>
+          </details>
+          <details style="border-bottom:1px solid rgba(244,243,247,0.08);">
+            <summary style="display:flex; align-items:center; justify-content:space-between; gap:18px; padding:19px 2px; cursor:pointer;">
+              <span class="ww-q" style="font-size:16px; font-weight:600; letter-spacing:-0.01em; color:rgba(244,243,247,0.86);">Est-ce que je reste propriétaire de mes systèmes ?</span>
+              <span class="ww-chev" data-accent="text" style="flex:none; font-size:20px; line-height:1; font-weight:300; color:#4bfac8;">+</span>
+            </summary>
+            <p class="ww-a" style="margin:0; padding:0 2px 22px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.62);">Oui, à 100 %. Tout est bâti sur vos propres comptes et vous est transféré, code, accès et documentation compris.</p>
+          </details>
+          <details style="border-bottom:1px solid rgba(244,243,247,0.08);">
+            <summary style="display:flex; align-items:center; justify-content:space-between; gap:18px; padding:19px 2px; cursor:pointer;">
+              <span class="ww-q" style="font-size:16px; font-weight:600; letter-spacing:-0.01em; color:rgba(244,243,247,0.86);">Combien ça coûte ?</span>
+              <span class="ww-chev" data-accent="text" style="flex:none; font-size:20px; line-height:1; font-weight:300; color:#4bfac8;">+</span>
+            </summary>
+            <p class="ww-a" style="margin:0; padding:0 2px 22px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.62);">Chaque projet est unique. On part d'une consultation gratuite, puis vous recevez un devis détaillé sous 24&nbsp;h, sans engagement.</p>
+          </details>
+          <details style="border-bottom:1px solid rgba(244,243,247,0.08);">
+            <summary style="display:flex; align-items:center; justify-content:space-between; gap:18px; padding:19px 2px; cursor:pointer;">
+              <span class="ww-q" style="font-size:16px; font-weight:600; letter-spacing:-0.01em; color:rgba(244,243,247,0.86);">Faut-il des connaissances techniques de notre côté ?</span>
+              <span class="ww-chev" data-accent="text" style="flex:none; font-size:20px; line-height:1; font-weight:300; color:#4bfac8;">+</span>
+            </summary>
+            <p class="ww-a" style="margin:0; padding:0 2px 22px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.62);">Aucune. On s'occupe de la mise en place et on vous forme à l'essentiel pour que vous restiez autonome.</p>
+          </details>
+          <details style="border-bottom:1px solid rgba(244,243,247,0.08);">
+            <summary style="display:flex; align-items:center; justify-content:space-between; gap:18px; padding:19px 2px; cursor:pointer;">
+              <span class="ww-q" style="font-size:16px; font-weight:600; letter-spacing:-0.01em; color:rgba(244,243,247,0.86);">Avec quels outils travaillez-vous ?</span>
+              <span class="ww-chev" data-accent="text" style="flex:none; font-size:20px; line-height:1; font-weight:300; color:#4bfac8;">+</span>
+            </summary>
+            <p class="ww-a" style="margin:0; padding:0 2px 22px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.62);">On se connecte à vos outils existants si possible, CRM, courriel, e-commerce, etc., plutôt que de tout remplacer.</p>
+          </details>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:48px;">
+
+        <div style="max-width:330px;">
+          <div style="display:flex; align-items:center; gap:9px; margin-bottom:18px; font-size:18px; font-weight:700; letter-spacing:-0.03em;">
+            <span>Workflow</span>
+            <span data-accent="bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 12px rgba(75,250,200,0.8);"></span>
+            <span>Wonder</span>
+          </div>
+          <p style="margin:0 0 20px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.55);">Automatisations IA et systèmes sur mesure pour les entrepreneurs qui veulent gagner du temps et développer leur activité.</p>
+          <a href="mailto:bonjour@workflowwonder.com" data-accent="text" style="font-size:14.5px; color:#8b7cff; text-decoration:none;">bonjour@workflowwonder.com</a>
+          <div style="font-size:14px; color:rgba(244,243,247,0.45); margin-top:6px;">+33 6 00 00 00 00</div>
+          <div style="display:flex; gap:10px; margin-top:22px;">
+            <a href="#" aria-label="Facebook" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">f</a>
+            <a href="#" aria-label="Instagram" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">ig</a>
+            <a href="#" aria-label="LinkedIn" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">in</a>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:clamp(36px,5vw,68px);">
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Services</span>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Automatisation des workflows</a>
+            <a href="Service%20Agents%20IA.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Agents &amp; assistants IA</a>
+            <a href="Service%20Sites%20Boutiques.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Sites &amp; boutiques en ligne</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Visibilité &amp; performance</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Entreprise</span>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">À propos</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Réalisations</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Approche</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Carrières</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Contact</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Ressources</span>
+            <a href="Blog%20Index.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Blog</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Études de cas</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">FAQ</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Tarifs</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px; margin-top:clamp(48px,7vh,72px); padding-top:26px; border-top:1px solid rgba(244,243,247,0.07);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(244,243,247,0.4);">© 2026 Workflow Wonder. Tous droits réservés.</span>
+        <div style="display:flex; flex-wrap:wrap; gap:24px; font-size:13px; color:rgba(244,243,247,0.5);">
+          <a href="#" style="color:inherit; text-decoration:none;" style-hover="color:#f4f3f7;">Mentions légales</a>
+          <a href="#" style="color:inherit; text-decoration:none;" style-hover="color:#f4f3f7;">Politique de confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1366, &quot;height&quot;: 768 },
+  &quot;concept&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;flow&quot;, &quot;aurora&quot;, &quot;grid&quot;], &quot;default&quot;: &quot;flow&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#4bfac8&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;city&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Montréal&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;line1&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Automatisez vos tâches,&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;line2pre&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;développez votre&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;accentWord&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;entreprise&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;line2post&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;.&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;sub&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Workflows automatisés et agents IA pour les entrepreneurs qui veulent libérer du temps, unifier leurs services et faire grandir leur activité.&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;cta1&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Démarrer un projet&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;cta2&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Voir nos réalisations&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  canvasRef = React.createRef();
+  rootRef = React.createRef();
+  globeRef = React.createRef();
+  labelRef = React.createRef();
+  labelRef2 = React.createRef();
+  labelRef3 = React.createRef();
+  labelRef4 = React.createRef();
+  siVpRef = React.createRef();
+  siTrackRef = React.createRef();
+  state = { concept: 'flow', navOpen: false, siIdx: 0, siStep: 0, siMax: 2, dragDX: 0, dragging: false };
+  navEnter = () => this.setState({ navOpen: true });
+  navLeave = () => this.setState({ navOpen: false });
+  navToggle = () => this.setState(s => ({ navOpen: !s.navOpen }));
+
+  measureSI = () => {
+    const vp = this.siVpRef.current, track = this.siTrackRef.current;
+    if (!vp || !track || !track.children.length) return;
+    const cw = track.children[0].getBoundingClientRect().width;
+    const gap = 14;
+    const step = cw + gap;
+    const perView = Math.max(1, Math.round((vp.clientWidth + gap) / step));
+    const maxIdx = Math.max(0, track.children.length - perView);
+    const idx = Math.min(this.state.siIdx, maxIdx);
+    if (Math.abs(step - this.state.siStep) > 0.5 || maxIdx !== this.state.siMax || idx !== this.state.siIdx)
+      this.setState({ siStep: step, siMax: maxIdx, siIdx: idx });
+  };
+  siPrev = () => this.setState(s => ({ siIdx: Math.max(0, s.siIdx - 1) }));
+  siNext = () => this.setState(s => ({ siIdx: Math.min(s.siMax, s.siIdx + 1) }));
+  siGoTo = (i) => this.setState(s => ({ siIdx: Math.max(0, Math.min(s.siMax, i)) }));
+
+  siDown = (e) => {
+    if (this.state.siMax <= 0 || (e.button != null && e.button !== 0)) return;
+    this._drag = { x: e.clientX, dx: 0 };
+    window.addEventListener('pointermove', this.siMove);
+    window.addEventListener('pointerup', this.siUp);
+    this.setState({ dragging: true });
+  };
+  siMove = (e) => {
+    if (!this._drag) return;
+    let dx = e.clientX - this._drag.x;
+    const atStart = this.state.siIdx <= 0, atEnd = this.state.siIdx >= this.state.siMax;
+    if ((atStart && dx > 0) || (atEnd && dx < 0)) dx *= 0.35;
+    this._drag.dx = dx;
+    this.setState({ dragDX: dx });
+  };
+  siUp = () => {
+    window.removeEventListener('pointermove', this.siMove);
+    window.removeEventListener('pointerup', this.siUp);
+    const d = this._drag ? this._drag.dx : 0;
+    this._drag = null;
+    const step = this.state.siStep || 1;
+    const threshold = Math.min(80, step * 0.22);
+    let idx = this.state.siIdx;
+    if (d <= -threshold) idx = Math.min(this.state.siMax, idx + 1);
+    else if (d >= threshold) idx = Math.max(0, idx - 1);
+    this.setState({ siIdx: idx, dragDX: 0, dragging: false });
+  };
+
+  componentDidMount() {
+    this.accent = this.props.accent || '#4bfac8';
+    const c = this.canvasRef.current;
+    this.ctx = c.getContext('2d');
+    this._resize = this.resize.bind(this);
+    window.addEventListener('resize', this._resize);
+    this.resize();
+    this._ro = new ResizeObserver(() => this.resize());
+    this._ro.observe(c);
+    requestAnimationFrame(() => this.resize());
+    const init = this.props.concept || 'flow';
+    this.concept = init;
+    this.initFor(init);
+    if (init !== this.state.concept) this.setState({ concept: init });
+    this.applyAccent();
+    // focal globe
+    const gc = this.globeRef.current;
+    if (gc) { this.gctx = gc.getContext('2d'); this.resizeGlobe(); this._ro2 = new ResizeObserver(() => this.resizeGlobe()); this._ro2.observe(gc); this.initGlobe(); }
+    this.setupLabel();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this.setupLabel());
+    this._loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this._loop);
+    window.addEventListener('resize', this.measureSI);
+    this.measureSI();
+    requestAnimationFrame(() => this.measureSI());
+    if (this.siVpRef.current) { this._siRo = new ResizeObserver(() => this.measureSI()); this._siRo.observe(this.siVpRef.current); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this.measureSI());
+  }
+  componentDidUpdate(prev) {
+    if (prev.accent !== this.props.accent) { this.accent = this.props.accent || '#8b7cff'; this.applyAccent(); }
+    if (this.props.concept && prev.concept !== this.props.concept) this.setConcept(this.props.concept);
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    if (this._ro) this._ro.disconnect();
+    if (this._ro2) this._ro2.disconnect();
+    if (this._siRo) this._siRo.disconnect();
+    window.removeEventListener('resize', this._resize);
+    window.removeEventListener('resize', this.measureSI);
+  }
+
+  setConcept(c) {
+    if (this.concept === c) return;
+    this.concept = c;
+    this.initFor(c);
+    this.setState({ concept: c });
+  }
+
+  resize() {
+    const c = this.canvasRef.current; if (!c) return;
+    const r = c.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.w = Math.max(1, r.width); this.h = Math.max(1, r.height);
+    c.width = this.w * dpr; c.height = this.h * dpr;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (this.resizeGlobe) this.resizeGlobe();
+  }
+  resizeGlobe() {
+    const c = this.globeRef.current; if (!c || !this.gctx) return;
+    const r = c.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.gw = Math.max(1, r.width); this.gh = Math.max(1, r.height);
+    c.width = this.gw * dpr; c.height = this.gh * dpr;
+    this.gctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // ---------- color helpers ----------
+  hexToRgb(hex) {
+    let h = (hex || '#4bfac8').replace('#', '');
+    if (h.length === 3) h = h.split('').map(x => x + x).join('');
+    const n = parseInt(h, 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+  rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    let hh = 0, s = 0, l = (mx + mn) / 2;
+    if (mx !== mn) {
+      const d = mx - mn;
+      s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+      if (mx === r) hh = (g - b) / d + (g < b ? 6 : 0);
+      else if (mx === g) hh = (b - r) / d + 2;
+      else hh = (r - g) / d + 4;
+      hh /= 6;
+    }
+    return { h: hh * 360, s, l };
+  }
+  hslToRgb(h, s, l) {
+    let r, g, b;
+    if (s === 0) { r = g = b = l; }
+    else {
+      const hue2rgb = (p, q, t) => { if (t < 0) t += 1; if (t > 1) t -= 1; if (t < 1 / 6) return p + (q - p) * 6 * t; if (t < 1 / 2) return q; if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6; return p; };
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1 / 3); g = hue2rgb(p, q, h); b = hue2rgb(p, q, h - 1 / 3);
+    }
+    return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+  }
+  applyAccent() {
+    const rgb = this.hexToRgb(this.accent);
+    this.aRgb = `${rgb.r},${rgb.g},${rgb.b}`;
+    const hsl = this.rgbToHsl(rgb.r, rgb.g, rgb.b);
+    this.aHsl = hsl;
+    const root = this.rootRef.current; if (!root) return;
+    root.style.setProperty('--ww-accent', this.accent);
+    root.style.setProperty('--ww-accent-rgb', this.aRgb);
+    const sec = `hsl(${(hsl.h + 38) % 360} ${Math.round(hsl.s * 100)}% ${Math.min(82, hsl.l * 100 + 6)}%)`;
+    const secRgb = this.hslToRgb(((hsl.h + 38) % 360) / 360, hsl.s, Math.min(82, hsl.l * 100 + 6) / 100);
+    this.secRgb = `${secRgb.r},${secRgb.g},${secRgb.b}`;
+    root.querySelectorAll('[data-accent="text"]').forEach(e => { e.style.color = this.accent; e.style.background = e.tagName === 'SPAN' && e.style.borderRadius ? this.accent : e.style.background; });
+    root.querySelectorAll('[data-accent="bg"]').forEach(e => { e.style.background = this.accent; });
+    root.querySelectorAll('[data-accent="grad"]').forEach(e => { e.style.backgroundImage = `linear-gradient(100deg, ${this.accent}, ${sec}, ${this.accent})`; });
+    // glow on hero buttons / logo
+    const logo = root.querySelector('header [data-accent="bg"]');
+    if (logo) logo.style.boxShadow = `0 0 18px rgba(${this.aRgb},0.7)`;
+    const primary = root.querySelector('main [data-accent="bg"]');
+    if (primary) primary.style.boxShadow = `0 8px 30px rgba(${this.aRgb},0.32)`;
+    this.refreshSwitcher();
+  }
+  refreshSwitcher() { this.forceUpdate(); }
+
+  // ---------- init per concept ----------
+  initFor(c) {
+    if (c === 'flow') this.initFlow();
+    else if (c === 'aurora') this.initAurora();
+    // grid is stateless
+  }
+  initFlow() {
+    const n = Math.min(84, Math.max(36, Math.floor(this.w * this.h / 18000)));
+    this.nodes = Array.from({ length: n }, () => ({
+      x: Math.random() * this.w, y: Math.random() * this.h,
+      bx: (Math.random() - 0.5) * 0.22, by: (Math.random() - 0.5) * 0.22,
+      r: Math.random() * 1.5 + 0.7, flash: 0
+    }));
+    this.pulses = []; this.nextPulse = 0;
+  }
+  initAurora() {
+    this.blobs = Array.from({ length: 5 }, (_, i) => ({
+      sx: 0.18 + Math.random() * 0.14, sy: 0.14 + Math.random() * 0.14,
+      px: Math.random() * Math.PI * 2, py: Math.random() * Math.PI * 2,
+      hue: (i - 2) * 26, rad: 0.42 + Math.random() * 0.3, a: 0.16 + Math.random() * 0.08
+    }));
+    this.specks = Array.from({ length: 26 }, () => ({
+      x: Math.random(), y: Math.random(), r: Math.random() * 1.4 + 0.4,
+      ph: Math.random() * Math.PI * 2, sp: 0.2 + Math.random() * 0.5
+    }));
+  }
+
+  loop(now) {
+    const t = now || performance.now();
+    const c = this.canvasRef.current;
+    if (c) { const r = c.getBoundingClientRect(); if (Math.abs(r.width - this.w) > 1 || Math.abs(r.height - this.h) > 1) this.resize(); }
+    const ctx = this.ctx;
+    if (ctx) {
+      if (this.concept === 'flow') this.drawFlow(ctx, t);
+      else if (this.concept === 'aurora') this.drawAurora(ctx, t);
+      else this.drawGrid(ctx, t);
+    }
+    if (this.gctx) this.drawGlobe(this.gctx, t);
+    if (this.lctx) this.drawLabel(t);
+    this.raf = requestAnimationFrame(this._loop);
+  }
+
+  setupLabel() {
+    this.labelDefs = this.labelDefs || [
+      { ref: this.labelRef, text: "CE QU'ON FAIT POUR VOUS", phase: 0 },
+      { ref: this.labelRef2, text: 'POUR QUI ?', phase: 0.28 },
+      { ref: this.labelRef3, text: 'PROPRIÉTÉ', phase: 0.52 },
+      { ref: this.labelRef4, text: 'INVESTISSEMENT', phase: 0.76 }
+    ];
+    this.labelFont = "500 12.5px 'JetBrains Mono', monospace";
+    this.labelLS = 2.25; // 0.18em * 12.5px
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    for (const def of this.labelDefs) {
+      const cv = def.ref.current; if (!cv) continue;
+      const ctx = cv.getContext('2d');
+      ctx.font = this.labelFont;
+      const hasLS = 'letterSpacing' in ctx;
+      if (hasLS) ctx.letterSpacing = this.labelLS + 'px';
+      const w = Math.ceil(ctx.measureText(def.text).width + (hasLS ? 0 : this.labelLS * (def.text.length - 1))) + 3;
+      const h = 17;
+      cv.width = w * dpr; cv.height = h * dpr;
+      cv.style.width = w + 'px'; cv.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      def.ctx = ctx; def.w = w; def.h = h;
+    }
+    this.lctx = true;
+  }
+
+  drawLabel(t) {
+    if (!this.labelDefs) return;
+    for (const def of this.labelDefs) {
+      const ctx = def.ctx, w = def.w, h = def.h; if (!ctx || !w) continue;
+      ctx.clearRect(0, 0, w, h);
+      ctx.font = this.labelFont;
+      const hasLS = 'letterSpacing' in ctx;
+      if (hasLS) ctx.letterSpacing = this.labelLS + 'px';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'left';
+      ctx.fillStyle = 'rgb(126,126,130)';
+      if (hasLS) { ctx.fillText(def.text, 0, h / 2 + 0.5); }
+      else { let x = 0; for (const ch of def.text) { ctx.fillText(ch, x, h / 2 + 0.5); x += ctx.measureText(ch).width + this.labelLS; } }
+      const period = 6000, band = w * 0.55;
+      const p = (((t / period) + def.phase) % 1 + 1) % 1;
+      const cx = -band + p * (w + 2 * band);
+      const g = ctx.createLinearGradient(cx - band, 0, cx + band, 0);
+      g.addColorStop(0, 'rgba(255,255,255,0)');
+      g.addColorStop(0.5, 'rgba(255,255,255,0.92)');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.globalCompositeOperation = 'source-atop';
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'source-over';
+    }
+  }
+
+  initGlobe() {
+    // atom: pulsing nucleus + electrons orbiting tilted rings (5 orbital planes)
+    const N = 3;
+    this.grings = Array.from({ length: N }, (_, i) => ({
+      ax: 1.15,
+      base: i * Math.PI / N,
+      e: Math.random() * 6.28,
+      spd: 0.0015 + i * 0.00035,
+      dir: i % 2 ? 1 : -1
+    }));
+  }
+
+  drawGlobe(ctx, t) {
+    if (!this.grings) return;
+    const w = this.gw, h = this.gh;
+    // two-color shimmer matching the "entreprise" gradient word (accent <-> secondary)
+    const A = (this.aRgb || '75,250,200').split(',').map(Number);
+    const B = (this.secRgb || this.aRgb || '139,200,255').split(',').map(Number);
+    const mix = (ph) => { const m = 0.5 + 0.5 * Math.sin(ph); return `${Math.round(A[0] + (B[0] - A[0]) * m)},${Math.round(A[1] + (B[1] - A[1]) * m)},${Math.round(A[2] + (B[2] - A[2]) * m)}`; };
+    ctx.clearRect(0, 0, w, h);
+    const cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.34;
+    const yaw = t * 0.0002;
+    // soft core glow
+    const glow = mix(t * 0.0016);
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.25);
+    g.addColorStop(0, `rgba(${glow},0.12)`); g.addColorStop(0.5, `rgba(${glow},0.03)`); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    const project = (a, ringAx, ringBase) => {
+      let p = { x: Math.cos(a), y: 0, z: Math.sin(a) };
+      const cx1 = Math.cos(ringAx), sx1 = Math.sin(ringAx);
+      const y1 = p.y * cx1 - p.z * sx1, z1 = p.y * sx1 + p.z * cx1; p = { x: p.x, y: y1, z: z1 };
+      const yy = ringBase + yaw; const cy1 = Math.cos(yy), sy1 = Math.sin(yy);
+      const x2 = p.x * cy1 - p.z * sy1, z2 = p.x * sy1 + p.z * cy1;
+      return { sx: cx + x2 * R, sy: cy + y1 * R, z: z2 };
+    };
+    for (let ri = 0; ri < this.grings.length; ri++) {
+      const ring = this.grings[ri];
+      const seg = 86;
+      for (let k = 0; k < seg; k++) {
+        const a = k / seg * 6.2832; const p = project(a, ring.ax, ring.base);
+        const d = (p.z + 1) / 2;
+        const col = mix(a * 1.5 + t * 0.0026 + ri);
+        ctx.fillStyle = `rgba(${col},${0.06 + d * 0.34})`;
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 0.5 + d * 1.2, 0, 6.2832); ctx.fill();
+      }
+      ring.e += ring.spd * ring.dir * 16;
+      const ep = project(ring.e, ring.ax, ring.base); const ed = (ep.z + 1) / 2;
+      const ecol = mix(ri * 1.25 + t * 0.004);
+      ctx.save(); ctx.shadowColor = `rgba(${ecol},0.95)`; ctx.shadowBlur = 12;
+      ctx.fillStyle = `rgba(${ecol},${0.55 + ed * 0.45})`;
+      ctx.beginPath(); ctx.arc(ep.sx, ep.sy, 3, 0, 6.2832); ctx.fill();
+      ctx.restore();
+    }
+    // nucleus
+    const pulse = 0.5 + 0.5 * Math.sin(t * 0.004);
+    const ncol = mix(t * 0.003);
+    ctx.save(); ctx.shadowColor = `rgba(${ncol},0.9)`; ctx.shadowBlur = 20 + pulse * 12;
+    ctx.fillStyle = `rgba(${ncol},0.95)`;
+    ctx.beginPath(); ctx.arc(cx, cy, 7.5 + pulse * 2.4, 0, 6.2832); ctx.fill();
+    ctx.restore();
+  }
+
+  drawFlow(ctx, t) {
+    const { w, h } = this; const rgb = this.aRgb || '75,250,200';
+    const nodes = this.nodes || [];
+    if (!this.pulses) { this.pulses = []; this.nextPulse = 0; }
+    const max = Math.min(150, w * 0.118);
+    // divergence-free curl flow + per-node drift, toroidal wrap, density stays uniform (no edge pile-up)
+    const F = 0.5, a1 = 0.0013, tt = t * 0.00018;
+    for (const p of nodes) {
+      const sx = p.x * a1, sy = p.y * a1;
+      const vx = Math.sin(sy + tt) * Math.cos(sx * 1.2 - tt * 0.6);
+      const vy = -Math.sin(sx - tt * 0.8) * Math.cos(sy * 1.2 + tt * 0.5);
+      p.x += vx * F + (p.bx || 0);
+      p.y += vy * F + (p.by || 0);
+      if (p.x < -8) p.x += w + 16; else if (p.x > w + 8) p.x -= w + 16;
+      if (p.y < -8) p.y += h + 16; else if (p.y > h + 8) p.y -= h + 16;
+    }
+    ctx.fillStyle = '#07070b'; ctx.fillRect(0, 0, w, h);
+    // proximity links
+    ctx.lineWidth = 1;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < max) {
+          ctx.strokeStyle = `rgba(${rgb},${(1 - d / max) * 0.42})`;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+    // nodes
+    for (const p of nodes) {
+      ctx.fillStyle = `rgba(${rgb},0.6)`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+    }
+  }
+
+  drawAurora(ctx, t) {
+    const { w, h } = this; const hsl = this.aHsl || { h: 162, s: 0.93, l: 0.64 };
+    ctx.fillStyle = '#07070b'; ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    for (const b of (this.blobs || [])) {
+      const cx = w * (0.5 + 0.34 * Math.sin(t * 0.0001 * (1 + b.sx) + b.px));
+      const cy = h * (0.5 + 0.32 * Math.cos(t * 0.0001 * (1 + b.sy) + b.py));
+      const R = Math.min(w, h) * b.rad;
+      const hue = (hsl.h + b.hue + 360) % 360;
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+      g.addColorStop(0, `hsla(${hue}, ${Math.round(hsl.s * 90)}%, 68%, ${b.a})`);
+      g.addColorStop(1, `hsla(${hue}, ${Math.round(hsl.s * 90)}%, 60%, 0)`);
+      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    for (const s of (this.specks || [])) {
+      const yy = (s.y + t * 0.00002 * s.sp) % 1;
+      const al = 0.25 + 0.25 * Math.sin(t * 0.001 * s.sp + s.ph);
+      ctx.fillStyle = `hsla(${(hsl.h + 20) % 360}, 60%, 82%, ${al})`;
+      ctx.beginPath(); ctx.arc(s.x * w, yy * h, s.r, 0, 6.2832); ctx.fill();
+    }
+  }
+
+  drawGrid(ctx, t) {
+    const { w, h } = this; const rgb = this.aRgb || '75,250,200';
+    ctx.fillStyle = '#07070b'; ctx.fillRect(0, 0, w, h);
+    const vp = h * 0.46, cx = w / 2;
+    // horizon glow
+    const hg = ctx.createRadialGradient(cx, vp, 0, cx, vp, w * 0.5);
+    hg.addColorStop(0, `rgba(${rgb},0.14)`); hg.addColorStop(1, `rgba(${rgb},0)`);
+    ctx.fillStyle = hg; ctx.fillRect(0, 0, w, h);
+    // vertical converging lines
+    const cols = 16, spread = w * 0.085;
+    ctx.lineWidth = 1;
+    for (let i = -cols; i <= cols; i++) {
+      ctx.strokeStyle = `rgba(${rgb},${0.16 - Math.abs(i) / cols * 0.1})`;
+      ctx.beginPath(); ctx.moveTo(cx + i * spread, h); ctx.lineTo(cx, vp); ctx.stroke();
+    }
+    // horizontal receding lines, scrolling toward viewer
+    const rows = 22, scroll = (t * 0.00018) % 1;
+    for (let k = 0; k < rows; k++) {
+      const f = (k + scroll) / rows;
+      const p = Math.pow(f, 2.6);
+      const y = vp + (h - vp) * p;
+      const al = Math.min(0.32, p * 0.45);
+      ctx.strokeStyle = `rgba(${rgb},${al})`;
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+    }
+  }
+
+  renderVals() {
+    const siBtnBase = "flex:none; width:42px; height:42px; border-radius:999px; border:1px solid rgba(244,243,247,0.18); background:rgba(255,255,255,0.03); color:#f4f3f7; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:opacity .2s, background .2s, border-color .2s;";
+    const siDots = [];
+    for (let i = 0; i <= this.state.siMax; i++) {
+      const on = i === this.state.siIdx;
+      siDots.push({ on: ((n) => () => this.siGoTo(n))(i), style: `flex:none; height:7px; padding:0; border:none; border-radius:999px; cursor:pointer; transition:background .25s, width .25s; width:${on ? 22 : 7}px; background:${on ? '#4bfac8' : 'rgba(244,243,247,0.22)'};` });
+    }
+    const active = this.state.concept;
+    const base = (on) => `font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; padding:8px 14px; border-radius:999px; cursor:pointer; transition:all .2s; border:1px solid ${on ? 'transparent' : 'rgba(244,243,247,0.14)'}; background:${on ? (this.accent || '#8b7cff') : 'rgba(255,255,255,0.03)'}; color:${on ? '#0a0712' : 'rgba(244,243,247,0.6)'}; font-weight:${on ? 600 : 400};`;
+    const defs = [['flow', 'Flow'], ['aurora', 'Aurora'], ['grid', 'Grid']];
+    const concepts = defs.map(([id, label]) => ({
+      label, style: base(active === id), onClick: () => this.setConcept(id)
+    }));
+    const services = [
+      { no: '01', href: 'Service%20Animation%20Workflow.dc.html', live: true, cta: 'Voir le service', tag: 'Automation', title: 'Automatisation des workflows', desc: 'Vos tâches répétitives exécutées automatiquement, selon vos règles, la mécanique qui relie vos outils entre eux et vous rend des heures chaque semaine.', items: [
+        { t: 'Emails marketing automatisés' },
+        { t: 'Séquences d’onboarding' },
+        { t: 'Synchronisation CRM & données client' },
+        { t: 'Tri & traitement automatisés des données récurrentes' }
+      ] },
+      { no: '02', href: 'Service%20Agents%20IA.dc.html', live: true, cta: 'Voir le service', tag: 'IA', title: 'Agents & assistants IA', desc: 'La couche qui réfléchit : des agents qui comprennent, décident et génèrent, pour raisonner à votre place, pas seulement exécuter une règle.', items: [
+        { t: 'Workflows IA agentiques' },
+        { t: 'Chatbots de support client' },
+        { t: 'Gestion client assistée par IA' },
+        { t: 'Automatisation des réseaux sociaux', soon: true }
+      ] },
+      { no: '03', href: 'Service%20Sites%20Boutiques.dc.html', live: true, cta: 'Voir le service', tag: 'Web', title: 'Sites & boutiques en ligne', desc: 'Des plateformes sur mesure, de la landing page à la boutique complète.', items: [
+        { t: 'Création de marque & identité visuelle' },
+        { t: 'Sites & web apps sur mesure' },
+        { t: 'Boutiques e-commerce' },
+        { t: 'Landing pages qui convertissent' }
+      ] },
+      { no: '04', href: 'Blog%20Index.dc.html', live: false, cta: 'Voir le Journal', tag: 'Growth', title: 'Visibilité & performance', desc: 'On vous rend visible, sur Google comme sur les moteurs IA, et on mesure ce qui compte.', items: [
+        { t: 'Fondations SEO' },
+        { t: 'Visibilité sur les moteurs IA (GEO)' },
+        { t: 'Présence dans les réponses IA (AEO)' },
+        { t: 'Mesure & analytics (Google Analytics)' }
+      ] }
+    ];
+    const iconPaths = {
+      'Make': 'M13.38 3.498c-.27 0-.511.19-.566.465L9.85 18.986a.578.578 0 0 0 .453.678l4.095.826a.58.58 0 0 0 .682-.455l2.963-15.021a.578.578 0 0 0-.453-.678l-4.096-.826a.589.589 0 0 0-.113-.012zm-5.876.098a.576.576 0 0 0-.516.318L.062 17.697a.575.575 0 0 0 .256.774l3.733 1.877a.578.578 0 0 0 .775-.258l6.926-13.781a.577.577 0 0 0-.256-.776L7.762 3.658a.571.571 0 0 0-.258-.062zm11.74.115a.576.576 0 0 0-.576.576v15.426c0 .318.258.578.576.578h4.178a.58.58 0 0 0 .578-.578V4.287a.578.578 0 0 0-.578-.576Z',
+      'Zapier': 'M4.157 0A4.151 4.151 0 0 0 0 4.161v15.678A4.151 4.151 0 0 0 4.157 24h15.682A4.152 4.152 0 0 0 24 19.839V4.161A4.152 4.152 0 0 0 19.839 0H4.157Zm10.61 8.761h.03a.577.577 0 0 1 .23.038.585.585 0 0 1 .201.124.63.63 0 0 1 .162.431.612.612 0 0 1-.162.435.58.58 0 0 1-.201.128.58.58 0 0 1-.23.042.529.529 0 0 1-.235-.042.585.585 0 0 1-.332-.328.559.559 0 0 1-.038-.235.613.613 0 0 1 .17-.431.59.59 0 0 1 .405-.162Zm2.853 1.572c.03.004.061.004.095.004.325-.011.646.064.937.219.238.144.431.355.552.609.128.279.189.582.185.888v.193a2 2 0 0 1 0 .219h-2.498c.003.227.075.45.204.642a.78.78 0 0 0 .646.265.714.714 0 0 0 .484-.136.642.642 0 0 0 .23-.318l.915.257a1.398 1.398 0 0 1-.28.537c-.14.159-.321.284-.521.355a2.234 2.234 0 0 1-.836.136 1.923 1.923 0 0 1-1.001-.245 1.618 1.618 0 0 1-.665-.703 2.221 2.221 0 0 1-.227-1.036 1.95 1.95 0 0 1 .48-1.398 1.9 1.9 0 0 1 1.3-.488Zm-9.607.023c.162.004.325.026.48.079.207.065.4.174.563.314.26.302.393.692.366 1.088v2.276H8.53l-.109-.711h-.065c-.064.163-.155.31-.272.439a1.122 1.122 0 0 1-.374.264 1.023 1.023 0 0 1-.453.083 1.334 1.334 0 0 1-.866-.264.965.965 0 0 1-.329-.801.993.993 0 0 1 .076-.431 1.02 1.02 0 0 1 .242-.363 1.478 1.478 0 0 1 1.043-.303h.952v-.181a.696.696 0 0 0-.136-.454.553.553 0 0 0-.438-.154.695.695 0 0 0-.378.086.48.48 0 0 0-.193.254l-.99-.144a1.26 1.26 0 0 1 .257-.563c.14-.174.321-.302.533-.378.261-.091.54-.136.82-.129.053-.003.106-.007.163-.007Zm4.384.007c.174 0 .347.038.506.114.182.083.34.211.458.374.257.423.377.911.351 1.406a2.53 2.53 0 0 1-.355 1.448 1.148 1.148 0 0 1-1.009.517c-.204 0-.401-.045-.582-.136a1.052 1.052 0 0 1-.48-.457 1.298 1.298 0 0 1-.114-.234h-.045l.004 1.784h-1.059v-4.713h.904l.117.805h.057c.068-.208.177-.401.328-.56a1.129 1.129 0 0 1 .843-.344h.076v-.004Zm7.559.084h.903l.113.805h.053a1.37 1.37 0 0 1 .235-.484.813.813 0 0 1 .313-.242.82.82 0 0 1 .39-.076h.234v1.051h-.401a.662.662 0 0 0-.313.008.623.623 0 0 0-.272.155.663.663 0 0 0-.174.26.683.683 0 0 0-.027.314v1.875h-1.054v-3.666Zm-17.515.003h3.262v.896L3.73 13.104l.034.113h1.973l.042.9H2.4v-.9l1.931-1.754-.045-.117H2.441v-.896Zm11.815 0h1.055v3.659h-1.055V10.45Zm3.443.684.019.016a.69.69 0 0 0-.351.045.756.756 0 0 0-.287.204c-.11.155-.174.336-.189.522h1.545c-.034-.526-.257-.787-.74-.787h.003Zm-5.718.163c-.026 0-.057 0-.083.004a.78.78 0 0 0-.31.053.746.746 0 0 0-.257.189 1.016 1.016 0 0 0-.204.695v.064c-.015.257.057.507.204.711a.634.634 0 0 0 .253.196.638.638 0 0 0 .314.061.644.644 0 0 0 .578-.265c.14-.223.204-.48.189-.74a1.216 1.216 0 0 0-.181-.711.677.677 0 0 0-.503-.257Zm-4.509 1.266a.464.464 0 0 0-.268.102.373.373 0 0 0-.114.276c0 .053.008.106.027.155a.375.375 0 0 0 .087.132.576.576 0 0 0 .397.11v.004a.863.863 0 0 0 .563-.182.573.573 0 0 0 .211-.457v-.14h-.903Z',
+      'n8n': 'M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632',
+      'Notion': 'M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z',
+      'Airtable': 'M11.992 1.966c-.434 0-.87.086-1.28.257L1.779 5.917c-.503.208-.49.908.012 1.116l8.982 3.558a3.266 3.266 0 0 0 2.454 0l8.982-3.558c.503-.196.503-.908.012-1.116l-8.957-3.694a3.255 3.255 0 0 0-1.272-.257zM23.4 8.056a.589.589 0 0 0-.222.045l-10.012 3.877a.612.612 0 0 0-.38.564v8.896a.6.6 0 0 0 .821.552L23.62 18.1a.583.583 0 0 0 .38-.551V8.653a.6.6 0 0 0-.6-.596zM.676 8.095a.644.644 0 0 0-.48.19C.086 8.396 0 8.53 0 8.69v8.355c0 .442.515.737.908.54l6.27-3.006.307-.147 2.969-1.436c.466-.22.43-.908-.061-1.092L.883 8.138a.57.57 0 0 0-.207-.044z',
+      'HubSpot': 'M18.164 7.93V5.084a2.198 2.198 0 001.267-1.978v-.067A2.2 2.2 0 0017.238.845h-.067a2.2 2.2 0 00-2.193 2.193v.067a2.196 2.196 0 001.252 1.973l.013.006v2.852a6.22 6.22 0 00-2.969 1.31l.012-.01-7.828-6.095A2.497 2.497 0 104.3 4.656l-.012.006 7.697 5.991a6.176 6.176 0 00-1.038 3.446c0 1.343.425 2.588 1.147 3.607l-.013-.02-2.342 2.343a1.968 1.968 0 00-.58-.095h-.002a2.033 2.033 0 102.033 2.033 1.978 1.978 0 00-.1-.595l.005.014 2.317-2.317a6.247 6.247 0 104.782-11.134l-.036-.005zm-.964 9.378a3.206 3.206 0 113.215-3.207v.002a3.206 3.206 0 01-3.207 3.207z',
+      'Shopify': 'M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z',
+      'Stripe': 'M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z',
+      'Google Workspace': 'M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z',
+      'WhatsApp': 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z',
+      'Anthropic': 'M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z',
+      'Supabase': 'M11.9 1.036c-.015-.986-1.26-1.41-1.874-.637L.764 12.05C-.33 13.427.65 15.455 2.409 15.455h9.579l.113 7.51c.014.985 1.259 1.408 1.873.636l9.262-11.653c1.093-1.375.113-3.403-1.645-3.403h-9.642z',
+      'Figma': 'M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z',
+      'Cursor': 'M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23',
+      'Calendly': 'M19.655 14.262c.281 0 .557.023.828.064 0 .005-.005.01-.005.014-.105.267-.234.534-.381.786l-1.219 2.106c-1.112 1.936-3.177 3.127-5.411 3.127h-2.432c-2.23 0-4.294-1.191-5.412-3.127l-1.218-2.106a6.251 6.251 0 0 1 0-6.252l1.218-2.106C6.736 4.832 8.8 3.641 11.035 3.641h2.432c2.23 0 4.294 1.191 5.411 3.127l1.219 2.106c.147.252.271.519.381.786 0 .004.005.009.005.014-.267.041-.543.064-.828.064-1.816 0-2.501-.607-3.291-1.306-.764-.676-1.711-1.517-3.44-1.517h-1.029c-1.251 0-2.387.455-3.2 1.278-.796.805-1.233 1.904-1.233 3.099v1.411c0 1.196.437 2.295 1.233 3.099.813.823 1.949 1.278 3.2 1.278h1.034c1.729 0 2.676-.841 3.439-1.517.791-.703 1.471-1.306 3.287-1.301Zm.005-3.237c.399 0 .794-.036 1.179-.11-.002-.004-.002-.01-.002-.014-.073-.414-.193-.823-.349-1.218.731-.12 1.407-.396 1.986-.819 0-.004-.005-.013-.005-.018-.331-1.085-.832-2.101-1.489-3.03-.649-.915-1.435-1.719-2.331-2.395-1.867-1.398-4.088-2.138-6.428-2.138-1.448 0-2.855.28-4.175.841-1.273.543-2.423 1.315-3.407 2.299S2.878 6.552 2.341 7.83c-.557 1.324-.842 2.726-.842 4.175 0 1.448.281 2.855.842 4.174.542 1.274 1.314 2.423 2.298 3.407s2.129 1.761 3.407 2.299c1.324.556 2.727.841 4.175.841 2.34 0 4.561-.74 6.428-2.137a10.815 10.815 0 0 0 2.331-2.396c.652-.929 1.158-1.949 1.489-3.03 0-.004.005-.014.005-.018-.579-.423-1.255-.699-1.986-.819.161-.395.276-.804.349-1.218.005-.009.005-.014.005-.023.869.166 1.692.506 2.404 1.035.685.505.552 1.075.446 1.416C22.184 20.437 17.619 24 12.221 24c-6.625 0-12-5.375-12-12s5.37-12 12-12c5.398 0 9.963 3.563 11.471 8.464.106.341.239.915-.446 1.421-.717.529-1.535.873-2.404 1.034.128.716.128 1.45 0 2.166-.387-.074-.782-.11-1.182-.11-4.184 0-3.968 2.823-6.736 2.823h-1.029c-1.899 0-3.15-1.357-3.15-3.095v-1.411c0-1.738 1.251-3.094 3.15-3.094h1.034c2.768 0 2.552 2.823 6.731 2.827Z',
+      'Mailchimp': 'M11.267 0C6.791-.015-1.82 10.246 1.397 12.964l.79.669a3.88 3.88 0 0 0-.22 1.792c.084.84.518 1.644 1.22 2.266.666.59 1.542.964 2.392.964 1.406 3.24 4.62 5.228 8.386 5.34 4.04.12 7.433-1.776 8.854-5.182.093-.24.488-1.316.488-2.267 0-.956-.54-1.352-.885-1.352-.01-.037-.078-.286-.172-.586-.093-.3-.19-.51-.19-.51.375-.563.382-1.065.332-1.35-.053-.353-.2-.653-.496-.964-.296-.311-.902-.63-1.753-.868l-.446-.124c-.002-.019-.024-1.053-.043-1.497-.014-.32-.042-.822-.197-1.315-.186-.668-.508-1.253-.911-1.627 1.112-1.152 1.806-2.422 1.804-3.511-.003-2.095-2.576-2.729-5.746-1.416l-.672.285A678.22 678.22 0 0 0 12.7.504C12.304.159 11.817.002 11.267 0zm.073.873c.166 0 .322.019.465.058.297.084 1.28 1.224 1.28 1.224s-1.826 1.013-3.52 2.426c-2.28 1.757-4.005 4.311-5.037 7.082-.811.158-1.526.618-1.963 1.253-.261-.218-.748-.64-.834-.804-.698-1.326.761-3.902 1.781-5.357C5.834 3.44 9.37.867 11.34.873zm3.286 3.273c.04-.002.06.05.028.074-.143.11-.299.26-.413.414a.04.04 0 0 0 .031.064c.659.004 1.587.235 2.192.574.041.023.012.103-.034.092-.915-.21-2.414-.369-3.97.01-1.39.34-2.45.863-3.224 1.426-.04.028-.086-.023-.055-.06.896-1.035 1.999-1.935 2.987-2.44.034-.018.07.019.052.052-.079.143-.23.447-.278.678-.007.035.032.063.062.042.615-.42 1.684-.868 2.622-.926zm3.023 3.205l.056.001a.896.896 0 0 1 .456.146c.534.355.61 1.216.638 1.845.015.36.059 1.229.074 1.478.034.571.184.651.487.751.17.057.33.098.563.164.706.198 1.125.4 1.39.658.157.162.23.333.253.497.083.608-.472 1.36-1.942 2.041-1.607.746-3.557.935-4.904.785l-.471-.053c-1.078-.145-1.693 1.247-1.046 2.201.417.615 1.552 1.015 2.688 1.015 2.604 0 4.605-1.111 5.35-2.072a.987.987 0 0 0 .06-.085c.036-.055.006-.085-.04-.054-.608.416-3.31 2.069-6.2 1.571 0 0-.351-.057-.672-.182-.255-.1-.788-.344-.853-.891 2.333.72 3.801.039 3.801.039a.072.072 0 0 0 .042-.072.067.067 0 0 0-.074-.06s-1.911.283-3.718-.378c.197-.64.72-.408 1.51-.345a11.045 11.045 0 0 0 3.647-.394c.818-.234 1.892-.697 2.727-1.356.281.618.38 1.299.38 1.299s.219-.04.4.073c.173.106.299.326.213.895-.176 1.063-.628 1.926-1.387 2.72a5.714 5.714 0 0 1-1.666 1.244c-.34.18-.704.334-1.087.46-2.863.935-5.794-.093-6.739-2.3a3.545 3.545 0 0 1-.189-.522c-.403-1.455-.06-3.2 1.008-4.299.065-.07.132-.153.132-.256 0-.087-.055-.179-.102-.243-.374-.543-1.669-1.466-1.409-3.254.187-1.284 1.31-2.189 2.357-2.135.089.004.177.01.266.015.453.027.85.085 1.223.1.625.028 1.187-.063 1.853-.618.225-.187.405-.35.71-.401.028-.005.092-.028.215-.028zm.022 2.18a.42.42 0 0 0-.06.005c-.335.054-.347.468-.228 1.04.068.32.187.595.32.765.175-.02.343-.022.498 0 .089-.205.104-.557.024-.942-.112-.535-.261-.872-.554-.868zm-3.66 1.546a1.724 1.724 0 0 0-1.016.326c-.16.117-.311.28-.29.378.008.032.031.056.088.063.131.015.592-.217 1.122-.25.374-.023.684.094.923.2.239.104.386.173.443.113.037-.038.026-.11-.031-.204-.118-.192-.36-.387-.618-.497a1.601 1.601 0 0 0-.621-.129zm4.082.81c-.171-.003-.313.186-.317.42-.004.236.131.43.303.432.172.003.314-.185.318-.42.004-.236-.132-.429-.304-.432zm-3.58.172c-.05 0-.102.002-.155.008-.311.05-.483.152-.593.247-.094.082-.152.173-.152.237a.075.075 0 0 0 .075.076c.07 0 .228-.063.228-.063a1.98 1.98 0 0 1 1.001-.104c.157.018.23.027.265-.026.01-.016.022-.049-.01-.1-.063-.103-.311-.269-.66-.275zm2.26.4c-.127 0-.235.051-.283.148-.075.154.035.363.246.466.21.104.443.063.52-.09.075-.155-.035-.364-.246-.467a.542.542 0 0 0-.237-.058zm-11.635.024c.048 0 .098 0 .149.003.73.04 1.806.6 2.052 2.19.217 1.41-.128 2.843-1.449 3.069-.123.02-.248.029-.374.026-1.22-.033-2.539-1.132-2.67-2.435-.145-1.44.591-2.548 1.894-2.811.117-.024.252-.04.398-.042zm-.07.927a1.144 1.144 0 0 0-.847.364c-.38.418-.439.988-.366 1.19.027.073.07.094.1.098.064.008.16-.039.22-.2a1.2 1.2 0 0 0 .017-.052 1.58 1.58 0 0 1 .157-.37.689.689 0 0 1 .955-.199c.266.174.369.5.255.81-.058.161-.154.469-.133.721.043.511.357.717.64.738.274.01.466-.143.515-.256.029-.067.005-.107-.011-.125-.043-.053-.113-.037-.18-.021a.638.638 0 0 1-.16.022.347.347 0 0 1-.294-.148c-.078-.12-.073-.3.013-.504.011-.028.025-.058.04-.092.138-.308.368-.825.11-1.317-.195-.37-.513-.602-.894-.65a1.135 1.135 0 0 0-.138-.01z',
+      'Instagram': 'M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077',
+      'QuickBooks': 'M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm.642 4.1335c.9554 0 1.7296.776 1.7296 1.7332v9.0667h1.6c1.614 0 2.9275-1.3156 2.9275-2.933 0-1.6173-1.3136-2.9333-2.9276-2.9333h-.6654V7.3334h.6654c2.5722 0 4.6577 2.0897 4.6577 4.667 0 2.5774-2.0855 4.6666-4.6577 4.6666H12.642zM7.9837 7.333h3.3291v12.533c-.9555 0-1.73-.7759-1.73-1.7332V9.0662H7.9837c-1.6146 0-2.9277 1.316-2.9277 2.9334 0 1.6175 1.3131 2.9333 2.9277 2.9333h.6654v1.7332h-.6654c-2.5725 0-4.6577-2.0892-4.6577-4.6665 0-2.5771 2.0852-4.6666 4.6577-4.6666Z',
+      'Meta': 'M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z',
+      'Facebook': 'M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z',
+      'YouTube': 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z',
+      'X': 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z',
+      'TikTok': 'M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z',
+      'WordPress': 'M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-1.06 0-1.812.923-1.812 1.914 0 .89.513 1.643 1.06 2.531.411.72.89 1.643.89 2.977 0 .915-.354 1.994-.821 3.479l-1.075 3.585-3.9-11.61.001.014zM12 22.784c-1.059 0-2.081-.153-3.048-.437l3.237-9.406 3.315 9.087c.024.053.05.101.078.149-1.12.393-2.325.609-3.582.609M1.211 12c0-1.564.336-3.05.935-4.39L7.29 21.709C3.694 19.96 1.212 16.271 1.211 12M12 0C5.385 0 0 5.385 0 12s5.385 12 12 12 12-5.385 12-12S18.615 0 12 0',
+      'Vercel': 'm12 1.608 12 20.784H0Z',
+      'GitHub': 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12',
+      'Cal.com': 'M2.408 14.488C1.035 14.488 0 13.4 0 12.058c0-1.346.982-2.443 2.408-2.443.758 0 1.282.233 1.691.765l-.66.55a1.343 1.343 0 0 0-1.03-.442c-.93 0-1.44.711-1.44 1.57 0 .86.559 1.557 1.44 1.557.413 0 .765-.147 1.043-.443l.651.573c-.391.51-.929.743-1.695.743zM6.948 10.913h.89v3.49h-.89v-.51c-.185.362-.493.604-1.083.604-.943 0-1.695-.82-1.695-1.826 0-1.007.752-1.825 1.695-1.825.585 0 .898.241 1.083.604zm.026 1.758c0-.546-.374-.998-.964-.998-.568 0-.938.457-.938.998 0 .528.37.998.938.998.586 0 .964-.456.964-.998zM8.467 9.503h.89v4.895h-.89zM9.752 13.937a.53.53 0 0 1 .542-.528c.313 0 .533.242.533.528a.527.527 0 0 1-.533.537.534.534 0 0 1-.542-.537zM14.23 13.839c-.33.403-.832.658-1.426.658a1.806 1.806 0 0 1-1.84-1.826c0-1.007.778-1.825 1.84-1.825.572 0 1.07.241 1.4.622l-.687.577c-.172-.215-.396-.376-.713-.376-.568 0-.938.456-.938.998 0 .541.37.997.938.997.343 0 .58-.179.757-.42zM14.305 12.671c0-1.007.78-1.825 1.84-1.825 1.061 0 1.84.818 1.84 1.825 0 1.007-.779 1.826-1.84 1.826-1.06-.005-1.84-.82-1.84-1.826zm2.778 0c0-.546-.37-.998-.938-.998-.568-.004-.937.452-.937.998 0 .542.37.998.937.998.568 0 .938-.456.938-.998zM24 12.269v2.13h-.89v-1.911c0-.604-.281-.864-.704-.864-.396 0-.678.197-.678.864v1.91h-.89v-1.91c0-.604-.285-.864-.704-.864-.396 0-.744.197-.744.864v1.91h-.89v-3.49h.89v.484c.185-.376.52-.564 1.035-.564.489 0 .898.241 1.123.649.224-.417.554-.65 1.153-.65.731.005 1.299.56 1.299 1.442z'
+    };
+    const toolNames = ['Make', 'Zapier', 'n8n', 'Notion', 'Airtable', 'HubSpot', 'Shopify', 'Stripe', 'Slack', 'Google Workspace', 'WhatsApp', 'OpenAI', 'Anthropic', 'Supabase', 'Figma', 'Cursor', 'Lightspeed', 'Calendly', 'Mailchimp', 'QuickBooks', 'Tally', 'Meta', 'Facebook', 'Instagram', 'LinkedIn', 'YouTube', 'X', 'TikTok', 'WordPress', 'Vercel', 'GitHub', 'Cal.com'];
+    const tools = toolNames.map(n => ({ name: n, path: iconPaths[n] || '' }));
+    return {
+      rootRef: this.rootRef,
+      canvasRef: this.canvasRef,
+      globeRef: this.globeRef,
+      labelRef: this.labelRef,
+      labelRef2: this.labelRef2,
+      labelRef3: this.labelRef3,
+      labelRef4: this.labelRef4,
+      siVpRef: this.siVpRef,
+      siTrackRef: this.siTrackRef,
+      siTrackTransform: `transform:translateX(${(-this.state.siIdx * this.state.siStep + this.state.dragDX).toFixed(2)}px);${this.state.dragging ? 'transition:none;' : ''}`,
+      siDown: this.siDown,
+      siPrev: this.siPrev,
+      siNext: this.siNext,
+      siPrevStyle: siBtnBase + (this.state.siIdx <= 0 ? 'opacity:0.28; pointer-events:none;' : 'opacity:1;'),
+      siNextStyle: siBtnBase + (this.state.siIdx >= this.state.siMax ? 'opacity:0.28; pointer-events:none;' : 'opacity:1;'),
+      siDots,
+      city: this.props.city ?? 'Montréal',
+      concepts,
+      services,
+      navEnter: this.navEnter,
+      navLeave: this.navLeave,
+      navToggle: this.navToggle,
+      navChevStyle: `flex:none; transition:transform .22s ease; transform:rotate(${this.state.navOpen ? 180 : 0}deg);`,
+      navPanelStyle: `position:absolute; top:100%; left:0; padding-top:13px; z-index:20; transition:opacity .2s ease, transform .2s ease; ${this.state.navOpen ? 'opacity:1; transform:translateY(0); visibility:visible; pointer-events:auto;' : 'opacity:0; transform:translateY(-6px); visibility:hidden; pointer-events:none;'}`,
+      tools,
+      line1: this.props.line1 ?? 'Automatisez vos tâches,',
+      line2pre: this.props.line2pre ?? 'développez votre',
+      accentWord: this.props.accentWord ?? 'entreprise',
+      line2post: this.props.line2post ?? '.',
+      sub: this.props.sub ?? 'Workflows automatisés et agents IA pour les entrepreneurs qui veulent libérer du temps, unifier leurs services et faire grandir leur activité.',
+      cta1: this.props.cta1 ?? 'Démarrer un projet',
+      cta2: this.props.cta2 ?? 'Voir nos réalisations'
+    };
+  }
+}
+</script>
+</body>
+</html>

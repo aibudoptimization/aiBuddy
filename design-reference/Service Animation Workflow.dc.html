@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#07070b;}
+  @keyframes wwPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.3;transform:scale(0.62);}}
+  .ww-cta-fill{position:relative; overflow:hidden; z-index:0;}
+  .ww-cta-fill::before{content:""; position:absolute; inset:0; background:var(--ww-accent,#4bfac8); transform:scaleX(0); transform-origin:center; transition:transform .42s cubic-bezier(.7,0,.2,1); z-index:-1;}
+  .ww-cta-fill:hover::before{transform:scaleX(1);}
+  .ww-cta-fill:hover{color:#07070b !important; box-shadow:0 8px 30px rgba(var(--ww-accent-rgb,75,250,200),0.3);}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; width:100%; box-sizing:border-box; background:#07070b; color:#f4f3f7; font-family:'Schibsted Grotesk',system-ui,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <canvas ref="{{ bgRef }}" style="position:absolute; top:0; left:0; width:100%; height:440px; display:block; z-index:0;"></canvas>
+  <div style="position:absolute; top:0; left:0; right:0; height:440px; z-index:1; pointer-events:none; background:linear-gradient(180deg, rgba(7,7,11,0.5) 0%, rgba(7,7,11,0.12) 32%, rgba(7,7,11,0.78) 78%, #07070b 100%);"></div>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:40; backdrop-filter:blur(9px); -webkit-backdrop-filter:blur(9px); display:flex; align-items:center; justify-content:space-between; padding:22px clamp(28px,5vw,64px);">
+    <a href="Workflow%20Wonder%20website.dc.html" style="display:flex; align-items:center; gap:9px; font-size:18px; font-weight:700; letter-spacing:-0.03em; color:inherit; text-decoration:none;">
+      <span>Workflow</span>
+      <span data-ic="accent-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 12px rgba(75,250,200,0.8);"></span>
+      <span>Wonder</span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:clamp(18px,2.4vw,38px); font-size:14.5px; color:rgba(244,243,247,0.66);">
+      <div onMouseEnter="{{ navEnter }}" onMouseLeave="{{ navLeave }}" style="position:relative;">
+        <span onClick="{{ navToggle }}" style="display:inline-flex; align-items:center; gap:6px; color:inherit; cursor:pointer;">Services <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="{{ navChevStyle }}"><path d="M5 9l7 7 7-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        <div style="{{ navPanelStyle }}">
+          <div style="min-width:312px; background:rgba(12,12,18,0.97); border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:8px; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 60px rgba(0,0,0,0.5); display:flex; flex-direction:column; gap:2px;">
+            <a href="Service%20Animation%20Workflow.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(75,250,200,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.8);"></span>Automatisation des workflows</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Workflows · agents · relais</span>
+            </a>
+            <a href="Service%20Agents%20IA.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(139,124,255,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.8);"></span>Agents &amp; assistants IA</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Agents · IA · décision</span>
+            </a>
+            <a href="Service%20Sites%20Boutiques.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(240,169,78,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#f0a94e; box-shadow:0 0 9px rgba(240,169,78,0.8);"></span>Sites &amp; boutiques en ligne</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Sites · boutiques · e-commerce</span>
+            </a>
+            <a href="Blog%20Index.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(106,168,255,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#6aa8ff; box-shadow:0 0 9px rgba(106,168,255,0.8);"></span>Visibilité &amp; performance</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Articles · Journal</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <a href="#" style="color:inherit; text-decoration:none;">Approche</a>
+      <a href="#" data-accent="border" style="color:#f4f3f7; text-decoration:none; border:1px solid rgba(244,243,247,0.18); padding:9px 18px; border-radius:999px;">Discutons</a>
+    </nav>
+  </header>
+
+  <div style="position:relative; z-index:2; padding:clamp(104px,12vh,128px) clamp(28px,5vw,64px) clamp(40px,6vw,72px);">
+    <div style="width:100%; max-width:1180px; margin:0 auto;">
+
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:14px;">
+      <div style="display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,243,247,0.6);">
+        <span data-ic="accent-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.7);"></span>
+        <span>Automatisation des workflows</span>
+      </div>
+      <span style="display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(244,243,247,0.4);"><span data-ic="accent-bg" style="width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.7); animation:wwPulse 1.8s ease-in-out infinite;"></span>7 scénarios · en direct</span>
+    </div>
+
+    <h2 style="margin:0 0 8px; font-weight:600; letter-spacing:-0.03em; line-height:1.02; font-size:clamp(26px,3.6vw,44px); max-width:820px;">Des workflows qui se déclenchent et se passent le <span data-ic="accent" style="color:#4bfac8;">relais</span>.</h2>
+    <p style="margin:0 0 18px; max-width:640px; font-size:clamp(14.5px,1.25vw,16.5px); line-height:1.55; color:rgba(244,243,247,0.6);">100&nbsp;% basé sur des règles : un événement lance une séquence, qui peut en déclencher une autre. Pas d'IA, juste votre logique, exécutée à la lettre.</p>
+
+    <div style="display:inline-flex; align-items:center; gap:11px; margin:0 0 clamp(24px,4vh,38px); padding:10px 17px 10px 14px; border:1px solid rgba(75,250,200,0.26); background:rgba(75,250,200,0.05); border-radius:999px; max-width:100%; box-sizing:border-box;">
+      <span data-ic="accent-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.7);"></span>
+      <span style="font-size:13.5px; line-height:1.4; color:#f4f3f7;">Les workflows préférés des entrepreneurs du Québec, <span style="color:rgba(244,243,247,0.6);">chacun s'adapte à vos outils et à votre façon de travailler.</span></span>
+    </div>
+
+    <div ref="{{ stageRef }}" style="position:relative; width:100%; aspect-ratio:1180/1240; min-height:520px; border:1px solid rgba(244,243,247,0.08); border-radius:20px; overflow:hidden; background:radial-gradient(120% 80% at 50% 0%, rgba(139,124,255,0.05), rgba(7,7,11,0) 60%);">
+      <canvas ref="{{ canvasRef }}" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
+
+      <div ref="{{ layerRef }}" style="position:absolute; top:0; left:0; width:1180px; height:1240px; transform-origin:0 0;">
+
+        <sc-for list="{{ lanes }}" as="l" hint-placeholder-count="5">
+          <div style="{{ l.style }}">
+            <span data-ic="accent" style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#4bfac8;">{{ l.no }}</span>
+            <span style="font-size:12.5px; font-weight:600; letter-spacing:-0.01em; color:#f4f3f7; white-space:normal; line-height:1.18;">{{ l.title }}</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,243,247,0.38);">{{ l.tag }}</span>
+          </div>
+        </sc-for>
+
+        <sc-for list="{{ nodes }}" as="n" hint-placeholder-count="30">
+          <div data-node="{{ n.id }}" style="{{ n.style }}">
+            <sc-if value="{{ n.hasIcon }}" hint-placeholder-val="{{ true }}">
+              <span style="{{ n.iconStyle }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><sc-for list="{{ n.paths }}" as="p" hint-placeholder-count="2"><path d="{{ p }}"></path></sc-for></svg></span>
+            </sc-if>
+            <span style="{{ n.textWrap }}">
+              <span style="{{ n.labelStyle }}">{{ n.label }}</span>
+              <sc-if value="{{ n.sub }}" hint-placeholder-val="x"><span style="{{ n.subStyle }}">{{ n.sub }}</span></sc-if>
+            </span>
+          </div>
+        </sc-for>
+
+      </div>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px; margin-top:clamp(22px,3vh,34px); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.04em; color:rgba(244,243,247,0.5);">
+      <span style="display:inline-flex; align-items:center; gap:8px;"><span data-ic="accent-bg" style="width:8px; height:8px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.7);"></span>Donnée · action</span>
+      <span style="display:inline-flex; align-items:center; gap:8px;"><span data-ic="alt-bg" style="width:8px; height:8px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.7);"></span>Règle · condition</span>
+      <span style="display:inline-flex; align-items:center; gap:8px;"><svg width="26" height="8" viewBox="0 0 26 8"><line x1="1" y1="4" x2="25" y2="4" stroke="rgba(139,124,255,0.8)" stroke-width="1.6" stroke-dasharray="4 4"></line></svg>Relais entre workflows</span>
+      <span style="opacity:0.6;">Sans IA · 100 % règles</span>
+    </div>
+
+    <div style="margin-top:clamp(26px,4vh,42px); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px; padding:clamp(24px,3vw,32px) clamp(26px,3vw,36px); border:1px solid rgba(244,243,247,0.1); border-radius:20px; background:linear-gradient(150deg, rgba(139,124,255,0.08), rgba(18,16,26,0.3) 55%);">
+      <div style="max-width:560px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#4bfac8; margin-bottom:10px;">Sur mesure</div>
+        <div style="font-size:clamp(18px,2vw,22px); font-weight:600; letter-spacing:-0.02em; line-height:1.25; margin-bottom:8px;">Vous ne voyez pas votre workflow ? On le bâtit pour vous.</div>
+        <div style="font-size:14.5px; line-height:1.55; color:rgba(244,243,247,0.6);">Ce ne sont que des exemples. Chaque automatisation se construit selon vos outils, vos règles et votre réalité.</div>
+      </div>
+      <a href="#" class="ww-cta-fill" style="flex:none; display:inline-flex; align-items:center; gap:10px; background:transparent; color:var(--ww-accent,#4bfac8); font-weight:600; font-size:15.5px; padding:15px 26px; border-radius:999px; text-decoration:none; border:1.5px solid var(--ww-accent,#4bfac8); white-space:nowrap; transition:color .35s ease, box-shadow .35s ease;">Plus d'informations</a>
+    </div>
+
+    </div>
+  </div>
+
+  <footer style="position:relative; z-index:2; border-top:1px solid rgba(244,243,247,0.08); background:rgba(9,8,12,0.74); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(48px,7vh,76px) clamp(28px,5vw,64px) 30px; box-sizing:border-box;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:48px;">
+        <div style="max-width:330px;">
+          <a href="Workflow%20Wonder%20website.dc.html" style="display:flex; align-items:center; gap:9px; margin-bottom:18px; font-size:18px; font-weight:700; letter-spacing:-0.03em; color:inherit; text-decoration:none;"><span>Workflow</span><span data-ic="accent-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 12px rgba(75,250,200,0.8);"></span><span>Wonder</span></a>
+          <p style="margin:0 0 20px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.55);">Automatisations sur mesure, 100&nbsp;% basées sur des règles, pour les entrepreneurs du Québec qui veulent gagner du temps.</p>
+          <a href="mailto:bonjour@workflowwonder.com" data-ic="accent" style="font-size:14.5px; color:#4bfac8; text-decoration:none;">bonjour@workflowwonder.com</a>
+          <div style="display:flex; gap:10px; margin-top:22px;">
+            <a href="#" aria-label="Facebook" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">f</a>
+            <a href="#" aria-label="Instagram" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">ig</a>
+            <a href="#" aria-label="LinkedIn" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">in</a>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:clamp(36px,5vw,68px);">
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Services</span>
+            <a href="Service%20Animation%20Workflow.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Automatisation des workflows</a>
+            <a href="Service%20Agents%20IA.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Agents &amp; assistants IA</a>
+            <a href="Service%20Sites%20Boutiques.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Sites &amp; boutiques en ligne</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Visibilité &amp; performance</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Entreprise</span>
+            <a href="Workflow%20Wonder%20website.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Accueil</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">À propos</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Réalisations</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Contact</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Ressources</span>
+            <a href="Blog%20Index.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Blog</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">FAQ</a>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px; margin-top:clamp(40px,6vh,64px); padding-top:26px; border-top:1px solid rgba(244,243,247,0.07);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(244,243,247,0.4);">© 2026 Workflow Wonder. Tous droits réservés.</span>
+        <div style="display:flex; flex-wrap:wrap; gap:24px; font-size:13px; color:rgba(244,243,247,0.5);">
+          <a href="#" style="color:inherit; text-decoration:none;" style-hover="color:#f4f3f7;">Mentions légales</a>
+          <a href="#" style="color:inherit; text-decoration:none;" style-hover="color:#f4f3f7;">Politique de confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:2280},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#4bfac8&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accentAlt&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#8b7cff&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;speed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;calme&quot;,&quot;normal&quot;,&quot;rapide&quot;],&quot;default&quot;:&quot;calme&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  stageRef = React.createRef();
+  canvasRef = React.createRef();
+  layerRef = React.createRef();
+  bgRef = React.createRef();
+  state = { navOpen: false };
+  navEnter = () => this.setState({ navOpen: true });
+  navLeave = () => this.setState({ navOpen: false });
+  navToggle = () => this.setState(s => ({ navOpen: !s.navOpen }));
+
+  ICONS = {
+    lead: ["M12 6a3 3 0 1 0 .01 0", "M6 19c0-3.6 12-3.6 12 0"],
+    branch: ["M4 12h6", "M10 12l8-6", "M10 12l8 6"],
+    clock: ["M12 4a8 8 0 1 0 .01 0", "M12 8v4l3 2"],
+    mail: ["M3 6.5h18v11H3z", "M3 7l9 6 9-6"],
+    chat: ["M4 5h16a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H9l-4 3v-3H5a1 1 0 0 1-1-1V6a1 1 0 0 1 0-1z"],
+    calendar: ["M5 6h14v14H5z", "M5 10h14", "M9 4v3", "M15 4v3"],
+    search: ["M11 5a6 6 0 1 0 .01 0", "M20 20l-4.5-4.5"],
+    shield: ["M12 4l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V7z"],
+    shieldalert: ["M12 4l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V7z", "M12 9.5v3.4"],
+    lock: ["M6 11h12v9H6z", "M8 11V8a4 4 0 0 1 8 0v3"],
+    bell: ["M12 4a5 5 0 0 0-5 5v3l-1.5 2.5h13L17 12V9a5 5 0 0 0-5-5z", "M10 18a2 2 0 0 0 4 0"],
+    list: ["M4 6h3.5v3.5H4z", "M4 14.5h3.5v3.5H4z", "M11 7.5h9", "M11 16h9"],
+    tag: ["M4 4h7l9 9-7 7-9-9z", "M8 8h.01"],
+    check: ["M4.5 12.5l4.5 4.5 10.5-11"],
+    briefcase: ["M3 8h18v11H3z", "M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"],
+    invoice: ["M7 3h7l4 4v14H7z", "M14 3v4h4", "M9.5 12h5", "M9.5 15.5h3"],
+    card: ["M3 6.5h18v11H3z", "M3 10.5h18"]
+  };
+
+  DATA = [
+    { id: 's_lead', fx: 0.205, fy: 0.090, c: 'a', type: 'trigger', label: 'Nouveau lead', sub: 'Formulaire · courriel', icon: 'lead' },
+    { id: 'n_triage', fx: 0.41, fy: 0.090, c: 'b', type: 'cond', label: 'Triage', sub: 'SI source / score', icon: 'branch' },
+    { id: 't_chaud', fx: 0.60, fy: 0.045, c: 'a', type: 'pill', label: 'Chaud' },
+    { id: 't_tiede', fx: 0.60, fy: 0.090, c: 'a', type: 'pill', label: 'Tiède' },
+    { id: 't_froid', fx: 0.60, fy: 0.135, c: 'b', type: 'pill', label: 'Froid' },
+
+    { id: 'e_lead', fx: 0.205, fy: 0.2275, c: 'a', type: 'trigger', label: 'Lead créé', sub: 'Même déclencheur', icon: 'lead' },
+    { id: 'e_fetch', fx: 0.42, fy: 0.2275, c: 'a', type: 'action', label: 'Récupère les infos', sub: 'Entreprise · secteur', icon: 'search' },
+    { id: 'e_crm', fx: 0.64, fy: 0.2275, c: 'a', type: 'action', label: 'Fiche CRM enrichie', sub: 'Mise à jour auto', icon: 'lead' },
+
+    { id: 'b_trig', fx: 0.205, fy: 0.365, c: 'b', type: 'trigger', label: 'Lead froid', sub: 'Depuis le triage', icon: 'clock' },
+    { id: 'b_wait', fx: 0.41, fy: 0.365, c: 'b', type: 'cond', label: 'Attendre 1 jour', sub: 'SI pas de réponse', icon: 'clock' },
+    { id: 'b_mail', fx: 0.61, fy: 0.365, c: 'a', type: 'action', label: 'Courriel de relance', sub: 'Séquence J+1', icon: 'mail' },
+    { id: 'b_sms', fx: 0.80, fy: 0.365, c: 'a', type: 'action', label: 'SMS de relance', sub: 'Séquence J+3', icon: 'chat' },
+
+    { id: 'c_book', fx: 0.205, fy: 0.5025, c: 'a', type: 'trigger', label: 'Audit réservé', sub: 'Calendrier', icon: 'calendar' },
+    { id: 'c_when', fx: 0.41, fy: 0.5025, c: 'b', type: 'cond', label: '24 h avant', sub: 'SI RDV ≤ 24 h', icon: 'clock' },
+    { id: 'c_mail', fx: 0.61, fy: 0.5025, c: 'a', type: 'action', label: 'Rappel courriel', sub: 'Confirmation', icon: 'mail' },
+    { id: 'c_sms', fx: 0.80, fy: 0.5025, c: 'a', type: 'action', label: 'Rappel SMS', sub: '24 h avant', icon: 'chat' },
+
+    { id: 'd_deal', fx: 0.205, fy: 0.640, c: 'a', type: 'trigger', label: 'Entente signée', sub: 'Devis accepté', icon: 'check' },
+    { id: 'd_work', fx: 0.41, fy: 0.640, c: 'b', type: 'cond', label: 'Projet livré', sub: 'SI travail terminé', icon: 'briefcase' },
+    { id: 'd_invoice', fx: 0.61, fy: 0.640, c: 'a', type: 'action', label: 'Facture générée', sub: 'Automatique', icon: 'invoice' },
+    { id: 'd_pay', fx: 0.80, fy: 0.640, c: 'a', type: 'action', label: 'Paiement & reçu', sub: 'Lien envoyé au client', icon: 'card' },
+
+    { id: 'x_susp', fx: 0.205, fy: 0.7775, c: 'b', type: 'trigger', label: 'Activité suspecte', sub: 'Connexion · paiement', icon: 'shieldalert' },
+    { id: 'x_rule', fx: 0.41, fy: 0.7775, c: 'b', type: 'cond', label: 'Règle déclenchée', sub: 'SI seuil dépassé', icon: 'shield' },
+    { id: 'x_block', fx: 0.61, fy: 0.7775, c: 'a', type: 'action', label: 'Bloquer & isoler', sub: 'Accès suspendu', icon: 'lock' },
+    { id: 'x_alert', fx: 0.80, fy: 0.7775, c: 'a', type: 'action', label: "Alerter l'équipe", sub: 'Notification', icon: 'bell' },
+
+    { id: 'p_list', fx: 0.205, fy: 0.915, c: 'a', type: 'trigger', label: "Liste d'abonnés", sub: 'Segment ciblé', icon: 'list' },
+    { id: 'p_promo', fx: 0.41, fy: 0.915, c: 'b', type: 'cond', label: 'Promo dernière minute', sub: 'SI fin de mois / stock', icon: 'tag' },
+    { id: 'p_mail', fx: 0.61, fy: 0.915, c: 'a', type: 'action', label: 'Courriel promo', sub: 'Offre -20% · 48 h', icon: 'mail' },
+    { id: 'p_sms', fx: 0.80, fy: 0.915, c: 'a', type: 'action', label: 'SMS dernière chance', sub: 'Expire ce soir', icon: 'chat' }
+  ];
+
+  LANES = [
+    { no: '01', title: 'Acquisition & triage', tag: 'Entrée', fy: 0.090 },
+    { no: '02', title: 'Enrichissement de lead', tag: 'Données', fy: 0.2275 },
+    { no: '03', title: 'Relance lead froid', tag: 'Relance', fy: 0.365 },
+    { no: '04', title: 'Rappels client', tag: 'Fidélité', fy: 0.5025 },
+    { no: '05', title: 'Livraison & paiement', tag: 'Facturation', fy: 0.640 },
+    { no: '06', title: 'Sécurité', tag: 'Protection', fy: 0.7775 },
+    { no: '07', title: 'Campagne promo', tag: 'Ventes', fy: 0.915 }
+  ];
+
+  EDGES = [
+    ['s_lead', 'n_triage', 'a', 0], ['n_triage', 't_chaud', 'a', 0], ['n_triage', 't_tiede', 'a', 0], ['n_triage', 't_froid', 'b', 0],
+    ['e_lead', 'e_fetch', 'a', 0], ['e_fetch', 'e_crm', 'a', 0],
+    ['b_trig', 'b_wait', 'b', 0], ['b_wait', 'b_mail', 'a', 0], ['b_mail', 'b_sms', 'a', 0],
+    ['c_book', 'c_when', 'a', 0], ['c_when', 'c_mail', 'a', 0], ['c_mail', 'c_sms', 'a', 0],
+    ['x_susp', 'x_rule', 'b', 0], ['x_rule', 'x_block', 'a', 0], ['x_block', 'x_alert', 'a', 0],
+    ['p_list', 'p_promo', 'a', 0], ['p_promo', 'p_mail', 'a', 0], ['p_mail', 'p_sms', 'a', 0],
+    ['d_deal', 'd_work', 'a', 0], ['d_work', 'd_invoice', 'a', 0], ['d_invoice', 'd_pay', 'a', 0],
+    ['s_lead', 'e_lead', 'a', 1], ['t_froid', 'b_trig', 'b', 1], ['c_sms', 'd_deal', 'a', 1]
+  ];
+
+  SCENARIOS = [
+    { path: ['s_lead', 'n_triage', 't_froid', 'b_trig', 'b_wait', 'b_mail', 'b_sms'], c: 'a', mult: 1.0 },
+    { path: ['s_lead', 'n_triage', 't_chaud'], c: 'a', mult: 2.3 },
+    { path: ['s_lead', 'e_lead', 'e_fetch', 'e_crm'], c: 'a', mult: 1.5 },
+    { path: ['c_book', 'c_when', 'c_mail', 'c_sms', 'd_deal', 'd_work', 'd_invoice', 'd_pay'], c: 'a', mult: 1.7 },
+    { path: ['x_susp', 'x_rule', 'x_block', 'x_alert'], c: 'b', mult: 2.0 },
+    { path: ['p_list', 'p_promo', 'p_mail', 'p_sms'], c: 'a', mult: 1.6 },
+    { path: ['d_deal', 'd_work', 'd_invoice', 'd_pay'], c: 'a', mult: 1.8 }
+  ];
+
+  componentDidMount() {
+    this.accent = this.props.accent || '#4bfac8';
+    this.alt = this.props.accentAlt || '#8b7cff';
+    this.aR = this.hexRgb(this.accent);
+    this.bR = this.hexRgb(this.alt);
+    this.root = this.rootRef.current;
+    this.ctx = this.canvasRef.current.getContext('2d');
+    this.bgCtx = this.bgRef.current.getContext('2d');
+    this.glow = {};
+    this.packets = [];
+    this.nextS = this.SCENARIOS.map((s, i) => 300 + i * 200);
+    this.NODEF = {};
+    this.DATA.forEach(n => { this.NODEF[n.id] = n; });
+    this.refreshRuntime();
+    this._ro = new ResizeObserver(() => this.resize());
+    this._ro.observe(this.stageRef.current);
+    this.resize();
+    this.resizeBg();
+    this._loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this._loop);
+  }
+  componentDidUpdate(prev) {
+    if (prev.accent !== this.props.accent || prev.accentAlt !== this.props.accentAlt) {
+      this.accent = this.props.accent || '#4bfac8';
+      this.alt = this.props.accentAlt || '#8b7cff';
+      this.aR = this.hexRgb(this.accent);
+      this.bR = this.hexRgb(this.alt);
+    }
+    this.refreshRuntime();
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); if (this._ro) this._ro.disconnect(); }
+
+  hexRgb(hex) {
+    let h = (hex || '#4bfac8').replace('#', '');
+    if (h.length === 3) h = h.split('').map(x => x + x).join('');
+    const n = parseInt(h, 16);
+    return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
+  }
+  refreshRuntime() {
+    if (!this.root) return;
+    this.els = {};
+    this.meta = {};
+    this.root.querySelectorAll('[data-node]').forEach(el => {
+      const id = el.dataset.node; this.els[id] = el;
+      const n = this.NODEF[id];
+      const rgb = n.c === 'b' ? this.bR : this.aR;
+      const base = n.type === 'pill' ? 0.5 : (n.type === 'trigger' || n.type === 'cond' ? 0.4 : 0.18);
+      this.meta[id] = { rgb, base };
+    });
+    this.root.style.setProperty('--ww-accent', this.accent);
+    this.root.style.setProperty('--ww-accent-rgb', this.aR);
+    this.root.querySelectorAll('[data-ic="accent"]').forEach(e => { e.style.color = this.accent; });
+    this.root.querySelectorAll('[data-ic="accent-bg"]').forEach(e => { e.style.background = this.accent; e.style.boxShadow = `0 0 9px rgba(${this.aR},0.7)`; });
+    this.root.querySelectorAll('[data-ic="alt-bg"]').forEach(e => { e.style.background = this.alt; e.style.boxShadow = `0 0 9px rgba(${this.bR},0.7)`; });
+  }
+  speedConf() {
+    const s = this.props.speed || 'normal';
+    return ({ calme: { ms: 1500, v: 1.5 }, normal: { ms: 1000, v: 2.3 }, rapide: { ms: 620, v: 3.3 } })[s] || { ms: 1000, v: 2.3 };
+  }
+
+  resize() {
+    const c = this.canvasRef.current, st = this.stageRef.current;
+    if (!c || !st) return;
+    const r = st.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.w = Math.max(1, r.width); this.h = Math.max(1, r.height);
+    c.width = this.w * dpr; c.height = this.h * dpr;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (this.layerRef.current) this.layerRef.current.style.transform = `scale(${this.w / 1180})`;
+  }
+
+  resizeBg() {
+    const c = this.bgRef.current; if (!c) return;
+    const r = c.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.bgW = Math.max(1, r.width); this.bgH = Math.max(1, r.height);
+    c.width = this.bgW * dpr; c.height = this.bgH * dpr;
+    this.bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(72, Math.max(26, Math.floor(this.bgW * this.bgH / 15000)));
+    this.bgNodes = Array.from({ length: n }, () => ({ x: Math.random() * this.bgW, y: Math.random() * this.bgH, vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.22, r: Math.random() * 1.4 + 0.6 }));
+  }
+  drawBg() {
+    const ctx = this.bgCtx; if (!ctx || !this.bgNodes) return;
+    const w = this.bgW, h = this.bgH, rgb = this.aR || '75,250,200';
+    ctx.clearRect(0, 0, w, h);
+    for (const p of this.bgNodes) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -6) p.x += w + 12; else if (p.x > w + 6) p.x -= w + 12;
+      if (p.y < -6) p.y += h + 12; else if (p.y > h + 6) p.y -= h + 12;
+    }
+    const max = Math.min(150, w * 0.12);
+    ctx.lineWidth = 1;
+    for (let i = 0; i < this.bgNodes.length; i++) for (let j = i + 1; j < this.bgNodes.length; j++) {
+      const a = this.bgNodes[i], b = this.bgNodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < max) { ctx.strokeStyle = `rgba(${rgb},${(1 - d / max) * 0.26})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+    }
+    for (const p of this.bgNodes) { ctx.fillStyle = `rgba(${rgb},0.5)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
+  }
+
+  ctr(id) { const n = this.NODEF[id]; return { x: n.fx * this.w, y: n.fy * this.h }; }
+  edge(aId, bId) {
+    const a = this.ctr(aId), b = this.ctr(bId), dx = b.x - a.x, dy = b.y - a.y;
+    const vertical = Math.abs(dy) > Math.abs(dx) * 1.1;
+    if (vertical) return { a, b, c1: { x: a.x, y: a.y + dy * 0.5 }, c2: { x: b.x, y: b.y - dy * 0.5 } };
+    return { a, b, c1: { x: a.x + dx * 0.5, y: a.y }, c2: { x: b.x - dx * 0.5, y: b.y } };
+  }
+  bez(e, t) {
+    const u = 1 - t, w0 = u * u * u, w1 = 3 * u * u * t, w2 = 3 * u * t * t, w3 = t * t * t;
+    return { x: w0 * e.a.x + w1 * e.c1.x + w2 * e.c2.x + w3 * e.b.x, y: w0 * e.a.y + w1 * e.c1.y + w2 * e.c2.y + w3 * e.b.y };
+  }
+
+  loop(now) {
+    const t = now || performance.now();
+    const bc = this.bgRef.current;
+    if (bc) { const br = bc.getBoundingClientRect(); if (Math.abs(br.width - this.bgW) > 1 || Math.abs(br.height - this.bgH) > 1) this.resizeBg(); }
+    this.drawBg();
+    const c = this.canvasRef.current;
+    if (c) { const r = c.getBoundingClientRect(); if (Math.abs(r.width - this.w) > 1 || Math.abs(r.height - this.h) > 1) this.resize(); }
+    const ctx = this.ctx, W = this.w, H = this.h;
+    ctx.clearRect(0, 0, W, H);
+
+    // lane bands
+    for (const l of this.LANES) {
+      const y = l.fy * H, bh = 0.116 * H, x0 = 0.155 * W, x1 = 0.93 * W;
+      ctx.fillStyle = 'rgba(255,255,255,0.018)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(x0, y - bh / 2, x1 - x0, bh, 16); else ctx.rect(x0, y - bh / 2, x1 - x0, bh);
+      ctx.fill();
+      ctx.fillStyle = `rgba(${this.aR},0.22)`;
+      ctx.fillRect(x0, y - bh / 2 + 4, 2.5, bh - 8);
+    }
+
+    // wires
+    for (const [aId, bId, ck, dashed] of this.EDGES) {
+      const e = this.edge(aId, bId), rgb = ck === 'b' ? this.bR : this.aR;
+      ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.bezierCurveTo(e.c1.x, e.c1.y, e.c2.x, e.c2.y, e.b.x, e.b.y);
+      ctx.setLineDash(dashed ? [2, 5] : []); ctx.lineWidth = 1.4; ctx.strokeStyle = `rgba(${rgb},${dashed ? 0.5 : 0.16})`; ctx.stroke();
+      if (!dashed) { ctx.setLineDash([4, 16]); ctx.lineDashOffset = -(t * 0.045); ctx.strokeStyle = `rgba(${rgb},0.4)`; ctx.stroke(); }
+      else {
+        const ang = Math.atan2(e.b.y - e.c2.y, e.b.x - e.c2.x);
+        ctx.setLineDash([]); ctx.fillStyle = `rgba(${rgb},0.85)`;
+        ctx.save(); ctx.translate(e.b.x, e.b.y); ctx.rotate(ang);
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-7, -3.4); ctx.lineTo(-7, 3.4); ctx.closePath(); ctx.fill(); ctx.restore();
+      }
+    }
+    ctx.setLineDash([]);
+
+    // spawn per scenario
+    const conf = this.speedConf();
+    this.SCENARIOS.forEach((sc, i) => {
+      if (t > this.nextS[i] && this.packets.length < 26) {
+        this.packets.push({ path: sc.path, seg: 0, t: 0, v: conf.v, rgb: sc.c === 'b' ? this.bR : this.aR });
+        this.pulse(sc.path[0]);
+        this.nextS[i] = t + conf.ms * sc.mult * (0.8 + Math.random() * 0.5);
+      }
+    });
+
+    // packets
+    ctx.save();
+    const next = [];
+    for (const p of this.packets) {
+      const e = this.edge(p.path[p.seg], p.path[p.seg + 1]);
+      const len = Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y) || 1;
+      p.t += p.v / len;
+      if (p.t >= 1) { this.pulse(p.path[p.seg + 1]); p.seg++; p.t = 0; if (p.seg >= p.path.length - 1) continue; next.push(p); }
+      else next.push(p);
+      const e2 = this.edge(p.path[p.seg], p.path[p.seg + 1]);
+      if (!this.NODEF[p.path[p.seg + 1]]) continue;
+      const pos = this.bez(e2, p.t), tp = this.bez(e2, Math.max(0, p.t - 0.06));
+      const grad = ctx.createLinearGradient(tp.x, tp.y, pos.x, pos.y);
+      grad.addColorStop(0, `rgba(${p.rgb},0)`); grad.addColorStop(1, `rgba(${p.rgb},0.55)`);
+      ctx.strokeStyle = grad; ctx.lineWidth = 2.4; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(tp.x, tp.y); ctx.lineTo(pos.x, pos.y); ctx.stroke();
+      ctx.shadowColor = `rgba(${p.rgb},0.9)`; ctx.shadowBlur = 10; ctx.fillStyle = `rgba(${p.rgb},1)`;
+      ctx.beginPath(); ctx.arc(pos.x, pos.y, 3, 0, 6.2832); ctx.fill(); ctx.shadowBlur = 0;
+    }
+    this.packets = next;
+    ctx.restore();
+
+    // glow -> DOM
+    for (const id in this.els) {
+      const g = (this.glow[id] || 0) * 0.9; this.glow[id] = g;
+      const m = this.meta[id]; const el = this.els[id];
+      el.style.borderColor = `rgba(${m.rgb},${m.base + g * (1 - m.base)})`;
+      el.style.boxShadow = g > 0.04 ? `0 0 ${10 + g * 24}px rgba(${m.rgb},${0.08 + g * 0.4})` : 'none';
+    }
+
+    this.raf = requestAnimationFrame(this._loop);
+  }
+
+  pulse(id) { this.glow[id] = Math.min(1.3, (this.glow[id] || 0) + 1); }
+
+  renderVals() {
+    const accent = this.props.accent || '#4bfac8', alt = this.props.accentAlt || '#8b7cff';
+    const aR = this.hexRgb(accent), bR = this.hexRgb(alt);
+    const W = 1180, H = 1240;
+    const col = c => c === 'b' ? { c: alt, r: bR } : { c: accent, r: aR };
+    const nodes = this.DATA.map(n => {
+      const cc = col(n.c), left = n.fx * W, top = n.fy * H;
+      const pos = `position:absolute; left:${left}px; top:${top}px; transform:translate(-50%,-50%); white-space:nowrap; box-sizing:border-box;`;
+      if (n.type === 'pill') {
+        return { id: n.id, hasIcon: false, paths: [], label: n.label, sub: '', textWrap: '', labelStyle: '', subStyle: '',
+          style: pos + `display:inline-flex; align-items:center; padding:6px 15px; border-radius:999px; background:rgba(${cc.r},0.1); border:1px solid rgba(${cc.r},0.5); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(244,243,247,0.86);` };
+      }
+      const emph = n.type === 'trigger' || n.type === 'cond';
+      return { id: n.id, hasIcon: true, paths: this.ICONS[n.icon] || [], label: n.label, sub: n.sub,
+        style: pos + `display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:13px; background:rgba(14,14,20,0.92); border:1px solid rgba(${cc.r},${emph ? 0.4 : 0.18});`,
+        iconStyle: `flex:none; display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:8px; background:rgba(${cc.r},0.12); color:${cc.c};`,
+        textWrap: 'display:flex; flex-direction:column; gap:2px;',
+        labelStyle: 'font-size:13px; font-weight:600; letter-spacing:-0.01em; color:#f4f3f7;',
+        subStyle: "font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.42);" };
+    });
+    const lanes = this.LANES.map(l => ({ no: l.no, title: l.title, tag: l.tag,
+      style: `position:absolute; left:16px; top:${l.fy * H}px; transform:translateY(-50%); width:126px; display:flex; flex-direction:column; gap:3px;` }));
+    return {
+      rootRef: this.rootRef, stageRef: this.stageRef, canvasRef: this.canvasRef, layerRef: this.layerRef, bgRef: this.bgRef, nodes, lanes,
+      navEnter: this.navEnter, navLeave: this.navLeave, navToggle: this.navToggle,
+      navChevStyle: `flex:none; transition:transform .22s ease; transform:rotate(${this.state.navOpen ? 180 : 0}deg);`,
+      navPanelStyle: `position:absolute; top:100%; left:0; padding-top:13px; z-index:40; transition:opacity .2s ease, transform .2s ease; ${this.state.navOpen ? 'opacity:1; transform:translateY(0); visibility:visible; pointer-events:auto;' : 'opacity:0; transform:translateY(-6px); visibility:hidden; pointer-events:none;'}`
+    };
+  }
+}
+</script>
+</body>
+</html>

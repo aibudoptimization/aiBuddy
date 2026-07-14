@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#07070b;}
+  @keyframes wwPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.3;transform:scale(0.62);}}
+  @keyframes wwFeedIn{from{opacity:0;transform:translateY(9px);}to{opacity:1;transform:none;}}
+  @keyframes wwFeedSlide{from{transform:translateY(10px);}to{transform:none;}}
+  @keyframes wwBlink{0%,100%{opacity:1;}50%{opacity:0.25;}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; width:100%; box-sizing:border-box; background:#07070b; color:#f4f3f7; font-family:'Schibsted Grotesk',system-ui,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <canvas ref="{{ bgRef }}" style="position:absolute; top:0; left:0; width:100%; height:440px; display:block; z-index:0;"></canvas>
+  <div style="position:absolute; top:0; left:0; right:0; height:440px; z-index:1; pointer-events:none; background:linear-gradient(180deg, rgba(7,7,11,0.5) 0%, rgba(7,7,11,0.12) 32%, rgba(7,7,11,0.78) 78%, #07070b 100%);"></div>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:40; backdrop-filter:blur(9px); -webkit-backdrop-filter:blur(9px); display:flex; align-items:center; justify-content:space-between; padding:22px clamp(28px,5vw,64px);">
+    <a href="Workflow%20Wonder%20website.dc.html" style="display:flex; align-items:center; gap:9px; font-size:18px; font-weight:700; letter-spacing:-0.03em; color:inherit; text-decoration:none;">
+      <span>Workflow</span>
+      <span data-ic="accent-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 12px rgba(75,250,200,0.8);"></span>
+      <span>Wonder</span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:clamp(18px,2.4vw,38px); font-size:14.5px; color:rgba(244,243,247,0.66);">
+      <div onMouseEnter="{{ navEnter }}" onMouseLeave="{{ navLeave }}" style="position:relative;">
+        <span onClick="{{ navToggle }}" style="display:inline-flex; align-items:center; gap:6px; color:inherit; cursor:pointer;">Services <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="{{ navChevStyle }}"><path d="M5 9l7 7 7-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        <div style="{{ navPanelStyle }}">
+          <div style="min-width:312px; background:rgba(12,12,18,0.97); border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:8px; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 60px rgba(0,0,0,0.5); display:flex; flex-direction:column; gap:2px;">
+            <a href="Service%20Animation%20Workflow.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(75,250,200,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.8);"></span>Automatisation des workflows</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Workflows · agents · relais</span>
+            </a>
+            <a href="Service%20Agents%20IA.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(139,124,255,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.8);"></span>Agents &amp; assistants IA</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Agents · IA · décision</span>
+            </a>
+            <a href="Service%20Sites%20Boutiques.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(240,169,78,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#f0a94e; box-shadow:0 0 9px rgba(240,169,78,0.8);"></span>Sites &amp; boutiques en ligne</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Sites · boutiques · e-commerce</span>
+            </a>
+            <a href="Blog%20Index.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(106,168,255,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#6aa8ff; box-shadow:0 0 9px rgba(106,168,255,0.8);"></span>Visibilité &amp; performance</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Articles · Journal</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <a href="#" style="color:inherit; text-decoration:none;">Approche</a>
+      <a href="#" style="color:#f4f3f7; text-decoration:none; border:1px solid rgba(244,243,247,0.18); padding:9px 18px; border-radius:999px;">Discutons</a>
+    </nav>
+  </header>
+
+  <div style="position:relative; z-index:2; padding:clamp(104px,12vh,128px) clamp(28px,5vw,64px) clamp(40px,6vw,72px);">
+    <div style="width:100%; max-width:1180px; margin:0 auto;">
+
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:14px;">
+      <div style="display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,243,247,0.6);">
+        <span data-ic="alt-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.7);"></span>
+        <span>Agents &amp; assistants IA</span>
+      </div>
+      <span style="display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(244,243,247,0.4);"><span data-ic="alt-bg" style="width:7px; height:7px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.7); animation:wwPulse 1.8s ease-in-out infinite;"></span>agent en direct</span>
+    </div>
+
+    <h2 style="margin:0 0 8px; font-weight:600; letter-spacing:-0.03em; line-height:1.02; font-size:clamp(28px,4vw,48px); max-width:780px;">Un agent. Il comprend, <span data-ic="alt" style="color:#8b7cff;">décide</span>, agit.</h2>
+    <p style="margin:0 0 clamp(20px,3vh,30px); max-width:560px; font-size:clamp(14.5px,1.25vw,16.5px); line-height:1.55; color:rgba(244,243,247,0.6);">Regardez-le travailler, chaque scénario se joue en direct.</p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:9px; margin-bottom:clamp(18px,2.6vh,26px);">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="4">
+        <button onClick="{{ c.onClick }}" style="{{ c.style }}">
+          <span style="{{ c.dotStyle }}"></span>{{ c.label }}
+        </button>
+      </sc-for>
+    </div>
+
+    <div ref="{{ stageRef }}" style="position:relative; width:100%; aspect-ratio:1180/780; min-height:480px; border:1px solid rgba(244,243,247,0.08); border-radius:20px; overflow:hidden; background:radial-gradient(90% 120% at 66% 50%, rgba(139,124,255,0.08), rgba(7,7,11,0) 62%);">
+      <canvas ref="{{ canvasRef }}" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
+
+      <div ref="{{ layerRef }}" style="position:absolute; top:0; left:0; width:1180px; height:780px; transform-origin:0 0;">
+
+        <!-- live work surface -->
+        <div style="{{ cardStyle }}">
+          <div style="display:flex; align-items:center; gap:10px; padding:13px 16px; border-bottom:1px solid rgba(244,243,247,0.08);">
+            <span style="{{ cardIconStyle }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><sc-for list="{{ surfaceIcon }}" as="p" hint-placeholder-count="2"><path d="{{ p }}"></path></sc-for></svg></span>
+            <span style="font-size:13px; font-weight:600; letter-spacing:-0.01em; color:#f4f3f7;">{{ surfaceName }}</span>
+            <span style="margin-left:auto; display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.4);"><span style="width:6px; height:6px; border-radius:999px; background:#4bfac8; box-shadow:0 0 8px rgba(75,250,200,0.8); animation:wwBlink 1.4s ease-in-out infinite;"></span>live</span>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; gap:11px; padding:16px; overflow:hidden;">
+            <sc-for list="{{ feedItems }}" as="it" hint-placeholder-count="3">
+              <div style="{{ it.rowStyle }}">
+                <div style="{{ it.style }}">
+                  <span style="{{ it.dotStyle }}"></span>
+                  <span>{{ it.text }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- orbiting capabilities -->
+        <sc-for list="{{ orbits }}" as="o" hint-placeholder-count="6">
+          <div data-orbit="{{ o.key }}" style="{{ o.style }}">
+            <span data-orbit-ic="1" style="{{ o.iconStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><sc-for list="{{ o.paths }}" as="p" hint-placeholder-count="2"><path d="{{ p }}"></path></sc-for></svg></span>
+            <span style="{{ o.labelStyle }}">{{ o.label }}</span>
+          </div>
+        </sc-for>
+
+        <!-- the agent -->
+        <div data-orb="1" style="{{ orbStyle }}">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#fff;"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L7 10l5.2-1.8z"></path><path d="M5 5l.5 1.5L7 7l-1.5.5L5 9l-.5-1.5L3 7l1.5-.5z"></path></svg>
+        </div>
+        <div style="{{ orbLabelStyle }}">
+          <span style="font-size:15px; font-weight:700; letter-spacing:-0.02em; color:#f4f3f7; white-space:nowrap;">{{ agentName }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; color:#8b7cff;">AI Agent</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px; margin-top:clamp(22px,3vh,34px); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.04em; color:rgba(244,243,247,0.5);">
+      <span style="display:inline-flex; align-items:center; gap:8px;"><span style="width:8px; height:8px; border-radius:999px; background:rgba(244,243,247,0.5);"></span>Perçoit l'entrée</span>
+      <span style="display:inline-flex; align-items:center; gap:8px;"><span data-ic="alt-bg" style="width:8px; height:8px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.7);"></span>Raisonne &amp; choisit l'outil</span>
+      <span style="display:inline-flex; align-items:center; gap:8px;"><span data-ic="accent-bg" style="width:8px; height:8px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.7);"></span>Agit &amp; répond</span>
+    </div>
+
+    <div style="margin-top:clamp(26px,4vh,42px); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px; padding:clamp(24px,3vw,32px) clamp(26px,3vw,36px); border:1px solid rgba(244,243,247,0.1); border-radius:20px; background:linear-gradient(150deg, rgba(139,124,255,0.12), rgba(18,16,26,0.3) 55%);">
+      <div style="max-width:560px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#8b7cff; margin-bottom:10px;">Sur mesure</div>
+        <div style="font-size:clamp(18px,2vw,22px); font-weight:600; letter-spacing:-0.02em; line-height:1.25; margin-bottom:8px;">Et si votre prochain employé n'avait jamais besoin de dormir ?</div>
+        <div style="font-size:14.5px; line-height:1.55; color:rgba(244,243,247,0.6);">On conçoit l'agent autour de votre métier, vos données, vos outils, votre ton de voix.</div>
+      </div>
+      <a href="#" style="flex:none; display:inline-flex; align-items:center; gap:10px; background:#8b7cff; color:#07070b; font-weight:600; font-size:15.5px; padding:15px 26px; border-radius:999px; text-decoration:none; box-shadow:0 8px 30px rgba(139,124,255,0.28); white-space:nowrap;">Concevoir mon agent <span style="font-size:17px;">→</span></a>
+    </div>
+
+    </div>
+  </div>
+
+  <footer style="position:relative; z-index:2; border-top:1px solid rgba(244,243,247,0.08); background:rgba(9,8,12,0.74); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(48px,7vh,76px) clamp(28px,5vw,64px) 30px; box-sizing:border-box;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:48px;">
+        <div style="max-width:330px;">
+          <a href="Workflow%20Wonder%20website.dc.html" style="display:flex; align-items:center; gap:9px; margin-bottom:18px; font-size:18px; font-weight:700; letter-spacing:-0.03em; color:inherit; text-decoration:none;"><span>Workflow</span><span data-ic="accent-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 12px rgba(75,250,200,0.8);"></span><span>Wonder</span></a>
+          <p style="margin:0 0 20px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.55);">Automatisations sur mesure et agents IA, pour les entrepreneurs du Québec qui veulent gagner du temps.</p>
+          <a href="mailto:bonjour@workflowwonder.com" data-ic="accent" style="font-size:14.5px; color:#4bfac8; text-decoration:none;">bonjour@workflowwonder.com</a>
+          <div style="display:flex; gap:10px; margin-top:22px;">
+            <a href="#" aria-label="Facebook" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">f</a>
+            <a href="#" aria-label="Instagram" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">ig</a>
+            <a href="#" aria-label="LinkedIn" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">in</a>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:clamp(36px,5vw,68px);">
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Services</span>
+            <a href="Service%20Animation%20Workflow.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Automatisation des workflows</a>
+            <a href="Service%20Agents%20IA.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Agents &amp; assistants IA</a>
+            <a href="Service%20Sites%20Boutiques.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Sites &amp; boutiques en ligne</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Visibilité &amp; performance</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Entreprise</span>
+            <a href="Workflow%20Wonder%20website.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Accueil</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">À propos</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Réalisations</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Contact</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Ressources</span>
+            <a href="Blog%20Index.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Blog</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">FAQ</a>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px; margin-top:clamp(40px,6vh,64px); padding-top:26px; border-top:1px solid rgba(244,243,247,0.07);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(244,243,247,0.4);">© 2026 Workflow Wonder. Tous droits réservés.</span>
+        <div style="display:flex; flex-wrap:wrap; gap:24px; font-size:13px; color:rgba(244,243,247,0.5);">
+          <a href="#" style="color:inherit; text-decoration:none;" style-hover="color:#f4f3f7;">Mentions légales</a>
+          <a href="#" style="color:inherit; text-decoration:none;" style-hover="color:#f4f3f7;">Politique de confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1640},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#4bfac8&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accentAlt&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#8b7cff&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  stageRef = React.createRef();
+  canvasRef = React.createRef();
+  layerRef = React.createRef();
+  bgRef = React.createRef();
+  state = { navOpen: false, idx: 0, shown: 0 };
+  navEnter = () => this.setState({ navOpen: true });
+  navLeave = () => this.setState({ navOpen: false });
+  navToggle = () => this.setState(s => ({ navOpen: !s.navOpen }));
+
+  OX = 0.655; OY = 0.5; R = 205; W = 1180; H = 780;
+
+  ICONS = {
+    chat: ["M4 5h16a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H9l-4 3v-3H5a1 1 0 0 1-1-1V6a1 1 0 0 1 0-1z"],
+    chart: ["M5 5v14h14", "M9 15v-3", "M13 15V9", "M17 15v-5"],
+    inbox: ["M4 13h4l1.5 2.5h5L16 13h4", "M4 13l2-8h12l2 8v6H4z"],
+    ticket: ["M4 7h16v4a1.6 1.6 0 0 0 0 3.2V18H4v-3.8A1.6 1.6 0 0 0 4 11z", "M14 7v11"],
+    ear: ["M9 8.5a3.2 3.2 0 1 1 5.4 2.3c-1 .9-1.7 1.5-1.7 2.7a1.9 1.9 0 0 1-3.4 1.1", "M9.4 17.4a3 3 0 0 0 2.2 1"],
+    memory: ["M12 4.5a3 3 0 0 0-3 3 3 3 0 0 0-1 5.8A3 3 0 0 0 12 19.5a3 3 0 0 0 4-5.2 3 3 0 0 0-1-6.8 3 3 0 0 0-3-3z", "M12 4.5v15"],
+    book: ["M6 5h11a1 1 0 0 1 1 1v13H8a2 2 0 0 0-2 2z", "M6 5a2 2 0 0 0-2 2v12", "M9.5 9h5"],
+    database: ["M12 4c4 0 7 1 7 2.5S16 9 12 9 5 8 5 6.5 8 4 12 4z", "M5 6.5v11C5 19 8 20 12 20s7-1 7-2.5v-11", "M5 12c0 1.5 3 2.5 7 2.5s7-1 7-2.5"],
+    plug: ["M9 3v6", "M15 3v6", "M7 9h10v2a5 5 0 0 1-10 0z", "M12 16v5"],
+    send: ["M5 12l15-7-7 15-2.2-5.8z", "M11 13.2l6.5-6.2"]
+  };
+
+  ORBITS = [
+    { key: 'comprend', label: 'Comprend', icon: 'ear', a: -90, role: 'in' },
+    { key: 'memoire', label: 'Mémoire', icon: 'memory', a: -30, role: 'tool' },
+    { key: 'connaissances', label: 'Connaissances', icon: 'book', a: 30, role: 'tool' },
+    { key: 'donnees', label: 'Données', icon: 'database', a: 90, role: 'tool' },
+    { key: 'outils', label: 'Outils', icon: 'plug', a: 150, role: 'tool' },
+    { key: 'repond', label: 'Répond', icon: 'send', a: 210, role: 'out' }
+  ];
+
+  SCEN = [
+    { short: 'Chatbot', agent: 'Assistant conversationnel', surface: 'Chat, site web', icon: 'chat', steps: [
+      { at: 400, kind: 'in', text: 'Bonjour ! Vous livrez à Québec ?' },
+      { at: 1700, kind: 'tool', node: 'connaissances', text: 'Consulte la base de connaissances' },
+      { at: 3200, kind: 'out', text: 'Oui, livraison en 24–48 h partout au Québec.' }
+    ] },
+    { short: 'Analyste', agent: 'Analyste de données', surface: 'Tableau de bord', icon: 'chart', steps: [
+      { at: 400, kind: 'in', text: 'Comment vont les ventes cette semaine ?' },
+      { at: 1700, kind: 'tool', node: 'donnees', text: 'Interroge les données de ventes' },
+      { at: 2900, kind: 'tool', node: 'memoire', text: 'Compare à la semaine passée' },
+      { at: 4300, kind: 'out', text: '+18 % cette semaine. Pic le jeudi, rapport prêt.' }
+    ] },
+    { short: 'Courriels', agent: 'Gestionnaire de courriels', surface: 'Boîte de réception', icon: 'inbox', steps: [
+      { at: 400, kind: 'in', text: 'Objet : Demande de remboursement' },
+      { at: 1700, kind: 'tool', node: 'connaissances', text: 'Vérifie la politique de retour' },
+      { at: 2900, kind: 'tool', node: 'outils', text: 'Classe : Facturation' },
+      { at: 4300, kind: 'out', text: 'Brouillon prêt + étiquette « Facturation » appliquée.' }
+    ] },
+    { short: 'Support', agent: 'Support client', surface: 'Tickets', icon: 'ticket', steps: [
+      { at: 400, kind: 'in', text: 'Où est ma commande #4471 ?' },
+      { at: 1700, kind: 'tool', node: 'outils', text: 'Vérifie le CRM' },
+      { at: 2900, kind: 'tool', node: 'donnees', text: 'Suit le colis' },
+      { at: 4300, kind: 'out', text: 'En transit, livraison demain. Suivi envoyé au client.' }
+    ] }
+  ];
+
+  HOLD = 2600;
+
+  setScenario = (i) => {
+    const now = performance.now();
+    this.t0 = now - this.CUM[i];
+  };
+
+  componentDidMount() {
+    this.alt = this.props.accentAlt || '#8b7cff';
+    this.accent = this.props.accent || '#4bfac8';
+    this.aR = this.hexRgb(this.accent);
+    this.bR = this.hexRgb(this.alt);
+    this.root = this.rootRef.current;
+    this.ctx = this.canvasRef.current.getContext('2d');
+    this.bgCtx = this.bgRef.current.getContext('2d');
+    this.orbitGlow = {};
+    this.orbEnergy = 0;
+    this.packets = [];
+    this._lastStep = '';
+    this._uiIdx = -1; this._uiShown = -1;
+    // timeline
+    this.DUR = this.SCEN.map(s => s.steps[s.steps.length - 1].at + this.HOLD);
+    this.CUM = []; let acc = 0;
+    this.DUR.forEach(d => { this.CUM.push(acc); acc += d; });
+    this.TOTAL = acc;
+    this.t0 = performance.now();
+    this._ro = new ResizeObserver(() => this.resize());
+    this._ro.observe(this.stageRef.current);
+    this.resize();
+    this.resizeBg();
+    this._loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this._loop);
+    this.applyTheme();
+  }
+  componentDidUpdate() { this.applyTheme(); }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); if (this._ro) this._ro.disconnect(); }
+
+  hexRgb(hex) {
+    let h = (hex || '#8b7cff').replace('#', '');
+    if (h.length === 3) h = h.split('').map(x => x + x).join('');
+    const n = parseInt(h, 16);
+    return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
+  }
+  applyTheme() {
+    if (!this.root) return;
+    this.root.querySelectorAll('[data-ic="accent"]').forEach(e => { e.style.color = this.accent; });
+    this.root.querySelectorAll('[data-ic="alt"]').forEach(e => { e.style.color = this.alt; });
+    this.root.querySelectorAll('[data-ic="accent-bg"]').forEach(e => { e.style.background = this.accent; e.style.boxShadow = `0 0 9px rgba(${this.aR},0.7)`; });
+    this.root.querySelectorAll('[data-ic="alt-bg"]').forEach(e => { e.style.background = this.alt; e.style.boxShadow = `0 0 9px rgba(${this.bR},0.7)`; });
+  }
+
+  resize() {
+    const c = this.canvasRef.current, st = this.stageRef.current;
+    if (!c || !st) return;
+    const r = st.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.w = Math.max(1, r.width); this.h = Math.max(1, r.height);
+    c.width = this.w * dpr; c.height = this.h * dpr;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (this.layerRef.current) this.layerRef.current.style.transform = `scale(${this.w / 1180})`;
+  }
+  resizeBg() {
+    const c = this.bgRef.current; if (!c) return;
+    const r = c.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.bgW = Math.max(1, r.width); this.bgH = Math.max(1, r.height);
+    c.width = this.bgW * dpr; c.height = this.bgH * dpr;
+    this.bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(72, Math.max(26, Math.floor(this.bgW * this.bgH / 15000)));
+    this.bgNodes = Array.from({ length: n }, () => ({ x: Math.random() * this.bgW, y: Math.random() * this.bgH, vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.22, r: Math.random() * 1.4 + 0.6 }));
+  }
+  drawBg() {
+    const ctx = this.bgCtx; if (!ctx || !this.bgNodes) return;
+    const w = this.bgW, h = this.bgH, rgb = this.bR || '139,124,255';
+    ctx.clearRect(0, 0, w, h);
+    for (const p of this.bgNodes) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -6) p.x += w + 12; else if (p.x > w + 6) p.x -= w + 12;
+      if (p.y < -6) p.y += h + 12; else if (p.y > h + 6) p.y -= h + 12;
+    }
+    const max = Math.min(150, w * 0.12);
+    ctx.lineWidth = 1;
+    for (let i = 0; i < this.bgNodes.length; i++) for (let j = i + 1; j < this.bgNodes.length; j++) {
+      const a = this.bgNodes[i], b = this.bgNodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < max) { ctx.strokeStyle = `rgba(${rgb},${(1 - d / max) * 0.22})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+    }
+    for (const p of this.bgNodes) { ctx.fillStyle = `rgba(${rgb},0.45)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
+  }
+
+  orbPos() { return { x: this.OX * this.w, y: this.OY * this.h }; }
+  nodePos(o) {
+    const c = this.orbPos(), rad = this.R * (this.w / 1180), ang = o.a * Math.PI / 180;
+    return { x: c.x + rad * Math.cos(ang), y: c.y + rad * Math.sin(ang) };
+  }
+  feedAnchor() { return { x: 0.40 * this.w, y: 0.5 * this.h }; }
+
+  loop(now) {
+    const t = now || performance.now();
+    const bc = this.bgRef.current;
+    if (bc) { const br = bc.getBoundingClientRect(); if (Math.abs(br.width - this.bgW) > 1 || Math.abs(br.height - this.bgH) > 1) this.resizeBg(); }
+    this.drawBg();
+    const cc = this.canvasRef.current;
+    if (cc) { const r = cc.getBoundingClientRect(); if (Math.abs(r.width - this.w) > 1 || Math.abs(r.height - this.h) > 1) this.resize(); }
+    const ctx = this.ctx, W = this.w, H = this.h;
+    ctx.clearRect(0, 0, W, H);
+
+    // timeline position
+    let e = (((t - this.t0) % this.TOTAL) + this.TOTAL) % this.TOTAL;
+    let idx = 0; while (idx < this.DUR.length - 1 && e >= this.CUM[idx] + this.DUR[idx]) idx++;
+    const local = e - this.CUM[idx];
+    const steps = this.SCEN[idx].steps;
+    let shown = 0; for (const s of steps) if (s.at <= local) shown++;
+    if (idx !== this._uiIdx || shown !== this._uiShown) { this._uiIdx = idx; this._uiShown = shown; this.setState({ idx, shown }); }
+
+    // newest step -> pulse + packet
+    const key = idx + '-' + shown;
+    if (shown > 0 && key !== this._lastStep) {
+      this._lastStep = key;
+      const st = steps[shown - 1];
+      const nodeKey = st.kind === 'in' ? 'comprend' : st.kind === 'out' ? 'repond' : st.node;
+      this.orbitGlow[nodeKey] = 1.25;
+      this.orbEnergy = Math.min(1.5, this.orbEnergy + (st.kind === 'out' ? 1.2 : 0.7));
+      this.packets.push({ node: nodeKey, kind: st.kind, born: t });
+    }
+
+    const orb = this.orbPos();
+    const orbR = 58 * (this.w / 1180);
+
+    // links orb -> nodes
+    for (const o of this.ORBITS) {
+      const np = this.nodePos(o), g = this.orbitGlow[o.key] || 0;
+      ctx.beginPath(); ctx.moveTo(orb.x, orb.y); ctx.lineTo(np.x, np.y);
+      ctx.lineWidth = 1.2; ctx.strokeStyle = `rgba(${this.bR},${0.1 + g * 0.45})`; ctx.stroke();
+    }
+    // link orb -> feed
+    const fa = this.feedAnchor();
+    ctx.beginPath(); ctx.moveTo(orb.x, orb.y); ctx.lineTo(fa.x, fa.y);
+    ctx.lineWidth = 1.2; ctx.strokeStyle = `rgba(${this.bR},0.12)`; ctx.stroke();
+
+    // agent rings
+    this.orbEnergy *= 0.94;
+    const en = this.orbEnergy;
+    for (let i = 0; i < 3; i++) {
+      const ph = ((t * 0.0006 + i / 3) % 1);
+      const rr = orbR + ph * (54 + en * 30);
+      ctx.beginPath(); ctx.arc(orb.x, orb.y, rr, 0, 6.2832);
+      ctx.lineWidth = 1.4; ctx.strokeStyle = `rgba(${this.bR},${(1 - ph) * (0.14 + en * 0.18)})`; ctx.stroke();
+    }
+    const halo = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orbR * 2.4);
+    halo.addColorStop(0, `rgba(${this.bR},${0.22 + en * 0.2})`);
+    halo.addColorStop(1, `rgba(${this.bR},0)`);
+    ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(orb.x, orb.y, orbR * 2.4, 0, 6.2832); ctx.fill();
+
+    // packets
+    const next = [];
+    for (const p of this.packets) {
+      const age = (t - p.born) / 850; if (age >= 1) continue; next.push(p);
+      let a, b, rgb;
+      if (p.kind === 'in') { const o = this.ORBITS.find(x => x.key === 'comprend'); a = this.nodePos(o); b = orb; rgb = '244,243,247'; }
+      else if (p.kind === 'out') { a = orb; b = fa; rgb = this.aR; }
+      else { const o = this.ORBITS.find(x => x.key === p.node); a = orb; b = this.nodePos(o); rgb = this.bR; }
+      const x = a.x + (b.x - a.x) * age, y = a.y + (b.y - a.y) * age;
+      const tx = a.x + (b.x - a.x) * Math.max(0, age - 0.08), ty = a.y + (b.y - a.y) * Math.max(0, age - 0.08);
+      const grad = ctx.createLinearGradient(tx, ty, x, y);
+      grad.addColorStop(0, `rgba(${rgb},0)`); grad.addColorStop(1, `rgba(${rgb},0.6)`);
+      ctx.strokeStyle = grad; ctx.lineWidth = 2.4; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
+      ctx.shadowColor = `rgba(${rgb},0.9)`; ctx.shadowBlur = 10; ctx.fillStyle = `rgba(${rgb},1)`;
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, 6.2832); ctx.fill(); ctx.shadowBlur = 0;
+    }
+    this.packets = next;
+
+    // orbit DOM glow
+    if (this.root) {
+      this.root.querySelectorAll('[data-orbit]').forEach(el => {
+        const k = el.dataset.orbit; const g = (this.orbitGlow[k] || 0); this.orbitGlow[k] = g * 0.92;
+        el.style.borderColor = `rgba(${this.bR},${0.2 + g * 0.7})`;
+        el.style.boxShadow = g > 0.04 ? `0 0 ${10 + g * 26}px rgba(${this.bR},${0.06 + g * 0.4})` : 'none';
+        const ic = el.querySelector('[data-orbit-ic]');
+        if (ic) { ic.style.background = `rgba(${this.bR},${0.12 + g * 0.3})`; ic.style.color = g > 0.2 ? '#fff' : this.alt; }
+      });
+      const orbEl = this.root.querySelector('[data-orb]');
+      if (orbEl) {
+        const s = 1 + en * 0.06;
+        orbEl.style.transform = `translate(-50%,-50%) scale(${s})`;
+        orbEl.style.boxShadow = `0 0 ${30 + en * 40}px rgba(${this.bR},${0.4 + en * 0.4}), inset 0 0 22px rgba(${this.bR},0.5)`;
+      }
+    }
+
+    this.raf = requestAnimationFrame(this._loop);
+  }
+
+  renderVals() {
+    const alt = this.props.accentAlt || '#8b7cff', accent = this.props.accent || '#4bfac8';
+    const bR = this.hexRgb(alt), aR = this.hexRgb(accent);
+    const W = this.W, H = this.H, ox = this.OX * W, oy = this.OY * H;
+    const idx = this.state.idx, shown = this.state.shown;
+    const scen = this.SCEN[idx];
+
+    const chips = this.SCEN.map((s, i) => ({
+      label: s.short,
+      onClick: () => this.setScenario(i),
+      dotStyle: `flex:none; width:7px; height:7px; border-radius:999px; background:${i === idx ? alt : 'rgba(244,243,247,0.3)'}; box-shadow:${i === idx ? `0 0 8px rgba(${bR},0.8)` : 'none'};`,
+      style: `display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-family:'Schibsted Grotesk',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:-0.01em; padding:9px 16px; border-radius:999px; transition:all .2s; ${i === idx ? `color:#f4f3f7; background:rgba(${bR},0.14); border:1px solid rgba(${bR},0.5);` : 'color:rgba(244,243,247,0.6); background:rgba(255,255,255,0.03); border:1px solid rgba(244,243,247,0.12);'}`
+    }));
+
+    const orbits = this.ORBITS.map(o => {
+      const ang = o.a * Math.PI / 180, x = ox + this.R * Math.cos(ang), y = oy + this.R * Math.sin(ang);
+      return { key: o.key, label: o.label, paths: this.ICONS[o.icon] || [],
+        style: `position:absolute; left:${x}px; top:${y}px; transform:translate(-50%,-50%); display:flex; align-items:center; gap:8px; padding:7px 13px 7px 8px; border-radius:999px; background:rgba(12,11,18,0.92); border:1px solid rgba(${bR},0.2); white-space:nowrap; transition:border-color .25s, box-shadow .25s;`,
+        iconStyle: `flex:none; display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:999px; background:rgba(${bR},0.12); color:${alt};`,
+        labelStyle: 'font-size:12px; font-weight:600; letter-spacing:-0.01em; color:rgba(244,243,247,0.9);' };
+    });
+
+    const feedItems = scen.steps.slice(0, shown).map((s, i) => {
+      const anim = 'animation:wwFeedSlide .4s cubic-bezier(.16,1,.3,1);';
+      if (s.kind === 'in') {
+        return { key: idx + '-' + i, text: s.text,
+          rowStyle: 'display:flex; justify-content:flex-start;',
+          dotStyle: 'display:none;',
+          style: `${anim} max-width:80%; padding:10px 14px; border-radius:14px 14px 14px 4px; background:rgba(244,243,247,0.07); border:1px solid rgba(244,243,247,0.1); font-size:13.5px; line-height:1.4; color:#f4f3f7;` };
+      }
+      if (s.kind === 'out') {
+        return { key: idx + '-' + i, text: s.text,
+          rowStyle: 'display:flex; justify-content:flex-end;',
+          dotStyle: 'display:none;',
+          style: `${anim} max-width:84%; padding:10px 14px; border-radius:14px 14px 4px 14px; background:rgba(${aR},0.14); border:1px solid rgba(${aR},0.4); font-size:13.5px; line-height:1.4; color:#eafff7;` };
+      }
+      return { key: idx + '-' + i, text: s.text,
+        rowStyle: 'display:flex; justify-content:flex-start;',
+        dotStyle: `flex:none; width:7px; height:7px; border-radius:999px; background:${alt}; box-shadow:0 0 8px rgba(${bR},0.9); animation:wwBlink 1s ease-in-out infinite;`,
+        style: `${anim} display:inline-flex; align-items:center; gap:9px; padding:8px 13px; border-radius:999px; background:rgba(${bR},0.1); border:1px solid rgba(${bR},0.3); font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.01em; color:${alt};` };
+    });
+
+    return {
+      rootRef: this.rootRef, stageRef: this.stageRef, canvasRef: this.canvasRef, layerRef: this.layerRef, bgRef: this.bgRef,
+      chips, orbits, feedItems,
+      agentName: scen.agent, surfaceName: scen.surface, surfaceIcon: this.ICONS[scen.icon] || [],
+      cardStyle: `position:absolute; left:36px; top:50%; transform:translateY(-50%); width:392px; height:430px; display:flex; flex-direction:column; border-radius:18px; background:rgba(11,11,17,0.82); border:1px solid rgba(244,243,247,0.1); box-shadow:0 30px 70px rgba(0,0,0,0.5); backdrop-filter:blur(6px); overflow:hidden;`,
+      cardIconStyle: `flex:none; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:rgba(${aR},0.12); color:${accent};`,
+      orbStyle: `position:absolute; left:${ox}px; top:${oy}px; transform:translate(-50%,-50%); width:116px; height:116px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 38% 32%, rgba(${bR},0.95), rgba(70,58,150,0.92) 62%, rgba(40,32,90,0.92)); border:1.5px solid rgba(${bR},0.8); box-shadow:0 0 36px rgba(${bR},0.5), inset 0 0 22px rgba(${bR},0.5);`,
+      orbLabelStyle: `position:absolute; left:${ox}px; top:${oy + 86}px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:2px; text-align:center;`,
+      navEnter: this.navEnter, navLeave: this.navLeave, navToggle: this.navToggle,
+      navChevStyle: `flex:none; transition:transform .22s ease; transform:rotate(${this.state.navOpen ? 180 : 0}deg);`,
+      navPanelStyle: `position:absolute; top:100%; left:0; padding-top:13px; z-index:40; transition:opacity .2s ease, transform .2s ease; ${this.state.navOpen ? 'opacity:1; transform:translateY(0); visibility:visible; pointer-events:auto;' : 'opacity:0; transform:translateY(-6px); visibility:hidden; pointer-events:none;'}`
+    };
+  }
+}
+</script>
+</body>
+</html>

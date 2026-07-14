@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#07070b;}
+  @keyframes wwPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.3;transform:scale(0.62);}}
+  @keyframes wwBlink{0%,100%{opacity:1;}50%{opacity:0.25;}}
+  .ww-cta-fill{position:relative; overflow:hidden; z-index:0;}
+  .ww-cta-fill::before{content:""; position:absolute; inset:0; background:var(--ww-accent,#f0a94e); transform:scaleX(0); transform-origin:center; transition:transform .42s cubic-bezier(.7,0,.2,1); z-index:-1;}
+  .ww-cta-fill:hover::before{transform:scaleX(1);}
+  .ww-cta-fill:hover{color:#07070b !important; box-shadow:0 8px 30px rgba(var(--ww-accent-rgb,240,169,78),0.3);}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; width:100%; box-sizing:border-box; background:#07070b; color:#f4f3f7; font-family:'Schibsted Grotesk',system-ui,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <canvas ref="{{ bgRef }}" style="position:absolute; top:0; left:0; width:100%; height:440px; display:block; z-index:0;"></canvas>
+  <div style="position:absolute; top:0; left:0; right:0; height:440px; z-index:1; pointer-events:none; background:linear-gradient(180deg, rgba(7,7,11,0.5) 0%, rgba(7,7,11,0.12) 32%, rgba(7,7,11,0.78) 78%, #07070b 100%);"></div>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:40; backdrop-filter:blur(9px); -webkit-backdrop-filter:blur(9px); display:flex; align-items:center; justify-content:space-between; padding:22px clamp(28px,5vw,64px);">
+    <a href="Workflow%20Wonder%20website.dc.html" style="display:flex; align-items:center; gap:9px; font-size:18px; font-weight:700; letter-spacing:-0.03em; color:inherit; text-decoration:none;">
+      <span>Workflow</span>
+      <span data-ic="accent-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 12px rgba(75,250,200,0.8);"></span>
+      <span>Wonder</span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:clamp(18px,2.4vw,38px); font-size:14.5px; color:rgba(244,243,247,0.66);">
+      <div onMouseEnter="{{ navEnter }}" onMouseLeave="{{ navLeave }}" style="position:relative;">
+        <span onClick="{{ navToggle }}" style="display:inline-flex; align-items:center; gap:6px; color:inherit; cursor:pointer;">Services <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="{{ navChevStyle }}"><path d="M5 9l7 7 7-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        <div style="{{ navPanelStyle }}">
+          <div style="min-width:312px; background:rgba(12,12,18,0.97); border:1px solid rgba(244,243,247,0.1); border-radius:16px; padding:8px; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 60px rgba(0,0,0,0.5); display:flex; flex-direction:column; gap:2px;">
+            <a href="Service%20Animation%20Workflow.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(75,250,200,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#4bfac8; box-shadow:0 0 9px rgba(75,250,200,0.8);"></span>Automatisation des workflows</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Workflows · agents · relais</span>
+            </a>
+            <a href="Service%20Agents%20IA.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(139,124,255,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#8b7cff; box-shadow:0 0 9px rgba(139,124,255,0.8);"></span>Agents &amp; assistants IA</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Agents · IA · décision</span>
+            </a>
+            <a href="Service%20Sites%20Boutiques.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(240,169,78,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#f0a94e; box-shadow:0 0 9px rgba(240,169,78,0.8);"></span>Sites &amp; boutiques en ligne</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Sites · boutiques · e-commerce</span>
+            </a>
+            <a href="Blog%20Index.dc.html" style="display:flex; flex-direction:column; gap:4px; padding:12px 13px; border-radius:11px; text-decoration:none; color:#f4f3f7; transition:background .2s;" style-hover="background:rgba(106,168,255,0.13);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; letter-spacing:-0.01em;"><span style="flex:none; width:6px; height:6px; border-radius:999px; background:#6aa8ff; box-shadow:0 0 9px rgba(106,168,255,0.8);"></span>Visibilité &amp; performance</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.45); padding-left:15px;">Articles · Journal</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <a href="#" style="color:inherit; text-decoration:none;">Approche</a>
+      <a href="#" style="color:#f4f3f7; text-decoration:none; border:1px solid rgba(244,243,247,0.18); padding:9px 18px; border-radius:999px;">Discutons</a>
+    </nav>
+  </header>
+
+  <div style="position:relative; z-index:2; padding:clamp(104px,12vh,128px) clamp(28px,5vw,64px) clamp(40px,6vw,72px);">
+    <div style="width:100%; max-width:1180px; margin:0 auto;">
+
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:14px;">
+      <div style="display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,243,247,0.6);">
+        <span data-ic="alt-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#f0a94e; box-shadow:0 0 9px rgba(240,169,78,0.7);"></span>
+        <span>Sites &amp; boutiques en ligne</span>
+      </div>
+      <span style="display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(244,243,247,0.4);"></span>
+    </div>
+
+    <h2 style="margin:0 0 8px; font-weight:600; letter-spacing:-0.03em; line-height:1.02; font-size:clamp(28px,4vw,48px); max-width:820px;">On donne <span data-ic="alt" style="color:#f0a94e;">vie</span> à votre présence en ligne.</h2>
+    <p style="margin:0 0 clamp(20px,3vh,30px); max-width:580px; font-size:clamp(14.5px,1.25vw,16.5px); line-height:1.55; color:rgba(244,243,247,0.6);">Du site vitrine à la boutique complète, façonné pour votre activité et ceux que vous servez.</p>
+
+    <div ref="{{ stageRef }}" style="position:relative; width:100%; aspect-ratio:1180/600; min-height:440px; border:1px solid rgba(244,243,247,0.08); border-radius:20px; overflow:hidden; background:radial-gradient(90% 120% at 60% 40%, rgba(240,169,78,0.07), rgba(7,7,11,0) 62%);">
+      <canvas ref="{{ stageBgRef }}" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
+
+      <div ref="{{ layerRef }}" style="position:absolute; top:0; left:0; width:1180px; height:600px; transform-origin:0 0;">
+
+        <!-- browser window: site building itself -->
+        <div style="position:absolute; left:130px; top:24px; width:850px; height:552px; border-radius:16px; overflow:hidden; background:rgba(13,13,19,0.94); border:1px solid rgba(244,243,247,0.12); box-shadow:0 40px 90px rgba(0,0,0,0.55);">
+          <div style="height:42px; display:flex; align-items:center; gap:14px; padding:0 16px; border-bottom:1px solid rgba(244,243,247,0.08); background:rgba(255,255,255,0.02);">
+            <div style="display:flex; gap:7px;"><span style="width:11px; height:11px; border-radius:999px; background:rgba(240,169,78,0.7);"></span><span style="width:11px; height:11px; border-radius:999px; background:rgba(244,243,247,0.18);"></span><span style="width:11px; height:11px; border-radius:999px; background:rgba(244,243,247,0.18);"></span></div>
+            <div style="flex:1; max-width:430px; display:flex; align-items:center; gap:8px; height:27px; padding:0 13px; border-radius:999px; background:rgba(244,243,247,0.05); border:1px solid rgba(244,243,247,0.08); font-family:'JetBrains Mono',monospace; font-size:11.5px; color:rgba(244,243,247,0.6);">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(240,169,78,0.8)" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+              <span data-domain="1">labonnetable.ca</span>
+            </div>
+            <span style="display:inline-flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,243,247,0.45);"><span data-builddot="1" style="width:6px; height:6px; border-radius:999px; background:#f0a94e; box-shadow:0 0 8px rgba(240,169,78,0.9); animation:wwBlink 1.2s ease-in-out infinite;"></span>build</span>
+          </div>
+
+          <div data-viewport="1" style="position:relative; height:510px; padding:26px 28px; box-sizing:border-box; display:flex; flex-direction:column; gap:18px; background:radial-gradient(120% 80% at 72% 0%, rgba(240,169,78,0.06), rgba(7,7,11,0) 58%);">
+
+            <div data-build="nav" style="opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; display:flex; align-items:center; justify-content:space-between;">
+              <div style="display:flex; align-items:center; gap:9px;"><span style="width:13px; height:13px; border-radius:5px; background:#f0a94e;"></span><span style="width:78px; height:9px; border-radius:5px; background:rgba(244,243,247,0.32);"></span></div>
+              <div style="display:flex; align-items:center; gap:16px;"><span style="width:42px; height:7px; border-radius:5px; background:rgba(244,243,247,0.18);"></span><span style="width:42px; height:7px; border-radius:5px; background:rgba(244,243,247,0.18);"></span><span style="width:42px; height:7px; border-radius:5px; background:rgba(244,243,247,0.18);"></span><span style="width:92px; height:28px; border-radius:999px; background:rgba(240,169,78,0.85);"></span></div>
+            </div>
+
+            <div data-herorow="1" style="display:flex; gap:26px; flex:1; min-height:0;">
+              <div data-build="heroText" style="opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; flex:1.18; display:flex; flex-direction:column; justify-content:center; gap:15px;">
+                <span style="width:96px; height:9px; border-radius:5px; background:rgba(240,169,78,0.5);"></span>
+                <div data-hl="1" style="font-size:30px; font-weight:700; letter-spacing:-0.03em; line-height:1.1; color:#f4f3f7; max-width:340px; text-wrap:balance;">Réservez votre table en deux clics</div>
+                <span style="width:88%; height:10px; border-radius:5px; background:rgba(244,243,247,0.16);"></span>
+                <span style="width:62%; height:10px; border-radius:5px; background:rgba(244,243,247,0.16);"></span>
+                <span style="margin-top:6px; width:148px; height:42px; border-radius:999px; background:#f0a94e; box-shadow:0 10px 26px rgba(240,169,78,0.3);"></span>
+              </div>
+              <div data-build="heroImg" style="opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; flex:1; min-width:0; border-radius:14px; border:1px solid rgba(240,169,78,0.22); background:linear-gradient(150deg, rgba(240,169,78,0.16), rgba(18,16,26,0.4) 60%); display:flex; align-items:center; justify-content:center;">
+                <span data-img-icon="1" style="color:rgba(240,169,78,0.85); display:inline-flex;"><svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h11v4a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"></path><path d="M16 9h2a2 2 0 0 1 0 4h-2"></path><path d="M7 4v1.5"></path><path d="M10 4v1.5"></path><path d="M13 4v1.5"></path></svg></span>
+              </div>
+            </div>
+
+            <div data-build="cards" style="opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; display:flex; gap:14px;">
+              <div style="flex:1; border-radius:12px; overflow:hidden; border:1px solid rgba(244,243,247,0.09); background:rgba(244,243,247,0.02);"><div style="height:60px; background:linear-gradient(135deg, rgba(240,169,78,0.18), rgba(240,169,78,0.05));"></div><div style="padding:11px 12px; display:flex; flex-direction:column; gap:7px;"><span style="width:70%; height:8px; border-radius:5px; background:rgba(244,243,247,0.22);"></span><span style="width:45%; height:7px; border-radius:5px; background:rgba(244,243,247,0.12);"></span></div></div>
+              <div style="flex:1; border-radius:12px; overflow:hidden; border:1px solid rgba(244,243,247,0.09); background:rgba(244,243,247,0.02);"><div style="height:60px; background:linear-gradient(135deg, rgba(240,169,78,0.18), rgba(240,169,78,0.05));"></div><div style="padding:11px 12px; display:flex; flex-direction:column; gap:7px;"><span style="width:70%; height:8px; border-radius:5px; background:rgba(244,243,247,0.22);"></span><span style="width:45%; height:7px; border-radius:5px; background:rgba(244,243,247,0.12);"></span></div></div>
+              <div style="flex:1; border-radius:12px; overflow:hidden; border:1px solid rgba(244,243,247,0.09); background:rgba(244,243,247,0.02);"><div style="height:60px; background:linear-gradient(135deg, rgba(240,169,78,0.18), rgba(240,169,78,0.05));"></div><div style="padding:11px 12px; display:flex; flex-direction:column; gap:7px;"><span style="width:70%; height:8px; border-radius:5px; background:rgba(244,243,247,0.22);"></span><span style="width:45%; height:7px; border-radius:5px; background:rgba(244,243,247,0.12);"></span></div></div>
+            </div>
+
+            <div data-build="footer" style="opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; display:flex; align-items:center; justify-content:space-between; padding-top:10px; border-top:1px solid rgba(244,243,247,0.08);">
+              <div style="display:flex; align-items:center; gap:7px;"><span style="width:9px; height:9px; border-radius:3px; background:rgba(240,169,78,0.7);"></span><span style="width:52px; height:7px; border-radius:5px; background:rgba(244,243,247,0.16);"></span></div>
+              <div style="display:flex; gap:12px;"><span style="width:30px; height:6px; border-radius:5px; background:rgba(244,243,247,0.1);"></span><span style="width:30px; height:6px; border-radius:5px; background:rgba(244,243,247,0.1);"></span><span style="width:30px; height:6px; border-radius:5px; background:rgba(244,243,247,0.1);"></span></div>
+            </div>
+
+            <div data-cursor="1" style="position:absolute; left:60px; top:40px; opacity:0; transition:left .55s cubic-bezier(.5,0,.2,1), top .55s cubic-bezier(.5,0,.2,1), opacity .3s ease; pointer-events:none; z-index:6;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" stroke="rgba(7,7,11,0.5)" stroke-width="1" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));"><path d="M5 3l14 7-6 1.6L9.5 19z"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- responsive phone -->
+        <div data-phone="1" style="position:absolute; left:900px; top:252px; width:172px; height:340px; border-radius:26px; opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; background:rgba(15,15,22,0.97); border:6px solid rgba(32,32,42,0.98); box-shadow:0 30px 60px rgba(0,0,0,0.5); overflow:hidden;">
+          <div style="height:100%; display:flex; flex-direction:column; gap:11px; padding:16px 13px; box-sizing:border-box; background:radial-gradient(120% 60% at 50% 0%, rgba(240,169,78,0.1), rgba(7,7,11,0) 55%);">
+            <div style="display:flex; align-items:center; justify-content:space-between;"><span style="width:9px; height:9px; border-radius:3px; background:#f0a94e;"></span><span style="width:30px; height:6px; border-radius:4px; background:rgba(244,243,247,0.2);"></span></div>
+            <div style="height:74px; border-radius:10px; border:1px solid rgba(240,169,78,0.2); background:linear-gradient(150deg, rgba(240,169,78,0.16), rgba(18,16,26,0.4) 60%); display:flex; align-items:center; justify-content:center;"><span style="color:rgba(240,169,78,0.85); display:inline-flex;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h11v4a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"></path><path d="M16 9h2a2 2 0 0 1 0 4h-2"></path></svg></span></div>
+            <span style="width:80%; height:8px; border-radius:5px; background:rgba(244,243,247,0.22);"></span>
+            <span style="width:55%; height:7px; border-radius:5px; background:rgba(244,243,247,0.14);"></span>
+            <span style="width:100%; height:30px; border-radius:999px; background:rgba(240,169,78,0.85); margin-top:2px;"></span>
+            <div style="display:flex; gap:8px; margin-top:2px;"><span style="flex:1; height:42px; border-radius:8px; background:rgba(244,243,247,0.05); border:1px solid rgba(244,243,247,0.08);"></span><span style="flex:1; height:42px; border-radius:8px; background:rgba(244,243,247,0.05); border:1px solid rgba(244,243,247,0.08);"></span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- build status chips -->
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px 12px; margin-top:clamp(20px,3vh,30px);">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="4">
+        <span data-stepchip="{{ c.i }}" style="display:inline-flex; align-items:center; gap:9px; padding:8px 15px; border-radius:999px; border:1px solid rgba(244,243,247,0.1); background:rgba(255,255,255,0.02); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,243,247,0.42); transition:all .35s ease;">
+          <span data-stepdot="{{ c.i }}" style="width:7px; height:7px; border-radius:999px; background:rgba(244,243,247,0.25); transition:all .35s ease;"></span>{{ c.label }}
+        </span>
+      </sc-for>
+    </div>
+
+    <!-- ===== NICHE SHOWCASE ===== -->
+    <div style="margin-top:clamp(64px,9vh,104px);">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:6px;">
+        <div style="display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,243,247,0.5);">
+          <span style="flex:none; width:7px; height:7px; border-radius:999px; background:#f0a94e; box-shadow:0 0 9px rgba(240,169,78,0.7);"></span>
+          <span>Démos · prototypes</span>
+        </div>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.35);">Survolez pour explorer</span>
+      </div>
+      <h2 style="margin:0 0 6px; font-weight:600; letter-spacing:-0.03em; line-height:1.05; font-size:clamp(26px,3.4vw,42px); max-width:760px;">Ce qu'on peut bâtir pour vous.</h2>
+      <p style="margin:0 0 clamp(22px,3vh,34px); max-width:560px; font-size:clamp(14px,1.2vw,16px); line-height:1.55; color:rgba(244,243,247,0.55);">Voici des pistes par secteur. Votre projet n'a pas à entrer dans une case : explorez et imaginez le vôtre.</p>
+
+      <div style="display:flex; gap:10px; height:460px; width:100%;">
+        <sc-for list="{{ panels }}" as="p" hint-placeholder-count="7">
+          <div onMouseEnter="{{ p.onEnter }}" onClick="{{ p.onEnter }}" style="{{ p.style }}">
+
+            <div style="{{ p.labelStyle }}">
+              <span style="{{ p.labelDotStyle }}"></span>
+              <span style="{{ p.labelTextStyle }}">{{ p.name }}</span>
+              <span style="{{ p.numStyle }}">{{ p.num }}</span>
+            </div>
+
+            <div style="{{ p.contentStyle }}">
+              <div style="display:flex; align-items:center; gap:13px; margin-bottom:18px;">
+                <span style="{{ p.iconWrapStyle }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><sc-for list="{{ p.paths }}" as="d" hint-placeholder-count="2"><path d="{{ d }}"></path></sc-for></svg></span>
+                <div style="display:flex; flex-direction:column; gap:3px;">
+                  <span style="{{ p.tagStyle }}">{{ p.tag }}</span>
+                  <span style="font-size:21px; font-weight:600; letter-spacing:-0.02em; color:#f4f3f7; white-space:nowrap;">{{ p.name }}</span>
+                </div>
+              </div>
+
+              <!-- MOCKUP CARD · remplacer par la capture du prototype -->
+              <a href="{{ p.demoHref }}" style="{{ p.mockStyle }}">
+                <div style="height:34px; display:flex; align-items:center; gap:9px; padding:0 13px; border-bottom:1px solid rgba(244,243,247,0.08); background:rgba(255,255,255,0.02);">
+                  <span style="width:9px; height:9px; border-radius:999px; background:rgba(244,243,247,0.18);"></span>
+                  <span style="width:9px; height:9px; border-radius:999px; background:rgba(244,243,247,0.18);"></span>
+                  <span style="width:9px; height:9px; border-radius:999px; background:rgba(244,243,247,0.18);"></span>
+                  <span style="margin-left:8px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:rgba(244,243,247,0.5);">{{ p.domain }}</span>
+                </div>
+                <div style="{{ p.mockInnerStyle }}">
+                  <span style="{{ p.mockIconStyle }}"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><sc-for list="{{ p.paths }}" as="d" hint-placeholder-count="2"><path d="{{ d }}"></path></sc-for></svg></span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(244,243,247,0.4);">Aperçu du prototype</span>
+                  <span style="font-size:12px; color:rgba(244,243,247,0.3);">Image à venir</span>
+                </div>
+              </a>
+
+              <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:18px; margin-top:16px;">
+                <span style="font-size:14px; line-height:1.5; color:rgba(244,243,247,0.6); max-width:340px;">{{ p.desc }}</span>
+                <a href="{{ p.demoHref }}" style="{{ p.linkStyle }}">Voir la démo <span style="font-size:15px;">→</span></a>
+              </div>
+            </div>
+
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- CTA band -->
+    <div style="margin-top:clamp(56px,8vh,88px); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px; padding:clamp(28px,3.4vw,40px) clamp(28px,3.4vw,44px); border:1px solid rgba(240,169,78,0.24); border-radius:22px; background:linear-gradient(150deg, rgba(240,169,78,0.13), rgba(20,16,12,0.3) 55%); overflow:hidden;">
+      <div style="position:absolute;"></div>
+      <div style="max-width:600px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#f0a94e; margin-bottom:12px;">Sur mesure</div>
+        <div style="font-size:clamp(20px,2.4vw,28px); font-weight:600; letter-spacing:-0.02em; line-height:1.2; margin-bottom:10px;">Et si on parlait de votre projet à vous ?</div>
+        <div style="font-size:15px; line-height:1.55; color:rgba(244,243,247,0.62);">Décrivez-nous le vôtre, on revient avec une première piste concrète sous 24&nbsp;h.</div>
+      </div>
+      <a href="#" class="ww-cta-fill" style="flex:none; display:inline-flex; align-items:center; gap:10px; background:transparent; color:#f0a94e; font-weight:600; font-size:16px; padding:16px 28px; border-radius:999px; text-decoration:none; border:1.5px solid #f0a94e; white-space:nowrap; transition:color .35s ease, box-shadow .35s ease;">Parlons-en</a>
+    </div>
+
+    </div>
+  </div>
+
+  <footer style="position:relative; z-index:2; border-top:1px solid rgba(244,243,247,0.08); background:rgba(9,8,12,0.74); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(48px,7vh,76px) clamp(28px,5vw,64px) 30px; box-sizing:border-box;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:48px;">
+        <div style="max-width:330px;">
+          <a href="Workflow%20Wonder%20website.dc.html" style="display:flex; align-items:center; gap:9px; margin-bottom:18px; font-size:18px; font-weight:700; letter-spacing:-0.03em; color:inherit; text-decoration:none;"><span>Workflow</span><span data-ic="accent-bg" style="flex:none; width:7px; height:7px; border-radius:999px; background:#4bfac8; box-shadow:0 0 12px rgba(75,250,200,0.8);"></span><span>Wonder</span></a>
+          <p style="margin:0 0 20px; font-size:14.5px; line-height:1.6; color:rgba(244,243,247,0.55);">Automatisations sur mesure et agents IA, pour les entrepreneurs du Québec qui veulent gagner du temps.</p>
+          <a href="mailto:bonjour@workflowwonder.com" data-ic="accent" style="font-size:14.5px; color:#4bfac8; text-decoration:none;">bonjour@workflowwonder.com</a>
+          <div style="display:flex; gap:10px; margin-top:22px;">
+            <a href="#" aria-label="Facebook" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">f</a>
+            <a href="#" aria-label="Instagram" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">ig</a>
+            <a href="#" aria-label="LinkedIn" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:1px solid rgba(244,243,247,0.16); color:rgba(244,243,247,0.7); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;" style-hover="border-color:rgba(244,243,247,0.45); color:#fff;">in</a>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:clamp(36px,5vw,68px);">
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Services</span>
+            <a href="Service%20Animation%20Workflow.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Automatisation des workflows</a>
+            <a href="Service%20Agents%20IA.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Agents &amp; assistants IA</a>
+            <a href="Service%20Sites%20Boutiques.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Sites &amp; boutiques en ligne</a>
+            <a href="Blog%20Index.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Visibilité &amp; performance</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Entreprise</span>
+            <a href="Workflow%20Wonder%20website.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Accueil</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">À propos</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Réalisations</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Contact</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:13px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,243,247,0.4); margin-bottom:4px;">Ressources</span>
+            <a href="Blog%20Index.dc.html" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">Blog</a>
+            <a href="#" style="font-size:14.5px; color:rgba(244,243,247,0.64); text-decoration:none;" style-hover="color:#f4f3f7;">FAQ</a>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px; margin-top:clamp(40px,6vh,64px); padding-top:26px; border-top:1px solid rgba(244,243,247,0.07);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(244,243,247,0.4);">© 2026 Workflow Wonder. Tous droits réservés.</span>
+        <div style="display:flex; flex-wrap:wrap; gap:24px; font-size:13px; color:rgba(244,243,247,0.5);">
+          <a href="#" style="color:inherit; text-decoration:none;" style-hover="color:#f4f3f7;">Mentions légales</a>
+          <a href="#" style="color:inherit; text-decoration:none;" style-hover="color:#f4f3f7;">Politique de confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:2280},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#4bfac8&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accentAlt&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#f0a94e&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  bgRef = React.createRef();
+  stageBgRef = React.createRef();
+  stageRef = React.createRef();
+  layerRef = React.createRef();
+  state = { navOpen: false, active: 0 };
+  navEnter = () => this.setState({ navOpen: true });
+  navLeave = () => this.setState({ navOpen: false });
+  navToggle = () => this.setState(s => ({ navOpen: !s.navOpen }));
+
+  ICONS = {
+    cup: ["M5 8h11v4a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z", "M16 9h2a2 2 0 0 1 0 4h-2", "M7 4v1.5", "M10 4v1.5", "M13 4v1.5"],
+    bag: ["M6 8h12l1 11H5z", "M9 8V6.5a3 3 0 0 1 6 0V8"],
+    briefcase: ["M4 8h16v11H4z", "M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2", "M4 13h16"],
+    house: ["M4 11l8-6 8 6", "M6 10v9h12v-9", "M10 19v-5h4v5"],
+    wrench: ["M15.5 4.6a4 4 0 0 0-5.2 5.2l-6 6 2.4 2.4 6-6a4 4 0 0 0 5.2-5.2l-2.3 2.3-2.1-.5-.5-2.1z"],
+    calendar: ["M4 6h16v14H4z", "M4 10h16", "M8 3v4", "M16 3v4"],
+    camera: ["M4 8h3l1.5-2h7L17 8h3v11H4z", "M12 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"],
+    cross: ["M10 4h4v6h6v4h-6v6h-4v-6H4v-4h6z"]
+  };
+
+  HEROES = [
+    { domain: 'labonnetable.ca', hl: 'Réservez votre table en deux clics', icon: 'cup', color: '#ff7a6b', side: 'right', layout: 'menu' },
+    { domain: 'atelier-nord.shop', hl: 'La boutique de vos artisans locaux', icon: 'bag', color: '#f0a94e', side: 'left', layout: 'shop' },
+    { domain: 'clinique-seve.ca', hl: 'Prenez rendez-vous en ligne, 24/7', icon: 'cross', color: '#4bfac8', side: 'right', layout: 'booking' },
+    { domain: 'maisons-du-quartier.ca', hl: 'Trouvez la propriété qui vous ressemble', icon: 'house', color: '#6aa8ff', side: 'left', layout: 'realty' }
+  ];
+
+  PANELS = [
+    { name: 'Boutique e-commerce', tag: 'E-COMMERCE', color: '#f0a94e', icon: 'bag', domain: 'boutique.ca', demoHref: '#', desc: "Vendez vos produits locaux en ligne. Paiement, stock et livraison inclus." },
+    { name: 'Services pro', tag: 'SERVICES', color: '#4bfac8', icon: 'briefcase', domain: 'cabinet.ca', demoHref: '#', desc: "Clinique, cabinet, comptable : prise de rendez-vous et confiance." },
+    { name: 'Restaurant / café', tag: 'RESTAURATION', color: '#ff7a6b', icon: 'cup', domain: 'restaurant.ca', demoHref: '#', desc: "Menu, réservations et commandes, sans frais de plateforme." },
+    { name: 'Immobilier', tag: 'IMMOBILIER', color: '#6aa8ff', icon: 'house', domain: 'courtier.ca', demoHref: '#', desc: "Vos inscriptions mises en valeur, visites guidées en ligne." },
+    { name: 'Artisan & métiers', tag: 'MÉTIERS', color: '#7bd88f', icon: 'wrench', domain: 'metier.ca', demoHref: '#', desc: "Plombier, paysagiste, électricien : devis et réputation en ligne." },
+    { name: 'Événementiel', tag: 'ÉVÉNEMENTS', color: '#c084fc', icon: 'calendar', domain: 'evenement.ca', demoHref: '#', desc: "Mariage, festival : page d'événement, billetterie et galerie." },
+    { name: 'Portfolio créatif', tag: 'PORTFOLIO', color: '#f472b6', icon: 'camera', domain: 'portfolio.ca', demoHref: '#', desc: "Photographe, designer : un portfolio qui décroche des contrats." }
+  ];
+
+  CHIP_LABELS = ['Structure', 'Design', 'Contenu', 'En ligne'];
+  PHASES = [350, 900, 1400, 2000, 2600];
+  CURSOR = { 1: [60, 38], 2: [120, 235], 3: [560, 235], 4: [400, 405], 5: [400, 470] };
+  CYCLE = 7200; FADE = 6500;
+
+  componentDidMount() {
+    this.alt = this.props.accentAlt || '#f0a94e';
+    this.accent = this.props.accent || '#4bfac8';
+    this.aR = this.hexRgb(this.accent);
+    this.bR = this.hexRgb(this.alt);
+    this.root = this.rootRef.current;
+    this.bgCtx = this.bgRef.current.getContext('2d');
+    this.sbCtx = this.stageBgRef.current.getContext('2d');
+    this._ni = -1; this._step = -1; this._fade = null;
+    this._ro = new ResizeObserver(() => this.resize());
+    this._ro.observe(this.stageRef.current);
+    this.resize();
+    this.resizeBg();
+    this.applyTheme();
+    this._loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this._loop);
+  }
+  componentDidUpdate() { this.applyTheme(); }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); if (this._ro) this._ro.disconnect(); }
+
+  hexRgb(hex) {
+    let h = (hex || '#f0a94e').replace('#', '');
+    if (h.length === 3) h = h.split('').map(x => x + x).join('');
+    const n = parseInt(h, 16);
+    return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
+  }
+  applyTheme() {
+    if (!this.root) return;
+    this.root.style.setProperty('--ww-accent', this.alt);
+    this.root.style.setProperty('--ww-accent-rgb', this.bR);
+    this.root.querySelectorAll('[data-ic="accent"]').forEach(e => { e.style.color = this.accent; });
+    this.root.querySelectorAll('[data-ic="alt"]').forEach(e => { e.style.color = this.alt; });
+    this.root.querySelectorAll('[data-ic="accent-bg"]').forEach(e => { e.style.background = this.accent; e.style.boxShadow = `0 0 9px rgba(${this.aR},0.7)`; });
+    this.root.querySelectorAll('[data-ic="alt-bg"]').forEach(e => { e.style.background = this.alt; e.style.boxShadow = `0 0 9px rgba(${this.bR},0.7)`; });
+  }
+
+  iconSvg(name, size, color) {
+    const paths = (this.ICONS[name] || []).map(d => `<path d="${d}"></path>`).join('');
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+  }
+
+  resize() {
+    const st = this.stageRef.current; if (!st) return;
+    const r = st.getBoundingClientRect();
+    this.w = Math.max(1, r.width);
+    if (this.layerRef.current) this.layerRef.current.style.transform = `scale(${this.w / 1180})`;
+    const c = this.stageBgRef.current, dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.sw = Math.max(1, r.width); this.sh = Math.max(1, r.height);
+    c.width = this.sw * dpr; c.height = this.sh * dpr;
+    this.sbCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resizeBg() {
+    const c = this.bgRef.current; if (!c) return;
+    const r = c.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.bgW = Math.max(1, r.width); this.bgH = Math.max(1, r.height);
+    c.width = this.bgW * dpr; c.height = this.bgH * dpr;
+    this.bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(72, Math.max(26, Math.floor(this.bgW * this.bgH / 15000)));
+    this.bgNodes = Array.from({ length: n }, () => ({ x: Math.random() * this.bgW, y: Math.random() * this.bgH, vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.22, r: Math.random() * 1.4 + 0.6 }));
+  }
+  drawNet(ctx, w, h, nodes, rgb) {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of nodes) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -6) p.x += w + 12; else if (p.x > w + 6) p.x -= w + 12;
+      if (p.y < -6) p.y += h + 12; else if (p.y > h + 6) p.y -= h + 12;
+    }
+    const max = Math.min(150, w * 0.12);
+    ctx.lineWidth = 1;
+    for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+      const a = nodes[i], b = nodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < max) { ctx.strokeStyle = `rgba(${rgb},${(1 - d / max) * 0.2})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+    }
+    for (const p of nodes) { ctx.fillStyle = `rgba(${rgb},0.42)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
+  }
+
+  rgba(rgb, a) { return `rgba(${rgb},${a})`; }
+  bar(w, h, o) { return `<span style="display:block;width:${w};height:${h}px;border-radius:5px;background:rgba(244,243,247,${o});"></span>`; }
+
+  navHTML(c) {
+    return `<div style="display:flex;align-items:center;gap:9px;"><span style="width:13px;height:13px;border-radius:5px;background:${c};"></span>${this.bar('78px',9,0.32)}</div>`
+      + `<div style="display:flex;align-items:center;gap:16px;">${this.bar('42px',7,0.18)}${this.bar('42px',7,0.18)}${this.bar('42px',7,0.18)}<span style="width:92px;height:28px;border-radius:999px;background:${c};opacity:0.9;"></span></div>`;
+  }
+  heroTextHTML(n, rgb) {
+    return `<span style="display:block;width:96px;height:9px;border-radius:5px;background:${this.rgba(rgb,0.55)};"></span>`
+      + `<div style="font-size:30px;font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#f4f3f7;max-width:340px;text-wrap:balance;">${n.hl}</div>`
+      + this.bar('88%',10,0.16) + this.bar('62%',10,0.16)
+      + `<span style="display:block;margin-top:6px;width:148px;height:42px;border-radius:999px;background:${n.color};box-shadow:0 10px 26px ${this.rgba(rgb,0.3)};"></span>`;
+  }
+  sideImageHTML(n, rgb) {
+    return `<span style="color:${this.rgba(rgb,0.85)};display:inline-flex;">${this.iconSvg(n.icon, 58, 'currentColor')}</span>`;
+  }
+  sideFormHTML(n, rgb) {
+    const input = `<div style="height:30px;border-radius:8px;border:1px solid rgba(244,243,247,0.12);background:rgba(244,243,247,0.03);"></div>`;
+    return `<span style="display:block;width:62%;height:10px;border-radius:5px;background:${this.rgba(rgb,0.6)};"></span>${input}${input}${input}`
+      + `<div style="height:34px;border-radius:8px;background:${n.color};margin-top:auto;"></div>`;
+  }
+  cardsMenuHTML(rgb) {
+    const row = (last) => `<div style="display:flex;align-items:center;gap:12px;padding:9px 2px;${last ? '' : 'border-bottom:1px solid rgba(244,243,247,0.07);'}"><span style="width:36px;height:36px;border-radius:9px;flex:none;background:linear-gradient(135deg,${this.rgba(rgb,0.32)},${this.rgba(rgb,0.08)});"></span><span style="flex:1;height:9px;border-radius:5px;background:rgba(244,243,247,0.2);"></span><span style="width:42px;height:15px;border-radius:5px;background:${this.rgba(rgb,0.5)};"></span></div>`;
+    return row() + row() + row(true);
+  }
+  cardsShopHTML(rgb) {
+    const tile = `<div style="flex:1;border-radius:10px;overflow:hidden;border:1px solid rgba(244,243,247,0.09);background:rgba(244,243,247,0.02);"><div style="height:48px;background:linear-gradient(135deg,${this.rgba(rgb,0.22)},${this.rgba(rgb,0.05)});"></div><div style="padding:8px;display:flex;flex-direction:column;gap:6px;"><span style="display:block;width:80%;height:7px;border-radius:5px;background:rgba(244,243,247,0.2);"></span><span style="display:block;width:34px;height:13px;border-radius:4px;background:${this.rgba(rgb,0.5)};"></span></div></div>`;
+    return tile + tile + tile + tile;
+  }
+  cardsBookingHTML(c, rgb) {
+    const pill = `<div style="flex:1;display:flex;align-items:center;gap:9px;padding:13px;border-radius:11px;border:1px solid ${this.rgba(rgb,0.22)};background:${this.rgba(rgb,0.07)};"><span style="width:9px;height:9px;border-radius:999px;flex:none;background:${c};box-shadow:0 0 8px ${this.rgba(rgb,0.7)};"></span><span style="flex:1;height:8px;border-radius:5px;background:rgba(244,243,247,0.2);"></span></div>`;
+    return pill + pill + pill;
+  }
+  cardsRealtyHTML(rgb) {
+    const card = `<div style="flex:1;display:flex;gap:11px;border-radius:11px;overflow:hidden;border:1px solid rgba(244,243,247,0.09);background:rgba(244,243,247,0.02);padding:10px;"><span style="width:72px;height:58px;border-radius:8px;flex:none;background:linear-gradient(135deg,${this.rgba(rgb,0.28)},${this.rgba(rgb,0.06)});"></span><div style="flex:1;display:flex;flex-direction:column;gap:7px;justify-content:center;"><span style="display:block;width:80%;height:8px;border-radius:5px;background:rgba(244,243,247,0.2);"></span><span style="display:block;width:55%;height:7px;border-radius:5px;background:rgba(244,243,247,0.12);"></span><span style="display:block;width:46px;height:15px;border-radius:5px;background:${this.rgba(rgb,0.5)};margin-top:2px;"></span></div></div>`;
+    return card + card;
+  }
+  footerHTML(rgb) {
+    return `<div style="display:flex;align-items:center;gap:7px;"><span style="width:9px;height:9px;border-radius:3px;background:${this.rgba(rgb,0.7)};"></span>${this.bar('52px',7,0.16)}</div>`
+      + `<div style="display:flex;gap:12px;">${this.bar('30px',6,0.1)}${this.bar('30px',6,0.1)}${this.bar('30px',6,0.1)}</div>`;
+  }
+  phoneHTML(n, rgb) {
+    const c = n.color;
+    const head = `<div style="display:flex;align-items:center;justify-content:space-between;"><span style="width:9px;height:9px;border-radius:3px;background:${c};"></span><span style="width:30px;height:6px;border-radius:4px;background:rgba(244,243,247,0.2);"></span></div>`;
+    const btn = (mt) => `<span style="display:block;width:100%;height:28px;border-radius:999px;background:${c};margin-top:${mt};"></span>`;
+    const img = (h) => `<div style="height:${h}px;border-radius:10px;border:1px solid ${this.rgba(rgb,0.2)};background:linear-gradient(150deg,${this.rgba(rgb,0.16)},rgba(18,16,26,0.4) 60%);display:flex;align-items:center;justify-content:center;"><span style="color:${this.rgba(rgb,0.85)};display:inline-flex;">${this.iconSvg(n.icon, 26, 'currentColor')}</span></div>`;
+    let body;
+    if (n.layout === 'menu') {
+      const r = `<div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:24px;border-radius:6px;flex:none;background:${this.rgba(rgb,0.2)};"></span><span style="flex:1;height:7px;border-radius:5px;background:rgba(244,243,247,0.12);"></span></div>`;
+      body = img(74) + this.bar('80%',8,0.22) + this.bar('55%',7,0.14) + btn('2px') + r + r;
+    } else if (n.layout === 'shop') {
+      const tile = `<div style="border-radius:8px;overflow:hidden;border:1px solid rgba(244,243,247,0.08);"><div style="height:40px;background:linear-gradient(135deg,${this.rgba(rgb,0.22)},${this.rgba(rgb,0.05)});"></div><div style="padding:5px;"><span style="display:block;width:60%;height:6px;border-radius:4px;background:${this.rgba(rgb,0.5)};"></span></div></div>`;
+      body = `<span style="display:block;width:60%;height:8px;border-radius:5px;background:rgba(244,243,247,0.22);"></span><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">${tile + tile + tile + tile}</div>` + btn('auto');
+    } else if (n.layout === 'booking') {
+      const inp = `<div style="height:24px;border-radius:7px;border:1px solid rgba(244,243,247,0.12);background:rgba(244,243,247,0.03);"></div>`;
+      body = img(54) + inp + inp + inp + btn('2px');
+    } else {
+      body = img(92) + `<div style="display:flex;align-items:center;justify-content:space-between;"><span style="width:46px;height:14px;border-radius:5px;background:${this.rgba(rgb,0.5)};"></span><span style="width:30px;height:7px;border-radius:5px;background:rgba(244,243,247,0.14);"></span></div>` + this.bar('80%',8,0.2) + this.bar('60%',7,0.12) + btn('auto');
+    }
+    return head + body;
+  }
+
+  applyHero(ni) {
+    const n = this.HEROES[ni]; if (!n || !this.root) return;
+    const c = n.color, rgb = this.hexRgb(c);
+    const q = s => this.root.querySelector(s);
+    const dom = q('[data-domain]'); if (dom) dom.textContent = n.domain;
+    const bd = q('[data-builddot]'); if (bd) { bd.style.background = c; bd.style.boxShadow = `0 0 8px ${this.rgba(rgb,0.9)}`; }
+    const vp = q('[data-viewport]'); if (vp) vp.style.background = `radial-gradient(120% 80% at 72% 0%, ${this.rgba(rgb,0.07)}, rgba(7,7,11,0) 58%)`;
+    const hr = q('[data-herorow]'); if (hr) hr.style.flexDirection = n.side === 'left' ? 'row-reverse' : 'row';
+    const nav = q('[data-build="nav"]'); if (nav) nav.innerHTML = this.navHTML(c);
+    const ht = q('[data-build="heroText"]'); if (ht) ht.innerHTML = this.heroTextHTML(n, rgb);
+    const hi = q('[data-build="heroImg"]');
+    if (hi) {
+      if (n.layout === 'booking') {
+        hi.style.flexDirection = 'column'; hi.style.gap = '11px'; hi.style.padding = '18px';
+        hi.style.alignItems = 'stretch'; hi.style.justifyContent = 'flex-start';
+        hi.style.border = '1px solid rgba(244,243,247,0.1)'; hi.style.background = 'rgba(255,255,255,0.03)';
+        hi.innerHTML = this.sideFormHTML(n, rgb);
+      } else {
+        hi.style.flexDirection = ''; hi.style.gap = ''; hi.style.padding = '';
+        hi.style.alignItems = 'center'; hi.style.justifyContent = 'center';
+        hi.style.border = `1px solid ${this.rgba(rgb,0.22)}`;
+        hi.style.background = `linear-gradient(150deg, ${this.rgba(rgb,0.16)}, rgba(18,16,26,0.4) 60%)`;
+        hi.innerHTML = this.sideImageHTML(n, rgb);
+      }
+    }
+    const cards = q('[data-build="cards"]');
+    if (cards) {
+      if (n.layout === 'menu') { cards.style.flexDirection = 'column'; cards.style.gap = '0'; cards.innerHTML = this.cardsMenuHTML(rgb); }
+      else if (n.layout === 'shop') { cards.style.flexDirection = 'row'; cards.style.gap = '10px'; cards.innerHTML = this.cardsShopHTML(rgb); }
+      else if (n.layout === 'booking') { cards.style.flexDirection = 'row'; cards.style.gap = '10px'; cards.innerHTML = this.cardsBookingHTML(c, rgb); }
+      else { cards.style.flexDirection = 'row'; cards.style.gap = '12px'; cards.innerHTML = this.cardsRealtyHTML(rgb); }
+    }
+    const ft = q('[data-build="footer"]'); if (ft) ft.innerHTML = this.footerHTML(rgb);
+    const ph = q('[data-phone]');
+    if (ph && ph.firstElementChild) {
+      ph.firstElementChild.style.background = `radial-gradient(120% 60% at 50% 0%, ${this.rgba(rgb,0.1)}, rgba(7,7,11,0) 55%)`;
+      ph.firstElementChild.innerHTML = this.phoneHTML(n, rgb);
+    }
+  }
+  applyBuild(step) {
+    if (!this.root) return;
+    const order = ['nav', 'heroText', 'heroImg', 'cards', 'footer'];
+    order.forEach((k, i) => {
+      const el = this.root.querySelector(`[data-build="${k}"]`); if (!el) return;
+      const placed = i < step;
+      el.style.opacity = placed ? '1' : '0';
+      el.style.transform = placed ? 'none' : 'translateY(12px)';
+    });
+    const ph = this.root.querySelector('[data-phone]');
+    if (ph) { const on = step >= 5; ph.style.opacity = on ? '1' : '0'; ph.style.transform = on ? 'none' : 'translateY(16px)'; }
+    const cur = this.root.querySelector('[data-cursor]');
+    if (cur) {
+      const t = this.CURSOR[step];
+      if (t) { cur.style.left = t[0] + 'px'; cur.style.top = t[1] + 'px'; cur.style.opacity = '1'; }
+      else { cur.style.opacity = '0'; }
+    }
+    const th = [1, 2, 4, 5];
+    this.root.querySelectorAll('[data-stepchip]').forEach(el => {
+      const i = +el.dataset.stepchip, on = step >= th[i];
+      el.style.borderColor = on ? `rgba(${this.bR},0.5)` : 'rgba(244,243,247,0.1)';
+      el.style.background = on ? `rgba(${this.bR},0.1)` : 'rgba(255,255,255,0.02)';
+      el.style.color = on ? '#f4f3f7' : 'rgba(244,243,247,0.42)';
+    });
+    this.root.querySelectorAll('[data-stepdot]').forEach(el => {
+      const i = +el.dataset.stepdot, on = step >= th[i];
+      el.style.background = on ? this.alt : 'rgba(244,243,247,0.25)';
+      el.style.boxShadow = on ? `0 0 8px rgba(${this.bR},0.8)` : 'none';
+    });
+  }
+
+  loop(now) {
+    const t = now || performance.now();
+    const bc = this.bgRef.current;
+    if (bc) { const br = bc.getBoundingClientRect(); if (Math.abs(br.width - this.bgW) > 1 || Math.abs(br.height - this.bgH) > 1) this.resizeBg(); }
+    if (this.bgNodes) this.drawNet(this.bgCtx, this.bgW, this.bgH, this.bgNodes, this.bR);
+    if (this.bgNodes) this.drawNet(this.sbCtx, this.sw, this.sh, this.bgNodes2 || (this.bgNodes2 = this.bgNodes.map(p => ({ ...p, x: Math.random() * this.sw, y: Math.random() * this.sh }))), this.bR);
+
+    if (!this._t0) this._t0 = t;
+    const e = t - this._t0;
+    const ni = Math.floor(e / this.CYCLE) % this.HEROES.length;
+    const local = e % this.CYCLE;
+    if (ni !== this._ni) { this._ni = ni; this.applyHero(ni); }
+    const fading = local >= this.FADE;
+    const step = fading ? 0 : this.PHASES.filter(a => local >= a).length;
+    if (step !== this._step) { this._step = step; this.applyBuild(step); }
+
+    this.raf = requestAnimationFrame(this._loop);
+  }
+
+  renderVals() {
+    const active = this.state.active;
+    const panels = this.PANELS.map((p, i) => {
+      const on = i === active, rgb = this.hexRgb(p.color);
+      return {
+        name: p.name, tag: p.tag, desc: p.desc, domain: p.domain, demoHref: p.demoHref,
+        paths: this.ICONS[p.icon] || [], num: '0' + (i + 1),
+        onEnter: () => this.setState({ active: i }),
+        style: `position:relative; ${on ? 'flex:7 7 0;' : 'flex:0.55 0.55 0;'} min-width:0; height:460px; border-radius:18px; overflow:hidden; cursor:pointer; transition:flex-grow .55s cubic-bezier(.6,0,.2,1), flex-shrink .55s, background .4s ease, border-color .4s ease; border:1px solid ${on ? `rgba(${rgb},0.45)` : 'rgba(244,243,247,0.1)'}; background:${on ? `linear-gradient(160deg, rgba(${rgb},0.14), rgba(13,12,16,0.55) 58%)` : `linear-gradient(180deg, rgba(${rgb},0.05), rgba(255,255,255,0.01))`};`,
+        labelStyle: `position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; padding:20px 0; gap:16px; opacity:${on ? 0 : 1}; transition:opacity .3s ease; pointer-events:none;`,
+        labelDotStyle: `flex:none; width:8px; height:8px; border-radius:999px; background:${p.color}; box-shadow:0 0 10px rgba(${rgb},0.8);`,
+        labelTextStyle: `writing-mode:vertical-rl; transform:rotate(180deg); font-size:15px; font-weight:600; letter-spacing:0.01em; color:rgba(244,243,247,0.78); white-space:nowrap;`,
+        numStyle: `margin-top:auto; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:rgba(244,243,247,0.3);`,
+        contentStyle: `position:absolute; inset:0; padding:26px 28px; box-sizing:border-box; display:flex; flex-direction:column; min-width:560px; opacity:${on ? 1 : 0}; transition:opacity .4s ease ${on ? '0.12s' : '0s'}; pointer-events:${on ? 'auto' : 'none'};`,
+        iconWrapStyle: `flex:none; display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:11px; background:rgba(${rgb},0.14); color:${p.color}; border:1px solid rgba(${rgb},0.3);`,
+        tagStyle: `font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:${p.color};`,
+        mockStyle: `flex:1; min-height:0; display:flex; flex-direction:column; border-radius:13px; overflow:hidden; border:1px solid rgba(244,243,247,0.1); background:rgba(9,9,13,0.6); text-decoration:none; transition:border-color .3s ease, transform .3s ease;`,
+        mockInnerStyle: `flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:11px; border:1.5px dashed rgba(${rgb},0.28); margin:14px; border-radius:10px; background:radial-gradient(circle at 50% 40%, rgba(${rgb},0.06), rgba(7,7,11,0) 70%);`,
+        mockIconStyle: `color:rgba(${rgb},0.7); display:inline-flex;`,
+        linkStyle: `flex:none; display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:${p.color}; text-decoration:none; white-space:nowrap;`
+      };
+    });
+    const chips = this.CHIP_LABELS.map((label, i) => ({ i, label }));
+    return {
+      rootRef: this.rootRef, bgRef: this.bgRef, stageBgRef: this.stageBgRef, stageRef: this.stageRef, layerRef: this.layerRef,
+      panels, chips,
+      navEnter: this.navEnter, navLeave: this.navLeave, navToggle: this.navToggle,
+      navChevStyle: `flex:none; transition:transform .22s ease; transform:rotate(${this.state.navOpen ? 180 : 0}deg);`,
+      navPanelStyle: `position:absolute; top:100%; left:0; padding-top:13px; z-index:40; transition:opacity .2s ease, transform .2s ease; ${this.state.navOpen ? 'opacity:1; transform:translateY(0); visibility:visible; pointer-events:auto;' : 'opacity:0; transform:translateY(-6px); visibility:hidden; pointer-events:none;'}`
+    };
+  }
+}
+</script>
+</body>
+</html>

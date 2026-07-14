@@ -2,8 +2,21 @@
 
 Marketing site for **WorkflowWonder** — [wfwonder.com](https://wfwonder.com).
 
-Rebuild in progress. New front-end will live at the repo root.
+Next.js App Router at repo root. Visual spec: `design-reference/*.dc.html`. Build guide: [HANDOFF.md](./HANDOFF.md).
+
+## Develop
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Vercel
+
+Root Directory: `./` (repo root).
 
 ## Workflow
 
-Work is tracked in [GitHub Issues](https://github.com/aibudoptimization/aiBuddy/issues) per [GITHUB_ISSUES_GUIDE.md](./GITHUB_ISSUES_GUIDE.md).
+[GitHub Issues](https://github.com/aibudoptimization/aiBuddy/issues) per [GITHUB_ISSUES_GUIDE.md](./GITHUB_ISSUES_GUIDE.md).
