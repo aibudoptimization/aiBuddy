@@ -5,7 +5,7 @@ import { ServicePageLayout } from "@/components/services/ServicePageLayout";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { hexToRgb } from "@/lib/accents";
 
-import { WorkflowStage } from "./WorkflowStage";
+import { WorkflowPipeline } from "./WorkflowPipeline";
 
 const ACCENT = "#4bfac8";
 const ACCENT_ALT = "#8b7cff";
@@ -49,7 +49,7 @@ export function AutomatisationPage() {
           </span>
         </div>
 
-        <WorkflowStage accent={ACCENT} accentAlt={ACCENT_ALT} speed="calme" />
+        <WorkflowPipeline accent={ACCENT} accentAlt={ACCENT_ALT} />
 
         <div className="ww-service-legend">
           <span>
@@ -70,17 +70,17 @@ export function AutomatisationPage() {
             {s.legend[1]}
           </span>
           <span>
-            <svg width="26" height="8" viewBox="0 0 26 8" aria-hidden>
-              <line
-                x1="1"
-                y1="4"
-                x2="25"
-                y2="4"
-                stroke="rgba(139,124,255,0.8)"
-                strokeWidth="1.6"
-                strokeDasharray="4 4"
-              />
-            </svg>
+            <span
+              className="ww-glow-dot"
+              style={{
+                width: 8,
+                height: 8,
+                background: "transparent",
+                border: `1.5px solid rgba(${altRgb},0.75)`,
+                boxShadow: "none",
+              }}
+              aria-hidden
+            />
             {s.legend[2]}
           </span>
           <span style={{ opacity: 0.6 }}>{s.legend[3]}</span>

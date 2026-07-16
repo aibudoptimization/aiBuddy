@@ -317,14 +317,14 @@ export const fr: Dictionary = {
       metaDescription:
         "Workflows basés sur des règles pour les entrepreneurs du Québec. Consultation gratuite.",
       eyebrow: "Automatisation des workflows",
-      live: "7 scénarios · en direct",
+      live: "7 scénarios · un parcours client",
       h1Before: "Des workflows qui se déclenchent et se passent le ",
       h1Accent: "relais",
       h1After: ".",
       lead: "100 % règles. Un événement lance une séquence. Pas d'IA : votre logique, exécutée à la lettre.",
-      pill: "Exemples adaptés aux entrepreneurs du Québec. ",
-      pillMuted: "branchés sur vos outils.",
-      legend: ["Donnée · action", "Règle · condition", "Relais entre workflows", "Sans IA · 100 % règles"],
+      pill: "Du premier lead à l'avis Google. ",
+      pillMuted: "chaque scénario peut passer le relais au suivant.",
+      legend: ["Déclencheur · action", "Condition · règle", "Relais vers un autre scénario", "Sans IA · 100 % règles"],
       ctaLabel: "Sur mesure",
       ctaTitle: "Votre workflow n'est pas dans la liste ? On le bâtit.",
       ctaDescription:

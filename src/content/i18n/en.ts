@@ -315,14 +315,14 @@ export const en: Dictionary = {
       metaDescription:
         "Rule-based workflows for Québec entrepreneurs. Free consultation.",
       eyebrow: "Workflow automation",
-      live: "7 scenarios · live",
+      live: "7 scenarios · one client journey",
       h1Before: "Workflows that trigger and hand off the ",
       h1Accent: "baton",
       h1After: ".",
       lead: "100% rules. An event starts a sequence. No AI: your logic, executed exactly.",
-      pill: "Examples built for Québec entrepreneurs. ",
-      pillMuted: "wired to your tools.",
-      legend: ["Data · action", "Rule · condition", "Handoff between workflows", "No AI · 100% rules"],
+      pill: "From first lead to Google review. ",
+      pillMuted: "each scenario can hand off to the next.",
+      legend: ["Trigger · action", "Condition · rule", "Handoff to another scenario", "No AI · 100% rules"],
       ctaLabel: "Custom",
       ctaTitle: "Don’t see your workflow? We’ll build it.",
       ctaDescription:
