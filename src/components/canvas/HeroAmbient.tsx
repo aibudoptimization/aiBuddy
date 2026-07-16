@@ -113,7 +113,9 @@ export function HeroAmbient({
     <>
       <canvas ref={canvasRef} aria-hidden className="ww-home-ambient__flow" />
       <div aria-hidden className="ww-home-ambient__veil" />
-      <canvas ref={globeRef} aria-hidden className="ww-home-ambient__globe" />
+      <div className="ww-home-ambient__globe-clip" aria-hidden>
+        <canvas ref={globeRef} className="ww-home-ambient__globe" />
+      </div>
     </>
   );
 }

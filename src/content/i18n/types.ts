@@ -1,0 +1,229 @@
+export type HomeServiceItem = {
+  t: string;
+  soon?: boolean;
+};
+
+export type HomeServiceCopy = {
+  no: string;
+  pathKey: "automatisation" | "agentsIa" | "sitesBoutiques";
+  tag: string;
+  title: string;
+  accent: string;
+  desc: string;
+  items: HomeServiceItem[];
+  cta: string;
+};
+
+export type FaqItem = {
+  q: string;
+  a: string;
+  open?: boolean;
+};
+
+export type Dictionary = {
+  meta: {
+    titleDefault: string;
+    titleTemplate: string;
+    description: string;
+  };
+  chrome: {
+    services: string;
+    approach: string;
+    consultCta: string;
+    allArticles: string;
+    langSwitchLabel: string;
+    langFr: string;
+    langEn: string;
+    skipIntro: string;
+    openMenu: string;
+    closeMenu: string;
+    primaryNav: string;
+    marquee: string[];
+  };
+  nav: {
+    services: { title: string; tag: string }[];
+  };
+  footer: {
+    blurb: string;
+    servicesHeading: string;
+    exploreHeading: string;
+    blog: string;
+    contact: string;
+    privacy: string;
+    rights: string;
+    homeCtaEyebrow: string;
+    homeCtaTitle: string;
+    homeCtaLead: string;
+    homeCtaButton: string;
+    homeCtaAlt: string;
+    faqLabel: string;
+    faq: FaqItem[];
+  };
+  home: {
+    city: string;
+    hero: {
+      eyebrow: string;
+      h1Line1: string;
+      h1Line2Before: string;
+      h1Gradient: string;
+      h1Line2After: string;
+      leadBefore: string;
+      leadCity: string;
+      leadAfter: string;
+      primaryCta: string;
+      secondaryCta: string;
+      meta: string[];
+    };
+    services: {
+      eyebrow: string;
+      titleLine1: string;
+      titleLine2: string;
+      soon: string;
+      cards: HomeServiceCopy[];
+    };
+    audience: {
+      titleLine1: string;
+      titleLine2: string;
+      lead: string;
+      fitTitle: string;
+      notFitTitle: string;
+      slidesHeading: string;
+      prev: string;
+      next: string;
+      goToSlide: string;
+      slides: { no: string; text: string }[];
+      fit: string[];
+      notFit: string[];
+    };
+    tools: {
+      title: string;
+    };
+    visibility: {
+      eyebrow: string;
+      title: string;
+      lead: string;
+      micro: string;
+      primaryCta: string;
+      secondaryCta: string;
+    };
+    ownership: {
+      title: string;
+      lead: string;
+      footer: string;
+      steps: { no: string; title: string; desc: string }[];
+    };
+    pricing: {
+      titleLine1: string;
+      titleLine2: string;
+      lead: string;
+      anchorsHeading: string;
+      anchorsNote: string;
+      consultEyebrow: string;
+      consultTitle: string;
+      consultItems: string[];
+      consultCta: string;
+      factorsHeading: string;
+      factorsNote: string;
+      factors: string[];
+      payment: { no: string; title: string; desc: string }[];
+      anchors: { label: string; price: string; note: string; highlight?: boolean }[];
+    };
+    journal: {
+      title: string;
+      allArticles: string;
+    };
+  };
+  contact: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    bullets: string[];
+    emailPrompt: string;
+    form: {
+      firstName: string;
+      firstNameOptional: string;
+      lastName: string;
+      lastNameOptional: string;
+      company: string;
+      email: string;
+      message: string;
+      messageOptional: string;
+      consent: string;
+      consentLinkLabel: string;
+      submit: string;
+      submitting: string;
+      successTitle: string;
+      successBody: string;
+      errorGeneric: string;
+    };
+  };
+  journalIndex: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    read: string;
+    featured: string;
+    readingSuffix: string;
+    toc: string;
+    readNext: string;
+    sources: string;
+  };
+  services: {
+    automatisation: {
+      metaTitle: string;
+      metaDescription: string;
+      eyebrow: string;
+      live: string;
+      h1Before: string;
+      h1Accent: string;
+      h1After: string;
+      lead: string;
+      pill: string;
+      pillMuted: string;
+      legend: string[];
+      ctaLabel: string;
+      ctaTitle: string;
+      ctaDescription: string;
+      ctaButton: string;
+    };
+    agentsIa: {
+      metaTitle: string;
+      metaDescription: string;
+      eyebrow: string;
+      live: string;
+      h1Before: string;
+      h1Accent: string;
+      h1After: string;
+      lead: string;
+      legend: string[];
+      ctaLabel: string;
+      ctaTitle: string;
+      ctaDescription: string;
+      ctaButton: string;
+    };
+    sitesBoutiques: {
+      metaTitle: string;
+      metaDescription: string;
+      eyebrow: string;
+      h1Before: string;
+      h1Accent: string;
+      h1After: string;
+      lead: string;
+      nicheEyebrow: string;
+      nicheHint: string;
+      nicheTitle: string;
+      nicheLead: string;
+      nicheDemo: string;
+      nichePreview: string;
+      nicheComingSoon: string;
+      ctaLabel: string;
+      ctaTitle: string;
+      ctaDescription: string;
+      ctaButton: string;
+    };
+  };
+  splash: {
+    skip: string;
+    ariaLabel: string;
+  };
+};

@@ -4,35 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { BrandMark } from "@/components/layout/BrandMark";
-import { CONTACT_EMAIL, NAV_ITEMS, ROUTES } from "@/lib/routes";
-
-const FAQ_ITEMS = [
-  {
-    q: "Combien de temps prend un projet ?",
-    a: "La plupart des projets sont livrés en 2 à 6 semaines selon leur ampleur. Vous recevez un échéancier clair dès la consultation.",
-    open: true,
-  },
-  {
-    q: "Est-ce que je reste propriétaire de mes systèmes ?",
-    a: "Oui, à 100 %. Tout est bâti sur vos propres comptes et vous est transféré, code, accès et documentation compris.",
-  },
-  {
-    q: "Combien ça coûte ?",
-    a: "Chaque projet est unique. On part d'une consultation gratuite, puis vous recevez un devis détaillé sous 24\u00a0h, sans engagement.",
-  },
-  {
-    q: "Faut-il des connaissances techniques de notre côté ?",
-    a: "Aucune. On s'occupe de la mise en place et on vous forme à l'essentiel pour que vous restiez autonome.",
-  },
-  {
-    q: "Avec quels outils travaillez-vous ?",
-    a: "On se connecte à vos outils existants si possible, CRM, courriel, e-commerce, etc., plutôt que de tout remplacer.",
-  },
-];
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { stripLocalePrefix } from "@/lib/locale";
+import { CONTACT_EMAIL, navItems } from "@/lib/routes";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const bare = stripLocalePrefix(pathname);
+  const isHome = bare === "/";
+  const { locale, dict, routes } = useLocale();
+  const items = navItems(locale, dict.nav.services);
+  const f = dict.footer;
 
   return (
     <footer
@@ -54,104 +36,20 @@ export function SiteFooter() {
         }}
       >
         {isHome ? (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-              gap: "clamp(24px, 2.4vw, 36px)",
-              alignItems: "stretch",
-              paddingBottom: "clamp(48px, 6vh, 70px)",
-              marginBottom: "clamp(48px, 6vh, 70px)",
-              borderBottom: "1px solid rgba(244,243,247,0.08)",
-            }}
-          >
-            <div
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                border: "1px solid rgba(139,124,255,0.28)",
-                borderRadius: 24,
-                padding: "clamp(34px, 3.4vw, 48px)",
-                display: "flex",
-                flexDirection: "column",
-                background:
-                  "linear-gradient(165deg, rgba(139,124,255,0.12), rgba(18,16,26,0.4) 52%)",
-              }}
-            >
-              <div
-                style={{
-                  position: "relative",
-                  display: "inline-flex",
-                  alignSelf: "flex-start",
-                  alignItems: "center",
-                  gap: 9,
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "rgba(244,243,247,0.7)",
-                  padding: "7px 13px",
-                  border: "1px solid rgba(244,243,247,0.16)",
-                  borderRadius: 999,
-                  marginBottom: 26,
-                }}
-              >
+          <div className="ww-footer-cta-grid">
+            <div className="ww-footer-cta-card">
+              <div className="ww-footer-cta-card__badge ww-mono">
                 <span className="ww-glow-dot" style={{ width: 6, height: 6 }} aria-hidden />
-                Consultation gratuite · sans engagement
+                {f.homeCtaEyebrow}
               </div>
-              <h2
-                style={{
-                  position: "relative",
-                  margin: 0,
-                  fontWeight: 600,
-                  letterSpacing: "-0.03em",
-                  lineHeight: 1,
-                  fontSize: "clamp(30px, 3.4vw, 46px)",
-                }}
-              >
-                Prêt à gagner
-                <br />
-                du temps ?
-              </h2>
-              <p
-                style={{
-                  position: "relative",
-                  margin: "18px 0 0",
-                  maxWidth: 400,
-                  fontSize: 16,
-                  lineHeight: 1.55,
-                  color: "rgba(244,243,247,0.7)",
-                }}
-              >
-                Parlons de votre activité. On revient vers vous sous 24&nbsp;h avec une première
-                piste d&apos;automatisation concrète.
-              </p>
-              <div
-                style={{
-                  position: "relative",
-                  display: "flex",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                  gap: "14px 22px",
-                  marginTop: "auto",
-                  paddingTop: 32,
-                }}
-              >
-                <Link href={ROUTES.contact} className="ww-cta-fill">
-                  Parlons-en
+              <h2 className="ww-footer-cta-card__title">{f.homeCtaTitle}</h2>
+              <p className="ww-footer-cta-card__lead">{f.homeCtaLead}</p>
+              <div className="ww-footer-cta-card__actions">
+                <Link href={routes.contact} className="ww-cta-fill">
+                  {f.homeCtaButton}
                 </Link>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 8,
-                    fontSize: 15,
-                    color: "var(--iris)",
-                    textDecoration: "none",
-                  }}
-                >
-                  ou écrivez-nous
+                <a href={`mailto:${CONTACT_EMAIL}`} className="ww-footer-cta-card__alt">
+                  {f.homeCtaAlt}
                 </a>
               </div>
             </div>
@@ -162,11 +60,11 @@ export function SiteFooter() {
                   className="ww-mono"
                   style={{ fontSize: "11.5px", letterSpacing: "0.18em", color: "var(--teal)" }}
                 >
-                  FAQ
+                  {f.faqLabel}
                 </span>
                 <span style={{ flex: 1, height: 1, background: "rgba(244,243,247,0.1)" }} />
               </div>
-              {FAQ_ITEMS.map((item) => (
+              {f.faq.map((item) => (
                 <details
                   key={item.q}
                   open={item.open}
@@ -177,35 +75,25 @@ export function SiteFooter() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      gap: 18,
-                      padding: "19px 2px",
+                      gap: 16,
+                      padding: "16px 0",
+                      cursor: "pointer",
+                      listStyle: "none",
+                      fontSize: 15.5,
+                      fontWeight: 500,
                     }}
                   >
-                    <span
-                      className="ww-q"
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 600,
-                        letterSpacing: "-0.01em",
-                        color: "rgba(244,243,247,0.86)",
-                      }}
-                    >
-                      {item.q}
-                    </span>
-                    <span
-                      className="ww-chev ww-accent-text"
-                      style={{ flex: "none", fontSize: 20, lineHeight: 1, fontWeight: 300 }}
-                    >
+                    {item.q}
+                    <span className="ww-chev" aria-hidden>
                       +
                     </span>
                   </summary>
                   <p
                     className="ww-a"
                     style={{
-                      margin: 0,
-                      padding: "0 2px 22px",
-                      fontSize: "14.5px",
-                      lineHeight: 1.6,
+                      margin: "0 0 16px",
+                      fontSize: 14.5,
+                      lineHeight: 1.55,
                       color: "rgba(244,243,247,0.62)",
                     }}
                   >
@@ -228,8 +116,7 @@ export function SiteFooter() {
                 color: "rgba(244,243,247,0.55)",
               }}
             >
-              Automatisations IA et systèmes sur mesure pour les entrepreneurs qui veulent gagner du
-              temps et développer leur activité.
+              {f.blurb}
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
@@ -250,9 +137,9 @@ export function SiteFooter() {
                   marginBottom: 4,
                 }}
               >
-                Services
+                {f.servicesHeading}
               </span>
-              {NAV_ITEMS.map((item) => (
+              {items.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -276,37 +163,37 @@ export function SiteFooter() {
                   marginBottom: 4,
                 }}
               >
-                Ressources
+                {f.exploreHeading}
               </span>
               <Link
-                href={ROUTES.journal}
+                href={routes.journal}
                 style={{
                   fontSize: "14.5px",
                   color: "rgba(244,243,247,0.64)",
                   textDecoration: "none",
                 }}
               >
-                Blog
+                {f.blog}
               </Link>
               <Link
-                href={ROUTES.contact}
+                href={routes.contact}
                 style={{
                   fontSize: "14.5px",
                   color: "rgba(244,243,247,0.64)",
                   textDecoration: "none",
                 }}
               >
-                Contact
+                {f.contact}
               </Link>
               <Link
-                href={ROUTES.privacy}
+                href={routes.privacy}
                 style={{
                   fontSize: "14.5px",
                   color: "rgba(244,243,247,0.64)",
                   textDecoration: "none",
                 }}
               >
-                Confidentialité
+                {f.privacy}
               </Link>
             </div>
           </div>
@@ -324,11 +211,8 @@ export function SiteFooter() {
             borderTop: "1px solid rgba(244,243,247,0.07)",
           }}
         >
-          <span
-            className="ww-mono"
-            style={{ fontSize: 12, color: "rgba(244,243,247,0.4)" }}
-          >
-            © 2026 Workflow Wonder. Tous droits réservés.
+          <span className="ww-mono" style={{ fontSize: 12, color: "rgba(244,243,247,0.4)" }}>
+            © 2026 Workflow Wonder. {f.rights}
           </span>
         </div>
       </div>

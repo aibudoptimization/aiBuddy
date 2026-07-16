@@ -10,7 +10,25 @@ import { PANELS } from "./data";
 
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 
-export function NicheShowcase() {
+type NicheShowcaseProps = {
+  eyebrow: string;
+  hint: string;
+  title: string;
+  lead: string;
+  demoLabel: string;
+  previewLabel: string;
+  comingSoonLabel: string;
+};
+
+export function NicheShowcase({
+  eyebrow,
+  hint,
+  title,
+  lead,
+  demoLabel,
+  previewLabel,
+  comingSoonLabel,
+}: NicheShowcaseProps) {
   const [active, setActive] = useState(0);
 
   return (
@@ -18,16 +36,13 @@ export function NicheShowcase() {
       <div className="ww-sites-niche__header">
         <div className="ww-sites-niche__eyebrow ww-mono">
           <span className="ww-glow-dot" style={{ width: 7, height: 7, background: "var(--amber)", boxShadow: "0 0 9px rgba(240,169,78,0.7)" }} aria-hidden />
-          Démos · prototypes
+          {eyebrow}
         </div>
-        <span className="ww-sites-niche__hint ww-mono">Survolez pour explorer</span>
+        <span className="ww-sites-niche__hint ww-mono">{hint}</span>
       </div>
 
-      <h2 className="ww-sites-niche__title">Ce qu&apos;on peut bâtir pour vous.</h2>
-      <p className="ww-sites-niche__lead">
-        Voici des pistes par secteur. Votre projet n&apos;a pas à entrer dans une case : explorez et
-        imaginez le vôtre.
-      </p>
+      <h2 className="ww-sites-niche__title">{title}</h2>
+      <p className="ww-sites-niche__lead">{lead}</p>
 
       <div className="ww-sites-panels">
         {PANELS.map((p, i) => {
@@ -127,8 +142,8 @@ export function NicheShowcase() {
                       <span style={{ color: `rgba(${rgb},0.7)`, display: "inline-flex" }}>
                         <SiteIcon icon={p.icon} size={34} />
                       </span>
-                      <span className="ww-mono ww-sites-panel__mock-label">Aperçu du prototype</span>
-                      <span className="ww-sites-panel__mock-note">Image à venir</span>
+                      <span className="ww-mono ww-sites-panel__mock-label">{previewLabel}</span>
+                      <span className="ww-sites-panel__mock-note">{comingSoonLabel}</span>
                     </div>
                   </Link>
                 )}
@@ -142,7 +157,7 @@ export function NicheShowcase() {
                     target={isExternal(p.demoHref) ? "_blank" : undefined}
                     rel={isExternal(p.demoHref) ? "noopener noreferrer" : undefined}
                   >
-                    Voir la démo <span aria-hidden>→</span>
+                    {demoLabel} <span aria-hidden>→</span>
                   </Link>
                 </div>
               </div>

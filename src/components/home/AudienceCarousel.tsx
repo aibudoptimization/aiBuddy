@@ -3,9 +3,17 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
-import { AUDIENCE_SLIDES } from "@/content/home";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
-export function AudienceCarousel() {
+type Slide = { no: string; text: string };
+
+type AudienceCarouselProps = {
+  slides: Slide[];
+};
+
+export function AudienceCarousel({ slides }: AudienceCarouselProps) {
+  const { dict } = useLocale();
+  const a = dict.home.audience;
   const vpRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ x: number; dx: number } | null>(null);
@@ -108,12 +116,12 @@ export function AudienceCarousel() {
           className="ww-mono"
           style={{ fontSize: "11.5px", letterSpacing: "0.16em", color: "var(--teal)" }}
         >
-          Vous êtes au bon endroit si…
+          {a.slidesHeading}
         </div>
         <div style={{ display: "flex", gap: 10 }}>
           <button
             type="button"
-            aria-label="Précédent"
+            aria-label={a.prev}
             style={{ ...btnBase, opacity: idx <= 0 ? 0.28 : 1, pointerEvents: idx <= 0 ? "none" : "auto" }}
             onClick={() => setIdx((i) => Math.max(0, i - 1))}
           >
@@ -121,7 +129,7 @@ export function AudienceCarousel() {
           </button>
           <button
             type="button"
-            aria-label="Suivant"
+            aria-label={a.next}
             style={{
               ...btnBase,
               opacity: idx >= maxIdx ? 0.28 : 1,
@@ -153,7 +161,7 @@ export function AudienceCarousel() {
             transition: dragging ? "none" : undefined,
           }}
         >
-          {AUDIENCE_SLIDES.map((slide) => (
+          {slides.map((slide) => (
             <div
               key={slide.no}
               className="ww-si-card ww-card-interactive"
@@ -196,7 +204,7 @@ export function AudienceCarousel() {
           <button
             key={i}
             type="button"
-            aria-label={`Aller à la diapositive ${i + 1}`}
+            aria-label={`${a.goToSlide} ${i + 1}`}
             onClick={() => setIdx(i)}
             style={{
               flex: "none",

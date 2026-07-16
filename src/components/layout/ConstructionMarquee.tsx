@@ -1,19 +1,17 @@
-const MARQUEE_ITEMS = [
-  "Site en construction",
-  "Certaines sections sont encore en préparation",
-  "Le formulaire de contact est actif",
-  "Consultation gratuite · sans engagement",
-] as const;
+"use client";
 
-const MARQUEE_TEXT = MARQUEE_ITEMS.join(" · ");
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function ConstructionMarquee() {
+  const { dict } = useLocale();
+  const text = dict.chrome.marquee.join(" · ");
+
   return (
-    <div className="ww-construction-banner" role="status" aria-label={MARQUEE_TEXT}>
+    <div className="ww-construction-banner" role="status" aria-label={text}>
       <div className="ww-construction-banner__inner">
         <div className="ww-construction-banner__track" aria-hidden>
-          <span className="ww-construction-banner__segment">{MARQUEE_TEXT} · </span>
-          <span className="ww-construction-banner__segment">{MARQUEE_TEXT} · </span>
+          <span className="ww-construction-banner__segment">{text} · </span>
+          <span className="ww-construction-banner__segment">{text} · </span>
         </div>
       </div>
     </div>

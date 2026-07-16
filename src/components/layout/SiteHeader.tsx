@@ -2,18 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, type MouseEvent } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useState, type MouseEvent } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 import { BrandMark } from "@/components/layout/BrandMark";
-import { NAV_ITEMS, ROUTES } from "@/lib/routes";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { switchLocalePath, stripLocalePrefix } from "@/lib/locale";
+import { navItems } from "@/lib/routes";
 
 type SiteHeaderProps = {
   fixed?: boolean;
 };
 
-function isJournalArticlePath(pathname: string) {
-  return pathname.startsWith("/journal/") && pathname.length > "/journal/".length;
+function isJournalArticlePath(barePath: string) {
+  return barePath.startsWith("/journal/") && barePath.length > "/journal/".length;
 }
 
 function scrollToHash(hash: string) {
@@ -25,127 +27,80 @@ function scrollToHash(hash: string) {
 
 export function SiteHeader({ fixed = true }: SiteHeaderProps) {
   const pathname = usePathname();
+  const bare = stripLocalePrefix(pathname);
+  const { locale, dict, routes } = useLocale();
+  const items = navItems(locale, dict.nav.services);
   const [navOpen, setNavOpen] = useState(false);
-  const isJournalArticle = isJournalArticlePath(pathname);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const isJournalArticle = isJournalArticlePath(bare);
+  const homePath = routes.home;
+
+  useEffect(() => {
+    setMobileOpen(false);
+    setNavOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
 
   const handleHomeHashClick = (event: MouseEvent<HTMLAnchorElement>, hash: string) => {
-    if (pathname !== "/") return;
+    if (bare !== "/") return;
     event.preventDefault();
     scrollToHash(hash);
+    setMobileOpen(false);
   };
 
+  const otherLocale = locale === "fr" ? "en" : "fr";
+  const langHref = switchLocalePath(pathname, otherLocale);
+
   return (
-    <header
-      style={{
-        position: fixed ? "fixed" : "relative",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 6,
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "30px clamp(28px, 5vw, 72px)",
-      }}
-    >
+    <header className={`ww-header${fixed ? " ww-header--fixed" : ""}`}>
       <BrandMark />
 
-      <nav
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "clamp(18px, 2.4vw, 38px)",
-          fontSize: "14.5px",
-          color: "rgba(244,243,247,0.66)",
-        }}
-      >
+      <nav className="ww-header__nav ww-header__nav--desktop" aria-label={dict.chrome.primaryNav}>
         {isJournalArticle ? (
-          <Link
-            href={ROUTES.journal}
-            className="ww-mono"
-            style={{
-              fontSize: "12.5px",
-              letterSpacing: "0.04em",
-              color: "rgba(244,243,247,0.7)",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            <span aria-hidden>←</span> Tous les articles
+          <Link href={routes.journal} className="ww-mono ww-header__back">
+            <span aria-hidden>←</span> {dict.chrome.allArticles}
           </Link>
         ) : (
           <>
             <div
               className={`ww-nav-wrap${navOpen ? " is-open" : ""}`}
-              style={{ position: "relative" }}
               onMouseEnter={() => setNavOpen(true)}
               onMouseLeave={() => setNavOpen(false)}
             >
               <button
                 type="button"
                 onClick={() => setNavOpen((open) => !open)}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                  color: "inherit",
-                  cursor: "pointer",
-                  background: "none",
-                  border: "none",
-                  font: "inherit",
-                  padding: 0,
-                }}
+                className="ww-header__link-btn"
                 aria-expanded={navOpen}
                 aria-haspopup="true"
               >
-                Services
+                {dict.chrome.services}
                 <ChevronDown size={10} strokeWidth={2.6} className="ww-nav-chev" />
               </button>
 
-              <div className={`ww-nav-panel${navOpen ? " is-open" : ""}`}>
-                <div
-                  style={{
-                    minWidth: 312,
-                    background: "rgba(12,12,18,0.97)",
-                    border: "1px solid rgba(244,243,247,0.1)",
-                    borderRadius: 16,
-                    padding: 8,
-                    backdropFilter: "blur(14px)",
-                    WebkitBackdropFilter: "blur(14px)",
-                    boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 2,
-                  }}
-                >
-                  {NAV_ITEMS.map((item) => (
+              <div className={`ww-nav-panel${navOpen ? " is-open" : ""}`} role="menu">
+                <div className="ww-nav-panel__inner">
+                  {items.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
                       className="ww-nav-dropdown-item"
+                      role="menuitem"
                       style={{ ["--nav-hover-bg" as string]: item.hoverBg }}
                       onClick={() => setNavOpen(false)}
                     >
-                      <span
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 9,
-                          fontSize: "14.5px",
-                          fontWeight: 600,
-                          letterSpacing: "-0.01em",
-                        }}
-                      >
+                      <span className="ww-nav-dropdown-item__title">
                         <span
+                          className="ww-nav-dropdown-item__dot"
                           style={{
-                            flex: "none",
-                            width: 6,
-                            height: 6,
-                            borderRadius: 999,
                             background: item.accent,
                             boxShadow: `0 0 9px ${item.accent}cc`,
                           }}
@@ -153,18 +108,7 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
                         />
                         {item.title}
                       </span>
-                      <span
-                        style={{
-                          fontFamily: "var(--font-mono)",
-                          fontSize: 10,
-                          letterSpacing: "0.08em",
-                          textTransform: "uppercase",
-                          color: "rgba(244,243,247,0.45)",
-                          paddingLeft: 15,
-                        }}
-                      >
-                        {item.tag}
-                      </span>
+                      <span className="ww-nav-dropdown-item__tag">{item.tag}</span>
                     </Link>
                   ))}
                 </div>
@@ -172,27 +116,93 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
             </div>
 
             <Link
-              href="/#approche"
-              style={{ color: "inherit", textDecoration: "none" }}
+              href={`${homePath}#approche`}
+              className="ww-header__link"
               onClick={(event) => handleHomeHashClick(event, "#approche")}
             >
-              Approche
+              {dict.chrome.approach}
+            </Link>
+            <Link href={routes.contact} className="ww-header__cta">
+              <span className="ww-header__cta-full">{dict.chrome.consultCta}</span>
+              <span className="ww-header__cta-short">
+                {locale === "en" ? "Consult" : "Consultation"}
+              </span>
             </Link>
             <Link
-              href={ROUTES.contact}
-              style={{
-                color: "var(--snow)",
-                textDecoration: "none",
-                border: "1px solid rgba(244,243,247,0.18)",
-                padding: "9px 18px",
-                borderRadius: 999,
-              }}
+              href={langHref}
+              className="ww-header__lang ww-mono"
+              aria-label={dict.chrome.langSwitchLabel}
             >
-              Discutons
+              {otherLocale === "en" ? dict.chrome.langEn : dict.chrome.langFr}
             </Link>
           </>
         )}
       </nav>
+
+      {!isJournalArticle ? (
+        <div className="ww-header__mobile-bar">
+          <Link
+            href={langHref}
+            className="ww-header__lang ww-mono"
+            aria-label={dict.chrome.langSwitchLabel}
+          >
+            {otherLocale === "en" ? dict.chrome.langEn : dict.chrome.langFr}
+          </Link>
+          <button
+            type="button"
+            className="ww-header__menu-btn"
+            aria-expanded={mobileOpen}
+            aria-controls="ww-mobile-drawer"
+            aria-label={mobileOpen ? dict.chrome.closeMenu : dict.chrome.openMenu}
+            onClick={() => setMobileOpen((o) => !o)}
+          >
+            {mobileOpen ? <X size={22} strokeWidth={2} /> : <Menu size={22} strokeWidth={2} />}
+          </button>
+        </div>
+      ) : (
+        <Link href={routes.journal} className="ww-mono ww-header__back ww-header__back--mobile">
+          <span aria-hidden>←</span> {dict.chrome.allArticles}
+        </Link>
+      )}
+
+      <div
+        id="ww-mobile-drawer"
+        className={`ww-mobile-drawer${mobileOpen ? " is-open" : ""}`}
+        aria-hidden={!mobileOpen}
+      >
+        <div className="ww-mobile-drawer__panel">
+          <p className="ww-mono ww-mobile-drawer__label">{dict.chrome.services}</p>
+          {items.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="ww-mobile-drawer__link"
+              onClick={() => setMobileOpen(false)}
+            >
+              <span
+                className="ww-nav-dropdown-item__dot"
+                style={{ background: item.accent, boxShadow: `0 0 9px ${item.accent}cc` }}
+                aria-hidden
+              />
+              {item.title}
+            </Link>
+          ))}
+          <Link
+            href={`${homePath}#approche`}
+            className="ww-mobile-drawer__link"
+            onClick={(event) => handleHomeHashClick(event, "#approche")}
+          >
+            {dict.chrome.approach}
+          </Link>
+          <Link
+            href={routes.contact}
+            className="ww-cta-fill ww-mobile-drawer__cta"
+            onClick={() => setMobileOpen(false)}
+          >
+            {dict.chrome.consultCta}
+          </Link>
+        </div>
+      </div>
     </header>
   );
 }

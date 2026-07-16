@@ -1,6 +1,12 @@
+"use client";
+
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { Reveal } from "@/components/ui/Reveal";
 import { INTEGRATION_TOOLS } from "@/content/tools";
 
 export function HomeToolsSection() {
+  const { dict } = useLocale();
+
   return (
     <section
       className="ww-container ww-section ww-section--center"
@@ -9,7 +15,9 @@ export function HomeToolsSection() {
         paddingBottom: "clamp(50px, 8vh, 90px)",
       }}
     >
-      <h2 className="ww-tools-title">On se connecte à vos outils</h2>
+      <Reveal>
+        <h2 className="ww-tools-title">{dict.home.tools.title}</h2>
+      </Reveal>
       <div className="ww-tools-grid">
         {INTEGRATION_TOOLS.map((name) => (
           <span key={name} className="ww-tool-chip">

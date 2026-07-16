@@ -5,22 +5,23 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { submitContact, type ContactFormState } from "@/app/(marketing)/contact/actions";
-import { CONTACT_FORM_LABELS } from "@/content/contact";
-import { ROUTES } from "@/lib/routes";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 const INITIAL_STATE: ContactFormState = { status: "idle" };
 
-function SubmitButton() {
+function SubmitButton({ submit, submitting }: { submit: string; submitting: string }) {
   const { pending } = useFormStatus();
   return (
     <button type="submit" className="ww-cta-fill ww-form__submit" disabled={pending}>
-      {pending ? CONTACT_FORM_LABELS.submitting : CONTACT_FORM_LABELS.submit}
+      {pending ? submitting : submit}
       {!pending ? <span aria-hidden>→</span> : null}
     </button>
   );
 }
 
 export function ContactForm() {
+  const { dict, routes } = useLocale();
+  const labels = dict.contact.form;
   const [state, formAction] = useActionState(submitContact, INITIAL_STATE);
   const errors = state.fieldErrors ?? {};
 
@@ -30,8 +31,8 @@ export function ContactForm() {
         <span className="ww-form__success-icon" aria-hidden>
           ✓
         </span>
-        <h2 className="ww-form__success-title">{CONTACT_FORM_LABELS.successTitle}</h2>
-        <p className="ww-form__success-body">{CONTACT_FORM_LABELS.successBody}</p>
+        <h2 className="ww-form__success-title">{labels.successTitle}</h2>
+        <p className="ww-form__success-body">{labels.successBody}</p>
       </div>
     );
   }
@@ -40,15 +41,15 @@ export function ContactForm() {
     <form action={formAction} className="ww-form" noValidate>
       {state.status === "error" && !state.fieldErrors ? (
         <p className="ww-form__alert" role="alert">
-          {state.message ?? CONTACT_FORM_LABELS.errorGeneric}
+          {state.message ?? labels.errorGeneric}
         </p>
       ) : null}
 
       <div className="ww-form__row">
         <div className="ww-field">
           <label className="ww-field__label" htmlFor="firstName">
-            {CONTACT_FORM_LABELS.firstName}
-            <span className="ww-field__opt">{CONTACT_FORM_LABELS.firstNameOptional}</span>
+            {labels.firstName}
+            <span className="ww-field__opt">{labels.firstNameOptional}</span>
           </label>
           <input
             id="firstName"
@@ -60,8 +61,8 @@ export function ContactForm() {
         </div>
         <div className="ww-field">
           <label className="ww-field__label" htmlFor="lastName">
-            {CONTACT_FORM_LABELS.lastName}
-            <span className="ww-field__opt">{CONTACT_FORM_LABELS.lastNameOptional}</span>
+            {labels.lastName}
+            <span className="ww-field__opt">{labels.lastNameOptional}</span>
           </label>
           <input
             id="lastName"
@@ -75,7 +76,7 @@ export function ContactForm() {
 
       <div className="ww-field">
         <label className="ww-field__label" htmlFor="company">
-          {CONTACT_FORM_LABELS.company}
+          {labels.company}
           <span className="ww-field__req" aria-hidden>
             *
           </span>
@@ -99,7 +100,7 @@ export function ContactForm() {
 
       <div className="ww-field">
         <label className="ww-field__label" htmlFor="email">
-          {CONTACT_FORM_LABELS.email}
+          {labels.email}
           <span className="ww-field__req" aria-hidden>
             *
           </span>
@@ -124,13 +125,12 @@ export function ContactForm() {
 
       <div className="ww-field">
         <label className="ww-field__label" htmlFor="message">
-          {CONTACT_FORM_LABELS.message}
-          <span className="ww-field__opt">{CONTACT_FORM_LABELS.messageOptional}</span>
+          {labels.message}
+          <span className="ww-field__opt">{labels.messageOptional}</span>
         </label>
         <textarea id="message" name="message" rows={4} className="ww-input ww-textarea" />
       </div>
 
-      {/* Honeypot — hidden from humans, catches bots */}
       <div aria-hidden className="ww-form__hp">
         <label htmlFor="website">Ne pas remplir</label>
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
@@ -146,22 +146,21 @@ export function ContactForm() {
             className="ww-consent__box"
           />
           <span className="ww-consent__text">
-            {CONTACT_FORM_LABELS.consent}{" "}
-            <Link href={ROUTES.privacy} className="ww-consent__link">
-              {CONTACT_FORM_LABELS.consentLinkLabel}
+            {labels.consent}{" "}
+            <Link href={routes.privacy} className="ww-consent__link">
+              {labels.consentLinkLabel}
             </Link>
-            .<span className="ww-field__req" aria-hidden>
+            .
+            <span className="ww-field__req" aria-hidden>
               {" "}
               *
             </span>
           </span>
         </label>
-        {errors.consent ? (
-          <span className="ww-field__error">{errors.consent}</span>
-        ) : null}
+        {errors.consent ? <span className="ww-field__error">{errors.consent}</span> : null}
       </div>
 
-      <SubmitButton />
+      <SubmitButton submit={labels.submit} submitting={labels.submitting} />
     </form>
   );
 }

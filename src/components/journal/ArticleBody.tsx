@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import type { ArticleBlock } from "@/content/articles";
 import { journalPostHref } from "@/content/journal";
 
@@ -12,7 +15,34 @@ type RelatedPost = {
 type ArticleBodyProps = {
   blocks: ArticleBlock[];
   related?: RelatedPost[];
+  tocLabel?: string;
+  readNextLabel?: string;
+  sourcesLabel?: string;
 };
+
+export function ArticleBody({
+  blocks,
+  related = [],
+  tocLabel,
+  readNextLabel,
+  sourcesLabel,
+}: ArticleBodyProps) {
+  const { locale, dict } = useLocale();
+  const toc = tocLabel ?? dict.journalIndex.toc;
+  const readNext = readNextLabel ?? dict.journalIndex.readNext;
+  const sources = sourcesLabel ?? dict.journalIndex.sources;
+
+  return (
+    <ArticleBodyInner
+      blocks={blocks}
+      related={related}
+      locale={locale}
+      tocLabel={toc}
+      readNextLabel={readNext}
+      sourcesLabel={sources}
+    />
+  );
+}
 
 function tocFromBlocks(blocks: ArticleBlock[]) {
   let h2Count = 0;
@@ -32,54 +62,25 @@ function h2Id(blocks: ArticleBlock[], index: number) {
   return `s${h2Count}`;
 }
 
-export function ArticleBody({ blocks, related = [] }: ArticleBodyProps) {
+function ArticleBodyInner({
+  blocks,
+  related = [],
+  locale,
+  tocLabel,
+  readNextLabel,
+  sourcesLabel,
+}: ArticleBodyProps & { locale: "fr" | "en"; tocLabel: string; readNextLabel: string; sourcesLabel: string }) {
   const toc = tocFromBlocks(blocks);
 
   return (
-    <article
-      style={{
-        maxWidth: 1040,
-        margin: "0 auto",
-        display: "grid",
-        gridTemplateColumns: "232px minmax(0, 680px)",
-        justifyContent: "center",
-        gap: "0 56px",
-      }}
-    >
+    <article className="ww-article-layout">
       {toc.length > 0 ? (
-        <aside style={{ display: "block" }}>
-          <div style={{ position: "sticky", top: 86 }}>
-            <div
-              className="ww-mono"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.14em",
-                color: "rgba(244,243,247,0.44)",
-                marginBottom: 14,
-              }}
-            >
-              Sommaire
-            </div>
-            <nav
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 11,
-                borderLeft: "1px solid rgba(244,243,247,0.1)",
-                paddingLeft: 16,
-              }}
-            >
+        <aside className="ww-article-toc">
+          <div className="ww-article-toc__sticky">
+            <div className="ww-mono ww-article-toc__label">{tocLabel}</div>
+            <nav className="ww-article-toc__nav">
               {toc.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  style={{
-                    fontSize: 13,
-                    lineHeight: 1.4,
-                    color: "rgba(244,243,247,0.7)",
-                    textDecoration: "none",
-                  }}
-                >
+                <a key={item.id} href={`#${item.id}`}>
                   {item.text}
                 </a>
               ))}
@@ -88,7 +89,7 @@ export function ArticleBody({ blocks, related = [] }: ArticleBodyProps) {
         </aside>
       ) : null}
 
-      <div className="ww-article-body" style={{ minWidth: 0 }}>
+      <div className="ww-article-body">
         {blocks.map((block, index) => {
           switch (block.type) {
             case "p":
@@ -127,10 +128,10 @@ export function ArticleBody({ blocks, related = [] }: ArticleBodyProps) {
                   {block.items.map((item) => (
                     <div key={item.n} className="ww-article-step">
                       <span className="ww-article-step__num">{item.n}</span>
-                      <span className="ww-article-step__text">
+                      <div className="ww-article-step__text">
                         {item.lead ? <strong>{item.lead}</strong> : null}
                         {item.text}
-                      </span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -166,16 +167,7 @@ export function ArticleBody({ blocks, related = [] }: ArticleBodyProps) {
                           {row.map((cell, cellIndex) => (
                             <td key={cellIndex}>
                               {cellIndex === 0 ? (
-                                <span
-                                  style={{
-                                    color: "var(--accent)",
-                                    fontWeight: 600,
-                                    fontFamily: "var(--font-mono)",
-                                    letterSpacing: "0.04em",
-                                  }}
-                                >
-                                  {cell}
-                                </span>
+                                <span className="ww-article-table__accent">{cell}</span>
                               ) : (
                                 cell
                               )}
@@ -190,7 +182,7 @@ export function ArticleBody({ blocks, related = [] }: ArticleBodyProps) {
             case "sources":
               return (
                 <div key={index} className="ww-article-sources">
-                  <h3>Sources</h3>
+                  <h3>{sourcesLabel}</h3>
                   {block.items.map((item) => (
                     <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer">
                       ↗ {item.text}
@@ -204,53 +196,17 @@ export function ArticleBody({ blocks, related = [] }: ArticleBodyProps) {
         })}
 
         {related.length > 0 ? (
-          <div
-            style={{
-              marginTop: 46,
-              paddingTop: 26,
-              borderTop: "1px solid rgba(244,243,247,0.1)",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 12,
-            }}
-          >
+          <div className="ww-article-related">
             {related.map((item) => (
               <Link
                 key={item.slug}
-                href={journalPostHref(item.slug)}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 6,
-                  flex: "1 1 240px",
-                  padding: "20px 22px",
-                  borderRadius: 16,
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(244,243,247,0.1)",
-                  textDecoration: "none",
-                  transition: "border-color 0.25s",
-                }}
+                href={journalPostHref(item.slug, locale)}
+                className="ww-article-related__card"
               >
-                <span
-                  className="ww-mono"
-                  style={{
-                    fontSize: "10.5px",
-                    letterSpacing: "0.14em",
-                    color: "rgba(244,243,247,0.5)",
-                  }}
-                >
-                  Lire ensuite · {item.cat}
+                <span className="ww-mono ww-article-related__label">
+                  {readNextLabel} · {item.cat}
                 </span>
-                <span
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 600,
-                    letterSpacing: "-0.01em",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {item.title}
-                </span>
+                <span className="ww-article-related__title">{item.title}</span>
               </Link>
             ))}
           </div>

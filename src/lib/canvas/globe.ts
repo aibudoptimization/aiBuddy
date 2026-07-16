@@ -19,6 +19,15 @@ export function initGlobeRings(): GlobeRing[] {
   }));
 }
 
+export type DrawGlobeOptions = {
+  /** Fraction of min(w,h) used as ring radius. Default 0.34 */
+  radiusFactor?: number;
+  /** Extra opacity multiplier for rings / core (0–1+). */
+  intensity?: number;
+  /** Scale the bright core relative to default. */
+  coreScale?: number;
+};
+
 export function drawGlobe(
   ctx: CanvasRenderingContext2D,
   w: number,
@@ -27,16 +36,21 @@ export function drawGlobe(
   secRgb: string,
   rings: GlobeRing[],
   t: number,
+  opts: DrawGlobeOptions = {},
 ) {
+  const radiusFactor = opts.radiusFactor ?? 0.34;
+  const intensity = opts.intensity ?? 1;
+  const coreScale = opts.coreScale ?? 1;
+
   ctx.clearRect(0, 0, w, h);
   const cx = w / 2;
   const cy = h / 2;
-  const R = Math.min(w, h) * 0.34;
+  const R = Math.min(w, h) * radiusFactor;
   const yaw = t * 0.0002;
   const glow = mixRgbStrings(aRgb, secRgb, t * 0.0016);
-  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.25);
-  g.addColorStop(0, `rgba(${glow},0.12)`);
-  g.addColorStop(0.5, `rgba(${glow},0.03)`);
+  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.35);
+  g.addColorStop(0, `rgba(${glow},${0.14 * intensity})`);
+  g.addColorStop(0.5, `rgba(${glow},${0.04 * intensity})`);
   g.addColorStop(1, "rgba(0,0,0,0)");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, w, h);
@@ -64,9 +78,9 @@ export function drawGlobe(
       const p = project(a, ring.ax, ring.base);
       const d = (p.z + 1) / 2;
       const col = mixRgbStrings(aRgb, secRgb, a * 1.5 + t * 0.0026 + ri);
-      ctx.fillStyle = `rgba(${col},${0.06 + d * 0.34})`;
+      ctx.fillStyle = `rgba(${col},${(0.06 + d * 0.34) * intensity})`;
       ctx.beginPath();
-      ctx.arc(p.sx, p.sy, 0.5 + d * 1.2, 0, Math.PI * 2);
+      ctx.arc(p.sx, p.sy, 0.55 + d * 1.35, 0, Math.PI * 2);
       ctx.fill();
     }
     ring.e += ring.spd * ring.dir * 16;
@@ -76,7 +90,7 @@ export function drawGlobe(
     ctx.save();
     ctx.shadowColor = `rgba(${ecol},0.95)`;
     ctx.shadowBlur = 12;
-    ctx.fillStyle = `rgba(${ecol},${0.55 + ed * 0.45})`;
+    ctx.fillStyle = `rgba(${ecol},${(0.55 + ed * 0.45) * intensity})`;
     ctx.beginPath();
     ctx.arc(ep.sx, ep.sy, 3, 0, Math.PI * 2);
     ctx.fill();
@@ -87,10 +101,10 @@ export function drawGlobe(
   const ncol = mixRgbStrings(aRgb, secRgb, t * 0.003);
   ctx.save();
   ctx.shadowColor = `rgba(${ncol},0.9)`;
-  ctx.shadowBlur = 20 + pulse * 12;
-  ctx.fillStyle = `rgba(${ncol},0.95)`;
+  ctx.shadowBlur = (20 + pulse * 12) * coreScale;
+  ctx.fillStyle = `rgba(${ncol},${0.95 * Math.min(1.2, intensity)})`;
   ctx.beginPath();
-  ctx.arc(cx, cy, 7.5 + pulse * 2.4, 0, Math.PI * 2);
+  ctx.arc(cx, cy, (7.5 + pulse * 2.4) * coreScale, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
 }

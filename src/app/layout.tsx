@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s · Workflow Wonder",
   },
   description:
-    "Automatisations IA et systèmes sur mesure pour les entrepreneurs du Québec.",
+    "Automatisations, agents IA et sites pour les entrepreneurs du Québec. Consultation gratuite.",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },

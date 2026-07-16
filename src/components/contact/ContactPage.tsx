@@ -1,9 +1,15 @@
+"use client";
+
 import { JournalPageAmbient } from "@/components/journal/JournalPageAmbient";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { GlowBullet } from "@/components/home/GlowBullet";
-import { CONTACT_COPY } from "@/content/contact";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { CONTACT_EMAIL } from "@/lib/routes";
 
 export function ContactPage() {
+  const { dict } = useLocale();
+  const c = dict.contact;
+
   return (
     <div className="ww-journal-page">
       <JournalPageAmbient />
@@ -20,13 +26,13 @@ export function ContactPage() {
             <div className="ww-contact__intro">
               <div className="ww-contact__eyebrow ww-mono">
                 <span className="ww-glow-dot" style={{ width: 6, height: 6 }} aria-hidden />
-                {CONTACT_COPY.eyebrow}
+                {c.eyebrow}
               </div>
-              <h1 className="ww-contact__title">{CONTACT_COPY.title}</h1>
-              <p className="ww-contact__lead">{CONTACT_COPY.lead}</p>
+              <h1 className="ww-contact__title">{c.title}</h1>
+              <p className="ww-contact__lead">{c.lead}</p>
 
               <div className="ww-contact__bullets">
-                {CONTACT_COPY.bullets.map((line) => (
+                {c.bullets.map((line) => (
                   <div key={line} className="ww-contact__bullet">
                     <GlowBullet />
                     {line}
@@ -35,9 +41,9 @@ export function ContactPage() {
               </div>
 
               <div className="ww-contact__email">
-                <span className="ww-contact__email-label">{CONTACT_COPY.emailPrompt}</span>
-                <a href={`mailto:${CONTACT_COPY.email}`} className="ww-contact__email-link">
-                  {CONTACT_COPY.email}
+                <span className="ww-contact__email-label">{c.emailPrompt}</span>
+                <a href={`mailto:${CONTACT_EMAIL}`} className="ww-contact__email-link">
+                  {CONTACT_EMAIL}
                 </a>
               </div>
             </div>
