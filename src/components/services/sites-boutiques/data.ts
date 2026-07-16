@@ -131,8 +131,9 @@ export const PANELS: NichePanel[] = [
     color: "#7bd88f",
     icon: "wrench",
     domain: "metier.ca",
-    demoHref: "#",
+    demoHref: "https://metier-demo.vercel.app/",
     desc: "Plombier, paysagiste, électricien : devis et réputation en ligne.",
+    preview: "/demo-metiers-wide.mp4",
   },
   {
     name: "Événementiel",
