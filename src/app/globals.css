@@ -3740,11 +3740,35 @@ canvas {
   justify-content: center;
   width: 44px;
   height: 44px;
+  padding: 0;
   background: none;
   border: 1px solid rgba(244, 243, 247, 0.14);
   border-radius: 12px;
   color: var(--snow);
   cursor: pointer;
+  transition:
+    border-color 0.2s var(--ease-out),
+    background 0.2s var(--ease-out);
+}
+
+.ww-header__menu-btn:hover,
+.ww-header__menu-btn:focus-visible {
+  border-color: rgba(75, 250, 200, 0.45);
+  background: rgba(75, 250, 200, 0.06);
+  outline: none;
+}
+
+.ww-header__menu-btn.is-open {
+  border-color: rgba(75, 250, 200, 0.4);
+  background: rgba(75, 250, 200, 0.08);
+}
+
+.ww-nav-globe__canvas {
+  display: block;
+  width: 40px;
+  height: 40px;
+  max-width: none;
+  pointer-events: none;
 }
 
 .ww-nav-panel__inner {
@@ -3865,18 +3889,9 @@ canvas {
     text-align: center;
   }
 
+  /* Hero globe hidden on mobile — header NavGlobeButton owns brand motion */
   .ww-home-ambient__globe-clip {
-    width: min(52vw, 220px);
-    height: min(42vh, 300px);
-    top: 16%;
-    right: 0;
-    opacity: 0.5;
-  }
-
-  .ww-home-ambient__globe {
-    right: -8%;
-    width: 115%;
-    opacity: 1;
+    display: none;
   }
 
   .ww-home-hero {

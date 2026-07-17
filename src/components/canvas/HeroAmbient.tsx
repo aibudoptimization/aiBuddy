@@ -23,6 +23,7 @@ type HeroAmbientProps = {
  * Homepage ambient — matches design-reference/Workflow Wonder website.dc.html:
  * - Flow canvas + gradient veil: position fixed (viewport-locked while scrolling)
  * - Globe canvas: position absolute, hero height only (scrolls away with hero)
+ * - Mobile (≤768px): no hero globe — header NavGlobeButton owns brand motion
  */
 export function HeroAmbient({
   accentRgb = "75,250,200",
@@ -36,6 +37,7 @@ export function HeroAmbient({
   const globeRings = useRef<ReturnType<typeof initGlobeRings>>([]);
   const size = useRef({ w: 1, h: 1, gw: 1, gh: 1 });
   const hsl = useRef(rgbToHsl(75, 250, 200));
+  const mobileRef = useRef(false);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -48,6 +50,9 @@ export function HeroAmbient({
     const ctx = canvas.getContext("2d");
     const gctx = globe?.getContext("2d") ?? null;
     if (!ctx) return;
+
+    const mobileMq = window.matchMedia("(max-width: 768px)");
+    mobileRef.current = mobileMq.matches;
 
     flowNodes.current = initFlowNodes(1, 1);
     aurora.current = initAuroraState();
@@ -68,7 +73,7 @@ export function HeroAmbient({
     };
 
     const resizeGlobe = () => {
-      if (!globe || !gctx) return;
+      if (!globe || !gctx || mobileRef.current) return;
       const dpr = Math.min(2, window.devicePixelRatio || 1);
       const gr = globe.getBoundingClientRect();
       size.current.gw = Math.max(1, gr.width);
@@ -78,13 +83,23 @@ export function HeroAmbient({
       gctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
+    const onBreakpoint = () => {
+      mobileRef.current = mobileMq.matches;
+      if (mobileRef.current && gctx && globe) {
+        gctx.clearRect(0, 0, globe.width, globe.height);
+      } else {
+        resizeGlobe();
+      }
+    };
+
     resizeFlow();
     resizeGlobe();
     window.addEventListener("resize", resizeFlow);
     window.addEventListener("resize", resizeGlobe);
+    mobileMq.addEventListener("change", onBreakpoint);
 
     const globeObserver = globe ? new ResizeObserver(resizeGlobe) : null;
-    globeObserver?.observe(globe!);
+    if (globe && !mobileRef.current) globeObserver?.observe(globe);
 
     let raf = 0;
     const loop = (t: number) => {
@@ -96,7 +111,9 @@ export function HeroAmbient({
       } else {
         drawGrid(ctx, w, h, accentRgb, t);
       }
-      if (gctx) drawGlobe(gctx, gw, gh, accentRgb, secondaryRgb, globeRings.current, t);
+      if (gctx && !mobileRef.current) {
+        drawGlobe(gctx, gw, gh, accentRgb, secondaryRgb, globeRings.current, t);
+      }
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
@@ -105,6 +122,7 @@ export function HeroAmbient({
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resizeFlow);
       window.removeEventListener("resize", resizeGlobe);
+      mobileMq.removeEventListener("change", onBreakpoint);
       globeObserver?.disconnect();
     };
   }, [accentRgb, secondaryRgb, motif]);

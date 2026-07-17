@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type MouseEvent } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import { BrandMark } from "@/components/layout/BrandMark";
+import { NavGlobeButton } from "@/components/layout/NavGlobeButton";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { switchLocalePath, stripLocalePrefix } from "@/lib/locale";
 import { navItems } from "@/lib/routes";
@@ -148,16 +149,12 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
           >
             {otherLocale === "en" ? dict.chrome.langEn : dict.chrome.langFr}
           </Link>
-          <button
-            type="button"
-            className="ww-header__menu-btn"
-            aria-expanded={mobileOpen}
-            aria-controls="ww-mobile-drawer"
-            aria-label={mobileOpen ? dict.chrome.closeMenu : dict.chrome.openMenu}
-            onClick={() => setMobileOpen((o) => !o)}
-          >
-            {mobileOpen ? <X size={22} strokeWidth={2} /> : <Menu size={22} strokeWidth={2} />}
-          </button>
+          <NavGlobeButton
+            open={mobileOpen}
+            onToggle={() => setMobileOpen((o) => !o)}
+            ariaControls="ww-mobile-drawer"
+            ariaLabel={mobileOpen ? dict.chrome.closeMenu : dict.chrome.openMenu}
+          />
         </div>
       ) : (
         <Link href={routes.journal} className="ww-mono ww-header__back ww-header__back--mobile">
