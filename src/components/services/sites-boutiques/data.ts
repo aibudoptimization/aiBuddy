@@ -141,8 +141,9 @@ export const PANELS: NichePanel[] = [
     color: "#c084fc",
     icon: "calendar",
     domain: "evenement.ca",
-    demoHref: "#",
+    demoHref: "https://evenementiel-demo.vercel.app/",
     desc: "Mariage, festival : page d'événement, billetterie et galerie.",
+    preview: "/demo-mariage-duo.mp4",
   },
   {
     name: "Portfolio créatif",
@@ -150,8 +151,9 @@ export const PANELS: NichePanel[] = [
     color: "#f472b6",
     icon: "camera",
     domain: "portfolio.ca",
-    demoHref: "#",
+    demoHref: "https://portfolio-demo-rouge-eight.vercel.app/",
     desc: "Photographe, designer : un portfolio qui décroche des contrats.",
+    preview: "/demo-portfolio-wide.mp4",
   },
 ];
 
