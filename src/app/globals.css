@@ -3528,6 +3528,31 @@ canvas {
 }
 
 /* Brand splash */
+
+/*
+ * Pre-hydration curtain: the inline script in app/layout.tsx sets
+ * [data-ww-intro] on <html> before first paint when the intro is pending,
+ * so the landing page never flashes before BrandSplash hydrates and mounts.
+ * BrandSplash removes the attribute on mount; the delayed animation is a
+ * failsafe that reveals the page if hydration never completes.
+ */
+html[data-ww-intro]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 99; /* just beneath .ww-splash */
+  background: var(--ink);
+  pointer-events: none;
+  animation: ww-splash-curtain-failsafe 0.6s var(--ease-out) 8s forwards;
+}
+
+@keyframes ww-splash-curtain-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 .ww-splash {
   position: fixed;
   inset: 0;

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { drawGlobe, initGlobeRings } from "@/lib/canvas/globe";
-import { INTRO_DONE_EVENT, INTRO_SEEN_KEY } from "@/lib/introFlag";
+import { INTRO_DONE_EVENT, INTRO_PENDING_ATTR, INTRO_SEEN_KEY } from "@/lib/introFlag";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 const STORAGE_KEY = INTRO_SEEN_KEY;
@@ -67,6 +67,16 @@ export function BrandSplash() {
       window.dispatchEvent(new Event(INTRO_DONE_EVENT));
     }, 480);
   };
+
+  // The pre-paint curtain (see app/layout.tsx) covered the page until we
+  // hydrated. Drop it only once the splash is committed to the DOM (visible
+  // flips true post-hydration), so there is never a frame with neither.
+  // If the intro was already seen, the inline script never set the attribute.
+  useEffect(() => {
+    if (visible) {
+      document.documentElement.removeAttribute(INTRO_PENDING_ATTR);
+    }
+  }, [visible]);
 
   useEffect(() => {
     if (!visible) return;
