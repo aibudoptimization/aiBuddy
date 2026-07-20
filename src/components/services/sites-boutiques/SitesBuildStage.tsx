@@ -8,6 +8,7 @@ import {
   type Particle,
 } from "@/lib/canvas/particle-network";
 import { hexToRgb } from "@/lib/accents";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 import {
   BuildCardsBooking,
@@ -33,6 +34,7 @@ import {
 } from "./data";
 
 const ACCENT_AMBER = "#f0a94e";
+const ACCENT_AMBER_RGB = hexToRgb(ACCENT_AMBER);
 const CHIP_THRESHOLDS = [1, 2, 4, 5];
 
 function buildVisible(step: number, index: number) {
@@ -44,8 +46,11 @@ export function SitesBuildStage() {
   const stageBgRef = useRef<HTMLCanvasElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
 
+  const reduced = usePrefersReducedMotion();
   const [heroIndex, setHeroIndex] = useState(0);
-  const [buildStep, setBuildStep] = useState(0);
+  const [animStep, setAnimStep] = useState(0);
+  // With reduced motion the animation never runs; show the fully built state.
+  const buildStep = reduced ? 5 : animStep;
 
   const particlesRef = useRef<Particle[]>([]);
   const sizeRef = useRef({ w: 1, h: 1 });
@@ -55,7 +60,6 @@ export function SitesBuildStage() {
 
   const hero = HEROES[heroIndex];
   const rgb = hexToRgb(hero.color);
-  const bR = hexToRgb(ACCENT_AMBER);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -83,9 +87,7 @@ export function SitesBuildStage() {
     const ro = new ResizeObserver(resize);
     ro.observe(stage);
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      setBuildStep(5);
       return () => ro.disconnect();
     }
 
@@ -101,7 +103,7 @@ export function SitesBuildStage() {
         particlesRef.current,
         sizeRef.current.w,
         sizeRef.current.h,
-        bR,
+        ACCENT_AMBER_RGB,
         0.2,
       );
 
@@ -117,7 +119,7 @@ export function SitesBuildStage() {
       }
       if (step !== lastStepRef.current) {
         lastStepRef.current = step;
-        setBuildStep(step);
+        setAnimStep(step);
       }
 
       raf = requestAnimationFrame(loop);
@@ -128,7 +130,7 @@ export function SitesBuildStage() {
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
-  }, []);
+  }, [reduced]);
 
   const cursor = BUILD_CURSOR[buildStep];
   const showPhone = buildStep >= 5;
@@ -231,7 +233,7 @@ export function SitesBuildStage() {
                   }
                 >
                   {hero.layout === "booking" ? (
-                    <BuildHeroForm hero={hero} rgb={rgb} />
+                    <BuildHeroForm hero={hero} />
                   ) : (
                     <BuildHeroImage hero={hero} rgb={rgb} />
                   )}
@@ -293,8 +295,8 @@ export function SitesBuildStage() {
               style={
                 on
                   ? {
-                      borderColor: `rgba(${bR},0.5)`,
-                      background: `rgba(${bR},0.1)`,
+                      borderColor: `rgba(${ACCENT_AMBER_RGB},0.5)`,
+                      background: `rgba(${ACCENT_AMBER_RGB},0.1)`,
                       color: "#f4f3f7",
                     }
                   : undefined
@@ -306,7 +308,7 @@ export function SitesBuildStage() {
                   on
                     ? {
                         background: ACCENT_AMBER,
-                        boxShadow: `0 0 8px rgba(${bR},0.8)`,
+                        boxShadow: `0 0 8px rgba(${ACCENT_AMBER_RGB},0.8)`,
                       }
                     : undefined
                 }

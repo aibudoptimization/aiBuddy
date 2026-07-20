@@ -120,7 +120,7 @@ export function AgentStage() {
 
       ctx.clearRect(0, 0, w, h);
 
-      let e = (((t - animRef.current.t0) % TOTAL) + TOTAL) % TOTAL;
+      const e = (((t - animRef.current.t0) % TOTAL) + TOTAL) % TOTAL;
       let scenIdx = 0;
       while (scenIdx < DUR.length - 1 && e >= CUM[scenIdx] + DUR[scenIdx]) scenIdx++;
       const local = e - CUM[scenIdx];

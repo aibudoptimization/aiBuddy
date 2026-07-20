@@ -90,7 +90,7 @@ export function BuildHeroImage({ hero, rgb }: { hero: HeroDef; rgb: string }) {
   );
 }
 
-export function BuildHeroForm({ hero, rgb }: { hero: HeroDef; rgb: string }) {
+export function BuildHeroForm({ hero }: { hero: HeroDef }) {
   const input = (
     <div
       style={{

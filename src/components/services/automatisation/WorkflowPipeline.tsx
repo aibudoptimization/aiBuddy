@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { PIPELINE_FLOWS, PIPELINE_UI } from "@/content/workflows";
 import { WORKFLOW_ICONS, type WorkflowIconKey } from "@/lib/services/workflow-data";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 const STEP_MS = 2400;
 
@@ -38,8 +39,8 @@ export function WorkflowPipeline({
   const ui = PIPELINE_UI[locale];
   const rootRef = useRef<HTMLElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
-  const reducedRef = useRef(false);
   const userPausedRef = useRef(false);
+  const reduced = usePrefersReducedMotion();
 
   const [flowId, setFlowId] = useState(PIPELINE_FLOWS[0]!.id);
   const [step, setStep] = useState(0);
@@ -49,15 +50,8 @@ export function WorkflowPipeline({
   const flow = PIPELINE_FLOWS.find((f) => f.id === flowId) ?? PIPELINE_FLOWS[0]!;
   const total = flow.steps.length;
   const active = flow.steps[Math.min(step, total - 1)]!;
-  const canAutoplay = playing && inView && !reducedRef.current;
-
-  useEffect(() => {
-    reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedRef.current) {
-      userPausedRef.current = true;
-      setPlaying(false);
-    }
-  }, []);
+  const isPlaying = playing && !reduced;
+  const canAutoplay = isPlaying && inView;
 
   useEffect(() => {
     const el = rootRef.current;
@@ -71,16 +65,14 @@ export function WorkflowPipeline({
   }, []);
 
   useEffect(() => {
-    setStep(0);
-  }, [flowId]);
-
-  useEffect(() => {
     if (!canAutoplay) return;
+    const count = (PIPELINE_FLOWS.find((f) => f.id === flowId) ?? PIPELINE_FLOWS[0]!).steps
+      .length;
     const id = window.setInterval(() => {
-      setStep((s) => (s + 1) % total);
+      setStep((s) => (s + 1) % count);
     }, STEP_MS);
     return () => window.clearInterval(id);
-  }, [canAutoplay, total, flowId]);
+  }, [canAutoplay, flowId]);
 
   useEffect(() => {
     const root = tabsRef.current;
@@ -112,7 +104,8 @@ export function WorkflowPipeline({
 
   const goToFlow = (id: string) => {
     setFlowId(id);
-    if (!reducedRef.current && !userPausedRef.current) setPlaying(true);
+    setStep(0);
+    if (!reduced && !userPausedRef.current) setPlaying(true);
   };
 
   const goToStep = (i: number) => {
@@ -173,10 +166,10 @@ export function WorkflowPipeline({
                   return next;
                 });
               }}
-              aria-label={playing ? ui.pause : ui.play}
+              aria-label={isPlaying ? ui.pause : ui.play}
             >
-              {playing ? <Pause size={16} /> : <Play size={16} />}
-              <span>{playing ? ui.pause : ui.play}</span>
+              {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+              <span>{isPlaying ? ui.pause : ui.play}</span>
             </button>
             <span className="ww-mono ww-pipeline__counter">
               {ui.stepOf} {step + 1} {ui.of} {total}

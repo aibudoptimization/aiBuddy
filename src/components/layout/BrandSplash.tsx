@@ -1,13 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import { BrandMark } from "@/components/layout/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { drawGlobe, initGlobeRings } from "@/lib/canvas/globe";
 import { INTRO_DONE_EVENT, INTRO_SEEN_KEY } from "@/lib/introFlag";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 const STORAGE_KEY = INTRO_SEEN_KEY;
+
+function subscribeIntroDone(onChange: () => void) {
+  window.addEventListener(INTRO_DONE_EVENT, onChange);
+  return () => window.removeEventListener(INTRO_DONE_EVENT, onChange);
+}
+
+function introPending() {
+  try {
+    return sessionStorage.getItem(STORAGE_KEY) !== "1";
+  } catch {
+    return true;
+  }
+}
 
 /** Orbit settle */
 const PHASE_ORBIT_MS = 1100;
@@ -29,7 +43,10 @@ function easeInOutCubic(t: number) {
  */
 export function BrandSplash() {
   const { dict } = useLocale();
-  const [visible, setVisible] = useState(false);
+  // Visible until the intro has been seen this session; the INTRO_DONE_EVENT
+  // dispatched by finish() re-reads the flag and hides the splash.
+  const visible = useSyncExternalStore(subscribeIntroDone, introPending, () => false);
+  const reduced = usePrefersReducedMotion();
   const [phase, setPhase] = useState<"orbit" | "collapse" | "mark" | "out">("orbit");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rings = useRef(initGlobeRings());
@@ -41,32 +58,20 @@ export function BrandSplash() {
     if (doneRef.current) return;
     doneRef.current = true;
     setPhase("out");
-    try {
-      sessionStorage.setItem(STORAGE_KEY, "1");
-    } catch {
-      /* ignore */
-    }
     window.setTimeout(() => {
-      setVisible(false);
+      try {
+        sessionStorage.setItem(STORAGE_KEY, "1");
+      } catch {
+        /* ignore */
+      }
       window.dispatchEvent(new Event(INTRO_DONE_EVENT));
     }, 480);
   };
 
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
-    } catch {
-      /* show intro */
-    }
-    setVisible(true);
-  }, []);
-
-  useEffect(() => {
     if (!visible) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      setPhase("mark");
       const t = window.setTimeout(finish, 420);
       return () => window.clearTimeout(t);
     }
@@ -82,14 +87,11 @@ export function BrandSplash() {
       window.clearTimeout(tMark);
       window.clearTimeout(tDone);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+  }, [visible, reduced]);
 
   // Single RAF loop for the whole intro — do not restart on phase changes.
   useEffect(() => {
-    if (!visible) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
+    if (!visible || reduced) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -164,16 +166,19 @@ export function BrandSplash() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
-  }, [visible]);
+  }, [visible, reduced]);
 
   if (!visible) return null;
 
-  const showMark = phase === "mark" || phase === "out";
-  const collapsing = phase === "collapse" || phase === "mark" || phase === "out";
+  // With reduced motion, skip straight to the settled mark without animating phases.
+  const effectivePhase = reduced && phase === "orbit" ? "mark" : phase;
+  const showMark = effectivePhase === "mark" || effectivePhase === "out";
+  const collapsing =
+    effectivePhase === "collapse" || effectivePhase === "mark" || effectivePhase === "out";
 
   return (
     <div
-      className={`ww-splash${phase === "out" ? " ww-splash--out" : ""}${collapsing ? " ww-splash--collapse" : ""}`}
+      className={`ww-splash${effectivePhase === "out" ? " ww-splash--out" : ""}${collapsing ? " ww-splash--collapse" : ""}`}
       role="dialog"
       aria-label={dict.splash.ariaLabel}
       aria-modal="true"

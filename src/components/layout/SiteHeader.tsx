@@ -36,10 +36,14 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
   const isJournalArticle = isJournalArticlePath(bare);
   const homePath = routes.home;
 
-  useEffect(() => {
+  // Close any open menus when the route changes (state adjustment during render,
+  // so the closed menus and the new page paint together).
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setMobileOpen(false);
     setNavOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!mobileOpen) return;
