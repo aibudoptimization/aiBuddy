@@ -168,6 +168,16 @@ export function SiteFooter() {
                 {f.exploreHeading}
               </span>
               <Link
+                href={routes.realisations}
+                style={{
+                  fontSize: "14.5px",
+                  color: "rgba(244,243,247,0.64)",
+                  textDecoration: "none",
+                }}
+              >
+                {f.realisations}
+              </Link>
+              <Link
                 href={routes.journal}
                 style={{
                   fontSize: "14.5px",

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 
 import { LocaleProvider } from "@/components/i18n/LocaleProvider";
 import { BrandSplash } from "@/components/layout/BrandSplash";
-import { ConstructionMarquee } from "@/components/layout/ConstructionMarquee";
 import { RouteChangeShell } from "@/components/layout/RouteChangeShell";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -27,10 +26,9 @@ export function MarketingChrome({ children, locale: localeProp }: MarketingChrom
   return (
     <LocaleProvider locale={locale}>
       <CookieConsentProvider>
-        <div className="ww-page ww-page--construction">
+        <div className="ww-page">
           <BrandSplash />
           <div className="ww-site-chrome">
-            <ConstructionMarquee />
             <SiteHeader fixed={false} />
           </div>
           <div className="ww-site-chrome-spacer" aria-hidden />

@@ -16,7 +16,20 @@ export function HomeToolsSection() {
       }}
     >
       <Reveal>
-        <h2 className="ww-tools-title">{dict.home.tools.title}</h2>
+        <h2 className="ww-tools-title" style={{ marginBottom: 10 }}>
+          {dict.home.tools.title}
+        </h2>
+        <p
+          style={{
+            margin: "0 auto 38px",
+            maxWidth: 520,
+            fontSize: "14.5px",
+            lineHeight: 1.55,
+            color: "rgba(244,243,247,0.55)",
+          }}
+        >
+          {dict.home.tools.subtitle}
+        </p>
       </Reveal>
       <div className="ww-tools-grid">
         {INTEGRATION_TOOLS.map((name) => (

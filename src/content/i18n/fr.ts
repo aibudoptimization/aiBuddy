@@ -10,6 +10,7 @@ export const fr: Dictionary = {
   chrome: {
     services: "Services",
     approach: "Approche",
+    realisations: "Réalisations",
     consultCta: "Consultation gratuite",
     allArticles: "Tous les articles",
     langSwitchLabel: "Language",
@@ -19,12 +20,6 @@ export const fr: Dictionary = {
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
     primaryNav: "Navigation principale",
-    marquee: [
-      "Site en construction",
-      "Certaines sections sont encore en préparation",
-      "Le formulaire de contact est actif",
-      "Consultation gratuite · sans engagement",
-    ],
   },
   nav: {
     services: [
@@ -40,6 +35,7 @@ export const fr: Dictionary = {
     exploreHeading: "Explorer",
     blog: "Journal",
     contact: "Contact",
+    realisations: "Réalisations",
     privacy: "Confidentialité",
     cookiePreferences: "Gérer les témoins",
     rights: "Tous droits réservés.",
@@ -88,12 +84,13 @@ export const fr: Dictionary = {
         ". On automatise vos workflows, on déploie des agents IA et on bâtit des sites qui convertissent, pour les entrepreneurs du Québec qui veulent avancer sans tout faire à la main.",
       primaryCta: "Consultation gratuite",
       secondaryCta: "Voir les services",
-      meta: ["Workflows · Agents IA · Sites", "Gain de temps", "Croissance"],
+      meta: ["Workflows · Agents IA · Sites", "À partir de 250 $", "Devis sous 24 h"],
     },
     services: {
       eyebrow: "CE QU'ON LIVRE",
       titleLine1: "Trois leviers.",
       titleLine2: "Un objectif : vous faire gagner du temps.",
+      lead: "Des règles quand c'est fiable, de l'IA quand c'est utile — jamais l'inverse.",
       soon: "Bientôt",
       cards: [
         {
@@ -103,6 +100,7 @@ export const fr: Dictionary = {
           title: "Automatisation des workflows",
           accent: "#4bfac8",
           desc: "Vos règles, vos outils, zéro relance oubliée. Les tâches répétitives partent. Votre focus reste sur la vente et la livraison.",
+          outcome: "Résultat : zéro suivi oublié et des heures récupérées chaque semaine.",
           items: [
             { t: "Emails marketing automatisés" },
             { t: "Séquences d'onboarding" },
@@ -118,6 +116,7 @@ export const fr: Dictionary = {
           title: "Agents & assistants IA",
           accent: "#8b7cff",
           desc: "Des agents qui comprennent la demande, choisissent l'action et répondent, 24/7, dans votre ton.",
+          outcome: "Résultat : chaque demande reçoit une réponse en quelques minutes, jour et nuit.",
           items: [
             { t: "Workflows IA agentiques" },
             { t: "Chatbots de support client" },
@@ -133,6 +132,7 @@ export const fr: Dictionary = {
           title: "Sites & boutiques en ligne",
           accent: "#f0a94e",
           desc: "Un site ou une boutique conçu pour convertir : clair, rapide, aligné à votre offre.",
+          outcome: "Résultat : un site qui génère des demandes pendant que vous travaillez.",
           items: [
             { t: "Création de marque & identité visuelle" },
             { t: "Sites & web apps sur mesure" },
@@ -143,9 +143,21 @@ export const fr: Dictionary = {
         },
       ],
     },
+    proof: {
+      eyebrow: "Réalisations",
+      title: "On ne le raconte pas. On le montre.",
+      caseTag: "Entraînement privé · Montréal",
+      caseTitle: "elianelarre.com",
+      caseDesc:
+        "Page d'atterrissage pour une entraîneure privée : parcours cliente, témoignages, FAQ et réservation d'appel découverte intégrée.",
+      caseCta: "Visiter le site",
+      pageCta: "Toutes les réalisations →",
+      demoNote:
+        "Envie d'en voir plus ? Chaque page service embarque une démo interactive : essayez-les.",
+    },
     audience: {
       titleLine1: "Fait pour les entrepreneurs",
-      titleLine2: "qui veulent scaler, sans s'épuiser.",
+      titleLine2: "qui veulent grandir, sans s'épuiser.",
       lead: "Solopreneur ou petite équipe au Québec, déjà en mouvement, freiné par le « tout-à-la-main ».",
       fitTitle: "C'est pour vous si…",
       notFitTitle: "Pas le bon moment si…",
@@ -153,12 +165,29 @@ export const fr: Dictionary = {
       prev: "Précédent",
       next: "Suivant",
       goToSlide: "Aller à la diapositive",
+      slideLinkLabel: "Voir la solution →",
       slides: [
-        { no: "01", text: "Trop d'heures sur des tâches qu'un système peut faire." },
-        { no: "02", text: "La demande monte plus vite que votre capacité à suivre." },
-        { no: "03", text: "Vous voulez l'IA, sans parcours technique." },
-        { no: "04", text: "Vos outils ne se parlent pas, trop de copier-coller." },
-        { no: "05", text: "Vous voulez un site qui génère des demandes, pas une vitrine." },
+        {
+          no: "01",
+          text: "Trop d'heures sur des tâches qu'un système peut faire.",
+          pathKey: "automatisation",
+        },
+        {
+          no: "02",
+          text: "La demande monte plus vite que votre capacité à suivre.",
+          pathKey: "agentsIa",
+        },
+        { no: "03", text: "Vous voulez l'IA, sans parcours technique.", pathKey: "agentsIa" },
+        {
+          no: "04",
+          text: "Vos outils ne se parlent pas, trop de copier-coller.",
+          pathKey: "automatisation",
+        },
+        {
+          no: "05",
+          text: "Vous voulez un site qui génère des demandes, pas une vitrine.",
+          pathKey: "sitesBoutiques",
+        },
       ],
       fit: [
         "Solopreneur ou petite équipe (2 à 10 personnes)",
@@ -174,11 +203,12 @@ export const fr: Dictionary = {
     },
     tools: {
       title: "On branche vos outils.",
+      subtitle: "Rien à remplacer — on s'intègre à ce que vous utilisez déjà.",
     },
     visibility: {
-      eyebrow: "Visibilité",
+      eyebrow: "Inclus dans tout ce qu'on livre",
       title: "Être trouvé. Sur Google. Dans les réponses IA.",
-      lead: "SEO, GEO et AEO : on pose les bases pour que vos clients vous trouvent, pas seulement vos concurrents.",
+      lead: "SEO, GEO et AEO : chaque site et chaque contenu qu'on livre pose ces bases, pour que vos clients vous trouvent — pas seulement vos concurrents.",
       micro: "Référencement · Réponses IA · Mesure",
       primaryCta: "Consultation gratuite",
       secondaryCta: "Comment ça marche →",
@@ -236,25 +266,31 @@ export const fr: Dictionary = {
         "Le niveau de personnalisation",
         "Le contenu déjà en place",
       ],
+      entryTag: "Commencez ici",
       payment: [
         {
           no: "01",
-          title: "Options de paiement flexibles",
-          desc: "On s'adapte à votre réalité, versements échelonnés selon le projet.",
+          title: "Paiement flexible",
+          desc: "Versements échelonnés selon le projet.",
         },
         {
           no: "02",
-          title: "Vos abonnements, payés en direct",
-          desc: "Outils & tokens IA réglés depuis vos comptes, aucune marge cachée.",
+          title: "Abonnements payés en direct",
+          desc: "Depuis vos comptes, sans marge cachée.",
         },
         {
           no: "03",
-          title: "Maintenance & support en option",
-          desc: "Un accompagnement continu, seulement si vous le voulez.",
+          title: "Support en option",
+          desc: "Seulement si vous le voulez.",
         },
       ],
       anchors: [
-        { label: "Automatisation · template", price: "250 $", note: "à partir de" },
+        {
+          label: "Automatisation · template",
+          price: "250 $",
+          note: "à partir de",
+          entry: true,
+        },
         { label: "Page événement", price: "500 $", note: "à partir de" },
         { label: "Landing page", price: "1 000 $", note: "à partir de" },
         {
@@ -371,6 +407,32 @@ export const fr: Dictionary = {
       ctaDescription: "Décrivez-nous le vôtre, on revient avec une première piste concrète sous 24 h.",
       ctaButton: "Consultation gratuite",
     },
+  },
+  realisations: {
+    metaTitle: "Réalisations",
+    metaDescription:
+      "Sites, automatisations et agents IA livrés par Workflow Wonder pour des entrepreneurs du Québec.",
+    eyebrow: "Réalisations",
+    title: "Du concret, en ligne.",
+    lead: "Pas de maquettes : des sites et des systèmes réellement en service. Chaque projet livré s'ajoute ici.",
+    visitLabel: "Visiter",
+    works: [
+      {
+        tag: "Site vitrine · Réservation intégrée",
+        client: "Éliane Larre — entraîneure privée, Montréal",
+        title: "elianelarre.com",
+        desc: "Page d'atterrissage complète : approche, accompagnement, témoignages, FAQ et parcours cliente en 5 étapes, avec réservation d'appel découverte et questionnaire d'accueil intégrés.",
+        url: "https://elianelarre.com",
+        urlLabel: "Visiter elianelarre.com",
+      },
+    ],
+    upcomingNote:
+      "D'autres projets sont en cours de livraison. Cette page grandit avec chaque mandat.",
+    ctaLabel: "Votre projet",
+    ctaTitle: "Le prochain projet ici pourrait être le vôtre.",
+    ctaDescription:
+      "Racontez-nous votre réalité : on revient sous 24 h avec une première piste et un devis.",
+    ctaButton: "Consultation gratuite",
   },
   splash: {
     skip: "Passer",

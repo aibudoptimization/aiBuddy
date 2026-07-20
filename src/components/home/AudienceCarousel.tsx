@@ -1,19 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import type { ServicePathKey } from "@/content/i18n/types";
 
-type Slide = { no: string; text: string };
+type Slide = { no: string; text: string; pathKey: ServicePathKey };
 
 type AudienceCarouselProps = {
   slides: Slide[];
 };
 
 export function AudienceCarousel({ slides }: AudienceCarouselProps) {
-  const { dict } = useLocale();
+  const { dict, routes } = useLocale();
   const a = dict.home.audience;
+  const movedRef = useRef(0);
   const vpRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ x: number; dx: number } | null>(null);
@@ -68,6 +71,7 @@ export function AudienceCarousel({ slides }: AudienceCarouselProps) {
     const onUp = () => {
       if (!dragRef.current) return;
       const d = dragRef.current.dx;
+      movedRef.current = Math.abs(d);
       dragRef.current = null;
       const threshold = Math.min(80, (step || 1) * 0.22);
       setIdx((current) => {
@@ -184,16 +188,28 @@ export function AudienceCarousel({ slides }: AudienceCarouselProps) {
               >
                 {slide.no}
               </span>
-              <p
-                style={{
-                  margin: 0,
-                  fontSize: "15.5px",
-                  lineHeight: 1.5,
-                  color: "rgba(244,243,247,0.82)",
-                }}
-              >
-                {slide.text}
-              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "15.5px",
+                    lineHeight: 1.5,
+                    color: "rgba(244,243,247,0.82)",
+                  }}
+                >
+                  {slide.text}
+                </p>
+                <Link
+                  href={routes[slide.pathKey]}
+                  className="ww-si-card__link ww-mono"
+                  draggable={false}
+                  onClick={(event) => {
+                    if (movedRef.current > 5) event.preventDefault();
+                  }}
+                >
+                  {a.slideLinkLabel}
+                </Link>
+              </div>
             </div>
           ))}
         </div>

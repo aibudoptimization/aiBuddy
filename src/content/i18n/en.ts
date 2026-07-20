@@ -10,6 +10,7 @@ export const en: Dictionary = {
   chrome: {
     services: "Services",
     approach: "Approach",
+    realisations: "Work",
     consultCta: "Free consultation",
     allArticles: "All articles",
     langSwitchLabel: "Langue",
@@ -19,12 +20,6 @@ export const en: Dictionary = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     primaryNav: "Primary navigation",
-    marquee: [
-      "Site under construction",
-      "Some sections are still being prepared",
-      "The contact form is live",
-      "Free consultation · no commitment",
-    ],
   },
   nav: {
     services: [
@@ -40,6 +35,7 @@ export const en: Dictionary = {
     exploreHeading: "Explore",
     blog: "Journal",
     contact: "Contact",
+    realisations: "Work",
     privacy: "Privacy",
     cookiePreferences: "Manage cookies",
     rights: "All rights reserved.",
@@ -53,7 +49,7 @@ export const en: Dictionary = {
     faq: [
       {
         q: "How long does a project take?",
-        a: "Most projects:  to  weeks. Clear timeline from the consultation.",
+        a: "Most projects: 2 to 6 weeks. Clear timeline from the consultation.",
         open: true,
       },
       {
@@ -88,12 +84,13 @@ export const en: Dictionary = {
         ". We automate workflows, ship AI agents, and build sites that convert, for Québec entrepreneurs who want to grow without doing everything by hand.",
       primaryCta: "Free consultation",
       secondaryCta: "See services",
-      meta: ["Workflows · AI agents · Sites", "Time back", "Growth"],
+      meta: ["Workflows · AI agents · Sites", "From CAD $250", "Quote within 24 h"],
     },
     services: {
       eyebrow: "WHAT WE DELIVER",
       titleLine1: "Three levers.",
       titleLine2: "One goal: give you time back.",
+      lead: "Rules where they're reliable, AI where it's useful — never the other way around.",
       soon: "Soon",
       cards: [
         {
@@ -103,6 +100,7 @@ export const en: Dictionary = {
           title: "Workflow automation",
           accent: "#4bfac8",
           desc: "Your rules, your tools, no forgotten follow-ups. Repetitive work goes away. You stay on sales and delivery.",
+          outcome: "The result: no missed follow-ups and hours back every week.",
           items: [
             { t: "Automated marketing emails" },
             { t: "Onboarding sequences" },
@@ -118,6 +116,7 @@ export const en: Dictionary = {
           title: "AI agents & assistants",
           accent: "#8b7cff",
           desc: "Agents that understand the request, pick the action, and reply, 24/7, in your voice.",
+          outcome: "The result: every request gets an answer within minutes, day or night.",
           items: [
             { t: "Agentic AI workflows" },
             { t: "Customer support chatbots" },
@@ -133,6 +132,7 @@ export const en: Dictionary = {
           title: "Websites & online stores",
           accent: "#f0a94e",
           desc: "A site or store built to convert: clear, fast, aligned with your offer.",
+          outcome: "The result: a site that generates leads while you work.",
           items: [
             { t: "Brand & visual identity" },
             { t: "Custom sites & web apps" },
@@ -142,6 +142,18 @@ export const en: Dictionary = {
           cta: "See the demo",
         },
       ],
+    },
+    proof: {
+      eyebrow: "Work",
+      title: "We don't tell. We show.",
+      caseTag: "Personal training · Montréal",
+      caseTitle: "elianelarre.com",
+      caseDesc:
+        "Landing page for a personal trainer: client journey, testimonials, FAQ, and integrated discovery-call booking.",
+      caseCta: "Visit the site",
+      pageCta: "All work →",
+      demoNote:
+        "Want more? Every service page ships with an interactive demo: try them.",
     },
     audience: {
       titleLine1: "Built for entrepreneurs",
@@ -153,15 +165,32 @@ export const en: Dictionary = {
       prev: "Previous",
       next: "Next",
       goToSlide: "Go to slide",
+      slideLinkLabel: "See the fix →",
       slides: [
-        { no: "01", text: "Too many hours on work a system could handle." },
-        { no: "02", text: "Demand is growing faster than you can keep up." },
-        { no: "03", text: "You want AI without a technical maze." },
-        { no: "04", text: "Your tools don’t talk, too much copy-paste." },
-        { no: "05", text: "You want a site that generates leads, not a brochure." },
+        {
+          no: "01",
+          text: "Too many hours on work a system could handle.",
+          pathKey: "automatisation",
+        },
+        {
+          no: "02",
+          text: "Demand is growing faster than you can keep up.",
+          pathKey: "agentsIa",
+        },
+        { no: "03", text: "You want AI without a technical maze.", pathKey: "agentsIa" },
+        {
+          no: "04",
+          text: "Your tools don’t talk, too much copy-paste.",
+          pathKey: "automatisation",
+        },
+        {
+          no: "05",
+          text: "You want a site that generates leads, not a brochure.",
+          pathKey: "sitesBoutiques",
+        },
       ],
       fit: [
-        "Solo or small team ( to 0 people)",
+        "Solo or small team (2 to 10 people)",
         "Already some volume and revenue to optimize",
         "Ready to invest to get time back",
         "Open to change, with a long-term view",
@@ -174,11 +203,12 @@ export const en: Dictionary = {
     },
     tools: {
       title: "We connect to your stack.",
+      subtitle: "Nothing to replace — we plug into what you already use.",
     },
     visibility: {
-      eyebrow: "Visibility",
+      eyebrow: "Included in everything we ship",
       title: "Get found. On Google. In AI answers.",
-      lead: "SEO, GEO, and AEO, foundations so customers find you, not just your competitors.",
+      lead: "SEO, GEO, and AEO: every site and piece of content we deliver lays these foundations, so customers find you — not just your competitors.",
       micro: "Search · AI answers · Measurement",
       primaryCta: "Free consultation",
       secondaryCta: "How it works →",
@@ -236,25 +266,26 @@ export const en: Dictionary = {
         "Level of customization",
         "Content already in place",
       ],
+      entryTag: "Start here",
       payment: [
         {
           no: "01",
-          title: "Flexible payment options",
-          desc: "We adapt to your reality, staged payments by project.",
+          title: "Flexible payment",
+          desc: "Staged payments by project.",
         },
         {
           no: "02",
-          title: "Your subscriptions, paid direct",
-          desc: "Tools & AI tokens billed on your accounts, no hidden markup.",
+          title: "Subscriptions paid direct",
+          desc: "On your accounts, no hidden markup.",
         },
         {
           no: "03",
-          title: "Maintenance & support optional",
-          desc: "Ongoing support only if you want it.",
+          title: "Support optional",
+          desc: "Only if you want it.",
         },
       ],
       anchors: [
-        { label: "Automation · template", price: "CAD $250", note: "from" },
+        { label: "Automation · template", price: "CAD $250", note: "from", entry: true },
         { label: "Event page", price: "CAD $500", note: "from" },
         { label: "Landing page", price: "CAD $1,000", note: "from" },
         {
@@ -369,6 +400,31 @@ export const en: Dictionary = {
         "Describe yours. We’ll come back with a concrete first path within 24 hours.",
       ctaButton: "Free consultation",
     },
+  },
+  realisations: {
+    metaTitle: "Work",
+    metaDescription:
+      "Websites, automations, and AI agents delivered by Workflow Wonder for Québec entrepreneurs.",
+    eyebrow: "Work",
+    title: "Real, and live.",
+    lead: "No mockups: sites and systems actually in service. Every delivered project lands here.",
+    visitLabel: "Visit",
+    works: [
+      {
+        tag: "Landing page · Integrated booking",
+        client: "Éliane Larre — personal trainer, Montréal",
+        title: "elianelarre.com",
+        desc: "Complete landing page: approach, coaching pillars, testimonials, FAQ, and a 5-step client journey, with integrated discovery-call booking and intake questionnaire.",
+        url: "https://elianelarre.com",
+        urlLabel: "Visit elianelarre.com",
+      },
+    ],
+    upcomingNote: "More projects are on the way. This page grows with every delivery.",
+    ctaLabel: "Your project",
+    ctaTitle: "The next project here could be yours.",
+    ctaDescription:
+      "Tell us about your reality: we reply within 24 hours with a first path and a quote.",
+    ctaButton: "Free consultation",
   },
   splash: {
     skip: "Skip",

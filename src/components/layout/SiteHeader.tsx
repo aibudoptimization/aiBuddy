@@ -120,6 +120,9 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
               </div>
             </div>
 
+            <Link href={routes.realisations} className="ww-header__link">
+              {dict.chrome.realisations}
+            </Link>
             <Link
               href={`${homePath}#approche`}
               className="ww-header__link"
@@ -188,6 +191,13 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
               {item.title}
             </Link>
           ))}
+          <Link
+            href={routes.realisations}
+            className="ww-mobile-drawer__link"
+            onClick={() => setMobileOpen(false)}
+          >
+            {dict.chrome.realisations}
+          </Link>
           <Link
             href={`${homePath}#approche`}
             className="ww-mobile-drawer__link"

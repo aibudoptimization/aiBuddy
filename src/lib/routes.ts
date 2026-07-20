@@ -9,6 +9,7 @@ export const PATHS = {
   journal: "/journal",
   article: (slug: string) => `/journal/${slug}`,
   contact: "/contact",
+  realisations: "/realisations",
   privacy: "/politique-de-confidentialite",
 } as const;
 
@@ -63,6 +64,7 @@ export function paths(locale: Locale = "fr") {
     journal: localizePath(locale, PATHS.journal),
     article: (slug: string) => localizePath(locale, PATHS.article(slug)),
     contact: localizePath(locale, PATHS.contact),
+    realisations: localizePath(locale, PATHS.realisations),
     privacy: localizePath(locale, PATHS.privacy),
   };
 }

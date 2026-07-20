@@ -39,8 +39,11 @@ export function HomePricingSection() {
           {p.anchors.map((item) => (
             <div
               key={item.label}
-              className={item.highlight ? "ww-price-card ww-price-card--highlight" : "ww-price-card"}
+              className={`ww-price-card${item.highlight ? " ww-price-card--highlight" : ""}${item.entry ? " ww-price-card--entry" : ""}`}
             >
+              {item.entry ? (
+                <span className="ww-mono ww-price-card__entry-tag">{p.entryTag}</span>
+              ) : null}
               <span className="ww-price-card__label">{item.label}</span>
               <span className="ww-mono ww-price-card__note">{item.note}</span>
               <span

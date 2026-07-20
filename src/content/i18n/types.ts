@@ -3,15 +3,28 @@ export type HomeServiceItem = {
   soon?: boolean;
 };
 
+export type ServicePathKey = "automatisation" | "agentsIa" | "sitesBoutiques";
+
 export type HomeServiceCopy = {
   no: string;
-  pathKey: "automatisation" | "agentsIa" | "sitesBoutiques";
+  pathKey: ServicePathKey;
   tag: string;
   title: string;
   accent: string;
   desc: string;
+  /** One-line result the client gets — outcomes, not features. */
+  outcome: string;
   items: HomeServiceItem[];
   cta: string;
+};
+
+export type WorkEntry = {
+  tag: string;
+  client: string;
+  title: string;
+  desc: string;
+  url: string;
+  urlLabel: string;
 };
 
 export type FaqItem = {
@@ -56,6 +69,7 @@ export type Dictionary = {
   chrome: {
     services: string;
     approach: string;
+    realisations: string;
     consultCta: string;
     allArticles: string;
     langSwitchLabel: string;
@@ -65,7 +79,6 @@ export type Dictionary = {
     openMenu: string;
     closeMenu: string;
     primaryNav: string;
-    marquee: string[];
   };
   nav: {
     services: { title: string; tag: string }[];
@@ -76,6 +89,7 @@ export type Dictionary = {
     exploreHeading: string;
     blog: string;
     contact: string;
+    realisations: string;
     privacy: string;
     cookiePreferences: string;
     rights: string;
@@ -106,8 +120,20 @@ export type Dictionary = {
       eyebrow: string;
       titleLine1: string;
       titleLine2: string;
+      /** Resolves the rules-vs-AI tension in one line. */
+      lead: string;
       soon: string;
       cards: HomeServiceCopy[];
+    };
+    proof: {
+      eyebrow: string;
+      title: string;
+      caseTag: string;
+      caseTitle: string;
+      caseDesc: string;
+      caseCta: string;
+      pageCta: string;
+      demoNote: string;
     };
     audience: {
       titleLine1: string;
@@ -119,12 +145,14 @@ export type Dictionary = {
       prev: string;
       next: string;
       goToSlide: string;
-      slides: { no: string; text: string }[];
+      slideLinkLabel: string;
+      slides: { no: string; text: string; pathKey: ServicePathKey }[];
       fit: string[];
       notFit: string[];
     };
     tools: {
       title: string;
+      subtitle: string;
     };
     visibility: {
       eyebrow: string;
@@ -153,8 +181,15 @@ export type Dictionary = {
       factorsHeading: string;
       factorsNote: string;
       factors: string[];
+      entryTag: string;
       payment: { no: string; title: string; desc: string }[];
-      anchors: { label: string; price: string; note: string; highlight?: boolean }[];
+      anchors: {
+        label: string;
+        price: string;
+        note: string;
+        highlight?: boolean;
+        entry?: boolean;
+      }[];
     };
     journal: {
       title: string;
@@ -249,6 +284,20 @@ export type Dictionary = {
       ctaDescription: string;
       ctaButton: string;
     };
+  };
+  realisations: {
+    metaTitle: string;
+    metaDescription: string;
+    eyebrow: string;
+    title: string;
+    lead: string;
+    visitLabel: string;
+    works: WorkEntry[];
+    upcomingNote: string;
+    ctaLabel: string;
+    ctaTitle: string;
+    ctaDescription: string;
+    ctaButton: string;
   };
   splash: {
     skip: string;

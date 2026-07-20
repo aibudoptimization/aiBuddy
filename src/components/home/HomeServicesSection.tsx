@@ -31,6 +31,9 @@ export function HomeServicesSection() {
         </h2>
         <EyebrowCanvas text={services.eyebrow} phase={0} />
       </div>
+      <Reveal as="p" className="ww-section-lead" delayMs={50}>
+        {services.lead}
+      </Reveal>
       <div className="ww-services-grid">
         {services.cards.map((service, i) => (
           <Reveal key={service.pathKey} delayMs={90 + i * 90}>
@@ -47,6 +50,9 @@ export function HomeServicesSection() {
               </div>
               <h3 className="ww-service-card__title">{service.title}</h3>
               <p className="ww-service-card__desc">{service.desc}</p>
+              <p className="ww-service-card__outcome" style={{ color: service.accent }}>
+                {service.outcome}
+              </p>
               <div className="ww-service-card__items">
                 {service.items.map((item) => (
                   <div key={item.t} className="ww-service-card__item">
