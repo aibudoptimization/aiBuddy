@@ -179,7 +179,14 @@ canvas {
   z-index: 50;
   overflow: visible;
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+}
+
+@media (max-width: 768px) {
+  .ww-site-chrome {
+    background: var(--ink);
+    backdrop-filter: none;
+    border-bottom: 1px solid rgba(244, 243, 247, 0.08);
+  }
 }
 
 .ww-site-chrome-spacer {
@@ -1200,6 +1207,25 @@ canvas {
 .ww-service-page__content > .ww-container {
   max-width: var(--content-max);
   margin: 0 auto;
+}
+
+/* Mobile: the wrapper + container gutters double up (56px/side) — collapse to a
+   single 20px gutter so the interactive stages get usable width. */
+@media (max-width: 768px) {
+  .ww-service-page__content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .ww-service-page__content > .ww-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .ww-pipeline__tabs {
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
 }
 
 .ww-service-eyebrow-row {
@@ -3142,7 +3168,6 @@ canvas {
   padding: clamp(24px, 3vw, 40px);
   background: rgba(12, 12, 18, 0.62);
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 
 /* Form */
@@ -3780,7 +3805,6 @@ canvas {
   border-radius: 16px;
   padding: 8px;
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55);
   display: flex;
   flex-direction: column;
@@ -4556,7 +4580,6 @@ canvas {
   border-top: 1px solid rgba(244, 243, 247, 0.1);
   background: rgba(9, 8, 12, 0.92);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.35);
   animation: ww-cookie-banner-in 0.4s var(--ease-out);
 }
@@ -4708,7 +4731,6 @@ canvas {
   padding: 16px;
   background: rgba(7, 7, 11, 0.68);
   backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   animation: ww-cookie-fade-in 0.25s var(--ease-out);
 }
 
