@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { BrandMark } from "@/components/layout/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { useCookieConsent } from "@/components/legal/CookieConsentContext";
 import { stripLocalePrefix } from "@/lib/locale";
 import { CONTACT_EMAIL, navItems } from "@/lib/routes";
 
@@ -15,6 +16,7 @@ export function SiteFooter() {
   const { locale, dict, routes } = useLocale();
   const items = navItems(locale, dict.nav.services);
   const f = dict.footer;
+  const { openPreferences } = useCookieConsent();
 
   return (
     <footer
@@ -214,6 +216,9 @@ export function SiteFooter() {
           <span className="ww-mono" style={{ fontSize: 12, color: "rgba(244,243,247,0.4)" }}>
             © 2026 Workflow Wonder. {f.rights}
           </span>
+          <button type="button" className="ww-footer-cookie-btn ww-mono" onClick={openPreferences}>
+            {f.cookiePreferences}
+          </button>
         </div>
       </div>
     </footer>

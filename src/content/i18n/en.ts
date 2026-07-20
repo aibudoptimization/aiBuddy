@@ -41,6 +41,7 @@ export const en: Dictionary = {
     blog: "Journal",
     contact: "Contact",
     privacy: "Privacy",
+    cookiePreferences: "Manage cookies",
     rights: "All rights reserved.",
     homeCtaEyebrow: "Free consultation · no commitment",
     homeCtaTitle: "Ready to get your time back?",
@@ -372,5 +373,199 @@ export const en: Dictionary = {
   splash: {
     skip: "Skip",
     ariaLabel: "Workflow Wonder introduction",
+  },
+  cookies: {
+    iconAriaLabel: "Cookie with a bite taken out, symbol for cookie preferences",
+    banner: {
+      title: "We respect your privacy.",
+      body: "We only use the cookies needed to run the site. Nothing else without your say-so.",
+      acceptAll: "Accept all",
+      rejectNonEssential: "Decline",
+      managePreferences: "Customize",
+      privacyLinkLabel: "Privacy policy",
+    },
+    modal: {
+      title: "Cookie preferences",
+      intro:
+        "Here's what we use, and why. Essential cookies can't be turned off.",
+      alwaysOn: "Always on",
+      saveButton: "Save my preferences",
+      acceptAllButton: "Accept all",
+      rejectAllButton: "Reject non-essential",
+      closeLabel: "Close",
+      updatedLabel: "Choice saved on",
+      privacyLinkLabel: "See the full privacy policy",
+    },
+    categories: [
+      {
+        id: "necessary",
+        title: "Essential",
+        description:
+          "Required for the site to work properly. Set by us, never by third parties.",
+        entries: [
+          {
+            label: "Your cookie choice",
+            purpose: "Remembers the decision you make here, so we don't ask again on every visit.",
+            duration: "12 months",
+          },
+          {
+            label: "Intro animation",
+            purpose: "Remembers you've already seen the welcome animation, so it doesn't replay.",
+            duration: "Your visit",
+          },
+        ],
+      },
+      {
+        id: "analytics",
+        title: "Analytics",
+        description:
+          "Would help us understand how the site is used, anonymously and in aggregate. Off by default.",
+        emptyNote:
+          "No analytics tool is active right now. If we add one, it will show up here and stay off without your say-so.",
+        entries: [],
+      },
+    ],
+  },
+  privacy: {
+    eyebrow: "Privacy",
+    title: "Privacy policy",
+    lastUpdatedLabel: "Last updated:",
+    lastUpdated: "July 19, 2026",
+    intro:
+      "Workflow Wonder (“we”) is committed to protecting the personal information you share with us. This policy explains what information we collect, why, how it's handled, and what your rights are, in accordance with Québec's **Law 25** (An Act to modernize legislative provisions as regards the protection of personal information).",
+    sections: [
+      {
+        heading: "Person in charge of personal information protection",
+        blocks: [
+          {
+            type: "p",
+            text: "Any question about your personal information or this policy can be addressed to our person in charge of the protection of personal information at {{email}}.",
+          },
+        ],
+      },
+      {
+        heading: "Information we collect",
+        blocks: [
+          {
+            type: "p",
+            text: "When you fill out our contact form, we collect only the information needed to process your request:",
+          },
+          {
+            type: "list",
+            items: [
+              "**Company name** (required)",
+              "**Email address** (required)",
+              "**First and last name** (optional)",
+              "**The message** you choose to send us (optional)",
+            ],
+          },
+          {
+            type: "p",
+            text: "We apply the principle of data minimization: we only ask for what's strictly necessary to respond to you.",
+          },
+        ],
+      },
+      {
+        heading: "Purposes of collection",
+        blocks: [
+          { type: "p", text: "Your information is used exclusively to:" },
+          {
+            type: "list",
+            items: [
+              "Send you a confirmation email that we've received your request;",
+              "Communicate with you and respond to your request;",
+              "Prepare a proposal or quote, where applicable.",
+            ],
+          },
+          {
+            type: "p",
+            text: "We do not use your information for marketing purposes without your separate, explicit consent, and we never sell or rent it to third parties.",
+          },
+        ],
+      },
+      {
+        heading: "Consent",
+        blocks: [
+          {
+            type: "p",
+            text: "By checking the consent box and submitting the form, you consent to us collecting and retaining your information for the purposes described above. You can withdraw your consent at any time by writing to us at {{email}}.",
+          },
+        ],
+      },
+      {
+        heading: "Disclosure to third parties and hosting",
+        blocks: [
+          {
+            type: "p",
+            text: "Processing your request relies on an automation provider, **n8n**, whose cloud infrastructure is located in the **European Union (Germany)**. That jurisdiction is governed by the General Data Protection Regulation (GDPR), which offers protection comparable to what Law 25 requires. We make no other transfer of your information beyond what these purposes require.",
+          },
+        ],
+      },
+      {
+        heading: "Retention period",
+        blocks: [
+          {
+            type: "p",
+            text: "We keep your information only as long as needed to fulfill these purposes, for a maximum of **12 months** from your last communication with us, after which it is securely deleted, unless an established business relationship justifies additional retention.",
+          },
+        ],
+      },
+      {
+        heading: "Your rights",
+        blocks: [
+          { type: "p", text: "In accordance with Law 25, you have the right to:" },
+          {
+            type: "list",
+            items: [
+              "Access the personal information we hold about you;",
+              "Request its correction if it is inaccurate or incomplete;",
+              "Withdraw your consent and request its deletion;",
+              "File a complaint with the Commission d'accès à l'information (CAI).",
+            ],
+          },
+          {
+            type: "p",
+            text: "To exercise any of these rights, write to us at {{email}}. We will respond within the timeframes required by law (at most 30 days).",
+          },
+        ],
+      },
+      {
+        heading: "Security",
+        blocks: [
+          {
+            type: "p",
+            text: "Data transmissions are made over encrypted (HTTPS) connections. We maintain reasonable security measures to protect your information against loss, unauthorized access, or disclosure. In the event of a privacy incident presenting a risk of serious harm, we will notify the CAI and the affected individuals, as required by law.",
+          },
+        ],
+      },
+      {
+        heading: "Cookies and similar technologies",
+        showCookieTable: true,
+        blocks: [
+          {
+            type: "p",
+            text: "A banner lets you make a choice the first time you visit. You can change it at any time via the **Manage cookies** link at the bottom of every page.",
+          },
+          {
+            type: "p",
+            text: "Strictly necessary cookies: always on, they keep the site working (for example, remembering your consent choice) and don't require your consent, in accordance with Law 25.",
+          },
+          {
+            type: "p",
+            text: "Analytics cookies: optional and off by default. No analytics tool is active on the site right now; if we add one, it will only run after your explicit consent, and this section will be updated accordingly.",
+          },
+          { type: "p", text: "In plain terms, here's what the site uses:" },
+        ],
+      },
+      {
+        heading: "Changes",
+        blocks: [
+          {
+            type: "p",
+            text: "This policy may be updated. The last-updated date is shown at the top of the page. We invite you to review it periodically.",
+          },
+        ],
+      },
+    ],
   },
 };

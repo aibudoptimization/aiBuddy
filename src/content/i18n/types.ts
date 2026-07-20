@@ -20,6 +20,33 @@ export type FaqItem = {
   open?: boolean;
 };
 
+export type CookieTableEntry = {
+  /** Plain-language name shown to visitors (never the technical cookie name). */
+  label: string;
+  purpose: string;
+  duration: string;
+};
+
+export type CookieCategoryCopy = {
+  id: "necessary" | "analytics";
+  title: string;
+  description: string;
+  /** Shown instead of a table row when `entries` is empty. */
+  emptyNote?: string;
+  entries: CookieTableEntry[];
+};
+
+export type PrivacyBlock =
+  | { type: "p"; text: string }
+  | { type: "list"; items: string[] };
+
+export type PrivacySection = {
+  heading: string;
+  blocks: PrivacyBlock[];
+  /** Renders the live cookie-categories table (shared with the preference modal) after this section's blocks. */
+  showCookieTable?: boolean;
+};
+
 export type Dictionary = {
   meta: {
     titleDefault: string;
@@ -50,6 +77,7 @@ export type Dictionary = {
     blog: string;
     contact: string;
     privacy: string;
+    cookiePreferences: string;
     rights: string;
     homeCtaEyebrow: string;
     homeCtaTitle: string;
@@ -225,5 +253,36 @@ export type Dictionary = {
   splash: {
     skip: string;
     ariaLabel: string;
+  };
+  cookies: {
+    iconAriaLabel: string;
+    banner: {
+      title: string;
+      body: string;
+      acceptAll: string;
+      rejectNonEssential: string;
+      managePreferences: string;
+      privacyLinkLabel: string;
+    };
+    modal: {
+      title: string;
+      intro: string;
+      alwaysOn: string;
+      saveButton: string;
+      acceptAllButton: string;
+      rejectAllButton: string;
+      closeLabel: string;
+      updatedLabel: string;
+      privacyLinkLabel: string;
+    };
+    categories: CookieCategoryCopy[];
+  };
+  privacy: {
+    eyebrow: string;
+    title: string;
+    lastUpdatedLabel: string;
+    lastUpdated: string;
+    intro: string;
+    sections: PrivacySection[];
   };
 };

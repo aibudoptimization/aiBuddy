@@ -4,6 +4,7 @@ node_modules/
 # Next.js
 .next/
 out/
+tsconfig.tsbuildinfo
 
 # Build output
 dist
@@ -34,6 +35,9 @@ Thumbs.db
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Claude Code local settings
+.claude/
 *.suo
 *.ntvs*
 *.njsproj

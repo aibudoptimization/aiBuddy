@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { drawGlobe, initGlobeRings } from "@/lib/canvas/globe";
+import { INTRO_DONE_EVENT, INTRO_SEEN_KEY } from "@/lib/introFlag";
 
-const STORAGE_KEY = "ww-intro-seen";
+const STORAGE_KEY = INTRO_SEEN_KEY;
 
 /** Orbit settle */
 const PHASE_ORBIT_MS = 1100;
@@ -45,7 +46,10 @@ export function BrandSplash() {
     } catch {
       /* ignore */
     }
-    window.setTimeout(() => setVisible(false), 480);
+    window.setTimeout(() => {
+      setVisible(false);
+      window.dispatchEvent(new Event(INTRO_DONE_EVENT));
+    }, 480);
   };
 
   useEffect(() => {

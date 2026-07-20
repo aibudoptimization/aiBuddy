@@ -41,6 +41,7 @@ export const fr: Dictionary = {
     blog: "Journal",
     contact: "Contact",
     privacy: "Confidentialité",
+    cookiePreferences: "Gérer les témoins",
     rights: "Tous droits réservés.",
     homeCtaEyebrow: "Consultation gratuite · sans engagement",
     homeCtaTitle: "Prêt à récupérer du temps ?",
@@ -374,5 +375,199 @@ export const fr: Dictionary = {
   splash: {
     skip: "Passer",
     ariaLabel: "Introduction Workflow Wonder",
+  },
+  cookies: {
+    iconAriaLabel: "Biscuit avec une bouchée, symbole des préférences de témoins",
+    banner: {
+      title: "On respecte votre vie privée.",
+      body: "On utilise seulement les témoins nécessaires au bon fonctionnement du site. Rien d'autre sans votre accord.",
+      acceptAll: "Tout accepter",
+      rejectNonEssential: "Refuser",
+      managePreferences: "Personnaliser",
+      privacyLinkLabel: "Politique de confidentialité",
+    },
+    modal: {
+      title: "Préférences de témoins",
+      intro:
+        "Voici ce qu'on utilise, et pourquoi. Les témoins essentiels ne peuvent pas être désactivés.",
+      alwaysOn: "Toujours actif",
+      saveButton: "Enregistrer mes préférences",
+      acceptAllButton: "Tout accepter",
+      rejectAllButton: "Refuser les non essentiels",
+      closeLabel: "Fermer",
+      updatedLabel: "Choix enregistré le",
+      privacyLinkLabel: "Voir la politique de confidentialité complète",
+    },
+    categories: [
+      {
+        id: "necessary",
+        title: "Essentiels",
+        description:
+          "Indispensables au bon fonctionnement du site. Déposés par nous, jamais par des tiers.",
+        entries: [
+          {
+            label: "Votre choix de témoins",
+            purpose: "Retient la décision que vous prenez ici, pour ne pas vous la redemander à chaque visite.",
+            duration: "12 mois",
+          },
+          {
+            label: "Animation d'introduction",
+            purpose: "Se souvient que vous avez déjà vu l'animation d'accueil, pour ne pas la rejouer.",
+            duration: "Votre visite",
+          },
+        ],
+      },
+      {
+        id: "analytics",
+        title: "Mesure d'audience",
+        description:
+          "Nous aideraient à comprendre l'utilisation du site, de façon anonyme et globale. Désactivés par défaut.",
+        emptyNote:
+          "Aucun outil de mesure n'est actif pour le moment. Si on en ajoute un, il apparaîtra ici et restera désactivé sans votre accord.",
+        entries: [],
+      },
+    ],
+  },
+  privacy: {
+    eyebrow: "Confidentialité",
+    title: "Politique de confidentialité",
+    lastUpdatedLabel: "Dernière mise à jour :",
+    lastUpdated: "19 juillet 2026",
+    intro:
+      "Workflow Wonder (« nous ») s'engage à protéger les renseignements personnels que vous nous confiez. La présente politique explique quels renseignements nous recueillons, pourquoi, comment ils sont traités et quels sont vos droits, conformément à la **Loi 25** (Loi modernisant des dispositions législatives en matière de protection des renseignements personnels) du Québec.",
+    sections: [
+      {
+        heading: "Responsable de la protection des renseignements personnels",
+        blocks: [
+          {
+            type: "p",
+            text: "Toute question relative à vos renseignements personnels ou à la présente politique peut être adressée à notre responsable de la protection des renseignements personnels à l'adresse {{email}}.",
+          },
+        ],
+      },
+      {
+        heading: "Renseignements que nous recueillons",
+        blocks: [
+          {
+            type: "p",
+            text: "Lorsque vous remplissez notre formulaire de contact, nous recueillons uniquement les renseignements nécessaires au traitement de votre demande :",
+          },
+          {
+            type: "list",
+            items: [
+              "**Nom de l'entreprise** (obligatoire)",
+              "**Adresse courriel** (obligatoire)",
+              "**Prénom et nom de famille** (facultatifs)",
+              "**Le message** que vous choisissez de nous transmettre (facultatif)",
+            ],
+          },
+          {
+            type: "p",
+            text: "Nous appliquons le principe de minimisation : nous ne demandons que ce qui est strictement nécessaire pour vous répondre.",
+          },
+        ],
+      },
+      {
+        heading: "Finalités de la collecte",
+        blocks: [
+          { type: "p", text: "Vos renseignements sont utilisés exclusivement pour :" },
+          {
+            type: "list",
+            items: [
+              "Vous envoyer un courriel de confirmation de la réception de votre demande ;",
+              "Communiquer avec vous et répondre à votre demande ;",
+              "Préparer, le cas échéant, une proposition ou un devis.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Nous n'utilisons pas vos renseignements à des fins de marketing sans votre consentement distinct et explicite, et nous ne les vendons ni ne les louons à des tiers.",
+          },
+        ],
+      },
+      {
+        heading: "Consentement",
+        blocks: [
+          {
+            type: "p",
+            text: "En cochant la case de consentement et en soumettant le formulaire, vous consentez à ce que nous recueillions et conservions vos renseignements aux fins décrites ci-dessus. Vous pouvez retirer votre consentement en tout temps en nous écrivant à {{email}}.",
+          },
+        ],
+      },
+      {
+        heading: "Communication à des tiers et hébergement",
+        blocks: [
+          {
+            type: "p",
+            text: "Le traitement de votre demande s'appuie sur un prestataire d'automatisation, **n8n**, dont l'infrastructure infonuagique utilisée est située dans l'**Union européenne (Allemagne)**. Cette juridiction est encadrée par le Règlement général sur la protection des données (RGPD), qui offre une protection comparable à celle exigée par la Loi 25. Aucun autre transfert de vos renseignements n'est effectué sans nécessité liée aux finalités décrites.",
+          },
+        ],
+      },
+      {
+        heading: "Durée de conservation",
+        blocks: [
+          {
+            type: "p",
+            text: "Nous conservons vos renseignements uniquement le temps nécessaire à la réalisation des finalités, soit un maximum de **12 mois** à compter de votre dernière communication avec nous, après quoi ils sont supprimés de manière sécuritaire, à moins qu'une relation d'affaires ne soit établie et justifie une conservation additionnelle.",
+          },
+        ],
+      },
+      {
+        heading: "Vos droits",
+        blocks: [
+          { type: "p", text: "Conformément à la Loi 25, vous avez le droit :" },
+          {
+            type: "list",
+            items: [
+              "D'accéder aux renseignements personnels que nous détenons à votre sujet ;",
+              "De demander leur rectification s'ils sont inexacts ou incomplets ;",
+              "De retirer votre consentement et de demander leur suppression ;",
+              "De porter plainte auprès de la Commission d'accès à l'information (CAI).",
+            ],
+          },
+          {
+            type: "p",
+            text: "Pour exercer l'un de ces droits, écrivez-nous à {{email}}. Nous répondrons dans les délais prévus par la loi (au plus tard 30 jours).",
+          },
+        ],
+      },
+      {
+        heading: "Sécurité",
+        blocks: [
+          {
+            type: "p",
+            text: "Les transmissions de données se font via des connexions chiffrées (HTTPS). Nous mettons en place des mesures de sécurité raisonnables pour protéger vos renseignements contre la perte, l'accès non autorisé ou la divulgation. En cas d'incident de confidentialité présentant un risque de préjudice sérieux, nous en aviserons la CAI et les personnes concernées, comme l'exige la loi.",
+          },
+        ],
+      },
+      {
+        heading: "Témoins et technologies similaires (cookies)",
+        showCookieTable: true,
+        blocks: [
+          {
+            type: "p",
+            text: "Un bandeau vous permet de faire un choix dès votre première visite. Vous pouvez le modifier en tout temps via le lien **Gérer les témoins** au bas de chaque page du site.",
+          },
+          {
+            type: "p",
+            text: "Témoins strictement nécessaires : toujours actifs, ils assurent le bon fonctionnement du site (par exemple, mémoriser votre choix de consentement) et ne requièrent pas votre consentement, conformément à la Loi 25.",
+          },
+          {
+            type: "p",
+            text: "Témoins de mesure d'audience (analytics) : optionnels et désactivés par défaut. Aucun outil de mesure n'est actif sur le site à l'heure actuelle; si nous en ajoutons un, il ne se déclenchera qu'après votre consentement explicite, et cette section sera mise à jour en conséquence.",
+          },
+          { type: "p", text: "En clair, voici ce que le site utilise :" },
+        ],
+      },
+      {
+        heading: "Modifications",
+        blocks: [
+          {
+            type: "p",
+            text: "Cette politique peut être mise à jour. La date de dernière mise à jour est indiquée en haut de la page. Nous vous invitons à la consulter périodiquement.",
+          },
+        ],
+      },
+    ],
   },
 };

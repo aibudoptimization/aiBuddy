@@ -9,6 +9,9 @@ import { ConstructionMarquee } from "@/components/layout/ConstructionMarquee";
 import { RouteChangeShell } from "@/components/layout/RouteChangeShell";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { CookieBanner } from "@/components/legal/CookieBanner";
+import { CookieConsentProvider } from "@/components/legal/CookieConsentContext";
+import { CookiePreferencesModal } from "@/components/legal/CookiePreferencesModal";
 import { localeFromPathname, type Locale } from "@/lib/locale";
 
 type MarketingChromeProps = {
@@ -23,16 +26,20 @@ export function MarketingChrome({ children, locale: localeProp }: MarketingChrom
 
   return (
     <LocaleProvider locale={locale}>
-      <div className="ww-page ww-page--construction">
-        <BrandSplash />
-        <div className="ww-site-chrome">
-          <ConstructionMarquee />
-          <SiteHeader fixed={false} />
+      <CookieConsentProvider>
+        <div className="ww-page ww-page--construction">
+          <BrandSplash />
+          <div className="ww-site-chrome">
+            <ConstructionMarquee />
+            <SiteHeader fixed={false} />
+          </div>
+          <div className="ww-site-chrome-spacer" aria-hidden />
+          <RouteChangeShell>{children}</RouteChangeShell>
+          <SiteFooter />
         </div>
-        <div className="ww-site-chrome-spacer" aria-hidden />
-        <RouteChangeShell>{children}</RouteChangeShell>
-        <SiteFooter />
-      </div>
+        <CookieBanner />
+        <CookiePreferencesModal />
+      </CookieConsentProvider>
     </LocaleProvider>
   );
 }
