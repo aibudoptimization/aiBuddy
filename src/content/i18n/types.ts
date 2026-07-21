@@ -153,6 +153,7 @@ export type Dictionary = {
     tools: {
       title: string;
       subtitle: string;
+      more: string;
     };
     visibility: {
       eyebrow: string;

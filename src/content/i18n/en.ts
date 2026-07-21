@@ -204,6 +204,7 @@ export const en: Dictionary = {
     tools: {
       title: "We connect to your stack.",
       subtitle: "Nothing to replace — we plug into what you already use.",
+      more: "+ dozens more",
     },
     visibility: {
       eyebrow: "Included in everything we ship",

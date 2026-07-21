@@ -719,12 +719,92 @@ canvas {
   font-size: clamp(22px, 2.6vw, 30px);
 }
 
-.ww-tools-grid {
+.ww-tools-marquee {
+  display: grid;
+  gap: 26px;
+}
+
+.ww-tools-marquee__row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+}
+
+.ww-tools-marquee__track {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  width: max-content;
+  animation: ww-marquee 55s linear infinite;
+}
+
+.ww-tools-marquee__track--reverse {
+  animation-direction: reverse;
+  animation-duration: 62s;
+}
+
+.ww-tools-marquee__row:hover .ww-tools-marquee__track {
+  animation-play-state: paused;
+}
+
+.ww-tools-marquee__half {
+  display: flex;
   align-items: center;
-  gap: 20px 40px;
+  gap: 44px;
+  padding-right: 44px;
+}
+
+@keyframes ww-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ww-tools-more {
+  display: inline-flex;
+  margin-top: 32px;
+  padding: 8px 18px;
+  border: 1px solid rgba(244, 243, 247, 0.14);
+  border-radius: 999px;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+  color: rgba(244, 243, 247, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ww-tools-marquee__track {
+    width: auto;
+    animation: none;
+  }
+
+  .ww-tools-marquee__row {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .ww-tools-marquee__half {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px 40px;
+    padding-right: 0;
+  }
+
+  .ww-tools-marquee__half[aria-hidden] {
+    display: none;
+  }
 }
 
 .ww-tool-chip {
@@ -734,6 +814,7 @@ canvas {
   font-size: clamp(17px, 1.8vw, 21px);
   font-weight: 500;
   letter-spacing: -0.01em;
+  white-space: nowrap;
   color: rgba(244, 243, 247, 0.42);
   transition: color 0.2s;
   cursor: default;
@@ -741,6 +822,21 @@ canvas {
 
 .ww-tool-chip:hover {
   color: var(--snow);
+}
+
+.ww-tool-chip__icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  opacity: 0.88;
+  transition:
+    opacity 0.35s,
+    filter 0.35s;
+}
+
+.ww-tool-chip:hover .ww-tool-chip__icon {
+  opacity: 1;
+  filter: drop-shadow(0 0 7px currentColor);
 }
 
 .ww-ownership-grid {
