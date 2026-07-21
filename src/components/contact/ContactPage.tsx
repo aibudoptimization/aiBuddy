@@ -1,14 +1,16 @@
 "use client";
 
+import Image from "next/image";
+
 import { JournalPageAmbient } from "@/components/journal/JournalPageAmbient";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { GlowBullet } from "@/components/home/GlowBullet";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { CONTACT_EMAIL } from "@/lib/routes";
 
 export function ContactPage() {
   const { dict } = useLocale();
   const c = dict.contact;
+  const f = dict.founder;
 
   return (
     <div className="ww-journal-page">
@@ -31,13 +33,23 @@ export function ContactPage() {
               <h1 className="ww-contact__title">{c.title}</h1>
               <p className="ww-contact__lead">{c.lead}</p>
 
-              <div className="ww-contact__bullets">
-                {c.bullets.map((line) => (
-                  <div key={line} className="ww-contact__bullet">
-                    <GlowBullet />
-                    {line}
+              <div className="ww-founder-card">
+                <Image
+                  src="/founder-christopher.webp"
+                  alt={f.photoAlt}
+                  width={132}
+                  height={132}
+                  className="ww-founder-card__photo"
+                />
+                <div className="ww-founder-card__body">
+                  <p className="ww-founder-card__note">{f.note}</p>
+                  <div className="ww-founder-card__sign">
+                    <span className="ww-founder-card__name">{f.name}</span>
+                    <span className="ww-founder-card__role">
+                      {f.role} · {f.region}
+                    </span>
                   </div>
-                ))}
+                </div>
               </div>
 
               <div className="ww-contact__email">

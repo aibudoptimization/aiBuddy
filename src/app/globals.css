@@ -965,6 +965,42 @@ canvas {
   color: rgba(244, 243, 247, 0.85);
 }
 
+.ww-consult-founder {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  margin-bottom: 16px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(75, 250, 200, 0.14);
+}
+
+.ww-consult-founder__photo {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid rgba(75, 250, 200, 0.35);
+}
+
+.ww-consult-founder__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ww-consult-founder__name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(244, 243, 247, 0.85);
+}
+
+.ww-consult-founder__line {
+  font-size: 12.5px;
+  color: rgba(244, 243, 247, 0.5);
+}
+
 .ww-cta-solid {
   margin-top: auto;
   align-self: flex-start;
@@ -3029,7 +3065,16 @@ canvas {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
   gap: clamp(28px, 4vw, 64px);
-  align-items: start;
+  align-items: stretch;
+}
+
+.ww-contact__intro {
+  display: flex;
+  flex-direction: column;
+}
+
+.ww-contact__intro .ww-contact__eyebrow {
+  align-self: flex-start;
 }
 
 @media (max-width: 900px) {
@@ -3070,28 +3115,104 @@ canvas {
   color: rgba(244, 243, 247, 0.66);
 }
 
-.ww-contact__bullets {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-  margin-top: 30px;
+.ww-founder-card {
+  display: block;
+  margin-top: 34px;
+  padding: 22px;
+  border: 1px solid rgba(75, 250, 200, 0.28);
+  border-radius: 18px;
+  background: rgba(75, 250, 200, 0.04);
 }
 
-.ww-contact__bullet {
+/* Clear the floated photo so the card wraps it */
+.ww-founder-card::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.ww-founder-card__photo {
+  float: left;
+  width: 168px;
+  height: 168px;
+  margin: 0 20px 12px 0;
+  border-radius: 18px;
+  object-fit: cover;
+  border: 1px solid rgba(75, 250, 200, 0.35);
+  box-shadow: 0 0 22px rgba(75, 250, 200, 0.16);
+}
+
+.ww-founder-card__body {
+  display: block;
+}
+
+.ww-founder-card__note {
+  margin: 0 0 12px;
+  font-size: 15.5px;
+  line-height: 1.62;
+  text-wrap: pretty;
+  color: rgba(244, 243, 247, 0.78);
+}
+
+.ww-founder-card__sign {
   display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ww-founder-card__name {
+  display: inline-flex;
   align-items: center;
-  gap: 11px;
+  gap: 8px;
   font-size: 15px;
-  color: rgba(244, 243, 247, 0.82);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--snow);
+}
+
+.ww-founder-card__role {
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: rgba(244, 243, 247, 0.55);
+}
+
+@media (max-width: 1120px) {
+  .ww-founder-card__photo {
+    width: 138px;
+    height: 138px;
+  }
+}
+
+@media (max-width: 900px) {
+  .ww-founder-card__photo {
+    width: 156px;
+    height: 156px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .ww-founder-card__photo {
+    width: 116px;
+    height: 116px;
+    margin: 0 16px 10px 0;
+  }
 }
 
 .ww-contact__email {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: 34px;
+  margin-top: auto;
   padding-top: 26px;
+  align-self: stretch;
   border-top: 1px solid rgba(244, 243, 247, 0.08);
+}
+
+@media (max-width: 900px) {
+  .ww-contact__email {
+    margin-top: 34px;
+  }
 }
 
 .ww-contact__email-label {

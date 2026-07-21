@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { EyebrowCanvas } from "@/components/canvas/EyebrowCanvas";
@@ -44,6 +45,21 @@ export function HomePricingSection() {
                 {line}
               </div>
             ))}
+          </div>
+          <div className="ww-consult-founder">
+            <Image
+              src="/founder-christopher.webp"
+              alt={dict.founder.photoAlt}
+              width={44}
+              height={44}
+              className="ww-consult-founder__photo"
+            />
+            <div className="ww-consult-founder__text">
+              <span className="ww-consult-founder__name">
+                {dict.founder.name} · {dict.founder.role}
+              </span>
+              <span className="ww-consult-founder__line">{dict.founder.consultLine}</span>
+            </div>
           </div>
           <Link href={routes.contact} className="ww-cta-solid">
             {p.consultCta}

@@ -287,15 +287,18 @@ export const en: Dictionary = {
       allArticles: "All articles →",
     },
   },
+  founder: {
+    name: "Christopher",
+    role: "Automation specialist",
+    region: "Lanaudière",
+    note: "Hi, I'm Christopher. I've always loved finding ways to do more with less effort. Today I help local businesses win their hours back by automating the grunt work. Write to me: I'm the one who answers.",
+    consultLine: "Your consultation is with me.",
+    photoAlt: "Christopher, automation specialist at Workflow Wonder",
+  },
   contact: {
     eyebrow: "Free consultation · no commitment",
     title: "Tell us about your project.",
     lead: "We reply within 24 hours with a first path and a quote. No commitment.",
-    bullets: [
-      "A clear, prioritized action plan",
-      "Concrete recommendations",
-      "A detailed quote within 24 hours",
-    ],
     emailPrompt: "Prefer email?",
     form: {
       firstName: "First name",

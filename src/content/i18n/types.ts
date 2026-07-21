@@ -187,11 +187,18 @@ export type Dictionary = {
       allArticles: string;
     };
   };
+  founder: {
+    name: string;
+    role: string;
+    region: string;
+    note: string;
+    consultLine: string;
+    photoAlt: string;
+  };
   contact: {
     eyebrow: string;
     title: string;
     lead: string;
-    bullets: string[];
     emailPrompt: string;
     form: {
       firstName: string;

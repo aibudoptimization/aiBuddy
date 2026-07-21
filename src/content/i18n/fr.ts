@@ -287,15 +287,18 @@ export const fr: Dictionary = {
       allArticles: "Tous les articles →",
     },
   },
+  founder: {
+    name: "Christopher",
+    role: "Spécialiste en automatisation",
+    region: "Lanaudière",
+    note: "Salut, moi c'est Christopher. Trouver des façons de faire mieux avec moins d'efforts, ça m'a toujours passionné. Aujourd'hui, j'aide les PME d'ici à récupérer leurs heures en automatisant ce qui les gruge. Écrivez-moi : c'est moi qui vous réponds.",
+    consultLine: "Votre consultation, c'est avec moi.",
+    photoAlt: "Christopher, spécialiste en automatisation chez Workflow Wonder",
+  },
   contact: {
     eyebrow: "Consultation gratuite · sans engagement",
     title: "Parlez-nous de votre projet.",
     lead: "On revient sous 24 h avec une première piste et un devis. Sans engagement.",
-    bullets: [
-      "Un plan d'action clair & priorisé",
-      "Des recommandations concrètes",
-      "Un devis détaillé sous 24 h",
-    ],
     emailPrompt: "Vous préférez le courriel ?",
     form: {
       firstName: "Prénom",
