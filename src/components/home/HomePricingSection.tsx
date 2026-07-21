@@ -33,33 +33,6 @@ export function HomePricingSection() {
         {p.lead}
       </Reveal>
 
-      <div style={{ marginBottom: 40 }}>
-        <div className="ww-mono ww-pricing-label">{p.anchorsHeading}</div>
-        <div className="ww-pricing-grid">
-          {p.anchors.map((item) => (
-            <div
-              key={item.label}
-              className={`ww-price-card${item.highlight ? " ww-price-card--highlight" : ""}${item.entry ? " ww-price-card--entry" : ""}`}
-            >
-              {item.entry ? (
-                <span className="ww-mono ww-price-card__entry-tag">{p.entryTag}</span>
-              ) : null}
-              <span className="ww-price-card__label">{item.label}</span>
-              <span className="ww-mono ww-price-card__note">{item.note}</span>
-              <span
-                className={`ww-price-card__price${item.highlight ? " ww-price-card__price--iris" : ""}`}
-              >
-                {item.price}
-                {locale === "fr" && !item.highlight && item.price.includes("$") ? (
-                  <small>CA</small>
-                ) : null}
-              </span>
-            </div>
-          ))}
-        </div>
-        <p className="ww-pricing-disclaimer">{p.anchorsNote}</p>
-      </div>
-
       <div className="ww-consult-grid">
         <div className="ww-consult-card">
           <span className="ww-consult-badge">{p.consultEyebrow}</span>

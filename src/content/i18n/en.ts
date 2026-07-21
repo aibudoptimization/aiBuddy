@@ -84,7 +84,7 @@ export const en: Dictionary = {
         ". We automate workflows, ship AI agents, and build sites that convert, for Québec entrepreneurs who want to grow without doing everything by hand.",
       primaryCta: "Free consultation",
       secondaryCta: "See services",
-      meta: ["Workflows · AI agents · Sites", "From CAD $250", "Quote within 24 h"],
+      meta: ["Workflows · AI agents · Sites", "Quote within 24 h", "No commitment"],
     },
     services: {
       eyebrow: "WHAT WE DELIVER",
@@ -243,10 +243,7 @@ export const en: Dictionary = {
     pricing: {
       titleLine1: "What does it cost?",
       titleLine2: "It starts with a free consultation.",
-      lead: "No magic price list. We map the need; you leave with a plan and a quote within 24 hours. No commitment.",
-      anchorsHeading: "A few anchors to situate",
-      anchorsNote:
-        "These are starting points. The more complex the project, the higher the investment. The exact price comes after the consultation.",
+      lead: "No price list: every project is quoted on your reality. We map the need; you leave with a plan and a detailed quote within 24 hours. No commitment.",
       consultEyebrow: "Free consultation · no commitment",
       consultTitle: "What you get",
       consultItems: [
@@ -266,7 +263,6 @@ export const en: Dictionary = {
         "Level of customization",
         "Content already in place",
       ],
-      entryTag: "Start here",
       payment: [
         {
           no: "01",
@@ -282,17 +278,6 @@ export const en: Dictionary = {
           no: "03",
           title: "Support optional",
           desc: "Only if you want it.",
-        },
-      ],
-      anchors: [
-        { label: "Automation · template", price: "CAD $250", note: "from", entry: true },
-        { label: "Event page", price: "CAD $500", note: "from" },
-        { label: "Landing page", price: "CAD $1,000", note: "from" },
-        {
-          label: "AI agents & custom",
-          price: "Quote",
-          note: "by project",
-          highlight: true,
         },
       ],
     },

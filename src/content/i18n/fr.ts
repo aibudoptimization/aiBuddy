@@ -84,7 +84,7 @@ export const fr: Dictionary = {
         ". On automatise vos workflows, on déploie des agents IA et on bâtit des sites qui convertissent, pour les entrepreneurs du Québec qui veulent avancer sans tout faire à la main.",
       primaryCta: "Consultation gratuite",
       secondaryCta: "Voir les services",
-      meta: ["Workflows · Agents IA · Sites", "À partir de 250 $", "Devis sous 24 h"],
+      meta: ["Workflows · Agents IA · Sites", "Devis sous 24 h", "Sans engagement"],
     },
     services: {
       eyebrow: "CE QU'ON LIVRE",
@@ -243,10 +243,7 @@ export const fr: Dictionary = {
     pricing: {
       titleLine1: "Combien ça coûte ?",
       titleLine2: "Ça commence par une consultation gratuite.",
-      lead: "Pas de prix magique. On comprend votre besoin, vous repartez avec un plan et un devis sous 24 h. Sans engagement.",
-      anchorsHeading: "Quelques repères, pour situer",
-      anchorsNote:
-        "Ce sont des points de départ. Plus le projet est complexe, plus l'investissement grandit. Le prix exact, c'est après la consultation.",
+      lead: "Pas de liste de prix : chaque projet est chiffré selon votre réalité. On comprend votre besoin, vous repartez avec un plan et un devis détaillé sous 24 h. Sans engagement.",
       consultEyebrow: "Consultation gratuite · sans engagement",
       consultTitle: "Ce que vous obtenez",
       consultItems: [
@@ -266,7 +263,6 @@ export const fr: Dictionary = {
         "Le niveau de personnalisation",
         "Le contenu déjà en place",
       ],
-      entryTag: "Commencez ici",
       payment: [
         {
           no: "01",
@@ -282,22 +278,6 @@ export const fr: Dictionary = {
           no: "03",
           title: "Support en option",
           desc: "Seulement si vous le voulez.",
-        },
-      ],
-      anchors: [
-        {
-          label: "Automatisation · template",
-          price: "250 $",
-          note: "à partir de",
-          entry: true,
-        },
-        { label: "Page événement", price: "500 $", note: "à partir de" },
-        { label: "Landing page", price: "1 000 $", note: "à partir de" },
-        {
-          label: "Agents IA & sur mesure",
-          price: "Sur devis",
-          note: "selon le projet",
-          highlight: true,
         },
       ],
     },

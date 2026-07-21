@@ -172,8 +172,6 @@ export type Dictionary = {
       titleLine1: string;
       titleLine2: string;
       lead: string;
-      anchorsHeading: string;
-      anchorsNote: string;
       consultEyebrow: string;
       consultTitle: string;
       consultItems: string[];
@@ -181,15 +179,7 @@ export type Dictionary = {
       factorsHeading: string;
       factorsNote: string;
       factors: string[];
-      entryTag: string;
       payment: { no: string; title: string; desc: string }[];
-      anchors: {
-        label: string;
-        price: string;
-        note: string;
-        highlight?: boolean;
-        entry?: boolean;
-      }[];
     };
     journal: {
       title: string;

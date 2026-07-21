@@ -815,73 +815,6 @@ canvas {
   font-weight: 400;
 }
 
-.ww-pricing-label {
-  font-size: 11.5px;
-  letter-spacing: 0.16em;
-  color: var(--faint);
-  margin-bottom: 16px;
-}
-
-.ww-pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 14px;
-}
-
-.ww-price-card {
-  border: 1px solid rgba(244, 243, 247, 0.1);
-  border-radius: 16px;
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.ww-price-card--highlight {
-  border-color: rgba(139, 124, 255, 0.3);
-  background: rgba(139, 124, 255, 0.05);
-}
-
-.ww-price-card__label {
-  font-size: 14.5px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.ww-price-card__note {
-  font-size: 10.5px;
-  letter-spacing: 0.1em;
-  color: rgba(244, 243, 247, 0.45);
-  margin-top: 6px;
-}
-
-.ww-price-card__price {
-  font-size: 27px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--teal);
-  margin-top: 4px;
-}
-
-.ww-price-card__price--iris {
-  color: var(--iris);
-}
-
-.ww-price-card__price small {
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(244, 243, 247, 0.4);
-  margin-left: 2px;
-}
-
-.ww-pricing-disclaimer {
-  margin: 18px 0 0;
-  max-width: 680px;
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: rgba(244, 243, 247, 0.6);
-}
-
 .ww-consult-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -5021,25 +4954,6 @@ html[data-ww-intro]::before {
 .ww-si-card__link:hover,
 .ww-si-card__link:focus-visible {
   color: var(--teal);
-}
-
-.ww-price-card--entry {
-  position: relative;
-  border-color: rgba(75, 250, 200, 0.35);
-  background: rgba(75, 250, 200, 0.04);
-}
-
-.ww-price-card__entry-tag {
-  position: absolute;
-  top: -9px;
-  left: 14px;
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--teal);
-  padding: 3px 9px;
-  border-radius: 999px;
 }
 
 .ww-work-card {
