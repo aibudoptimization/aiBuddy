@@ -42,7 +42,7 @@ export const en: Dictionary = {
     homeCtaEyebrow: "Free consultation · no commitment",
     homeCtaTitle: "Ready to get your time back?",
     homeCtaLead:
-      "Tell us about your business. We’ll reply within 24 hours with a concrete first step.",
+      "Tell us about your business. We’ll reply within 48 hours with a concrete first step.",
     homeCtaButton: "Free consultation",
     homeCtaAlt: "or email us",
     faqLabel: "FAQ",
@@ -58,7 +58,7 @@ export const en: Dictionary = {
       },
       {
         q: "What does it cost?",
-        a: "Free consultation, then a detailed quote within 24 hours. No commitment.",
+        a: "Free consultation, then a detailed quote within 48 hours. No commitment.",
       },
       {
         q: "Do I need to be technical?",
@@ -71,7 +71,7 @@ export const en: Dictionary = {
     ],
   },
   home: {
-    city: "Montréal",
+    city: "Lanaudière",
     hero: {
       eyebrow: "AI automation",
       h1Line1: "Less busywork.",
@@ -79,12 +79,12 @@ export const en: Dictionary = {
       h1Gradient: "growth",
       h1Line2After: ".",
       leadBefore: "Based in ",
-      leadCity: "Montréal",
+      leadCity: "Lanaudière",
       leadAfter:
         ". We automate workflows, ship AI agents, and build sites that convert, for Québec entrepreneurs who want to grow without doing everything by hand.",
       primaryCta: "Free consultation",
       secondaryCta: "See services",
-      meta: ["Workflows · AI agents · Sites", "Quote within 24 h", "No commitment"],
+      meta: ["Workflows · AI agents · Sites", "Quote within 48 h", "No commitment"],
     },
     services: {
       eyebrow: "WHAT WE DELIVER",
@@ -244,13 +244,13 @@ export const en: Dictionary = {
     pricing: {
       titleLine1: "What does it cost?",
       titleLine2: "It starts with a free consultation.",
-      lead: "No price list: every project is quoted on your reality. We map the need; you leave with a plan and a detailed quote within 24 hours. No commitment.",
+      lead: "No price list: every project is quoted on your reality. We map the need; you leave with a plan and a detailed quote within 48 hours. No commitment.",
       consultEyebrow: "Free consultation · no commitment",
       consultTitle: "What you get",
       consultItems: [
         "A clear, prioritized action plan",
         "Concrete recommendations",
-        "A detailed quote within 24 hours",
+        "A detailed quote within 48 hours",
       ],
       consultCta: "Book my consultation →",
       factorsHeading: "What changes your quote",
@@ -298,7 +298,7 @@ export const en: Dictionary = {
   contact: {
     eyebrow: "Free consultation · no commitment",
     title: "Tell us about your project.",
-    lead: "We reply within 24 hours with a first path and a quote. No commitment.",
+    lead: "We reply within 48 hours with a first path and a quote. No commitment.",
     emailPrompt: "Prefer email?",
     form: {
       firstName: "First name",
@@ -315,7 +315,7 @@ export const en: Dictionary = {
       submit: "Send my request",
       submitting: "Sending…",
       successTitle: "Message received, thank you!",
-      successBody: "We’ve sent a confirmation email. We’ll get back to you within 24 hours.",
+      successBody: "We’ve sent a confirmation email. We’ll get back to you within 48 hours.",
       errorGeneric: "Something went wrong. Try again or email us directly.",
     },
   },
@@ -386,7 +386,7 @@ export const en: Dictionary = {
       ctaLabel: "Custom",
       ctaTitle: "Let’s talk about your project.",
       ctaDescription:
-        "Describe yours. We’ll come back with a concrete first path within 24 hours.",
+        "Describe yours. We’ll come back with a concrete first path within 48 hours.",
       ctaButton: "Free consultation",
     },
   },
@@ -412,7 +412,7 @@ export const en: Dictionary = {
     ctaLabel: "Your project",
     ctaTitle: "The next project here could be yours.",
     ctaDescription:
-      "Tell us about your reality: we reply within 24 hours with a first path and a quote.",
+      "Tell us about your reality: we reply within 48 hours with a first path and a quote.",
     ctaButton: "Free consultation",
   },
   splash: {

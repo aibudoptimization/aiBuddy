@@ -42,7 +42,7 @@ export const fr: Dictionary = {
     homeCtaEyebrow: "Consultation gratuite · sans engagement",
     homeCtaTitle: "Prêt à récupérer du temps ?",
     homeCtaLead:
-      "Parlons de votre activité. On revient sous 24 h avec une première piste concrète.",
+      "Parlons de votre activité. On revient sous 48 h avec une première piste concrète.",
     homeCtaButton: "Consultation gratuite",
     homeCtaAlt: "ou écrivez-nous",
     faqLabel: "FAQ",
@@ -58,7 +58,7 @@ export const fr: Dictionary = {
       },
       {
         q: "Combien ça coûte ?",
-        a: "Consultation gratuite, puis devis détaillé sous 24 h. Sans engagement.",
+        a: "Consultation gratuite, puis devis détaillé sous 48 h. Sans engagement.",
       },
       {
         q: "Faut-il être technique ?",
@@ -71,20 +71,20 @@ export const fr: Dictionary = {
     ],
   },
   home: {
-    city: "Montréal",
+    city: "Lanaudière",
     hero: {
       eyebrow: "Automatisation IA",
       h1Line1: "Moins de tâches manuelles.",
       h1Line2Before: "Plus de ",
       h1Gradient: "croissance",
       h1Line2After: ".",
-      leadBefore: "Basé à ",
-      leadCity: "Montréal",
+      leadBefore: "Basé dans ",
+      leadCity: "Lanaudière",
       leadAfter:
         ". On automatise vos workflows, on déploie des agents IA et on bâtit des sites qui convertissent, pour les entrepreneurs du Québec qui veulent avancer sans tout faire à la main.",
       primaryCta: "Consultation gratuite",
       secondaryCta: "Voir les services",
-      meta: ["Workflows · Agents IA · Sites", "Devis sous 24 h", "Sans engagement"],
+      meta: ["Workflows · Agents IA · Sites", "Devis sous 48 h", "Sans engagement"],
     },
     services: {
       eyebrow: "CE QU'ON LIVRE",
@@ -244,13 +244,13 @@ export const fr: Dictionary = {
     pricing: {
       titleLine1: "Combien ça coûte ?",
       titleLine2: "Ça commence par une consultation gratuite.",
-      lead: "Pas de liste de prix : chaque projet est chiffré selon votre réalité. On comprend votre besoin, vous repartez avec un plan et un devis détaillé sous 24 h. Sans engagement.",
+      lead: "Pas de liste de prix : chaque projet est chiffré selon votre réalité. On comprend votre besoin, vous repartez avec un plan et un devis détaillé sous 48 h. Sans engagement.",
       consultEyebrow: "Consultation gratuite · sans engagement",
       consultTitle: "Ce que vous obtenez",
       consultItems: [
         "Un plan d'action clair & priorisé",
         "Des recommandations concrètes",
-        "Un devis détaillé sous 24 h",
+        "Un devis détaillé sous 48 h",
       ],
       consultCta: "Réserver ma consultation →",
       factorsHeading: "Ce qui fait varier votre devis",
@@ -298,7 +298,7 @@ export const fr: Dictionary = {
   contact: {
     eyebrow: "Consultation gratuite · sans engagement",
     title: "Parlez-nous de votre projet.",
-    lead: "On revient sous 24 h avec une première piste et un devis. Sans engagement.",
+    lead: "On revient sous 48 h avec une première piste et un devis. Sans engagement.",
     emailPrompt: "Vous préférez le courriel ?",
     form: {
       firstName: "Prénom",
@@ -316,7 +316,7 @@ export const fr: Dictionary = {
       submitting: "Envoi en cours…",
       successTitle: "Message reçu, merci !",
       successBody:
-        "On vous a envoyé un courriel de confirmation. On revient vers vous sous 24 h.",
+        "On vous a envoyé un courriel de confirmation. On revient vers vous sous 48 h.",
       errorGeneric:
         "Une erreur est survenue. Réessayez ou écrivez-nous directement par courriel.",
     },
@@ -388,7 +388,7 @@ export const fr: Dictionary = {
       nicheComingSoon: "Image à venir",
       ctaLabel: "Sur mesure",
       ctaTitle: "Parlons de votre projet.",
-      ctaDescription: "Décrivez-nous le vôtre, on revient avec une première piste concrète sous 24 h.",
+      ctaDescription: "Décrivez-nous le vôtre, on revient avec une première piste concrète sous 48 h.",
       ctaButton: "Consultation gratuite",
     },
   },
@@ -415,7 +415,7 @@ export const fr: Dictionary = {
     ctaLabel: "Votre projet",
     ctaTitle: "Le prochain projet ici pourrait être le vôtre.",
     ctaDescription:
-      "Racontez-nous votre réalité : on revient sous 24 h avec une première piste et un devis.",
+      "Racontez-nous votre réalité : on revient sous 48 h avec une première piste et un devis.",
     ctaButton: "Consultation gratuite",
   },
   splash: {
