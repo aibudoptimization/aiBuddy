@@ -419,8 +419,8 @@ export const fr: Dictionary = {
     ctaButton: "Consultation gratuite",
   },
   splash: {
-    skip: "Passer",
     ariaLabel: "Introduction Workflow Wonder",
+    choose: "Choisissez votre langue · Choose your language",
   },
   cookies: {
     iconAriaLabel: "Biscuit avec une bouchée, symbole des préférences de témoins",

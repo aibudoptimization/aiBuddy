@@ -3667,6 +3667,8 @@ html[data-ww-intro]::before {
   place-items: center;
   background: var(--ink);
   overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: contain;
   transition: opacity 0.48s var(--ease-out);
 }
 
@@ -3728,6 +3730,34 @@ html[data-ww-intro]::before {
   filter: none;
 }
 
+.ww-splash__mark.is-in .ww-brand-mark {
+  /* Gentle rock every few seconds once the mark has settled */
+  animation: ww-splash-wiggle 3.4s ease-in-out 1.6s infinite;
+  transform-origin: 50% 58%;
+}
+
+@keyframes ww-splash-wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  3% {
+    transform: rotate(-2deg);
+  }
+  6% {
+    transform: rotate(1.7deg);
+  }
+  9% {
+    transform: rotate(-1.1deg);
+  }
+  12% {
+    transform: rotate(0.5deg);
+  }
+  15%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 .ww-splash__mark.is-in .ww-brand-mark__dot {
   animation: ww-splash-dot 0.9s var(--ease-out);
 }
@@ -3738,6 +3768,18 @@ html[data-ww-intro]::before {
 
 .ww-splash__mark.is-in .ww-brand-mark__word:last-child {
   animation-delay: 0.08s;
+}
+
+/* Cross-language handoff: the remounted splash must show the logo already
+   settled — replaying the entrance reads as a stutter. */
+.ww-splash--handoff .ww-splash__mark {
+  transition: none;
+}
+
+.ww-splash--handoff .ww-splash__mark.is-in .ww-brand-mark,
+.ww-splash--handoff .ww-splash__mark.is-in .ww-brand-mark__word,
+.ww-splash--handoff .ww-splash__mark.is-in .ww-brand-mark__dot {
+  animation: none;
 }
 
 @keyframes ww-splash-dot {
@@ -3761,23 +3803,77 @@ html[data-ww-intro]::before {
   }
 }
 
-.ww-splash__skip {
+.ww-splash__lang {
   position: absolute;
-  bottom: max(24px, env(safe-area-inset-bottom));
-  right: max(24px, env(safe-area-inset-right));
-  background: none;
-  border: none;
-  color: var(--faint);
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 12px;
-  min-height: 44px;
+  left: 50%;
+  top: calc(50% + clamp(58px, 11vh, 104px));
+  transform: translateX(-50%) translateY(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.55s var(--ease-out),
+    transform 0.55s var(--ease-out);
 }
 
-.ww-splash__skip:hover {
+.ww-splash__lang.is-in {
+  opacity: 1;
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.ww-splash__lang-prompt {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 247, 0.45);
+}
+
+.ww-splash__lang-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.ww-splash__lang-btn {
+  min-width: 128px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 243, 247, 0.2);
+  background: rgba(244, 243, 247, 0.04);
   color: var(--snow);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    background 0.25s,
+    transform 0.25s var(--ease-out);
+}
+
+.ww-splash__lang-btn:hover {
+  border-color: rgba(75, 250, 200, 0.55);
+  background: rgba(75, 250, 200, 0.08);
+  transform: translateY(-1px);
+}
+
+.ww-splash__lang-btn:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ww-splash__mark.is-in .ww-brand-mark {
+    animation: none;
+  }
+
+  .ww-splash__lang {
+    transition: none;
+  }
 }
 
 /* Header + mobile nav */

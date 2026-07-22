@@ -298,8 +298,8 @@ export type Dictionary = {
     ctaButton: string;
   };
   splash: {
-    skip: string;
     ariaLabel: string;
+    choose: string;
   };
   cookies: {
     iconAriaLabel: string;

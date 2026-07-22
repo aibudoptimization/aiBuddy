@@ -8,6 +8,7 @@ import { ChevronDown } from "lucide-react";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { NavGlobeButton } from "@/components/layout/NavGlobeButton";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { saveLangPref } from "@/lib/langPref";
 import { switchLocalePath, stripLocalePrefix } from "@/lib/locale";
 import { navItems } from "@/lib/routes";
 
@@ -140,6 +141,7 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
               href={langHref}
               className="ww-header__lang ww-mono"
               aria-label={dict.chrome.langSwitchLabel}
+              onClick={() => saveLangPref(otherLocale)}
             >
               {otherLocale === "en" ? dict.chrome.langEn : dict.chrome.langFr}
             </Link>
@@ -153,6 +155,7 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
             href={langHref}
             className="ww-header__lang ww-mono"
             aria-label={dict.chrome.langSwitchLabel}
+            onClick={() => saveLangPref(otherLocale)}
           >
             {otherLocale === "en" ? dict.chrome.langEn : dict.chrome.langFr}
           </Link>
