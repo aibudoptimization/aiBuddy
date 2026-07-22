@@ -74,10 +74,10 @@ export const fr: Dictionary = {
     city: "Lanaudière",
     hero: {
       eyebrow: "Automatisation IA",
-      h1Line1: "Moins de tâches manuelles.",
+      h1Line1: "Moins de tâches manuelles",
       h1Line2Before: "Plus de ",
-      h1Gradient: "croissance",
-      h1Line2After: ".",
+      h1GradientWords: ["croissance", "temps", "liberté"],
+      h1MobileBreak: true,
       leadBefore: "Basé dans ",
       leadCity: "Lanaudière",
       leadAfter:

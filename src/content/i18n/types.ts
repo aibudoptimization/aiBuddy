@@ -107,8 +107,10 @@ export type Dictionary = {
       eyebrow: string;
       h1Line1: string;
       h1Line2Before: string;
-      h1Gradient: string;
-      h1Line2After: string;
+      /** Rotating gradient words; the first is the SSR/static one. */
+      h1GradientWords: string[];
+      /** Break before the gradient word on narrow screens (long-word locales). */
+      h1MobileBreak: boolean;
       leadBefore: string;
       leadCity: string;
       leadAfter: string;

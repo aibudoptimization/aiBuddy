@@ -423,6 +423,93 @@ canvas {
   animation: ww-up 0.9s var(--ease-out) forwards;
 }
 
+.ww-rotate {
+  display: inline-grid;
+  white-space: nowrap;
+  overflow: hidden;
+  /* Clip window slightly taller than the glyph box (ascenders/descenders);
+     negative margins cancel the layout impact. */
+  padding: 0.08em 0 0.12em;
+  margin: -0.08em 0 -0.12em;
+}
+
+/* All children share one grid cell, so every word sits exactly where the
+   invisible sizer's glyphs sit — perfect alignment by construction. */
+.ww-rotate__sizer {
+  grid-area: 1 / 1;
+  visibility: hidden;
+}
+
+.ww-rotate__word {
+  grid-area: 1 / 1;
+}
+
+.ww-rotate__word.is-waiting {
+  transform: translateY(-140%);
+  opacity: 0;
+}
+
+/* The old word loses its grip and falls off the line: accelerating drop
+   with a slight tip forward. */
+.ww-rotate__word.is-leaving {
+  transform-origin: 18% 95%;
+  animation: ww-word-fall 0.85s cubic-bezier(0.5, 0.05, 0.85, 0.4) forwards;
+}
+
+/* The new word drops in and settles with a small, firm bounce. */
+.ww-rotate__word.is-entering {
+  animation: ww-word-drop 1s cubic-bezier(0.2, 0.9, 0.3, 1) 0.3s both;
+}
+
+@keyframes ww-word-fall {
+  0% {
+    transform: none;
+    opacity: 1;
+    filter: none;
+  }
+  30% {
+    transform: translateY(16%) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(150%) rotate(11deg);
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+
+@keyframes ww-word-drop {
+  0% {
+    transform: translateY(-140%);
+    opacity: 0;
+    filter: blur(6px);
+  }
+  55% {
+    transform: translateY(4%);
+    opacity: 1;
+    filter: none;
+  }
+  75% {
+    transform: translateY(-1.8%);
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* On narrow screens the long FR words wrap anyway; forcing the break keeps
+   the hero height identical for every word in the cycle. */
+.ww-hero-break {
+  display: none;
+}
+
+@media (max-width: 540px) {
+  .ww-hero-break {
+    display: inline;
+  }
+}
+
 .ww-gradient-word {
   background-image: linear-gradient(100deg, var(--sky), var(--teal), var(--sky));
   background-size: 200% auto;
