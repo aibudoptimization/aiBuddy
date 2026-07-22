@@ -1,3 +1,4 @@
+import { driftColor, repelFromPointer } from "./ambient";
 import type { HslColor } from "./types";
 
 type FlowNode = {
@@ -26,15 +27,22 @@ type AuroraSpeck = {
   sp: number;
 };
 
-export function initFlowNodes(w: number, h: number): FlowNode[] {
-  const n = Math.min(84, Math.max(36, Math.floor((w * h) / 18000)));
-  return Array.from({ length: n }, () => ({
+export function flowNodeCount(w: number, h: number): number {
+  return Math.min(84, Math.max(36, Math.floor((w * h) / 18000)));
+}
+
+export function makeFlowNode(w: number, h: number): FlowNode {
+  return {
     x: Math.random() * w,
     y: Math.random() * h,
     bx: (Math.random() - 0.5) * 0.22,
     by: (Math.random() - 0.5) * 0.22,
     r: Math.random() * 1.5 + 0.7,
-  }));
+  };
+}
+
+export function initFlowNodes(w: number, h: number): FlowNode[] {
+  return Array.from({ length: flowNodeCount(w, h) }, () => makeFlowNode(w, h));
 }
 
 export function initAuroraState() {
@@ -58,6 +66,13 @@ export function initAuroraState() {
   };
 }
 
+export type FlowOptions = {
+  /** Second color; when set, the palette slowly breathes between rgb and rgb2. */
+  rgb2?: string;
+  /** Cursor position in canvas coordinates; nodes gently yield around it. */
+  pointer?: { x: number; y: number } | null;
+};
+
 export function drawFlow(
   ctx: CanvasRenderingContext2D,
   w: number,
@@ -65,17 +80,32 @@ export function drawFlow(
   rgb: string,
   nodes: FlowNode[],
   t: number,
+  opts?: FlowOptions,
 ) {
   const F = 0.5;
   const a1 = 0.0013;
   const tt = t * 0.00018;
+  const pointer = opts?.pointer ?? null;
   for (const p of nodes) {
     const sx = p.x * a1;
     const sy = p.y * a1;
-    const vx = Math.sin(sy + tt) * Math.cos(sx * 1.2 - tt * 0.6);
-    const vy = -Math.sin(sx - tt * 0.8) * Math.cos(sy * 1.2 + tt * 0.5);
+    // Velocity derives from a stream function (vx = ∂ψ/∂y, vy = −∂ψ/∂x), so
+    // the field is divergence-free: uniform node density is preserved forever
+    // (the previous ad-hoc sin/cos field had sinks that clumped nodes over
+    // long sessions).
+    const s1 = Math.sin(1.2 * sx - tt * 0.6);
+    const c1 = Math.cos(1.2 * sx - tt * 0.6);
+    const s2 = Math.sin(sy + tt);
+    const c2 = Math.cos(sy + tt);
+    const s3 = Math.sin(sx - tt * 0.8);
+    const c3 = Math.cos(sx - tt * 0.8);
+    const s4 = Math.sin(1.2 * sy + tt * 0.5);
+    const c4 = Math.cos(1.2 * sy + tt * 0.5);
+    const vx = 0.6 * s1 * c2 - 0.72 * c3 * s4;
+    const vy = -0.72 * c1 * s2 + 0.6 * s3 * c4;
     p.x += vx * F + p.bx;
     p.y += vy * F + p.by;
+    repelFromPointer(p, pointer);
     if (p.x < -8) p.x += w + 16;
     else if (p.x > w + 8) p.x -= w + 16;
     if (p.y < -8) p.y += h + 16;
@@ -85,6 +115,7 @@ export function drawFlow(
   ctx.fillStyle = "#07070b";
   ctx.fillRect(0, 0, w, h);
 
+  const color = opts?.rgb2 ? driftColor(rgb, opts.rgb2, t) : rgb;
   const max = Math.min(150, w * 0.118);
   ctx.lineWidth = 1;
   for (let i = 0; i < nodes.length; i++) {
@@ -93,7 +124,7 @@ export function drawFlow(
       const b = nodes[j];
       const d = Math.hypot(a.x - b.x, a.y - b.y);
       if (d < max) {
-        ctx.strokeStyle = `rgba(${rgb},${(1 - d / max) * 0.42})`;
+        ctx.strokeStyle = `rgba(${color},${(1 - d / max) * 0.42})`;
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
@@ -102,7 +133,7 @@ export function drawFlow(
     }
   }
   for (const p of nodes) {
-    ctx.fillStyle = `rgba(${rgb},0.6)`;
+    ctx.fillStyle = `rgba(${color},0.6)`;
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fill();

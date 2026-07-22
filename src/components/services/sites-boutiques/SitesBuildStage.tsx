@@ -2,9 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { adaptNodes, classifyResize } from "@/lib/canvas/ambient";
 import {
   drawParticleNetwork,
   initParticles,
+  makeParticle,
+  particleCount,
   type Particle,
 } from "@/lib/canvas/particle-network";
 import { hexToRgb } from "@/lib/accents";
@@ -72,14 +75,31 @@ export function SitesBuildStage() {
     const resize = () => {
       const r = stage.getBoundingClientRect();
       const dpr = Math.min(2, window.devicePixelRatio || 1);
-      sizeRef.current.w = Math.max(1, r.width);
-      sizeRef.current.h = Math.max(1, r.height);
-      canvas.width = sizeRef.current.w * dpr;
-      canvas.height = sizeRef.current.h * dpr;
+      const newW = Math.max(1, r.width);
+      const newH = Math.max(1, r.height);
+      const oldW = sizeRef.current.w;
+      const oldH = sizeRef.current.h;
+      const decision = classifyResize(oldW, oldH, newW, newH);
+      sizeRef.current.w = newW;
+      sizeRef.current.h = newH;
+      canvas.width = newW * dpr;
+      canvas.height = newH * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      particlesRef.current = initParticles(sizeRef.current.w, sizeRef.current.h);
+      if (decision === "seed" || particlesRef.current.length === 0) {
+        particlesRef.current = initParticles(newW, newH);
+      } else if (decision === "rescale") {
+        adaptNodes(
+          particlesRef.current,
+          oldW,
+          oldH,
+          newW,
+          newH,
+          particleCount(newW, newH),
+          makeParticle,
+        );
+      }
       if (layerRef.current) {
-        layerRef.current.style.transform = `scale(${sizeRef.current.w / SITES_LAYER_W})`;
+        layerRef.current.style.transform = `scale(${newW / SITES_LAYER_W})`;
       }
     };
 

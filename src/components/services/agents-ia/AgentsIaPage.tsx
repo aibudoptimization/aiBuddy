@@ -13,7 +13,12 @@ export function AgentsIaPage() {
   const s = dict.services.agentsIa;
 
   return (
-    <ServicePageLayout accent={ACCENT} accentAlt={ACCENT} heroRgb="139,124,255">
+    <ServicePageLayout
+      accent={ACCENT}
+      accentAlt={ACCENT}
+      heroRgb="139,124,255"
+      heroSecondaryRgb="75,250,200"
+    >
       <div className="ww-container">
         <div className="ww-service-eyebrow-row">
           <div className="ww-service-eyebrow">

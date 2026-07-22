@@ -2,13 +2,16 @@
 
 import { useEffect, useRef } from "react";
 
+import { adaptNodes, classifyResize, createAmbientClock } from "@/lib/canvas/ambient";
 import { hexToRgbString, hexToRgbTuple, rgbToHsl } from "@/lib/canvas/colors";
 import {
   drawAurora,
   drawFlow,
   drawGrid,
+  flowNodeCount,
   initAuroraState,
   initFlowNodes,
+  makeFlowNode,
 } from "@/lib/canvas/motifs";
 import type { CanvasMotif } from "@/lib/canvas/types";
 
@@ -40,19 +43,35 @@ export function JournalCardCanvas({
     const rgb = hexToRgbString(accent);
     const hsl = rgbToHsl(r, g, b);
 
-    flowNodes.current = initFlowNodes(1, 1);
-    aurora.current = initAuroraState();
+    if (!aurora.current) aurora.current = initAuroraState();
 
     const resize = () => {
       const dpr = Math.min(2, window.devicePixelRatio || 1);
       const rect = canvas.getBoundingClientRect();
-      size.current.w = Math.max(1, rect.width);
-      size.current.h = Math.max(1, rect.height);
-      canvas.width = size.current.w * dpr;
-      canvas.height = size.current.h * dpr;
+      const newW = Math.max(1, rect.width);
+      const newH = Math.max(1, rect.height);
+      const oldW = size.current.w;
+      const oldH = size.current.h;
+      const decision = classifyResize(oldW, oldH, newW, newH);
+      size.current.w = newW;
+      size.current.h = newH;
+      canvas.width = newW * dpr;
+      canvas.height = newH * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (motif === "flow") {
-        flowNodes.current = initFlowNodes(size.current.w, size.current.h);
+        if (decision === "seed" || flowNodes.current.length === 0) {
+          flowNodes.current = initFlowNodes(newW, newH);
+        } else if (decision === "rescale") {
+          adaptNodes(
+            flowNodes.current,
+            oldW,
+            oldH,
+            newW,
+            newH,
+            flowNodeCount(newW, newH),
+            makeFlowNode,
+          );
+        }
       }
     };
 
@@ -66,8 +85,10 @@ export function JournalCardCanvas({
       return () => ro.disconnect();
     }
 
+    const clock = createAmbientClock();
     let raf = 0;
-    const loop = (t: number) => {
+    const loop = (now: number) => {
+      const t = clock(now);
       const { w, h } = size.current;
       if (motif === "flow") {
         drawFlow(ctx, w, h, rgb, flowNodes.current, t);

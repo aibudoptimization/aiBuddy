@@ -14,7 +14,12 @@ export function SitesBoutiquesPage() {
   const s = dict.services.sitesBoutiques;
 
   return (
-    <ServicePageLayout accent={ACCENT} accentAlt={ACCENT} heroRgb="240,169,78">
+    <ServicePageLayout
+      accent={ACCENT}
+      accentAlt={ACCENT}
+      heroRgb="240,169,78"
+      heroSecondaryRgb="246,205,150"
+    >
       <div className="ww-container">
         <div className="ww-service-eyebrow-row">
           <div className="ww-service-eyebrow">
