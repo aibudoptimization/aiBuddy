@@ -8,7 +8,6 @@ import { ServicePageLayout } from "@/components/services/ServicePageLayout";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
 import { NicheShowcase } from "./NicheShowcase";
-import { SitesBuildStage } from "./SitesBuildStage";
 
 const ACCENT = "#f0a94e";
 
@@ -57,8 +56,6 @@ export function SitesBoutiquesPage() {
             className="ww-svc-hero-img__el"
           />
         </div>
-
-        <SitesBuildStage />
 
         <NicheShowcase
           eyebrow={s.nicheEyebrow}
