@@ -3,17 +3,17 @@
 import { ServiceDetailPage } from "@/components/services/detail/ServiceDetailPage";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
-export function AutomatisationPage() {
+export function IntegrationPage() {
   const { dict } = useLocale();
   return (
     <ServiceDetailPage
-      copy={dict.services.automatisation}
-      accent="#4bfac8"
-      heroRgb="75,250,200"
+      copy={dict.services.integration}
+      accent="#6aa8ff"
+      heroRgb="106,168,255"
       heroSecondaryRgb="139,124,255"
       heroImage={{
-        src: "/services/automatisation.png",
-        alt: "Réseau de nœuds connectés qui s'enchaînent, image d'automatisation des workflows",
+        src: "/services/integration.png",
+        alt: "Plusieurs outils reliés qui convergent en un seul flux de données",
       }}
     />
   );

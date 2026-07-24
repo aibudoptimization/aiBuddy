@@ -1,6 +1,9 @@
 "use client";
 
-import { ServiceCtaBand } from "@/components/services/ServiceCtaBand";
+import Image from "next/image";
+
+import { ServiceContactBlock } from "@/components/services/ServiceContactBlock";
+import { ServiceFaq } from "@/components/services/ServiceFaq";
 import { ServicePageLayout } from "@/components/services/ServicePageLayout";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
@@ -10,7 +13,7 @@ import { SitesBuildStage } from "./SitesBuildStage";
 const ACCENT = "#f0a94e";
 
 export function SitesBoutiquesPage() {
-  const { dict, routes } = useLocale();
+  const { dict } = useLocale();
   const s = dict.services.sitesBoutiques;
 
   return (
@@ -20,7 +23,7 @@ export function SitesBoutiquesPage() {
       heroRgb="240,169,78"
       heroSecondaryRgb="246,205,150"
     >
-      <div className="ww-container">
+      <div className="ww-container ww-svc">
         <div className="ww-service-eyebrow-row">
           <div className="ww-service-eyebrow">
             <span
@@ -44,6 +47,17 @@ export function SitesBoutiquesPage() {
         </h1>
         <p className="ww-service-lead">{s.lead}</p>
 
+        <div className="ww-svc-hero-img">
+          <Image
+            src="/services/sites-boutiques.png"
+            alt="Maquettes de site vitrine et de boutique en ligne"
+            fill
+            priority
+            sizes="(max-width: 1240px) 100vw, 1180px"
+            className="ww-svc-hero-img__el"
+          />
+        </div>
+
         <SitesBuildStage />
 
         <NicheShowcase
@@ -56,13 +70,12 @@ export function SitesBoutiquesPage() {
           comingSoonLabel={s.nicheComingSoon}
         />
 
-        <ServiceCtaBand
-          accentLabel={s.ctaLabel}
+        <ServiceFaq title={s.faqTitle} items={s.faq} />
+
+        <ServiceContactBlock
+          kicker={s.ctaLabel}
           title={s.ctaTitle}
           description={s.ctaDescription}
-          ctaLabel={s.ctaButton}
-          ctaHref={routes.contact}
-          gradientRgb="240,169,78"
         />
       </div>
     </ServicePageLayout>

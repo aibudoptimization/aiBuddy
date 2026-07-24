@@ -3,10 +3,13 @@ export const PATHS = {
   home: "/",
   automatisation: "/services/automatisation",
   agentsIa: "/services/agents-ia",
+  integration: "/services/integration",
   sitesBoutiques: "/services/sites-boutiques",
+  conseil: "/services/conseil",
   journal: "/journal",
   article: (slug: string) => `/journal/${slug}`,
   contact: "/contact",
+  faq: "/faq",
   realisations: "/realisations",
   privacy: "/politique-de-confidentialite",
 } as const;
@@ -16,16 +19,30 @@ export const ROUTES = {
   home: PATHS.home,
   automatisation: PATHS.automatisation,
   agentsIa: PATHS.agentsIa,
+  integration: PATHS.integration,
   sitesBoutiques: PATHS.sitesBoutiques,
+  conseil: PATHS.conseil,
   journal: PATHS.journal,
   article: PATHS.article,
   contact: PATHS.contact,
+  faq: PATHS.faq,
   privacy: PATHS.privacy,
 } as const;
 
 export const CONTACT_EMAIL = "info@wfwonder.com";
+/** Display form of Christopher's cell. */
+export const CONTACT_PHONE = "514-795-9369";
+/** tel: href form (E.164). */
+export const CONTACT_PHONE_TEL = "+15147959369";
+/** cal.com discovery-call ("appel découverte") booking link. */
+export const BOOKING_URL = "https://cal.com/wfwonder/consultation";
 
-export type ServiceSlug = "automatisation" | "agents-ia" | "sites-boutiques";
+export type ServiceSlug =
+  | "automatisation"
+  | "agents-ia"
+  | "integration"
+  | "sites-boutiques"
+  | "conseil";
 
 export type NavItem = {
   href: string;
@@ -47,9 +64,19 @@ const NAV_META = [
     hoverBg: "rgba(139,124,255,0.13)",
   },
   {
+    path: PATHS.integration,
+    accent: "#6aa8ff",
+    hoverBg: "rgba(106,168,255,0.13)",
+  },
+  {
     path: PATHS.sitesBoutiques,
     accent: "#f0a94e",
     hoverBg: "rgba(240,169,78,0.13)",
+  },
+  {
+    path: PATHS.conseil,
+    accent: "#f56aa8",
+    hoverBg: "rgba(245,106,168,0.13)",
   },
 ] as const;
 
@@ -58,10 +85,13 @@ export function paths() {
     home: PATHS.home,
     automatisation: PATHS.automatisation,
     agentsIa: PATHS.agentsIa,
+    integration: PATHS.integration,
     sitesBoutiques: PATHS.sitesBoutiques,
+    conseil: PATHS.conseil,
     journal: PATHS.journal,
     article: (slug: string) => PATHS.article(slug),
     contact: PATHS.contact,
+    faq: PATHS.faq,
     realisations: PATHS.realisations,
     privacy: PATHS.privacy,
   };
@@ -94,10 +124,24 @@ export const NAV_ITEMS: NavItem[] = [
     hoverBg: "rgba(139,124,255,0.13)",
   },
   {
+    href: PATHS.integration,
+    title: "Intégration & connexion d'outils",
+    tag: "Connexion · synchro · API",
+    accent: "#6aa8ff",
+    hoverBg: "rgba(106,168,255,0.13)",
+  },
+  {
     href: PATHS.sitesBoutiques,
     title: "Sites & boutiques en ligne",
     tag: "Sites · boutiques · e-commerce",
     accent: "#f0a94e",
     hoverBg: "rgba(240,169,78,0.13)",
+  },
+  {
+    href: PATHS.conseil,
+    title: "Conseil & optimisation",
+    tag: "Audit · stratégie · feuille de route",
+    accent: "#f56aa8",
+    hoverBg: "rgba(245,106,168,0.13)",
   },
 ];

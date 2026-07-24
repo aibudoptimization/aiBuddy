@@ -13,6 +13,7 @@
   --iris: #8b7cff;
   --amber: #f0a94e;
   --sky: #6aa8ff;
+  --rose: #f56aa8;
 
   --accent: var(--teal);
   --accent-rgb: 75, 250, 200;
@@ -208,6 +209,329 @@ canvas {
 
 .ww-accent-bg {
   background: var(--accent);
+}
+
+/* ============================================================
+   Service detail (text / section) pages
+   ============================================================ */
+.ww-svc {
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(40px, 8vh, 96px);
+}
+
+.ww-svc-section {
+  margin-top: clamp(52px, 9vh, 104px);
+}
+
+/* Hero artwork under the lead */
+.ww-svc-hero-img {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin-top: clamp(30px, 5vh, 52px);
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--ink);
+  box-shadow: 0 30px 80px -40px rgba(var(--accent-rgb), 0.4);
+}
+
+.ww-svc-hero-img__el {
+  object-fit: cover;
+}
+
+.ww-svc-eyebrow {
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.ww-svc-h2 {
+  margin: 0 0 clamp(22px, 3.4vh, 38px);
+  font-size: clamp(23px, 3.4vw, 34px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+}
+
+/* What it is */
+.ww-svc-what__body {
+  display: grid;
+  gap: 18px;
+  max-width: 760px;
+}
+
+.ww-svc-what__p {
+  margin: 0;
+  font-size: clamp(15.5px, 1.5vw, 18px);
+  line-height: 1.62;
+  color: rgba(244, 243, 247, 0.72);
+}
+
+.ww-svc-what__p:first-child {
+  color: var(--snow);
+  font-size: clamp(18px, 2vw, 23px);
+  line-height: 1.5;
+}
+
+/* Card grids (included + use cases) */
+.ww-svc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.ww-svc-card {
+  padding: 22px 22px 24px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.018);
+  transition:
+    border-color 0.3s var(--ease-out),
+    background 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out);
+}
+
+.ww-svc-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 42%, transparent);
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateY(-2px);
+}
+
+.ww-svc-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 9px rgba(var(--accent-rgb), 0.75);
+  margin-bottom: 14px;
+}
+
+.ww-svc-card__title {
+  font-size: 16.5px;
+  font-weight: 600;
+  margin-bottom: 7px;
+  letter-spacing: -0.01em;
+}
+
+.ww-svc-card__desc {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: rgba(244, 243, 247, 0.6);
+}
+
+/* Process steps */
+.ww-svc-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.ww-svc-step {
+  position: relative;
+  padding: 22px 20px 24px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.ww-svc-step__no {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.ww-svc-step__title {
+  font-size: 15.5px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.ww-svc-step__desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(244, 243, 247, 0.58);
+}
+
+/* Outcome tiles */
+.ww-svc-outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.ww-svc-outcome {
+  padding: 30px 26px;
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(var(--accent-rgb), 0.09), rgba(255, 255, 255, 0.01));
+}
+
+.ww-svc-outcome__stat {
+  font-size: clamp(24px, 3.6vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.ww-svc-outcome__label {
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgba(244, 243, 247, 0.72);
+}
+
+/* FAQ accordion */
+.ww-svc-faq__list {
+  max-width: 820px;
+}
+
+.ww-svc-faq__item {
+  border-bottom: 1px solid rgba(244, 243, 247, 0.09);
+}
+
+.ww-svc-faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.ww-svc-faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.ww-svc-faq .ww-chev {
+  flex: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform 0.28s var(--ease-out);
+}
+
+.ww-svc-faq__item[open] .ww-chev {
+  transform: rotate(45deg);
+}
+
+.ww-svc-faq__a {
+  margin: 0 0 18px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(244, 243, 247, 0.62);
+  max-width: 68ch;
+}
+
+/* Discovery CTA + form block */
+.ww-svc-contact__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  padding: clamp(26px, 4vw, 44px);
+  border: 1px solid var(--hairline);
+  border-radius: 22px;
+  background: linear-gradient(155deg, rgba(var(--accent-rgb), 0.1), rgba(18, 16, 26, 0.35) 60%);
+}
+
+.ww-svc-contact__kicker {
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.ww-svc-contact__title {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.ww-svc-contact__desc {
+  margin: 0 0 24px;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: rgba(244, 243, 247, 0.66);
+  max-width: 440px;
+}
+
+.ww-svc-contact__book {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ww-svc-contact__reassure {
+  margin-top: 12px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgba(244, 243, 247, 0.42);
+}
+
+.ww-svc-contact__lines {
+  margin-top: 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.ww-svc-contact__line {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(244, 243, 247, 0.55);
+}
+
+.ww-svc-contact__link {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ww-svc-contact__link:hover {
+  text-decoration: underline;
+}
+
+.ww-svc-contact__formheading {
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 247, 0.4);
+  margin-bottom: 14px;
+}
+
+@media (max-width: 860px) {
+  .ww-svc-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 820px) {
+  .ww-svc-contact__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .ww-svc-grid,
+  .ww-svc-outcomes {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .ww-svc-steps {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ww-accent-border {

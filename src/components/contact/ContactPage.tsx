@@ -5,7 +5,7 @@ import Image from "next/image";
 import { JournalPageAmbient } from "@/components/journal/JournalPageAmbient";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { CONTACT_EMAIL } from "@/lib/routes";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL } from "@/lib/routes";
 
 export function ContactPage() {
   const { dict } = useLocale();
@@ -56,6 +56,13 @@ export function ContactPage() {
                 <span className="ww-contact__email-label">{c.emailPrompt}</span>
                 <a href={`mailto:${CONTACT_EMAIL}`} className="ww-contact__email-link">
                   {CONTACT_EMAIL}
+                </a>
+              </div>
+
+              <div className="ww-contact__email">
+                <span className="ww-contact__email-label">{c.phonePrompt}</span>
+                <a href={`tel:${CONTACT_PHONE_TEL}`} className="ww-contact__email-link">
+                  {CONTACT_PHONE}
                 </a>
               </div>
             </div>

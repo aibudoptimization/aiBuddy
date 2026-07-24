@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { useCookieConsent } from "@/components/legal/CookieConsentContext";
-import { CONTACT_EMAIL, navItems } from "@/lib/routes";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL, navItems } from "@/lib/routes";
 
 export function SiteFooter() {
   const pathname = usePathname();
@@ -101,6 +101,20 @@ export function SiteFooter() {
                   </p>
                 </details>
               ))}
+              <Link
+                href={routes.faq}
+                className="ww-mono"
+                style={{
+                  marginTop: 14,
+                  alignSelf: "flex-start",
+                  fontSize: 12.5,
+                  letterSpacing: "0.04em",
+                  color: "var(--teal)",
+                  textDecoration: "none",
+                }}
+              >
+                {f.faqAllLabel}
+              </Link>
             </div>
           </div>
         ) : null}
@@ -123,6 +137,18 @@ export function SiteFooter() {
               style={{ fontSize: "14.5px", color: "var(--iris)", textDecoration: "none" }}
             >
               {CONTACT_EMAIL}
+            </a>
+            <a
+              href={`tel:${CONTACT_PHONE_TEL}`}
+              style={{
+                display: "block",
+                marginTop: 8,
+                fontSize: "14.5px",
+                color: "var(--iris)",
+                textDecoration: "none",
+              }}
+            >
+              {CONTACT_PHONE}
             </a>
           </div>
 
@@ -194,6 +220,16 @@ export function SiteFooter() {
                 }}
               >
                 {f.contact}
+              </Link>
+              <Link
+                href={routes.faq}
+                style={{
+                  fontSize: "14.5px",
+                  color: "rgba(244,243,247,0.64)",
+                  textDecoration: "none",
+                }}
+              >
+                {f.faqLabel}
               </Link>
               <Link
                 href={routes.privacy}

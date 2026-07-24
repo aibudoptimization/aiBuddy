@@ -3,7 +3,12 @@ export type HomeServiceItem = {
   soon?: boolean;
 };
 
-export type ServicePathKey = "automatisation" | "agentsIa" | "sitesBoutiques";
+export type ServicePathKey =
+  | "automatisation"
+  | "agentsIa"
+  | "integration"
+  | "sitesBoutiques"
+  | "conseil";
 
 export type HomeServiceCopy = {
   no: string;
@@ -31,6 +36,54 @@ export type FaqItem = {
   q: string;
   a: string;
   open?: boolean;
+};
+
+/** Title + one-line description, used for "included", "process" and "use case" rows. */
+export type ServiceRow = {
+  title: string;
+  desc: string;
+};
+
+/** A result tile: an optional short stat plus a label. */
+export type ServiceOutcome = {
+  stat: string;
+  label: string;
+};
+
+/** Unified copy shape for the text/section-based service pages. */
+export type ServiceDetailCopy = {
+  metaTitle: string;
+  metaDescription: string;
+  eyebrow: string;
+  h1Before: string;
+  h1Accent: string;
+  h1After: string;
+  lead: string;
+  whatTitle: string;
+  whatBody: string[];
+  includedTitle: string;
+  included: ServiceRow[];
+  processTitle: string;
+  process: ServiceRow[];
+  useCasesTitle: string;
+  useCases: ServiceRow[];
+  outcomesTitle: string;
+  outcomes: ServiceOutcome[];
+  faqTitle: string;
+  faq: FaqItem[];
+  /** Small label above the closing CTA band. */
+  ctaLabel: string;
+  ctaTitle: string;
+  ctaDescription: string;
+};
+
+/** Shared labels for the discovery-call CTA + embedded form on every service page. */
+export type ServiceContactCopy = {
+  eyebrow: string;
+  bookLabel: string;
+  phonePrompt: string;
+  formHeading: string;
+  emailPrompt: string;
 };
 
 export type CookieTableEntry = {
@@ -97,6 +150,9 @@ export type Dictionary = {
     homeCtaAlt: string;
     faqLabel: string;
     faq: FaqItem[];
+    /** Full FAQ page link label shown under the footer FAQ. */
+    faqAllLabel: string;
+    phoneLabel: string;
   };
   home: {
     city: string;
@@ -199,6 +255,7 @@ export type Dictionary = {
     title: string;
     lead: string;
     emailPrompt: string;
+    phonePrompt: string;
     form: {
       firstName: string;
       firstNameOptional: string;
@@ -229,38 +286,10 @@ export type Dictionary = {
     sources: string;
   };
   services: {
-    automatisation: {
-      metaTitle: string;
-      metaDescription: string;
-      eyebrow: string;
-      live: string;
-      h1Before: string;
-      h1Accent: string;
-      h1After: string;
-      lead: string;
-      pill: string;
-      pillMuted: string;
-      legend: string[];
-      ctaLabel: string;
-      ctaTitle: string;
-      ctaDescription: string;
-      ctaButton: string;
-    };
-    agentsIa: {
-      metaTitle: string;
-      metaDescription: string;
-      eyebrow: string;
-      live: string;
-      h1Before: string;
-      h1Accent: string;
-      h1After: string;
-      lead: string;
-      legend: string[];
-      ctaLabel: string;
-      ctaTitle: string;
-      ctaDescription: string;
-      ctaButton: string;
-    };
+    automatisation: ServiceDetailCopy;
+    agentsIa: ServiceDetailCopy;
+    integration: ServiceDetailCopy;
+    conseil: ServiceDetailCopy;
     sitesBoutiques: {
       metaTitle: string;
       metaDescription: string;
@@ -276,11 +305,26 @@ export type Dictionary = {
       nicheDemo: string;
       nichePreview: string;
       nicheComingSoon: string;
+      faqTitle: string;
+      faq: FaqItem[];
       ctaLabel: string;
       ctaTitle: string;
       ctaDescription: string;
       ctaButton: string;
     };
+  };
+  /** Shared discovery-call CTA + form labels reused on every service page. */
+  serviceContact: ServiceContactCopy;
+  faqPage: {
+    metaTitle: string;
+    metaDescription: string;
+    eyebrow: string;
+    title: string;
+    lead: string;
+    generalTitle: string;
+    general: FaqItem[];
+    ctaTitle: string;
+    ctaDescription: string;
   };
   realisations: {
     metaTitle: string;
