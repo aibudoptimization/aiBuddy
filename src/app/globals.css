@@ -204,20 +204,55 @@ canvas {
   margin-top: clamp(52px, 9vh, 104px);
 }
 
-/* Hero artwork under the lead */
-.ww-svc-hero-img {
+/* —— Service hero: title + lead overlaid on the artwork —— */
+
+.ww-svc-hero {
   position: relative;
-  aspect-ratio: 16 / 9;
-  margin-top: clamp(30px, 5vh, 52px);
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(400px, 56vh, 580px);
   border: 1px solid var(--hairline);
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: hidden;
   background: var(--ink);
   box-shadow: 0 30px 80px -40px rgba(var(--accent-rgb), 0.4);
 }
 
-.ww-svc-hero-img__el {
+.ww-svc-hero__media {
   object-fit: cover;
+}
+
+/* Bottom-heavy scrim with a mild left wash: guarantees contrast for the
+   overlaid text on every artwork, whatever its glow placement. */
+.ww-svc-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 7, 11, 0.25) 0%,
+      rgba(7, 7, 11, 0.02) 34%,
+      rgba(7, 7, 11, 0.62) 72%,
+      rgba(7, 7, 11, 0.9) 100%
+    ),
+    linear-gradient(90deg, rgba(7, 7, 11, 0.5) 0%, rgba(7, 7, 11, 0) 60%);
+}
+
+.ww-svc-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  padding: clamp(22px, 4vw, 48px);
+}
+
+.ww-svc-hero__content .ww-service-lead {
+  margin-bottom: 0;
+  color: rgba(244, 243, 247, 0.78);
+}
+
+.ww-svc-hero__content .ww-service-title,
+.ww-svc-hero__content .ww-service-lead {
+  text-shadow: 0 2px 22px rgba(7, 7, 11, 0.6);
 }
 
 .ww-svc-eyebrow {

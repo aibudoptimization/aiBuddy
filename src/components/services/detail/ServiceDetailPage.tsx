@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
-
 import { ServiceContactBlock } from "@/components/services/ServiceContactBlock";
 import { ServiceFaq } from "@/components/services/ServiceFaq";
+import { ServiceHero } from "@/components/services/ServiceHero";
 import { ServicePageLayout } from "@/components/services/ServicePageLayout";
 import { Reveal } from "@/components/ui/Reveal";
 import type { ServiceDetailCopy } from "@/content/i18n/types";
@@ -36,40 +35,15 @@ export function ServiceDetailPage({
     >
       <div className="ww-container ww-svc">
         {/* Hero */}
-        <div className="ww-service-eyebrow-row">
-          <div className="ww-service-eyebrow">
-            <span
-              className="ww-glow-dot"
-              style={{
-                width: 7,
-                height: 7,
-                background: accent,
-                boxShadow: `0 0 9px rgba(${hexToRgb(accent)},0.7)`,
-              }}
-              aria-hidden
-            />
-            {s.eyebrow}
-          </div>
-        </div>
-        <h1 className="ww-service-title">
-          {s.h1Before}
-          <span className="ww-accent-text">{s.h1Accent}</span>
-          {s.h1After}
-        </h1>
-        <p className="ww-service-lead">{s.lead}</p>
-
-        {heroImage ? (
-          <div className="ww-svc-hero-img">
-            <Image
-              src={heroImage.src}
-              alt={heroImage.alt}
-              fill
-              priority
-              sizes="(max-width: 1240px) 100vw, 1180px"
-              className="ww-svc-hero-img__el"
-            />
-          </div>
-        ) : null}
+        <ServiceHero
+          eyebrow={s.eyebrow}
+          h1Before={s.h1Before}
+          h1Accent={s.h1Accent}
+          h1After={s.h1After}
+          lead={s.lead}
+          accent={accent}
+          image={heroImage}
+        />
 
         {/* What it is */}
         <Reveal as="section" className="ww-svc-section ww-svc-what">
