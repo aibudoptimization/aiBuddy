@@ -1,20 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { usePathname, useRouter } from "next/navigation";
 
 import { BrandMark } from "@/components/layout/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { drawGlobe, initGlobeRings } from "@/lib/canvas/globe";
 import { INTRO_DONE_EVENT, INTRO_PENDING_ATTR, INTRO_SEEN_KEY } from "@/lib/introFlag";
-import { langPrefApplied, markLangPrefApplied, readLangPref, saveLangPref } from "@/lib/langPref";
-import { switchLocalePath, type Locale } from "@/lib/locale";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 const STORAGE_KEY = INTRO_SEEN_KEY;
-/** Set just before a cross-language choice navigates; the remounted splash on
- *  the target locale picks it up and only plays the final fade. */
-const HANDOFF_KEY = "ww-splash-handoff";
 
 function subscribeIntroDone(onChange: () => void) {
   window.addEventListener(INTRO_DONE_EVENT, onChange);
@@ -45,39 +39,16 @@ function easeInOutCubic(t: number) {
 
 /**
  * First-visit brand intro:
- * roomy globe orbits → collapses into the glow-dot → Workflow · Wonder settles in.
- * First visit ever also asks Français / English; the choice is persisted and
- * auto-applied on later sessions (splash then plays through without buttons).
+ * roomy globe orbits → collapses into the glow-dot → Workflow · Wonder settles in,
+ * then fades out. Plays once per session.
  */
 export function BrandSplash() {
-  const { dict, locale } = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
+  const { dict } = useLocale();
   // Visible until the intro has been seen this session; the INTRO_DONE_EVENT
   // dispatched by finish() re-reads the flag and hides the splash.
   const visible = useSyncExternalStore(subscribeIntroDone, introPending, () => false);
   const reduced = usePrefersReducedMotion();
-  // Cross-language choice remounts this component (each locale has its own
-  // layout tree); the handoff flag makes the new instance resume at the
-  // settled logo instead of replaying the whole intro.
-  const [handoff] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      return sessionStorage.getItem(HANDOFF_KEY) === "1";
-    } catch {
-      return false;
-    }
-  });
-  const [phase, setPhase] = useState<"orbit" | "collapse" | "mark" | "choose" | "out">(
-    handoff ? "mark" : "orbit",
-  );
-  // Read once; null = no stored preference yet → the splash asks.
-  const [pref] = useState<Locale | null>(() =>
-    typeof window === "undefined" ? null : readLangPref(),
-  );
-  // Cross-language choice in flight: hold the splash opaque until the new
-  // locale has mounted, so the old language never flashes through the fade.
-  const [pendingNav, setPendingNav] = useState<Locale | null>(null);
+  const [phase, setPhase] = useState<"orbit" | "collapse" | "mark" | "out">("orbit");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rings = useRef(initGlobeRings());
   const startRef = useRef(0);
@@ -109,7 +80,7 @@ export function BrandSplash() {
   }, [visible]);
 
   // Lock page scroll while the splash owns the screen, so an accidental
-  // scroll during the language choice can't move the page underneath.
+  // scroll during the intro can't move the page underneath.
   useEffect(() => {
     if (!visible) return;
     const html = document.documentElement;
@@ -124,71 +95,15 @@ export function BrandSplash() {
     };
   }, [visible]);
 
-  // Returning visitor with a stored preference: land them on their language.
-  // Only on the session's first load (the splash covers the swap), never
-  // against in-session navigation.
-  useEffect(() => {
-    if (!visible || !pref) return;
-    if (langPrefApplied()) return;
-    markLangPrefApplied();
-    if (pref !== locale) {
-      router.replace(switchLocalePath(pathname, pref));
-    }
-    // Intentionally not reactive to locale/pathname: this is a once-per-session gate.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible, pref]);
-
-  const chooseLang = (target: Locale) => {
-    saveLangPref(target);
-    // Guarantee the reveal starts on the hero, whatever happened underneath.
-    window.scrollTo(0, 0);
-    if (target !== locale) {
-      try {
-        sessionStorage.setItem(HANDOFF_KEY, "1");
-      } catch {
-        /* ignore */
-      }
-      setPendingNav(target);
-      router.push(switchLocalePath(pathname, target));
-      return; // the remounted splash on the target locale plays the fade
-    }
-    finish();
-  };
-
-  useEffect(() => {
-    if (!pendingNav) return;
-    if (locale === pendingNav) {
-      finish();
-      return;
-    }
-    // Failsafe: never strand the visitor behind the splash.
-    const t = window.setTimeout(finish, 2500);
-    return () => window.clearTimeout(t);
-  }, [pendingNav, locale]);
-
   useEffect(() => {
     if (!visible) return;
 
-    // Remounted after a cross-language choice: just hold the logo a beat,
-    // then fade out over the already-mounted target page.
-    if (handoff) {
-      try {
-        sessionStorage.removeItem(HANDOFF_KEY);
-      } catch {
-        /* ignore */
-      }
+    if (reduced) {
       const t = window.setTimeout(finish, 420);
       return () => window.clearTimeout(t);
     }
 
-    // No stored preference: the splash holds on the language choice instead
-    // of auto-finishing.
-    if (reduced) {
-      const t = window.setTimeout(pref ? finish : () => setPhase("choose"), 420);
-      return () => window.clearTimeout(t);
-    }
-
-    // Timers only ever advance the phase; skip can jump ahead of them.
+    // Timers only ever advance the phase.
     const tCollapse = window.setTimeout(
       () => setPhase((p) => (p === "orbit" ? "collapse" : p)),
       PHASE_ORBIT_MS,
@@ -197,22 +112,17 @@ export function BrandSplash() {
       () => setPhase((p) => (p === "orbit" || p === "collapse" ? "mark" : p)),
       PHASE_ORBIT_MS + PHASE_COLLAPSE_MS * 0.55,
     );
-    const tDone = pref
-      ? window.setTimeout(finish, TOTAL_MS)
-      : window.setTimeout(
-          () => setPhase((p) => (p === "out" ? p : "choose")),
-          PHASE_ORBIT_MS + PHASE_COLLAPSE_MS + PHASE_MARK_MS,
-        );
+    const tDone = window.setTimeout(finish, TOTAL_MS);
     return () => {
       window.clearTimeout(tCollapse);
       window.clearTimeout(tMark);
       window.clearTimeout(tDone);
     };
-  }, [visible, reduced, pref, handoff]);
+  }, [visible, reduced]);
 
   // Single RAF loop for the whole intro — do not restart on phase changes.
   useEffect(() => {
-    if (!visible || reduced || handoff) return;
+    if (!visible || reduced) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -287,20 +197,18 @@ export function BrandSplash() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
-  }, [visible, reduced, handoff]);
+  }, [visible, reduced]);
 
   if (!visible) return null;
 
   // With reduced motion, skip straight to the settled mark without animating phases.
   const effectivePhase = reduced && phase === "orbit" ? "mark" : phase;
-  const showMark =
-    effectivePhase === "mark" || effectivePhase === "choose" || effectivePhase === "out";
+  const showMark = effectivePhase === "mark" || effectivePhase === "out";
   const collapsing = effectivePhase !== "orbit";
-  const choosing = effectivePhase === "choose";
 
   return (
     <div
-      className={`ww-splash${effectivePhase === "out" ? " ww-splash--out" : ""}${collapsing ? " ww-splash--collapse" : ""}${handoff ? " ww-splash--handoff" : ""}`}
+      className={`ww-splash${effectivePhase === "out" ? " ww-splash--out" : ""}${collapsing ? " ww-splash--collapse" : ""}`}
       role="dialog"
       aria-label={dict.splash.ariaLabel}
       aria-modal="true"
@@ -316,31 +224,6 @@ export function BrandSplash() {
           <BrandMark asLink={false} size="lg" />
         </div>
       </div>
-      {!pref && (
-        <div className={`ww-splash__lang${choosing ? " is-in" : ""}`} aria-hidden={!choosing}>
-          <span className="ww-splash__lang-prompt ww-mono">{dict.splash.choose}</span>
-          <div className="ww-splash__lang-buttons">
-            <button
-              type="button"
-              lang="fr"
-              className="ww-splash__lang-btn"
-              onClick={() => chooseLang("fr")}
-              tabIndex={choosing ? 0 : -1}
-            >
-              Français
-            </button>
-            <button
-              type="button"
-              lang="en"
-              className="ww-splash__lang-btn"
-              onClick={() => chooseLang("en")}
-              tabIndex={choosing ? 0 : -1}
-            >
-              English
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

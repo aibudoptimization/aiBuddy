@@ -1,17 +1,16 @@
 import { ArticleBody } from "@/components/journal/ArticleBody";
 import { ArticleHeroCanvas } from "@/components/journal/ArticleHeroCanvas";
 import { getDictionary } from "@/content/i18n";
-import { getJournalPosts, getLocalizedArticle } from "@/content/journal";
+import { getArticle, getJournalPosts } from "@/content/journal";
 import { accentStyle } from "@/lib/accents";
-import type { Locale } from "@/lib/locale";
 import { notFound } from "next/navigation";
 
-export function ArticlePageView({ slug, locale }: { slug: string; locale: Locale }) {
-  const article = getLocalizedArticle(slug, locale);
+export function ArticlePageView({ slug }: { slug: string }) {
+  const article = getArticle(slug);
   if (!article) notFound();
 
-  const dict = getDictionary(locale);
-  const related = getJournalPosts(locale)
+  const dict = getDictionary();
+  const related = getJournalPosts()
     .filter((item) => item.slug !== slug)
     .map((item) => ({
       slug: item.slug,

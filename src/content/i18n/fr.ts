@@ -13,9 +13,6 @@ export const fr: Dictionary = {
     realisations: "Réalisations",
     consultCta: "Consultation gratuite",
     allArticles: "Tous les articles",
-    langSwitchLabel: "Language",
-    langFr: "FR",
-    langEn: "EN",
     skipIntro: "Passer",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
@@ -420,7 +417,6 @@ export const fr: Dictionary = {
   },
   splash: {
     ariaLabel: "Introduction Workflow Wonder",
-    choose: "Choisissez votre langue · Choose your language",
   },
   cookies: {
     iconAriaLabel: "Biscuit avec une bouchée, symbole des préférences de témoins",

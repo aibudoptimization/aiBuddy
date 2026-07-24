@@ -7,9 +7,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { getJournalPosts } from "@/content/journal";
 
 export function HomeJournalSection() {
-  const { dict, routes, locale } = useLocale();
+  const { dict, routes } = useLocale();
   const j = dict.home.journal;
-  const posts = getJournalPosts(locale).slice(0, 3);
+  const posts = getJournalPosts().slice(0, 3);
 
   const accents = ["#4bfac8", "#8b7cff", "#6aa8ff"] as const;
   const hovers = [

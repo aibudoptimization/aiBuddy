@@ -8,16 +8,14 @@ import { ChevronDown } from "lucide-react";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { NavGlobeButton } from "@/components/layout/NavGlobeButton";
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { saveLangPref } from "@/lib/langPref";
-import { switchLocalePath, stripLocalePrefix } from "@/lib/locale";
 import { navItems } from "@/lib/routes";
 
 type SiteHeaderProps = {
   fixed?: boolean;
 };
 
-function isJournalArticlePath(barePath: string) {
-  return barePath.startsWith("/journal/") && barePath.length > "/journal/".length;
+function isJournalArticlePath(path: string) {
+  return path.startsWith("/journal/") && path.length > "/journal/".length;
 }
 
 function scrollToHash(hash: string) {
@@ -29,12 +27,11 @@ function scrollToHash(hash: string) {
 
 export function SiteHeader({ fixed = true }: SiteHeaderProps) {
   const pathname = usePathname();
-  const bare = stripLocalePrefix(pathname);
-  const { locale, dict, routes } = useLocale();
-  const items = navItems(locale, dict.nav.services);
+  const { dict, routes } = useLocale();
+  const items = navItems(dict.nav.services);
   const [navOpen, setNavOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isJournalArticle = isJournalArticlePath(bare);
+  const isJournalArticle = isJournalArticlePath(pathname);
   const homePath = routes.home;
 
   // Close any open menus when the route changes (state adjustment during render,
@@ -56,14 +53,11 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
   }, [mobileOpen]);
 
   const handleHomeHashClick = (event: MouseEvent<HTMLAnchorElement>, hash: string) => {
-    if (bare !== "/") return;
+    if (pathname !== "/") return;
     event.preventDefault();
     scrollToHash(hash);
     setMobileOpen(false);
   };
-
-  const otherLocale = locale === "fr" ? "en" : "fr";
-  const langHref = switchLocalePath(pathname, otherLocale);
 
   return (
     <header className={`ww-header${fixed ? " ww-header--fixed" : ""}`}>
@@ -133,17 +127,7 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
             </Link>
             <Link href={routes.contact} className="ww-header__cta">
               <span className="ww-header__cta-full">{dict.chrome.consultCta}</span>
-              <span className="ww-header__cta-short">
-                {locale === "en" ? "Consult" : "Consultation"}
-              </span>
-            </Link>
-            <Link
-              href={langHref}
-              className="ww-header__lang ww-mono"
-              aria-label={dict.chrome.langSwitchLabel}
-              onClick={() => saveLangPref(otherLocale)}
-            >
-              {otherLocale === "en" ? dict.chrome.langEn : dict.chrome.langFr}
+              <span className="ww-header__cta-short">Consultation</span>
             </Link>
           </>
         )}
@@ -151,14 +135,6 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
 
       {!isJournalArticle ? (
         <div className="ww-header__mobile-bar">
-          <Link
-            href={langHref}
-            className="ww-header__lang ww-mono"
-            aria-label={dict.chrome.langSwitchLabel}
-            onClick={() => saveLangPref(otherLocale)}
-          >
-            {otherLocale === "en" ? dict.chrome.langEn : dict.chrome.langFr}
-          </Link>
           <NavGlobeButton
             open={mobileOpen}
             onToggle={() => setMobileOpen((o) => !o)}

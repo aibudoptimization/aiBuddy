@@ -1,35 +1,22 @@
 "use client";
 
-import { createContext, useContext, useEffect, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 
 import { getDictionary, type Dictionary } from "@/content/i18n";
-import { htmlLang, type Locale } from "@/lib/locale";
 import { paths } from "@/lib/routes";
 
 type LocaleContextValue = {
-  locale: Locale;
   dict: Dictionary;
   routes: ReturnType<typeof paths>;
 };
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-export function LocaleProvider({
-  locale,
-  children,
-}: {
-  locale: Locale;
-  children: ReactNode;
-}) {
+export function LocaleProvider({ children }: { children: ReactNode }) {
   const value: LocaleContextValue = {
-    locale,
-    dict: getDictionary(locale),
-    routes: paths(locale),
+    dict: getDictionary(),
+    routes: paths(),
   };
-
-  useEffect(() => {
-    document.documentElement.lang = htmlLang(locale);
-  }, [locale]);
 
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }

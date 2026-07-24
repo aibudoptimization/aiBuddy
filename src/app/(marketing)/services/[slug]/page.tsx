@@ -9,8 +9,8 @@ import type { ServiceSlug } from "@/lib/routes";
 
 const SERVICE_SLUGS: ServiceSlug[] = ["automatisation", "agents-ia", "sites-boutiques"];
 
-function serviceCopy(slug: ServiceSlug, locale: "fr" | "en" = "fr") {
-  const dict = getDictionary(locale);
+function serviceCopy(slug: ServiceSlug) {
+  const dict = getDictionary();
   if (slug === "automatisation") return dict.services.automatisation;
   if (slug === "agents-ia") return dict.services.agentsIa;
   return dict.services.sitesBoutiques;
@@ -27,7 +27,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   if (!SERVICE_SLUGS.includes(slug as ServiceSlug)) return {};
-  const meta = serviceCopy(slug as ServiceSlug, "fr");
+  const meta = serviceCopy(slug as ServiceSlug);
   return { title: meta.metaTitle, description: meta.metaDescription };
 }
 

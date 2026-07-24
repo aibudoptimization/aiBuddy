@@ -1,6 +1,4 @@
-import { localizePath, type Locale } from "@/lib/locale";
-
-/** Locale-agnostic path shapes (always French URL segments). */
+/** Canonical path shapes. */
 export const PATHS = {
   home: "/",
   automatisation: "/services/automatisation",
@@ -13,7 +11,7 @@ export const PATHS = {
   privacy: "/politique-de-confidentialite",
 } as const;
 
-/** @deprecated Prefer `paths(locale)` — kept for gradual migration. Defaults to FR. */
+/** @deprecated Prefer `paths()` — kept for gradual migration. */
 export const ROUTES = {
   home: PATHS.home,
   automatisation: PATHS.automatisation,
@@ -55,26 +53,23 @@ const NAV_META = [
   },
 ] as const;
 
-export function paths(locale: Locale = "fr") {
+export function paths() {
   return {
-    home: localizePath(locale, PATHS.home),
-    automatisation: localizePath(locale, PATHS.automatisation),
-    agentsIa: localizePath(locale, PATHS.agentsIa),
-    sitesBoutiques: localizePath(locale, PATHS.sitesBoutiques),
-    journal: localizePath(locale, PATHS.journal),
-    article: (slug: string) => localizePath(locale, PATHS.article(slug)),
-    contact: localizePath(locale, PATHS.contact),
-    realisations: localizePath(locale, PATHS.realisations),
-    privacy: localizePath(locale, PATHS.privacy),
+    home: PATHS.home,
+    automatisation: PATHS.automatisation,
+    agentsIa: PATHS.agentsIa,
+    sitesBoutiques: PATHS.sitesBoutiques,
+    journal: PATHS.journal,
+    article: (slug: string) => PATHS.article(slug),
+    contact: PATHS.contact,
+    realisations: PATHS.realisations,
+    privacy: PATHS.privacy,
   };
 }
 
-export function navItems(
-  locale: Locale,
-  labels: { title: string; tag: string }[],
-): NavItem[] {
+export function navItems(labels: { title: string; tag: string }[]): NavItem[] {
   return NAV_META.map((meta, i) => ({
-    href: localizePath(locale, meta.path),
+    href: meta.path,
     title: labels[i]?.title ?? "",
     tag: labels[i]?.tag ?? "",
     accent: meta.accent,
@@ -82,7 +77,7 @@ export function navItems(
   }));
 }
 
-/** Legacy FR-only nav (3 services). Prefer `navItems(locale, dict.nav.services)`. */
+/** Legacy hardcoded nav (3 services). Prefer `navItems(dict.nav.services)`. */
 export const NAV_ITEMS: NavItem[] = [
   {
     href: PATHS.automatisation,

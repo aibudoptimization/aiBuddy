@@ -9,8 +9,8 @@ import { useLocale } from "@/components/i18n/LocaleProvider";
 import { getJournalPosts } from "@/content/journal";
 
 export default function JournalPage() {
-  const { dict, routes, locale } = useLocale();
-  const posts = getJournalPosts(locale);
+  const { dict, routes } = useLocale();
+  const posts = getJournalPosts();
   const [featured, ...rest] = posts;
   const j = dict.journalIndex;
 

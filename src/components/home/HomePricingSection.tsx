@@ -9,9 +9,9 @@ import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Reveal } from "@/components/ui/Reveal";
 
 export function HomePricingSection() {
-  const { dict, routes, locale } = useLocale();
+  const { dict, routes } = useLocale();
   const p = dict.home.pricing;
-  const eyebrow = locale === "en" ? "INVESTMENT" : "INVESTISSEMENT";
+  const eyebrow = "INVESTISSEMENT";
 
   return (
     <section

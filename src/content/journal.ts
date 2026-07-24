@@ -1,7 +1,4 @@
-import { ARTICLES_EN } from "@/content/articles-en";
 import { ARTICLES, type Article } from "@/content/articles";
-import { JOURNAL_POSTS_EN } from "@/content/journal-en";
-import type { Locale } from "@/lib/locale";
 import { ROUTES } from "@/lib/routes";
 import type { CanvasMotif } from "@/lib/canvas/types";
 
@@ -50,22 +47,18 @@ export const JOURNAL_POSTS: JournalPost[] = [
   },
 ];
 
-export function getJournalPosts(locale: Locale = "fr"): JournalPost[] {
-  return locale === "en" ? JOURNAL_POSTS_EN : JOURNAL_POSTS;
+export function getJournalPosts(): JournalPost[] {
+  return JOURNAL_POSTS;
 }
 
-export function getJournalPost(slug: string, locale: Locale = "fr"): JournalPost | undefined {
-  return getJournalPosts(locale).find((post) => post.slug === slug);
+export function getJournalPost(slug: string): JournalPost | undefined {
+  return JOURNAL_POSTS.find((post) => post.slug === slug);
 }
 
-export function getLocalizedArticle(slug: string, locale: Locale = "fr"): Article | undefined {
-  if (locale === "en") {
-    return ARTICLES_EN[slug] ?? ARTICLES[slug];
-  }
+export function getArticle(slug: string): Article | undefined {
   return ARTICLES[slug];
 }
 
-export function journalPostHref(slug: string, locale: Locale = "fr"): string {
-  if (locale === "en") return `/en/journal/${slug}`;
+export function journalPostHref(slug: string): string {
   return ROUTES.article(slug);
 }

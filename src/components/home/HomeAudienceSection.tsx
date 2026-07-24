@@ -9,9 +9,9 @@ import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Reveal } from "@/components/ui/Reveal";
 
 export function HomeAudienceSection() {
-  const { dict, locale } = useLocale();
+  const { dict } = useLocale();
   const a = dict.home.audience;
-  const eyebrow = locale === "en" ? "WHO IS IT FOR?" : "POUR QUI ?";
+  const eyebrow = "POUR QUI ?";
 
   return (
     <section

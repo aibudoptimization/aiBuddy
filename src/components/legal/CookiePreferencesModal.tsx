@@ -9,7 +9,7 @@ import { CookieCategoriesTable } from "@/components/legal/CookieCategoriesTable"
 import { useCookieConsent } from "@/components/legal/CookieConsentContext";
 
 export function CookiePreferencesModal() {
-  const { dict, routes, locale } = useLocale();
+  const { dict, routes } = useLocale();
   const { consent, preferencesOpen, closePreferences, acceptAll, rejectNonEssential, savePreferences } =
     useCookieConsent();
   const t = dict.cookies.modal;
@@ -37,7 +37,7 @@ export function CookiePreferencesModal() {
   if (!preferencesOpen) return null;
 
   const updatedDate = consent
-    ? new Date(consent.updatedAt).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", {
+    ? new Date(consent.updatedAt).toLocaleDateString("fr-CA", {
         year: "numeric",
         month: "long",
         day: "numeric",

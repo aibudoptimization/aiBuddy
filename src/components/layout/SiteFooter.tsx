@@ -6,15 +6,13 @@ import { usePathname } from "next/navigation";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { useCookieConsent } from "@/components/legal/CookieConsentContext";
-import { stripLocalePrefix } from "@/lib/locale";
 import { CONTACT_EMAIL, navItems } from "@/lib/routes";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const bare = stripLocalePrefix(pathname);
-  const isHome = bare === "/";
-  const { locale, dict, routes } = useLocale();
-  const items = navItems(locale, dict.nav.services);
+  const isHome = pathname === "/";
+  const { dict, routes } = useLocale();
+  const items = navItems(dict.nav.services);
   const f = dict.footer;
   const { openPreferences } = useCookieConsent();
 

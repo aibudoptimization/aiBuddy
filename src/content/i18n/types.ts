@@ -72,9 +72,6 @@ export type Dictionary = {
     realisations: string;
     consultCta: string;
     allArticles: string;
-    langSwitchLabel: string;
-    langFr: string;
-    langEn: string;
     skipIntro: string;
     openMenu: string;
     closeMenu: string;
@@ -301,7 +298,6 @@ export type Dictionary = {
   };
   splash: {
     ariaLabel: string;
-    choose: string;
   };
   cookies: {
     iconAriaLabel: string;

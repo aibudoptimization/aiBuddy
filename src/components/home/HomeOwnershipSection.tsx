@@ -6,9 +6,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { TextReveal } from "@/components/ui/TextReveal";
 
 export function HomeOwnershipSection() {
-  const { dict, locale } = useLocale();
+  const { dict } = useLocale();
   const o = dict.home.ownership;
-  const eyebrow = locale === "en" ? "OWNERSHIP" : "PROPRIÉTÉ";
+  const eyebrow = "PROPRIÉTÉ";
 
   return (
     <section

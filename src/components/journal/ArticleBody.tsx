@@ -27,7 +27,7 @@ export function ArticleBody({
   readNextLabel,
   sourcesLabel,
 }: ArticleBodyProps) {
-  const { locale, dict } = useLocale();
+  const { dict } = useLocale();
   const toc = tocLabel ?? dict.journalIndex.toc;
   const readNext = readNextLabel ?? dict.journalIndex.readNext;
   const sources = sourcesLabel ?? dict.journalIndex.sources;
@@ -36,7 +36,6 @@ export function ArticleBody({
     <ArticleBodyInner
       blocks={blocks}
       related={related}
-      locale={locale}
       tocLabel={toc}
       readNextLabel={readNext}
       sourcesLabel={sources}
@@ -65,11 +64,10 @@ function h2Id(blocks: ArticleBlock[], index: number) {
 function ArticleBodyInner({
   blocks,
   related = [],
-  locale,
   tocLabel,
   readNextLabel,
   sourcesLabel,
-}: ArticleBodyProps & { locale: "fr" | "en"; tocLabel: string; readNextLabel: string; sourcesLabel: string }) {
+}: ArticleBodyProps & { tocLabel: string; readNextLabel: string; sourcesLabel: string }) {
   const toc = tocFromBlocks(blocks);
 
   return (
@@ -200,7 +198,7 @@ function ArticleBodyInner({
             {related.map((item) => (
               <Link
                 key={item.slug}
-                href={journalPostHref(item.slug, locale)}
+                href={journalPostHref(item.slug)}
                 className="ww-article-related__card"
               >
                 <span className="ww-mono ww-article-related__label">

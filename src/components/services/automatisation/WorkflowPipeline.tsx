@@ -3,7 +3,6 @@
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
-import { useLocale } from "@/components/i18n/LocaleProvider";
 import { PIPELINE_FLOWS, PIPELINE_UI } from "@/content/workflows";
 import { WORKFLOW_ICONS, type WorkflowIconKey } from "@/lib/services/workflow-data";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
@@ -35,8 +34,7 @@ export function WorkflowPipeline({
   accent?: string;
   accentAlt?: string;
 }) {
-  const { locale } = useLocale();
-  const ui = PIPELINE_UI[locale];
+  const ui = PIPELINE_UI;
   const rootRef = useRef<HTMLElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const userPausedRef = useRef(false);
@@ -141,7 +139,7 @@ export function WorkflowPipeline({
                 onClick={() => goToFlow(f.id)}
               >
                 <span className="ww-mono ww-pipeline__tab-no">{f.no}</span>
-                <span className="ww-pipeline__tab-title">{f.title[locale]}</span>
+                <span className="ww-pipeline__tab-title">{f.title}</span>
               </button>
             );
           })}
@@ -151,9 +149,9 @@ export function WorkflowPipeline({
       <div className="ww-pipeline__stage">
         <header className="ww-pipeline__head">
           <div className="ww-pipeline__head-copy">
-            <span className="ww-mono ww-pipeline__tag">{flow.tag[locale]}</span>
-            <h2 className="ww-pipeline__title">{flow.title[locale]}</h2>
-            <p className="ww-pipeline__blurb">{flow.blurb[locale]}</p>
+            <span className="ww-mono ww-pipeline__tag">{flow.tag}</span>
+            <h2 className="ww-pipeline__title">{flow.title}</h2>
+            <p className="ww-pipeline__blurb">{flow.blurb}</p>
           </div>
           <div className="ww-pipeline__controls">
             <button
@@ -188,7 +186,7 @@ export function WorkflowPipeline({
                   className="ww-pipeline__step-btn"
                   onClick={() => goToStep(i)}
                   aria-current={i === step ? "step" : undefined}
-                  aria-label={`${ui.stepOf} ${i + 1}: ${s.label[locale]}`}
+                  aria-label={`${ui.stepOf} ${i + 1}: ${s.label}`}
                 >
                   <span className="ww-pipeline__step-dot" aria-hidden />
                   <span className="ww-mono ww-pipeline__step-no">
@@ -222,7 +220,7 @@ export function WorkflowPipeline({
                   </span>
                 </span>
                 <span className="ww-pipeline__node-kind ww-mono">{ui.kinds[s.kind]}</span>
-                <span className="ww-pipeline__node-label">{s.label[locale]}</span>
+                <span className="ww-pipeline__node-label">{s.label}</span>
               </button>
             );
           })}
@@ -234,8 +232,8 @@ export function WorkflowPipeline({
           </div>
           <div>
             <p className="ww-mono ww-pipeline__detail-kind">{ui.kinds[active.kind]}</p>
-            <h3 className="ww-pipeline__detail-title">{active.label[locale]}</h3>
-            <p className="ww-pipeline__detail-body">{active.detail[locale]}</p>
+            <h3 className="ww-pipeline__detail-title">{active.label}</h3>
+            <p className="ww-pipeline__detail-body">{active.detail}</p>
           </div>
         </div>
 
@@ -250,7 +248,7 @@ export function WorkflowPipeline({
                   className="ww-pipeline__handoff"
                   onClick={() => goToFlow(h.to)}
                 >
-                  {h.label[locale]}
+                  {h.label}
                   <span aria-hidden>→</span>
                 </button>
               ))}
