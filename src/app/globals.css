@@ -90,26 +90,6 @@ html {
     );
 }
 
-.ww-home-ambient__globe-clip {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(58vw, 680px);
-  height: 100vh;
-  z-index: 2;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.ww-home-ambient__globe {
-  position: absolute;
-  top: 0;
-  right: clamp(-36px, -2vw, 0px);
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
 html,
 body {
   margin: 0;
@@ -893,22 +873,91 @@ canvas {
   color: rgba(244, 243, 247, 0.6);
 }
 
-.ww-services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  align-items: stretch;
+/* —— Services sphere carousel: cards orbit the brand globe —— */
+
+.ww-sphere {
+  position: relative;
+  margin-top: 8px;
+  /* Cards animate transforms every frame; without this Chrome's scroll
+     anchoring "follows" them and drags the page back to the carousel. */
+  overflow-anchor: none;
 }
 
-.ww-services-grid > .ww-reveal {
-  display: flex;
-  min-height: 100%;
-}
-
-.ww-services-grid > .ww-reveal > .ww-service-card {
-  flex: 1;
+.ww-sphere__scene {
+  position: relative;
   width: 100%;
-  height: 100%;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.ww-sphere__scene.is-dragging {
+  cursor: grabbing;
+}
+
+.ww-sphere__scene:focus-visible {
+  border-radius: 24px;
+  box-shadow: 0 0 0 2px rgba(75, 250, 200, 0.45);
+}
+
+.ww-sphere__globe {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  pointer-events: none;
+  /* JS sizes it; may intentionally exceed the scene width on mobile. */
+  max-width: none;
+}
+
+.ww-sphere__card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(400px, 84vw);
+  will-change: transform, opacity, filter;
+}
+
+/* Orbiting cards overlap: they need a real dark surface, not the grid's
+   near-transparent film. */
+.ww-sphere__card > .ww-service-card {
+  width: 100%;
+  background: rgba(11, 11, 18, 0.86);
+}
+
+.ww-sphere__card:not(.is-active) > .ww-service-card {
+  cursor: pointer;
+}
+
+.ww-sphere__card:not(.is-active) > .ww-service-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.ww-sphere__card a {
+  -webkit-user-drag: none;
+}
+
+/* No hover background light inside the carousel — the surface stays dark. */
+.ww-sphere__card > .ww-service-card:hover,
+.ww-sphere__card > .ww-service-card:focus-visible {
+  background: rgba(11, 11, 18, 0.86);
+}
+
+/* Mobile: a normal flat carousel — no globe, denser card surface. */
+@media (max-width: 768px) {
+  .ww-sphere__globe {
+    display: none;
+  }
+
+  .ww-sphere__card > .ww-service-card,
+  .ww-sphere__card > .ww-service-card:hover,
+  .ww-sphere__card > .ww-service-card:focus-visible {
+    background: rgba(11, 11, 18, 0.95);
+  }
 }
 
 .ww-service-card {
@@ -968,10 +1017,6 @@ canvas {
 }
 
 @media (max-width: 960px) {
-  .ww-services-grid {
-    grid-template-columns: 1fr;
-  }
-
   .ww-service-card:hover {
     transform: none;
   }
@@ -4467,11 +4512,6 @@ html[data-ww-intro]::before {
   .ww-mobile-drawer__cta {
     margin-top: 22px;
     text-align: center;
-  }
-
-  /* Hero globe hidden on mobile — header NavGlobeButton owns brand motion */
-  .ww-home-ambient__globe-clip {
-    display: none;
   }
 
   .ww-home-hero {

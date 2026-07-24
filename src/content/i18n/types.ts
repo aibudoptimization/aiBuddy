@@ -178,6 +178,10 @@ export type Dictionary = {
       /** Resolves the rules-vs-AI tension in one line. */
       lead: string;
       soon: string;
+      /** Accessible name of the sphere carousel region. */
+      carouselLabel: string;
+      /** Prefix for the "bring this card to front" card labels. */
+      goTo: string;
       cards: HomeServiceCopy[];
     };
     proof: {

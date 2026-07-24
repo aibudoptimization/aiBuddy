@@ -93,6 +93,8 @@ export const fr: Dictionary = {
       titleLine2: "Un objectif : vous faire gagner du temps.",
       lead: "Des règles quand c'est fiable, de l'IA quand c'est utile. Jamais l'inverse.",
       soon: "Bientôt",
+      carouselLabel: "Carrousel des services",
+      goTo: "Afficher le service :",
       cards: [
         {
           no: "01",
