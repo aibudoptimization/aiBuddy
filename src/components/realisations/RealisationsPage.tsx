@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { JournalPageAmbient } from "@/components/journal/JournalPageAmbient";
+import { StaticAmbient } from "@/components/canvas/StaticAmbient";
 import { WorkCard } from "@/components/realisations/WorkCard";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -13,7 +13,7 @@ export function RealisationsPage() {
 
   return (
     <div className="ww-journal-page">
-      <JournalPageAmbient />
+      <StaticAmbient quiet />
 
       <div className="ww-journal-page__content">
         <section

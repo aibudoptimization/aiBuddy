@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 
-import { ParticleHeroBg } from "@/components/canvas/ParticleHeroBg";
+import { StaticAmbient } from "@/components/canvas/StaticAmbient";
 import { accentStyle, hexToRgb } from "@/lib/accents";
 
 type ServicePageLayoutProps = {
   accent: string;
   accentAlt?: string;
-  /** RGB string for hero particle network (defaults to accent color) */
+  /** RGB string tinting the ambient aurora (defaults to accent color) */
   heroRgb?: string;
-  /** RGB string the hero particles slowly drift toward (defaults to iris) */
+  /** RGB string for the aurora's tail + lower glow (defaults to iris) */
   heroSecondaryRgb?: string;
   children: ReactNode;
 };
@@ -22,11 +22,10 @@ export function ServicePageLayout({
 }: ServicePageLayoutProps) {
   return (
     <div className="ww-service-page" style={accentStyle(accentAlt ?? accent)}>
-      <ParticleHeroBg
+      <StaticAmbient
         accentRgb={heroRgb ?? hexToRgb(accent)}
         secondaryRgb={heroSecondaryRgb}
       />
-      <div className="ww-service-page__fade" aria-hidden />
       <div className="ww-service-page__content">{children}</div>
     </div>
   );

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { JournalCardCanvas } from "@/components/journal/JournalCardCanvas";
 import { JournalIndexIntro } from "@/components/journal/JournalIndexIntro";
-import { JournalPageAmbient } from "@/components/journal/JournalPageAmbient";
+import { StaticAmbient } from "@/components/canvas/StaticAmbient";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { getJournalPosts } from "@/content/journal";
 
@@ -16,7 +16,7 @@ export default function JournalPage() {
 
   return (
     <div className="ww-journal-page">
-      <JournalPageAmbient />
+      <StaticAmbient quiet />
 
       <div className="ww-journal-page__content">
         <JournalIndexIntro />

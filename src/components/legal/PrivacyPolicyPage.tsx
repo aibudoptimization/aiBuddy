@@ -4,7 +4,7 @@ import { Fragment, type ReactNode } from "react";
 
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { CookieCategoriesTable } from "@/components/legal/CookieCategoriesTable";
-import { JournalPageAmbient } from "@/components/journal/JournalPageAmbient";
+import { StaticAmbient } from "@/components/canvas/StaticAmbient";
 import { CONTACT_EMAIL } from "@/lib/routes";
 
 /** Renders `**bold**` and `{{email}}` tokens found in dict.privacy content strings. */
@@ -36,7 +36,7 @@ export function PrivacyPolicyPage() {
 
   return (
     <div className="ww-journal-page">
-      <JournalPageAmbient />
+      <StaticAmbient quiet />
 
       <div className="ww-journal-page__content">
         <section

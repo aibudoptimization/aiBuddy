@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { JournalPageAmbient } from "@/components/journal/JournalPageAmbient";
+import { StaticAmbient } from "@/components/canvas/StaticAmbient";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL } from "@/lib/routes";
@@ -14,7 +14,7 @@ export function ContactPage() {
 
   return (
     <div className="ww-journal-page">
-      <JournalPageAmbient />
+      <StaticAmbient quiet />
 
       <div className="ww-journal-page__content">
         <section

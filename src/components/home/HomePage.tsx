@@ -1,4 +1,4 @@
-import { HeroAmbient } from "@/components/canvas/HeroAmbient";
+import { StaticAmbient } from "@/components/canvas/StaticAmbient";
 import { HomeAudienceSection } from "@/components/home/HomeAudienceSection";
 import { HomeHero } from "@/components/home/HomeHero";
 import { HomeJournalSection } from "@/components/home/HomeJournalSection";
@@ -12,7 +12,7 @@ import { HomeVisibilitySection } from "@/components/home/HomeVisibilitySection";
 export function HomePage() {
   return (
     <div className="ww-home">
-      <HeroAmbient accentRgb="75,250,200" secondaryRgb="139,124,255" motif="flow" />
+      <StaticAmbient />
       <HomeHero />
       <HomeServicesSection />
       <HomeProofSection />
