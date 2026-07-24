@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
-
 import { INTRO_PENDING_ATTR, INTRO_SEEN_KEY } from "@/lib/introFlag";
 
 import "./globals.css";
@@ -61,7 +60,17 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <script dangerouslySetInnerHTML={{ __html: introCurtainScript }} />
+        {/* The curtain script must be parser-blocking (runs before first
+            paint), which next/script's beforeInteractive can't guarantee in
+            the app router (it defers via the __next_s queue). Serializing the
+            <script> as opaque HTML keeps React from ever rendering a script
+            component, so it executes from the SSR HTML without React 19's
+            dev warning, and hydration/re-renders never re-execute it. */}
+        <div
+          hidden
+          aria-hidden
+          dangerouslySetInnerHTML={{ __html: `<script>${introCurtainScript}</script>` }}
+        />
         {children}
       </body>
     </html>
