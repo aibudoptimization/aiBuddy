@@ -5,9 +5,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { GlowBullet } from "@/components/home/GlowBullet";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { createAmbientClock } from "@/lib/canvas/ambient";
+import { drawHelix } from "@/lib/canvas/helix";
+import { hexToRgb } from "@/lib/accents";
 
 const STEP = 72; // 360° / 5 cards
 const IDLE_MS = 4600;
+const IRIS_RGB = "139,124,255";
+/** Idle helix spin, radians per ms (~one turn every 26 s). */
+const HELIX_SPIN = 0.00024;
+/** Helix radians per degree of card rotation — the DNA turns with the deck. */
+const HELIX_COUPLING = (Math.PI / 180) * 0.55;
 
 /** Shortest signed distance from `angle` to the front position (0°). */
 function frontOffset(angle: number): number {
@@ -15,11 +23,13 @@ function frontOffset(angle: number): number {
 }
 
 /**
- * The 5 service cards orbit a still center piece (orbit rings + the active
- * service's number — the globe lives in the hero). Rotation is driven by
- * pointer drag with a velocity fling, snaps card-to-card, and drifts on its
- * own until the first interaction. Transforms are applied directly to the
- * DOM from a rAF loop — React state only tracks the active index for aria.
+ * The 5 service cards orbit the DNA of Workflow Wonder — a glowing canvas
+ * double helix that spins slowly on its own, turns with the deck while you
+ * drag, and re-tints toward the active service's accent. Card rotation is
+ * driven by pointer drag with a velocity fling, snaps card-to-card, and
+ * drifts on its own until the first interaction. Transforms are applied
+ * directly to the DOM from a rAF loop — React state only tracks the active
+ * index for aria.
  */
 export function ServiceSphereCarousel() {
   const { dict, routes } = useLocale();
@@ -28,7 +38,10 @@ export function ServiceSphereCarousel() {
   const n = cards.length;
 
   const sceneRef = useRef<HTMLDivElement>(null);
+  const helixRef = useRef<HTMLCanvasElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const helixColor = useRef<[number, number, number]>([75, 250, 200]);
+  const helixTarget = useRef<[number, number, number]>([75, 250, 200]);
 
   const rot = useRef(0);
   const target = useRef(0);
@@ -109,6 +122,14 @@ export function ServiceSphereCarousel() {
       const cardW = cardRefs.current[0]?.offsetWidth ?? 400;
       spread.current = Math.max(120, Math.min(cw * 0.42, cw / 2 - cardW * 0.22));
       setMinH(maxH + 56);
+      const helix = helixRef.current;
+      if (helix) {
+        const rect = helix.getBoundingClientRect();
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+        helix.width = Math.max(1, rect.width) * dpr;
+        helix.height = Math.max(1, rect.height) * dpr;
+        helix.getContext("2d")?.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
       apply(rot.current);
     };
     measure();
@@ -117,20 +138,39 @@ export function ServiceSphereCarousel() {
     return () => ro.disconnect();
   }, [apply]);
 
-  // Animation loop: spring toward the snap target.
+  // Keep the helix easing toward the active card's accent.
+  useEffect(() => {
+    helixTarget.current = hexToRgb(cards[active].accent).split(",").map(Number) as [
+      number,
+      number,
+      number,
+    ];
+  }, [active, cards]);
+
+  // Animation loop: card spring + helix drawing share one rAF.
   useEffect(() => {
     reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     apply(rot.current);
 
+    const helix = helixRef.current;
+    const hctx = helix?.getContext("2d") ?? null;
+    const helixW = () => (helix ? helix.clientWidth : 0);
+    const helixH = () => (helix ? helix.clientHeight : 0);
+
     if (reduced.current) {
-      // No drift, no spring — rotation jumps straight to its target.
+      // Single static helix frame, no drift, no spring.
+      if (hctx) {
+        drawHelix(hctx, helixW(), helixH(), 0, helixTarget.current.join(","), IRIS_RGB);
+      }
       return;
     }
 
+    const clock = createAmbientClock();
     let raf = 0;
     let lastNow = 0;
     const loop = (now: number) => {
+      const t = clock(now);
       const dt = Math.min(48, lastNow ? now - lastNow : 16);
       lastNow = now;
       if (!dragging.current) {
@@ -142,6 +182,21 @@ export function ServiceSphereCarousel() {
           rot.current = target.current;
           apply(rot.current);
         }
+      }
+      if (hctx) {
+        const c = helixColor.current;
+        const goal = helixTarget.current;
+        const ease = Math.min(1, dt * 0.004);
+        for (let i = 0; i < 3; i++) c[i] += (goal[i] - c[i]) * ease;
+        const spin = t * HELIX_SPIN + rot.current * HELIX_COUPLING;
+        drawHelix(
+          hctx,
+          helixW(),
+          helixH(),
+          spin,
+          `${Math.round(c[0])},${Math.round(c[1])},${Math.round(c[2])}`,
+          IRIS_RGB,
+        );
       }
       raf = requestAnimationFrame(loop);
     };
@@ -275,22 +330,7 @@ export function ServiceSphereCarousel() {
           style={{ ["--service-accent" as string]: cards[active].accent }}
           aria-hidden
         >
-          <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="200" cy="200" r="196" fill="none" stroke="rgba(244,243,247,0.06)" strokeWidth="1" />
-            <circle cx="200" cy="200" r="152" fill="none" stroke="rgba(244,243,247,0.08)" strokeWidth="1" />
-            <circle
-              cx="200"
-              cy="200"
-              r="118"
-              fill="none"
-              stroke="var(--service-accent)"
-              strokeWidth="1"
-              strokeDasharray="3 9"
-              opacity="0.45"
-            />
-          </svg>
-          <span className="ww-mono ww-sphere__center-no">{cards[active].no}</span>
-          <span className="ww-mono ww-sphere__center-tag">{cards[active].tag}</span>
+          <canvas ref={helixRef} className="ww-sphere__helix" />
         </div>
         {cards.map((service, i) => (
           <div

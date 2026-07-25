@@ -967,48 +967,31 @@ canvas {
   box-shadow: 0 0 0 2px rgba(75, 250, 200, 0.45);
 }
 
-/* Still center piece: orbit rings + the active service's number/tag,
-   tinted by the active card's accent (the globe lives in the hero). */
+/* Still center piece: double helix (the DNA of Workflow Wonder), rungs and
+   nodes tinted by the active card's accent (the globe lives in the hero). */
 .ww-sphere__center {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: min(56vw, 480px);
-  aspect-ratio: 1;
+  /* Taller than the front card so the strands emerge above and below it */
+  height: min(124%, 620px);
+  aspect-ratio: 200 / 460;
   z-index: 100;
   pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  /* Soft accent halo behind the helix, re-tinting with the active card */
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--service-accent, var(--teal)) 9%, transparent),
+    transparent 72%
+  );
+  transition: background 0.5s var(--ease-out);
 }
 
-.ww-sphere__center svg {
-  position: absolute;
-  inset: 0;
+.ww-sphere__helix {
+  display: block;
   width: 100%;
   height: 100%;
-}
-
-.ww-sphere__center circle {
-  transition: stroke 0.5s var(--ease-out);
-}
-
-.ww-sphere__center-no {
-  font-size: clamp(30px, 3.4vw, 44px);
-  letter-spacing: 0.08em;
-  color: var(--service-accent, var(--teal));
-  text-shadow: 0 0 24px color-mix(in srgb, var(--service-accent, var(--teal)) 55%, transparent);
-  transition: color 0.5s var(--ease-out);
-}
-
-.ww-sphere__center-tag {
-  font-size: 10.5px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(244, 243, 247, 0.4);
 }
 
 .ww-sphere__card {
