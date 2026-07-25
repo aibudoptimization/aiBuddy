@@ -40,10 +40,9 @@ export function PrivacyPolicyPage() {
 
       <div className="ww-journal-page__content">
         <section
-          className="ww-container"
+          className="ww-container ww-page-head"
           style={{
             maxWidth: 820,
-            paddingTop: "clamp(104px, 13vh, 132px)",
             paddingBottom: "clamp(64px, 12vh, 120px)",
           }}
         >

@@ -8,11 +8,8 @@ export function JournalIndexIntro() {
 
   return (
     <section
-      className="ww-container"
-      style={{
-        paddingTop: "clamp(100px, 12vh, 120px)",
-        paddingBottom: "clamp(30px, 5vh, 54px)",
-      }}
+      className="ww-container ww-page-head"
+      style={{ paddingBottom: "clamp(30px, 5vh, 54px)" }}
     >
       <div
         className="ww-mono"

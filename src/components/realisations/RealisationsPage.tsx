@@ -17,11 +17,8 @@ export function RealisationsPage() {
 
       <div className="ww-journal-page__content">
         <section
-          className="ww-container"
-          style={{
-            paddingTop: "clamp(104px, 13vh, 132px)",
-            paddingBottom: "clamp(64px, 12vh, 120px)",
-          }}
+          className="ww-container ww-page-head"
+          style={{ paddingBottom: "clamp(64px, 12vh, 120px)" }}
         >
           <div
             className="ww-mono"

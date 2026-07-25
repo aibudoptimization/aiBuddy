@@ -18,11 +18,8 @@ export function ContactPage() {
 
       <div className="ww-journal-page__content">
         <section
-          className="ww-container ww-contact"
-          style={{
-            paddingTop: "clamp(104px, 13vh, 132px)",
-            paddingBottom: "clamp(64px, 12vh, 120px)",
-          }}
+          className="ww-container ww-contact ww-page-head"
+          style={{ paddingBottom: "clamp(64px, 12vh, 120px)" }}
         >
           <div className="ww-contact__grid">
             <div className="ww-contact__intro">

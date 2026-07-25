@@ -658,6 +658,12 @@ canvas {
   box-sizing: border-box;
 }
 
+/* First section of a page: clears the fixed chrome and sets the breathing
+   room above the page title. Tightened on mobile (see the 768px block). */
+.ww-page-head {
+  padding-top: clamp(104px, 13vh, 132px);
+}
+
 .ww-faq summary {
   list-style: none;
   outline: none;
@@ -3486,8 +3492,13 @@ canvas {
   padding-top: 3px;
 }
 
+/* min-width: 0 keeps the min-width:520px table below from inflating the
+   article column's min-content size — without it the whole body stretches
+   past the viewport and centred text gets clipped on both sides. */
 .ww-article-table-wrap {
   overflow-x: auto;
+  min-width: 0;
+  max-width: 100%;
   margin: 12px 0 28px;
   border: 1px solid rgba(244, 243, 247, 0.1);
   border-radius: 16px;
@@ -5014,6 +5025,12 @@ html[data-ww-intro]::before {
   gap: 0 56px;
 }
 
+/* Grid items default to min-width:auto, which lets wide content (tables,
+   long URLs) push the column past the viewport. */
+.ww-article-body {
+  min-width: 0;
+}
+
 .ww-article-toc__sticky {
   position: sticky;
   top: calc(var(--ww-chrome-h) + 12px);
@@ -5129,14 +5146,46 @@ html[data-ww-intro]::before {
 }
 
 @media (max-width: 768px) {
+  /* The mobile header is shorter than the desktop one; the spacer that
+     offsets the fixed chrome has to match it exactly or every page starts
+     with dead space. 72px header + 1px bottom border. */
+  :root {
+    --ww-header-h: 73px;
+  }
+
   .ww-header {
     padding: 14px var(--page-pad);
   }
 
+  /* Page tops: the fixed chrome already reserves its own height, so these
+     only need enough room to breathe above the title. */
+  .ww-page-head {
+    padding-top: 30px;
+  }
+
+  .ww-service-page__content {
+    padding-top: 28px;
+  }
+
+  .ww-article-main {
+    padding-top: 26px;
+  }
+
+  .ww-article-hero__inner {
+    padding-top: 32px;
+  }
+
   .ww-home-hero {
     min-height: calc(100svh - var(--ww-chrome-h));
-    padding-top: clamp(72px, 10vh, 110px);
-    padding-bottom: 48px;
+    padding-top: 30px;
+    padding-bottom: 44px;
+  }
+
+  /* Featured journal card: match the other cards' thumbnail height instead
+     of the desktop side-by-side proportions. */
+  .ww-journal-featured-art {
+    min-height: 0;
+    height: 190px;
   }
 
   .ww-home-hero__title {
