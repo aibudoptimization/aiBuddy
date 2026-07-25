@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { MapPin } from "lucide-react";
 
+import { HeroGlobe } from "@/components/canvas/HeroGlobe";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
 const ROTATE_HOLD_MS = 3400;
@@ -85,6 +86,8 @@ export function HomeHero() {
 
   return (
     <main className="ww-home-hero">
+      <div className="ww-home-hero__inner">
+        <div className="ww-home-hero__copy">
       <div style={{ overflow: "hidden", marginBottom: 26 }}>
         <div
           className="ww-mono ww-fade-up"
@@ -150,6 +153,12 @@ export function HomeHero() {
             {item}
           </span>
         ))}
+      </div>
+        </div>
+
+        <div className="ww-home-hero__globe ww-fade-up" style={{ animationDelay: "0.4s" }} aria-hidden>
+          <HeroGlobe />
+        </div>
       </div>
     </main>
   );

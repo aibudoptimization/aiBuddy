@@ -701,8 +701,8 @@ canvas {
     visibility 0.2s;
 }
 
-.ww-nav-panel.is-open,
-.ww-nav-wrap:hover .ww-nav-panel {
+/* Click-only dropdown: hover never opens it */
+.ww-nav-panel.is-open {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, 0);
@@ -714,7 +714,6 @@ canvas {
   transition: transform 0.22s ease;
 }
 
-.ww-nav-wrap:hover .ww-nav-chev,
 .ww-nav-wrap.is-open .ww-nav-chev {
   transform: rotate(180deg);
 }
@@ -968,15 +967,48 @@ canvas {
   box-shadow: 0 0 0 2px rgba(75, 250, 200, 0.45);
 }
 
-.ww-sphere__globe {
+/* Still center piece: orbit rings + the active service's number/tag,
+   tinted by the active card's accent (the globe lives in the hero). */
+.ww-sphere__center {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  width: min(56vw, 480px);
+  aspect-ratio: 1;
   z-index: 100;
   pointer-events: none;
-  /* JS sizes it; may intentionally exceed the scene width on mobile. */
-  max-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ww-sphere__center svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ww-sphere__center circle {
+  transition: stroke 0.5s var(--ease-out);
+}
+
+.ww-sphere__center-no {
+  font-size: clamp(30px, 3.4vw, 44px);
+  letter-spacing: 0.08em;
+  color: var(--service-accent, var(--teal));
+  text-shadow: 0 0 24px color-mix(in srgb, var(--service-accent, var(--teal)) 55%, transparent);
+  transition: color 0.5s var(--ease-out);
+}
+
+.ww-sphere__center-tag {
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 247, 0.4);
 }
 
 .ww-sphere__card {
@@ -1013,9 +1045,9 @@ canvas {
   background: rgba(11, 11, 18, 0.86);
 }
 
-/* Mobile: a normal flat carousel — no globe, denser card surface. */
+/* Mobile: a normal flat carousel — no center piece, denser card surface. */
 @media (max-width: 768px) {
-  .ww-sphere__globe {
+  .ww-sphere__center {
     display: none;
   }
 
@@ -3996,14 +4028,38 @@ canvas {
   position: relative;
   z-index: 2;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
   min-height: 100vh;
   box-sizing: border-box;
-  padding: clamp(122px, 14vh, 156px) clamp(28px, 5vw, 72px) clamp(56px, 8vh, 90px);
-  max-width: min(980px, 100%);
-  /* Keep copy clear of the ambient globe on wide screens */
-  padding-right: clamp(28px, 8vw, 72px);
+  padding: clamp(122px, 14vh, 156px) var(--page-pad) clamp(56px, 8vh, 90px);
+}
+
+/* Tight hero: copy + globe constrained to the site column, not full bleed */
+.ww-home-hero__inner {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+}
+
+.ww-home-hero__globe {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1;
+  justify-self: center;
+  pointer-events: none;
+}
+
+.ww-hero-globe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .ww-home-hero__title {
@@ -4011,7 +4067,7 @@ canvas {
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 0.98;
-  font-size: clamp(40px, 6.6vw, 92px);
+  font-size: clamp(38px, 4.6vw, 68px);
 }
 
 .ww-home-hero__lead {
@@ -4281,11 +4337,7 @@ html[data-ww-intro]::before {
 .ww-header {
   position: relative;
   z-index: 60;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 22px var(--page-pad);
-  gap: 16px;
   overflow: visible;
 }
 
@@ -4296,15 +4348,34 @@ html[data-ww-intro]::before {
   right: 0;
 }
 
+/* Tight header: content constrained to the site column, not full bleed.
+   Logo left, nav right beside it, CTA pushed to the far right. */
+.ww-header__inner {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
 .ww-header__nav {
   display: flex;
   align-items: center;
+  flex: 1;
+  justify-content: flex-start;
+  margin-left: clamp(14px, 2.6vw, 40px);
   gap: clamp(16px, 2.2vw, 32px);
   font-size: 14.5px;
   color: rgba(244, 243, 247, 0.66);
   overflow: visible;
   position: relative;
   z-index: 60;
+}
+
+.ww-header__back--desktop {
+  margin-left: auto;
 }
 
 .ww-header__link,
@@ -4319,6 +4390,40 @@ html[data-ww-intro]::before {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  position: relative;
+  transition: color 0.25s var(--ease-out);
+}
+
+.ww-header__link:hover,
+.ww-header__link:focus-visible,
+.ww-header__link-btn:hover,
+.ww-header__link-btn:focus-visible,
+.ww-nav-wrap.is-open .ww-header__link-btn {
+  color: var(--snow);
+}
+
+/* Under-word slide-in on hover */
+.ww-header__link::after,
+.ww-header__link-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: var(--teal);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.ww-header__link:hover::after,
+.ww-header__link:focus-visible::after,
+.ww-header__link-btn:hover::after,
+.ww-header__link-btn:focus-visible::after,
+.ww-nav-wrap.is-open .ww-header__link-btn::after {
+  transform: scaleX(1);
 }
 
 .ww-header__cta {
@@ -4454,7 +4559,9 @@ html[data-ww-intro]::before {
 }
 
 @media (max-width: 768px) {
-  .ww-header__nav--desktop {
+  .ww-header__nav--desktop,
+  .ww-header__cta--desktop,
+  .ww-header__back--desktop {
     display: none;
   }
 
@@ -4526,9 +4633,13 @@ html[data-ww-intro]::before {
     text-align: center;
   }
 
-  .ww-home-hero {
-    max-width: 100%;
-    padding-right: var(--page-pad);
+  /* Mobile hero: copy only — header NavGlobeButton owns brand motion */
+  .ww-home-hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .ww-home-hero__globe {
+    display: none;
   }
 
   .ww-sites-panels {

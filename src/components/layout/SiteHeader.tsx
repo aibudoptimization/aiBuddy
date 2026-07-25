@@ -52,6 +52,23 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
     };
   }, [mobileOpen]);
 
+  // Dropdown is click-only: close on outside pointerdown or Escape.
+  useEffect(() => {
+    if (!navOpen) return;
+    const onPointerDown = (e: PointerEvent) => {
+      if (!(e.target as Element | null)?.closest(".ww-nav-wrap")) setNavOpen(false);
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setNavOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [navOpen]);
+
   const handleHomeHashClick = (event: MouseEvent<HTMLAnchorElement>, hash: string) => {
     if (pathname !== "/") return;
     event.preventDefault();
@@ -61,20 +78,20 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
 
   return (
     <header className={`ww-header${fixed ? " ww-header--fixed" : ""}`}>
+      <div className="ww-header__inner">
       <BrandMark />
 
-      <nav className="ww-header__nav ww-header__nav--desktop" aria-label={dict.chrome.primaryNav}>
-        {isJournalArticle ? (
-          <Link href={routes.journal} className="ww-mono ww-header__back">
-            <span aria-hidden>←</span> {dict.chrome.allArticles}
-          </Link>
-        ) : (
-          <>
-            <div
-              className={`ww-nav-wrap${navOpen ? " is-open" : ""}`}
-              onMouseEnter={() => setNavOpen(true)}
-              onMouseLeave={() => setNavOpen(false)}
-            >
+      {isJournalArticle ? (
+        <Link href={routes.journal} className="ww-mono ww-header__back ww-header__back--desktop">
+          <span aria-hidden>←</span> {dict.chrome.allArticles}
+        </Link>
+      ) : (
+        <>
+          <nav
+            className="ww-header__nav ww-header__nav--desktop"
+            aria-label={dict.chrome.primaryNav}
+          >
+            <div className={`ww-nav-wrap${navOpen ? " is-open" : ""}`}>
               <button
                 type="button"
                 onClick={() => setNavOpen((open) => !open)}
@@ -125,13 +142,14 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
             >
               {dict.chrome.approach}
             </Link>
-            <Link href={routes.contact} className="ww-header__cta">
-              <span className="ww-header__cta-full">{dict.chrome.consultCta}</span>
-              <span className="ww-header__cta-short">Consultation</span>
-            </Link>
-          </>
-        )}
-      </nav>
+          </nav>
+
+          <Link href={routes.contact} className="ww-header__cta ww-header__cta--desktop">
+            <span className="ww-header__cta-full">{dict.chrome.consultCta}</span>
+            <span className="ww-header__cta-short">Consultation</span>
+          </Link>
+        </>
+      )}
 
       {!isJournalArticle ? (
         <div className="ww-header__mobile-bar">
@@ -147,6 +165,7 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
           <span aria-hidden>←</span> {dict.chrome.allArticles}
         </Link>
       )}
+      </div>
 
       <div
         id="ww-mobile-drawer"

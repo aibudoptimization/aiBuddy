@@ -5,13 +5,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { GlowBullet } from "@/components/home/GlowBullet";
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { createAmbientClock } from "@/lib/canvas/ambient";
-import { drawGlobe, initGlobeRings } from "@/lib/canvas/globe";
 
 const STEP = 72; // 360° / 5 cards
 const IDLE_MS = 4600;
-const ACCENT_RGB = "75,250,200";
-const SECONDARY_RGB = "139,124,255";
 
 /** Shortest signed distance from `angle` to the front position (0°). */
 function frontOffset(angle: number): number {
@@ -19,11 +15,11 @@ function frontOffset(angle: number): number {
 }
 
 /**
- * The 5 service cards orbit the brand globe (the same canvas drawing that
- * used to live in the hero). Rotation is driven by pointer drag with a
- * velocity fling, snaps card-to-card, and drifts on its own until the first
- * interaction. Transforms are applied directly to the DOM from a rAF loop —
- * React state only tracks the active index for dots/aria.
+ * The 5 service cards orbit a still center piece (orbit rings + the active
+ * service's number — the globe lives in the hero). Rotation is driven by
+ * pointer drag with a velocity fling, snaps card-to-card, and drifts on its
+ * own until the first interaction. Transforms are applied directly to the
+ * DOM from a rAF loop — React state only tracks the active index for aria.
  */
 export function ServiceSphereCarousel() {
   const { dict, routes } = useLocale();
@@ -32,7 +28,6 @@ export function ServiceSphereCarousel() {
   const n = cards.length;
 
   const sceneRef = useRef<HTMLDivElement>(null);
-  const globeRef = useRef<HTMLCanvasElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const rot = useRef(0);
@@ -114,19 +109,6 @@ export function ServiceSphereCarousel() {
       const cardW = cardRefs.current[0]?.offsetWidth ?? 400;
       spread.current = Math.max(120, Math.min(cw * 0.42, cw / 2 - cardW * 0.22));
       setMinH(maxH + 56);
-      const globe = globeRef.current;
-      if (globe) {
-        // Wide enough that the rings arc past the front card's edges; on
-        // narrow screens (card ≈ scene width) grow with card height instead
-        // so the rings peek above and below the card.
-        const size = Math.min(Math.max(cw * 0.98, maxH * 1.3), 780);
-        const dpr = Math.min(2, window.devicePixelRatio || 1);
-        globe.style.width = `${size}px`;
-        globe.style.height = `${size}px`;
-        globe.width = size * dpr;
-        globe.height = size * dpr;
-        globe.getContext("2d")?.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
       apply(rot.current);
     };
     measure();
@@ -135,39 +117,22 @@ export function ServiceSphereCarousel() {
     return () => ro.disconnect();
   }, [apply]);
 
-  // Animation loop: globe drawing + spring toward the snap target.
+  // Animation loop: spring toward the snap target.
   useEffect(() => {
     reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const globe = globeRef.current;
-    const gctx = globe?.getContext("2d") ?? null;
-    const rings = initGlobeRings();
 
     apply(rot.current);
 
     if (reduced.current) {
-      // Single static globe frame, no drift, no spring.
-      if (gctx && globe) {
-        drawGlobe(gctx, globe.clientWidth, globe.clientHeight, ACCENT_RGB, SECONDARY_RGB, rings, 0, {
-          radiusFactor: 0.46,
-          intensity: 1.1,
-        });
-      }
+      // No drift, no spring — rotation jumps straight to its target.
       return;
     }
 
-    const clock = createAmbientClock();
     let raf = 0;
     let lastNow = 0;
     const loop = (now: number) => {
-      const t = clock(now);
       const dt = Math.min(48, lastNow ? now - lastNow : 16);
       lastNow = now;
-      if (gctx && globe) {
-        drawGlobe(gctx, globe.clientWidth, globe.clientHeight, ACCENT_RGB, SECONDARY_RGB, rings, t, {
-          radiusFactor: 0.46,
-          intensity: 1.1,
-        });
-      }
       if (!dragging.current) {
         const diff = target.current - rot.current;
         if (Math.abs(diff) > 0.02) {
@@ -305,7 +270,28 @@ export function ServiceSphereCarousel() {
         onKeyDown={onKeyDown}
         tabIndex={0}
       >
-        <canvas ref={globeRef} className="ww-sphere__globe" aria-hidden />
+        <div
+          className="ww-sphere__center"
+          style={{ ["--service-accent" as string]: cards[active].accent }}
+          aria-hidden
+        >
+          <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="200" cy="200" r="196" fill="none" stroke="rgba(244,243,247,0.06)" strokeWidth="1" />
+            <circle cx="200" cy="200" r="152" fill="none" stroke="rgba(244,243,247,0.08)" strokeWidth="1" />
+            <circle
+              cx="200"
+              cy="200"
+              r="118"
+              fill="none"
+              stroke="var(--service-accent)"
+              strokeWidth="1"
+              strokeDasharray="3 9"
+              opacity="0.45"
+            />
+          </svg>
+          <span className="ww-mono ww-sphere__center-no">{cards[active].no}</span>
+          <span className="ww-mono ww-sphere__center-tag">{cards[active].tag}</span>
+        </div>
         {cards.map((service, i) => (
           <div
             key={service.pathKey}
