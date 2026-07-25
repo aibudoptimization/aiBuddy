@@ -658,10 +658,11 @@ canvas {
   box-sizing: border-box;
 }
 
-/* First section of a page: clears the fixed chrome and sets the breathing
-   room above the page title. Tightened on mobile (see the 768px block). */
+/* First section of a page. The chrome spacer already reserves the header's
+   height, so this is purely the breathing room above the page title —
+   don't re-add the header height here. Tightened further on mobile. */
 .ww-page-head {
-  padding-top: clamp(104px, 13vh, 132px);
+  padding-top: clamp(38px, 5.5vh, 60px);
 }
 
 .ww-faq summary {
@@ -1709,8 +1710,7 @@ canvas {
 .ww-service-page__content {
   position: relative;
   z-index: 2;
-  padding: clamp(104px, 12vh, 128px) clamp(28px, 5vw, 64px)
-    clamp(40px, 6vw, 72px);
+  padding: clamp(36px, 5.5vh, 58px) clamp(28px, 5vw, 64px) clamp(40px, 6vw, 72px);
 }
 
 .ww-service-page__content > .ww-container {
@@ -4023,9 +4023,11 @@ canvas {
   z-index: 2;
   display: flex;
   align-items: center;
-  min-height: 100vh;
+  /* Minus the chrome: the fixed header sits above this, so a full 100vh
+     would push the bottom of the hero off the first screen. */
+  min-height: calc(100svh - var(--ww-chrome-h));
   box-sizing: border-box;
-  padding: clamp(122px, 14vh, 156px) var(--page-pad) clamp(56px, 8vh, 90px);
+  padding: clamp(36px, 5vh, 64px) var(--page-pad) clamp(44px, 6vh, 76px);
 }
 
 /* Tight hero: copy + globe constrained to the site column, not full bleed */
@@ -4967,7 +4969,7 @@ html[data-ww-intro]::before {
   z-index: 2;
   max-width: 980px;
   margin: 0 auto;
-  padding: clamp(100px, 12vh, 120px) clamp(22px, 5vw, 64px) clamp(40px, 7vh, 72px);
+  padding: clamp(40px, 6vh, 64px) clamp(22px, 5vw, 64px) clamp(40px, 7vh, 72px);
 }
 
 .ww-article-hero__cat {
