@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
-import { INTRO_PENDING_ATTR, INTRO_SEEN_KEY } from "@/lib/introFlag";
+import { INTRO_HOLD_ATTR, INTRO_PENDING_ATTR, INTRO_SEEN_KEY } from "@/lib/introFlag";
 
 import "./globals.css";
 
@@ -36,15 +36,18 @@ export const metadata: Metadata = {
 
 /**
  * Runs synchronously before the body paints: if the splash intro hasn't been
- * seen this session, flag <html> so CSS raises an opaque curtain immediately.
+ * seen this session, flag <html> so CSS raises an opaque curtain immediately
+ * and holds hero entrance animations at their first frame.
  * Mirrors introPending() in BrandSplash (on storage errors, treat as pending).
- * BrandSplash removes the attribute once it has mounted and owns the screen.
+ * BrandSplash drops the curtain attribute once it owns the screen, and the
+ * hold attribute once the intro has fully finished. The timeout is a
+ * failsafe: if the splash never runs, the hold must not strand the hero.
  */
-const introCurtainScript = `(function(){var d=document.documentElement;try{if(sessionStorage.getItem(${JSON.stringify(
-  INTRO_SEEN_KEY,
-)})!=="1")d.setAttribute(${JSON.stringify(INTRO_PENDING_ATTR)},"")}catch(e){d.setAttribute(${JSON.stringify(
+const introCurtainScript = `(function(){var d=document.documentElement,p=${JSON.stringify(
   INTRO_PENDING_ATTR,
-)},"")}})()`;
+)},h=${JSON.stringify(INTRO_HOLD_ATTR)};function m(){d.setAttribute(p,"");d.setAttribute(h,"");setTimeout(function(){d.removeAttribute(h)},6000)}try{if(sessionStorage.getItem(${JSON.stringify(
+  INTRO_SEEN_KEY,
+)})!=="1")m()}catch(e){m()}})()`;
 
 export default function RootLayout({
   children,

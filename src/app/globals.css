@@ -37,6 +37,10 @@
 
 html {
   scroll-behavior: auto;
+  /* Always reserve the scrollbar gutter. The splash locks scrolling while it
+     owns the screen; without this, releasing the lock makes the scrollbar pop
+     in and shove the whole layout left by its width. */
+  scrollbar-gutter: stable;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -115,12 +119,71 @@ html {
   animation-delay: var(--hero-delay, 0ms);
 }
 
+/* While the first-visit splash owns the screen, hold every hero entrance at
+   its first frame. Pausing freezes the delay too, so releasing the hold
+   plays the whole cascade once, in front of the visitor — instead of it
+   running out behind the curtain. */
+html[data-ww-hold] .ww-hero-line > *,
+html[data-ww-hold] .ww-hero-word > *,
+html[data-ww-hold] .ww-hero-fade {
+  animation-play-state: paused;
+}
+
+/* Once the line has landed, drop the clip: the rotating word inside the
+   headline needs to fall past the line box without being sliced. */
+.ww-hero-line.is-settled {
+  overflow: visible;
+}
+
+/* One headline line's worth of words. Block-level so consecutive groups
+   stack as separate lines, while the words inside stay inline and wrap. */
+.ww-hero-words {
+  display: block;
+}
+
+/* Word-by-word variant: each word carries its own mask and delay. Inline so
+   words still wrap naturally; the trailing space is a real space so line
+   breaks and text selection behave normally. */
+.ww-hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Descender room, cancelled from layout. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.ww-hero-word::after {
+  content: " ";
+  white-space: pre;
+}
+
+.ww-hero-word > * {
+  display: inline-block;
+  animation: ww-hero-line var(--hero-dur) var(--hero-ease) both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+/* The rotating word must overflow its box once the headline has arrived,
+   otherwise the mask-up clip slices it as it falls off the line. */
+.ww-home-hero__title.is-settled .ww-hero-word {
+  overflow: visible;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ww-hero-line > *,
+  .ww-hero-word > *,
   .ww-hero-fade {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  /* No animation means no animationend, so nothing would ever release the
+     clip — and the lines never need it here. */
+  .ww-hero-line,
+  .ww-hero-word {
+    overflow: visible;
   }
 }
 
@@ -828,14 +891,33 @@ canvas {
   }
 }
 
+/* A soft mask instead of a hard clip: words dissolve as they leave the line
+   rather than being sliced by an invisible box. The band is opaque across
+   the glyphs and fades over the generous padding above/below; the negative
+   margins cancel that padding's layout impact. */
 .ww-rotate {
   display: inline-grid;
   white-space: nowrap;
-  overflow: hidden;
-  /* Clip window slightly taller than the glyph box (ascenders/descenders);
-     negative margins cancel the layout impact. */
-  padding: 0.08em 0 0.12em;
-  margin: -0.08em 0 -0.12em;
+  padding: 0.5em 0 0.6em;
+  margin: -0.5em 0 -0.6em;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgb(0 0 0 / 0.3) 8%,
+    #000 20%,
+    #000 76%,
+    rgb(0 0 0 / 0.3) 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgb(0 0 0 / 0.3) 8%,
+    #000 20%,
+    #000 76%,
+    rgb(0 0 0 / 0.3) 90%,
+    transparent 100%
+  );
 }
 
 /* All children share one grid cell, so every word sits exactly where the
@@ -874,12 +956,16 @@ canvas {
   }
   30% {
     transform: translateY(16%) rotate(2deg);
-    opacity: 1;
+    opacity: 0.92;
+  }
+  /* Gone before it reaches the mask's edge — it dissolves mid-fall. */
+  75% {
+    opacity: 0;
   }
   100% {
-    transform: translateY(150%) rotate(11deg);
+    transform: translateY(120%) rotate(9deg);
     opacity: 0;
-    filter: blur(3px);
+    filter: blur(4px);
   }
 }
 
@@ -4064,6 +4150,11 @@ canvas {
   width: 100%;
   height: 100%;
   display: block;
+  /* Grabbable even though the wrapper stays inert. pan-y keeps vertical
+     scrolling working on touch while horizontal drags spin the globe. */
+  pointer-events: auto;
+  touch-action: pan-y;
+  cursor: grab;
 }
 
 .ww-home-hero__title {

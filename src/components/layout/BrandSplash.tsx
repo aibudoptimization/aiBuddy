@@ -5,7 +5,12 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { drawGlobe, initGlobeRings } from "@/lib/canvas/globe";
-import { INTRO_DONE_EVENT, INTRO_PENDING_ATTR, INTRO_SEEN_KEY } from "@/lib/introFlag";
+import {
+  INTRO_DONE_EVENT,
+  INTRO_HOLD_ATTR,
+  INTRO_PENDING_ATTR,
+  INTRO_SEEN_KEY,
+} from "@/lib/introFlag";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 const STORAGE_KEY = INTRO_SEEN_KEY;
@@ -65,6 +70,8 @@ export function BrandSplash() {
       } catch {
         /* ignore */
       }
+      // Release the hero entrance animations: the screen is ours to see now.
+      document.documentElement.removeAttribute(INTRO_HOLD_ATTR);
       window.dispatchEvent(new Event(INTRO_DONE_EVENT));
     }, 480);
   };

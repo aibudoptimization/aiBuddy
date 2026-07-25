@@ -7,10 +7,15 @@ import { MapPin } from "lucide-react";
 import { HeroGlobe } from "@/components/canvas/HeroGlobe";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { HeroReveal } from "@/components/ui/HeroReveal";
+import { HeroWords } from "@/components/ui/HeroWords";
+import { INTRO_DONE_EVENT, INTRO_HOLD_ATTR } from "@/lib/introFlag";
 
 const ROTATE_HOLD_MS = 3400;
 const ROTATE_FIRST_MS = 3800;
 const ROTATE_FALL_MS = 1200;
+
+/** Second headline line starts a beat after the first line's words. */
+const HERO_LINE2_MS = 190;
 
 /**
  * Gradient word that falls off the line on intervals while the next one
@@ -29,6 +34,10 @@ function RotatingGradientWord({ words }: { words: string[] }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let clearPrevT = 0;
+    let interval = 0;
+    let startT = 0;
+    let failsafeT = 0;
+
     const tick = () => {
       if (document.hidden) return;
       const next = (indexRef.current + 1) % words.length;
@@ -40,14 +49,31 @@ function RotatingGradientWord({ words }: { words: string[] }) {
       clearPrevT = window.setTimeout(() => setPrev(null), ROTATE_FALL_MS);
     };
 
-    let interval = 0;
-    const start = window.setTimeout(() => {
-      tick();
-      interval = window.setInterval(tick, ROTATE_HOLD_MS);
-    }, ROTATE_FIRST_MS);
+    const beginCycle = () => {
+      if (startT || interval) return;
+      startT = window.setTimeout(() => {
+        tick();
+        interval = window.setInterval(tick, ROTATE_HOLD_MS);
+      }, ROTATE_FIRST_MS);
+    };
+
+    // Counting from page load would spend most of the first word's turn
+    // behind the splash, so it would swap almost as soon as the curtain
+    // lifted. Start the cycle when the hero is actually on screen.
+    const held = document.documentElement.hasAttribute(INTRO_HOLD_ATTR);
+    if (!held) {
+      beginCycle();
+    } else {
+      window.addEventListener(INTRO_DONE_EVENT, beginCycle, { once: true });
+      // The pre-paint script clears the hold on its own after 6s if the
+      // splash never runs; don't let the word sit frozen in that case.
+      failsafeT = window.setTimeout(beginCycle, 6500);
+    }
 
     return () => {
-      window.clearTimeout(start);
+      window.removeEventListener(INTRO_DONE_EVENT, beginCycle);
+      window.clearTimeout(startT);
+      window.clearTimeout(failsafeT);
       window.clearTimeout(clearPrevT);
       window.clearInterval(interval);
     };
@@ -84,10 +110,16 @@ function RotatingGradientWord({ words }: { words: string[] }) {
 export function HomeHero() {
   const { dict, routes } = useLocale();
   const { hero, city } = dict.home;
+  // The mask-up wrapper clips its line while the reveal plays. It has to let
+  // go once the lines have landed, otherwise that same clip slices the
+  // rotating word every time it falls off the line.
+  const [settled, setSettled] = useState(false);
 
   return (
     <main className="ww-home-hero">
       <div className="ww-home-hero__inner">
+        {/* The entrance is held paused by html[data-ww-hold] until the splash
+            finishes (see globals.css), so it plays once, in view. */}
         <HeroReveal className="ww-home-hero__copy">
           <div
             className="ww-mono ww-hero-fade"
@@ -109,19 +141,31 @@ export function HomeHero() {
             </span>
           </div>
 
-          <h1 className="ww-home-hero__title">
-            <span className="ww-hero-line">
-              <span>{hero.h1Line1}</span>
-            </span>
-            {/* The h1 inherits its own 90ms slot from HeroReveal; the second
-                line steps once past it so the two lines cascade. */}
-            <span className="ww-hero-line" style={{ ["--hero-delay" as string]: "150ms" }}>
-              <span>
-                {hero.h1Line2Before}
-                {hero.h1MobileBreak ? <br className="ww-hero-break" aria-hidden /> : null}
-                <RotatingGradientWord words={hero.h1GradientWords} />
-              </span>
-            </span>
+          <h1
+            className={`ww-home-hero__title${settled ? " is-settled" : ""}`}
+            // Only the last word may settle the headline: releasing the clips
+            // while earlier-delayed words are still rising would let them
+            // spill out of their masks.
+            onAnimationEnd={(e) => {
+              if (
+                e.animationName.includes("hero-line") &&
+                (e.target as HTMLElement).parentElement?.classList.contains(
+                  "ww-hero-word--last",
+                )
+              ) {
+                setSettled(true);
+              }
+            }}
+          >
+            <HeroWords text={hero.h1Line1} startMs={0} />
+            <HeroWords
+              text={hero.h1Line2Before}
+              startMs={HERO_LINE2_MS}
+              beforeTrailing={
+                hero.h1MobileBreak ? <br className="ww-hero-break" aria-hidden /> : null
+              }
+              trailing={<RotatingGradientWord words={hero.h1GradientWords} />}
+            />
           </h1>
 
           <p className="ww-hero-fade ww-home-hero__lead">
@@ -154,7 +198,7 @@ export function HomeHero() {
 
         <div
           className="ww-home-hero__globe ww-hero-fade"
-          style={{ ["--hero-delay" as string]: "260ms" }}
+          style={{ ["--hero-delay" as string]: "300ms" }}
           aria-hidden
         >
           <HeroGlobe />
