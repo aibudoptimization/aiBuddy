@@ -121,7 +121,9 @@ export function ServiceSphereCarousel() {
       }
       const cardW = cardRefs.current[0]?.offsetWidth ?? 400;
       spread.current = Math.max(120, Math.min(cw * 0.42, cw / 2 - cardW * 0.22));
-      setMinH(maxH + 56);
+      // Room around the tallest card. Desktop needs more because the helix
+      // reaches past the cards; mobile hides it, so the padding stays tight.
+      setMinH(maxH + (window.innerWidth <= 768 ? 48 : 116));
       const helix = helixRef.current;
       if (helix) {
         const rect = helix.getBoundingClientRect();

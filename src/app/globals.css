@@ -1064,7 +1064,12 @@ canvas {
 
 .ww-sphere {
   position: relative;
-  margin-top: 8px;
+  /* The helix is taller than the scene and overflows it top and bottom, so
+     this is what keeps it clear of the section header above and the next
+     section below. Padding, not margin: a margin here would collapse with
+     the section lead's own margin and the gap would never grow. */
+  padding-top: clamp(46px, 6.5vh, 74px);
+  padding-bottom: clamp(40px, 5.5vh, 66px);
   /* Cards animate transforms every frame; without this Chrome's scroll
      anchoring "follows" them and drags the page back to the carousel. */
   overflow-anchor: none;

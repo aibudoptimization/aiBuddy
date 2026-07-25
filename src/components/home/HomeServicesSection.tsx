@@ -27,12 +27,8 @@ export function HomeServicesSection() {
         </h2>
         <EyebrowCanvas text={services.eyebrow} phase={0} />
       </div>
-      <p className="ww-section-lead">
-        {services.lead}
-      </p>
-      <div>
-        <ServiceSphereCarousel />
-      </div>
+      <p className="ww-section-lead">{services.lead}</p>
+      <ServiceSphereCarousel />
     </section>
   );
 }
