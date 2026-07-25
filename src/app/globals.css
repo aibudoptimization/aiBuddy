@@ -22,6 +22,12 @@
   --page-pad: clamp(28px, 5vw, 72px);
   --content-max: 1180px;
 
+  /* Standard card surface. Cards sit on the ambient background, so they need
+     a real surface rather than a transparent film — this is the reference
+     level for every card on the site. Mobile goes denser (see the 768px
+     block) because the backdrop reads through more on small screens. */
+  --card-surface: rgba(11, 11, 18, 0.86);
+
   --font-grotesk: var(--font-schibsted), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
@@ -1133,7 +1139,7 @@ canvas {
    near-transparent film. */
 .ww-sphere__card > .ww-service-card {
   width: 100%;
-  background: rgba(11, 11, 18, 0.86);
+  background: var(--card-surface);
 }
 
 .ww-sphere__card:not(.is-active) > .ww-service-card {
@@ -1152,7 +1158,7 @@ canvas {
 /* No hover background light inside the carousel — the surface stays dark. */
 .ww-sphere__card > .ww-service-card:hover,
 .ww-sphere__card > .ww-service-card:focus-visible {
-  background: rgba(11, 11, 18, 0.86);
+  background: var(--card-surface);
 }
 
 /* Mobile: a normal flat carousel — no center piece, denser card surface. */
@@ -1161,10 +1167,9 @@ canvas {
     display: none;
   }
 
-  .ww-sphere__card > .ww-service-card,
-  .ww-sphere__card > .ww-service-card:hover,
-  .ww-sphere__card > .ww-service-card:focus-visible {
-    background: rgba(11, 11, 18, 0.95);
+  /* Denser on mobile: the backdrop reads through more on small screens. */
+  :root {
+    --card-surface: rgba(11, 11, 18, 0.95);
   }
 }
 
@@ -5899,7 +5904,7 @@ html[data-ww-intro]::before {
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  background: rgba(255, 255, 255, 0.015);
+  background: var(--card-surface);
   transition:
     border-color 0.35s var(--ease-out),
     transform 0.4s var(--ease-out),
@@ -5913,50 +5918,47 @@ html[data-ww-intro]::before {
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
-.ww-work-card__browser {
-  border-bottom: 1px solid rgba(244, 243, 247, 0.08);
-  background: rgba(7, 7, 11, 0.55);
-}
-
-.ww-work-card__chrome {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
-  border-bottom: 1px solid rgba(244, 243, 247, 0.07);
-}
-
-.ww-work-card__dots {
-  display: inline-flex;
-  gap: 5px;
-}
-
-.ww-work-card__dots span {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(244, 243, 247, 0.16);
-}
-
-.ww-work-card__dots span:first-child {
-  background: color-mix(in srgb, var(--work-accent, var(--amber)) 70%, transparent);
-}
-
-.ww-work-card__url {
-  flex: 1;
-  min-width: 0;
+/* Live-site screenshot, anchored top so the visitor sees the real page's
+   hero. Plain block sizing (no absolute fill) so the image is laid out by
+   its own intrinsic ratio and can't collapse. */
+.ww-work-card__shot {
+  width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-align: center;
-  padding: 5px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(244, 243, 247, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(244, 243, 247, 0.72);
+  border-bottom: 1px solid rgba(244, 243, 247, 0.08);
+  background: rgba(7, 7, 11, 0.9);
+  line-height: 0;
 }
+
+.ww-work-card__shot-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* A band rather than a panel: the screenshot is supporting evidence, so
+     it shouldn't outweigh the words underneath it. */
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: top center;
+  /* Sits back at rest, comes forward on hover. */
+  opacity: 0.88;
+  transition:
+    transform 0.6s var(--ease-out),
+    opacity 0.4s var(--ease-out);
+}
+
+.ww-work-card:hover .ww-work-card__shot-img,
+.ww-work-card:focus-visible .ww-work-card__shot-img {
+  opacity: 1;
+}
+
+.ww-work-card:hover .ww-work-card__shot-img,
+.ww-work-card:focus-visible .ww-work-card__shot-img {
+  transform: scale(1.03);
+}
+
+
+
+
+
 
 .ww-work-card__screen {
   position: relative;
@@ -6076,9 +6078,9 @@ html[data-ww-intro]::before {
   align-items: flex-start;
   gap: 22px;
   padding: clamp(24px, 3vw, 36px);
-  border: 1px solid rgba(244, 243, 247, 0.08);
+  border: 1px solid rgba(244, 243, 247, 0.1);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.015);
+  background: var(--card-surface);
 }
 
 .ww-proof-aside__note {

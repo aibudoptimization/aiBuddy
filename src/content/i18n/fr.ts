@@ -188,7 +188,7 @@ export const fr: Dictionary = {
       caseCta: "Visiter le site",
       pageCta: "Toutes les réalisations →",
       demoNote:
-        "Envie d'en voir plus ? Chaque service a sa page dédiée : explorez-les.",
+        "Un mandat livré, d'autres en cours. Voyez le détail de chaque projet, ce qu'on a bâti et pourquoi.",
     },
     audience: {
       titleLine1: "Fait pour les entrepreneurs",
@@ -673,6 +673,10 @@ export const fr: Dictionary = {
         desc: "Page d'atterrissage complète : approche, accompagnement, témoignages, FAQ et parcours cliente en 5 étapes, avec réservation d'appel découverte et questionnaire d'accueil intégrés.",
         url: "https://elianelarre.com",
         urlLabel: "Visiter elianelarre.com",
+        shot: {
+          src: "/realisations/elianelarre.webp",
+          alt: "Page d'accueil du site d'Éliane Larre, entraîneure privée à Montréal",
+        },
       },
     ],
     upcomingNote:

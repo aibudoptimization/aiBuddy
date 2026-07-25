@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 import type { WorkEntry } from "@/content/i18n/types";
@@ -19,16 +20,19 @@ export function WorkCard({ work, accent = "#f0a94e" }: WorkCardProps) {
       className="ww-work-card"
       style={{ ["--work-accent" as string]: accent }}
     >
-      <div className="ww-work-card__browser" aria-hidden>
-        <div className="ww-work-card__chrome">
-          <span className="ww-work-card__dots">
-            <span />
-            <span />
-            <span />
-          </span>
-          <span className="ww-work-card__url ww-mono">{work.title}</span>
+      {work.shot ? (
+        <div className="ww-work-card__shot">
+          <Image
+            src={work.shot.src}
+            alt={work.shot.alt}
+            width={1600}
+            height={1000}
+            sizes="(max-width: 880px) 100vw, 620px"
+            className="ww-work-card__shot-img"
+          />
         </div>
-        <div className="ww-work-card__screen">
+      ) : (
+        <div className="ww-work-card__screen" aria-hidden>
           <span className="ww-work-card__bar ww-work-card__bar--title" />
           <span className="ww-work-card__bar ww-work-card__bar--sub" />
           <span className="ww-work-card__pill" />
@@ -38,7 +42,7 @@ export function WorkCard({ work, accent = "#f0a94e" }: WorkCardProps) {
             <span />
           </div>
         </div>
-      </div>
+      )}
 
       <div className="ww-work-card__body">
         <span className="ww-mono ww-work-card__tag">{work.tag}</span>

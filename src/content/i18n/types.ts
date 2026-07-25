@@ -24,6 +24,8 @@ export type HomeServiceCopy = {
 };
 
 export type WorkEntry = {
+  /** Screenshot of the live site; falls back to the browser mockup when absent. */
+  shot?: { src: string; alt: string };
   tag: string;
   client: string;
   title: string;
