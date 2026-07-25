@@ -3,8 +3,6 @@
 import { EyebrowCanvas } from "@/components/canvas/EyebrowCanvas";
 import { ServiceSphereCarousel } from "@/components/home/ServiceSphereCarousel";
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { Reveal } from "@/components/ui/Reveal";
-import { TextReveal } from "@/components/ui/TextReveal";
 
 export function HomeServicesSection() {
   const { dict } = useLocale();
@@ -21,20 +19,20 @@ export function HomeServicesSection() {
     >
       <div className="ww-section-header">
         <h2 className="ww-section-title">
-          <TextReveal as="span">{services.titleLine1}</TextReveal>
+          <span>{services.titleLine1}</span>
           <br />
-          <TextReveal as="span" staggerMs={28}>
+          <span>
             {services.titleLine2}
-          </TextReveal>
+          </span>
         </h2>
         <EyebrowCanvas text={services.eyebrow} phase={0} />
       </div>
-      <Reveal as="p" className="ww-section-lead" delayMs={50}>
+      <p className="ww-section-lead">
         {services.lead}
-      </Reveal>
-      <Reveal delayMs={120}>
+      </p>
+      <div>
         <ServiceSphereCarousel />
-      </Reveal>
+      </div>
     </section>
   );
 }

@@ -4,7 +4,6 @@ import { ServiceContactBlock } from "@/components/services/ServiceContactBlock";
 import { ServiceFaq } from "@/components/services/ServiceFaq";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { ServicePageLayout } from "@/components/services/ServicePageLayout";
-import { Reveal } from "@/components/ui/Reveal";
 import type { ServiceDetailCopy } from "@/content/i18n/types";
 import { hexToRgb } from "@/lib/accents";
 
@@ -46,7 +45,7 @@ export function ServiceDetailPage({
         />
 
         {/* What it is */}
-        <Reveal as="section" className="ww-svc-section ww-svc-what">
+        <section className="ww-svc-section ww-svc-what">
           <div className="ww-svc-eyebrow ww-mono">{s.whatTitle}</div>
           <div className="ww-svc-what__body">
             {s.whatBody.map((p, i) => (
@@ -55,10 +54,10 @@ export function ServiceDetailPage({
               </p>
             ))}
           </div>
-        </Reveal>
+        </section>
 
         {/* What's included */}
-        <Reveal as="section" className="ww-svc-section">
+        <section className="ww-svc-section">
           <h2 className="ww-svc-h2">{s.includedTitle}</h2>
           <div className="ww-svc-grid">
             {s.included.map((it) => (
@@ -69,10 +68,10 @@ export function ServiceDetailPage({
               </div>
             ))}
           </div>
-        </Reveal>
+        </section>
 
         {/* Process */}
-        <Reveal as="section" className="ww-svc-section">
+        <section className="ww-svc-section">
           <h2 className="ww-svc-h2">{s.processTitle}</h2>
           <div className="ww-svc-steps">
             {s.process.map((step, i) => (
@@ -83,10 +82,10 @@ export function ServiceDetailPage({
               </div>
             ))}
           </div>
-        </Reveal>
+        </section>
 
         {/* Use cases */}
-        <Reveal as="section" className="ww-svc-section">
+        <section className="ww-svc-section">
           <h2 className="ww-svc-h2">{s.useCasesTitle}</h2>
           <div className="ww-svc-grid">
             {s.useCases.map((c) => (
@@ -97,10 +96,10 @@ export function ServiceDetailPage({
               </div>
             ))}
           </div>
-        </Reveal>
+        </section>
 
         {/* Outcomes */}
-        <Reveal as="section" className="ww-svc-section">
+        <section className="ww-svc-section">
           <h2 className="ww-svc-h2">{s.outcomesTitle}</h2>
           <div className="ww-svc-outcomes">
             {s.outcomes.map((o, i) => (
@@ -110,7 +109,7 @@ export function ServiceDetailPage({
               </div>
             ))}
           </div>
-        </Reveal>
+        </section>
 
         {/* FAQ */}
         <ServiceFaq title={s.faqTitle} items={s.faq} />

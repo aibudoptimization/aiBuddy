@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { StaticAmbient } from "@/components/canvas/StaticAmbient";
 import { WorkCard } from "@/components/realisations/WorkCard";
-import { Reveal } from "@/components/ui/Reveal";
+import { HeroReveal } from "@/components/ui/HeroReveal";
 
 export function RealisationsPage() {
   const { dict, routes } = useLocale();
@@ -20,8 +20,9 @@ export function RealisationsPage() {
           className="ww-container ww-page-head"
           style={{ paddingBottom: "clamp(64px, 12vh, 120px)" }}
         >
+          <HeroReveal>
           <div
-            className="ww-mono"
+            className="ww-mono ww-hero-fade"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -45,9 +46,12 @@ export function RealisationsPage() {
               fontSize: "clamp(32px, 5vw, 56px)",
             }}
           >
-            {r.title}
+            <span className="ww-hero-line">
+              <span>{r.title}</span>
+            </span>
           </h1>
           <p
+            className="ww-hero-fade"
             style={{
               margin: "18px 0 0",
               maxWidth: 560,
@@ -58,16 +62,17 @@ export function RealisationsPage() {
           >
             {r.lead}
           </p>
+          </HeroReveal>
 
           <div className="ww-work-grid">
             {r.works.map((work, i) => (
-              <Reveal key={work.url} delayMs={60 + i * 80}>
+              <div key={work.url}>
                 <WorkCard work={work} />
-              </Reveal>
+              </div>
             ))}
-            <Reveal className="ww-work-upcoming" delayMs={60 + r.works.length * 80}>
+            <div className="ww-work-upcoming">
               <p>{r.upcomingNote}</p>
-            </Reveal>
+            </div>
           </div>
 
           <div className="ww-service-cta" style={{ marginTop: "clamp(40px, 7vh, 72px)" }}>

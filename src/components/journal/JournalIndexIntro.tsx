@@ -1,18 +1,20 @@
 "use client";
 
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { HeroReveal } from "@/components/ui/HeroReveal";
 
 export function JournalIndexIntro() {
   const { dict } = useLocale();
   const j = dict.journalIndex;
 
   return (
-    <section
+    <HeroReveal
+      as="section"
       className="ww-container ww-page-head"
       style={{ paddingBottom: "clamp(30px, 5vh, 54px)" }}
     >
       <div
-        className="ww-mono"
+        className="ww-mono ww-hero-fade"
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -47,9 +49,12 @@ export function JournalIndexIntro() {
           textWrap: "balance",
         }}
       >
-        {j.title}
+        <span className="ww-hero-line">
+          <span>{j.title}</span>
+        </span>
       </h1>
       <p
+        className="ww-hero-fade"
         style={{
           maxWidth: 560,
           margin: "26px 0 0",
@@ -60,6 +65,6 @@ export function JournalIndexIntro() {
       >
         {j.lead}
       </p>
-    </section>
+    </HeroReveal>
   );
 }

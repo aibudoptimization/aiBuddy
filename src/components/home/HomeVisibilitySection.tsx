@@ -3,8 +3,6 @@
 import Link from "next/link";
 
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { Reveal } from "@/components/ui/Reveal";
-import { LineReveal, TextReveal } from "@/components/ui/TextReveal";
 
 /** Sky-accented bridge: visibility / SEO·GEO·AEO (replaces former 4th service card). */
 export function HomeVisibilitySection() {
@@ -14,7 +12,7 @@ export function HomeVisibilitySection() {
   return (
     <section className="ww-visibility" aria-labelledby="ww-visibility-title">
       <div className="ww-container ww-visibility__inner">
-        <Reveal>
+        <div>
           <div className="ww-visibility__eyebrow ww-mono">
             <span
               className="ww-glow-dot"
@@ -28,16 +26,11 @@ export function HomeVisibilitySection() {
             />
             {v.eyebrow}
           </div>
-          <LineReveal>
-            <TextReveal
-              id="ww-visibility-title"
-              as="h2"
-              className="ww-visibility__title"
-              staggerMs={32}
-            >
+          <div className="ww-line-reveal">
+            <h2 id="ww-visibility-title" className="ww-visibility__title">
               {v.title}
-            </TextReveal>
-          </LineReveal>
+            </h2>
+          </div>
           <p className="ww-visibility__lead">{v.lead}</p>
           <p className="ww-visibility__micro ww-mono">{v.micro}</p>
           <div className="ww-visibility__actions">
@@ -48,7 +41,7 @@ export function HomeVisibilitySection() {
               {v.secondaryCta}
             </Link>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

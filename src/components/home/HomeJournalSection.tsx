@@ -3,7 +3,6 @@
 import Link from "next/link";
 
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { Reveal } from "@/components/ui/Reveal";
 import { getJournalPosts } from "@/content/journal";
 
 export function HomeJournalSection() {
@@ -26,15 +25,15 @@ export function HomeJournalSection() {
         paddingBottom: "clamp(40px, 7vh, 90px)",
       }}
     >
-      <Reveal className="ww-section-header" style={{ marginBottom: 38 }}>
+      <div className="ww-section-header" style={{ marginBottom: 38 }}>
         <h2 className="ww-section-title">{j.title}</h2>
         <Link href={routes.journal} className="ww-mono ww-link-muted">
           {j.allArticles}
         </Link>
-      </Reveal>
+      </div>
       <div className="ww-journal-grid">
         {posts.map((post, i) => (
-          <Reveal key={post.slug} delayMs={60 + i * 70}>
+          <div key={post.slug}>
             <Link
               href={routes.article(post.slug)}
               className="ww-journal-card"
@@ -49,7 +48,7 @@ export function HomeJournalSection() {
               <h3>{post.title}</h3>
               <p>{post.dek}</p>
             </Link>
-          </Reveal>
+          </div>
         ))}
       </div>
     </section>

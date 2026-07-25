@@ -6,7 +6,6 @@ import Link from "next/link";
 import { EyebrowCanvas } from "@/components/canvas/EyebrowCanvas";
 import { GlowBullet } from "@/components/home/GlowBullet";
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { Reveal } from "@/components/ui/Reveal";
 
 export function HomePricingSection() {
   const { dict, routes } = useLocale();
@@ -22,17 +21,17 @@ export function HomePricingSection() {
         paddingBottom: "clamp(50px, 8vh, 100px)",
       }}
     >
-      <Reveal className="ww-section-header" style={{ marginBottom: 18 }}>
+      <div className="ww-section-header" style={{ marginBottom: 18 }}>
         <h2 className="ww-section-title">
           {p.titleLine1}
           <br />
           {p.titleLine2}
         </h2>
         <EyebrowCanvas text={eyebrow} phase={0.76} />
-      </Reveal>
-      <Reveal as="p" className="ww-section-lead" style={{ marginBottom: 30 }} delayMs={50}>
+      </div>
+      <p className="ww-section-lead" style={{ marginBottom: 30 }}>
         {p.lead}
-      </Reveal>
+      </p>
 
       <div className="ww-consult-grid">
         <div className="ww-consult-card">

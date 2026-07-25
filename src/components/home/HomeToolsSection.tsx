@@ -1,7 +1,6 @@
 "use client";
 
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { Reveal } from "@/components/ui/Reveal";
 import { INTEGRATION_TOOLS, type IntegrationTool } from "@/content/tools";
 
 const MID = Math.ceil(INTEGRATION_TOOLS.length / 2);
@@ -34,7 +33,7 @@ export function HomeToolsSection() {
         paddingBottom: "clamp(50px, 8vh, 90px)",
       }}
     >
-      <Reveal>
+      <div>
         <h2 className="ww-tools-title" style={{ marginBottom: 10 }}>
           {dict.home.tools.title}
         </h2>
@@ -49,7 +48,7 @@ export function HomeToolsSection() {
         >
           {dict.home.tools.subtitle}
         </p>
-      </Reveal>
+      </div>
       <div className="ww-tools-marquee">
         {ROWS.map((row, rowIndex) => (
           <div key={rowIndex} className="ww-tools-marquee__row">

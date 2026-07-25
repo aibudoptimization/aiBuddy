@@ -6,7 +6,6 @@ import { EyebrowCanvas } from "@/components/canvas/EyebrowCanvas";
 import { AudienceCarousel } from "@/components/home/AudienceCarousel";
 import { GlowBullet } from "@/components/home/GlowBullet";
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { Reveal } from "@/components/ui/Reveal";
 
 export function HomeAudienceSection() {
   const { dict } = useLocale();
@@ -22,22 +21,22 @@ export function HomeAudienceSection() {
         paddingBottom: "clamp(50px, 8vh, 100px)",
       }}
     >
-      <Reveal className="ww-section-header" style={{ marginBottom: 18 }}>
+      <div className="ww-section-header" style={{ marginBottom: 18 }}>
         <h2 className="ww-section-title">
           {a.titleLine1}
           <br />
           {a.titleLine2}
         </h2>
         <EyebrowCanvas text={eyebrow} phase={0.28} />
-      </Reveal>
-      <Reveal as="p" className="ww-section-lead" delayMs={60}>
+      </div>
+      <p className="ww-section-lead">
         {a.lead}
-      </Reveal>
+      </p>
 
       <AudienceCarousel slides={a.slides} />
 
       <div className="ww-fit-grid">
-        <Reveal className="ww-fit-card ww-fit-card--yes" delayMs={40}>
+        <div className="ww-fit-card ww-fit-card--yes">
           <div className="ww-fit-card__head">
             <span className="ww-fit-icon ww-fit-icon--yes">
               <Check size={13} strokeWidth={3} color="#07070b" />
@@ -50,8 +49,8 @@ export function HomeAudienceSection() {
               <span>{line}</span>
             </div>
           ))}
-        </Reveal>
-        <Reveal className="ww-fit-card" delayMs={100}>
+        </div>
+        <div className="ww-fit-card">
           <div className="ww-fit-card__head">
             <span className="ww-fit-icon">
               <X size={11} strokeWidth={3} color="rgba(244,243,247,0.4)" />
@@ -64,7 +63,7 @@ export function HomeAudienceSection() {
               <span>{line}</span>
             </div>
           ))}
-        </Reveal>
+        </div>
       </div>
     </section>
   );

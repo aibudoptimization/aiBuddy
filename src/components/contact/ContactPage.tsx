@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { StaticAmbient } from "@/components/canvas/StaticAmbient";
+import { HeroReveal } from "@/components/ui/HeroReveal";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL } from "@/lib/routes";
@@ -23,12 +24,18 @@ export function ContactPage() {
         >
           <div className="ww-contact__grid">
             <div className="ww-contact__intro">
-              <div className="ww-contact__eyebrow ww-mono">
-                <span className="ww-glow-dot" style={{ width: 6, height: 6 }} aria-hidden />
-                {c.eyebrow}
-              </div>
-              <h1 className="ww-contact__title">{c.title}</h1>
-              <p className="ww-contact__lead">{c.lead}</p>
+              <HeroReveal>
+                <div className="ww-contact__eyebrow ww-mono ww-hero-fade">
+                  <span className="ww-glow-dot" style={{ width: 6, height: 6 }} aria-hidden />
+                  {c.eyebrow}
+                </div>
+                <h1 className="ww-contact__title">
+                  <span className="ww-hero-line">
+                    <span>{c.title}</span>
+                  </span>
+                </h1>
+                <p className="ww-contact__lead ww-hero-fade">{c.lead}</p>
+              </HeroReveal>
 
               <div className="ww-founder-card">
                 <Image

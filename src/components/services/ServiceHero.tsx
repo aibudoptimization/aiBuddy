@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { HeroReveal } from "@/components/ui/HeroReveal";
 import { hexToRgb } from "@/lib/accents";
 
 type ServiceHeroProps = {
@@ -15,8 +16,8 @@ type ServiceHeroProps = {
 
 function HeroCopy({ eyebrow, h1Before, h1Accent, h1After, lead, accent }: ServiceHeroProps) {
   return (
-    <>
-      <div className="ww-service-eyebrow-row">
+    <HeroReveal>
+      <div className="ww-service-eyebrow-row ww-hero-fade">
         <div className="ww-service-eyebrow">
           <span
             className="ww-glow-dot"
@@ -32,12 +33,16 @@ function HeroCopy({ eyebrow, h1Before, h1Accent, h1After, lead, accent }: Servic
         </div>
       </div>
       <h1 className="ww-service-title">
-        {h1Before}
-        <span className="ww-accent-text">{h1Accent}</span>
-        {h1After}
+        <span className="ww-hero-line">
+          <span>
+            {h1Before}
+            <span className="ww-accent-text">{h1Accent}</span>
+            {h1After}
+          </span>
+        </span>
       </h1>
-      <p className="ww-service-lead">{lead}</p>
-    </>
+      <p className="ww-service-lead ww-hero-fade">{lead}</p>
+    </HeroReveal>
   );
 }
 

@@ -1,5 +1,6 @@
 import { ArticleBody } from "@/components/journal/ArticleBody";
 import { ArticleHeroCanvas } from "@/components/journal/ArticleHeroCanvas";
+import { HeroReveal } from "@/components/ui/HeroReveal";
 import { getDictionary } from "@/content/i18n";
 import { getArticle, getJournalPosts } from "@/content/journal";
 import { accentStyle } from "@/lib/accents";
@@ -23,14 +24,18 @@ export function ArticlePageView({ slug }: { slug: string }) {
       <section className="ww-article-hero">
         <ArticleHeroCanvas motif={article.motif} accent={article.accent} />
         <div className="ww-article-hero-overlay" />
-        <div className="ww-article-hero__inner">
-          <div className="ww-mono ww-article-hero__cat">
+        <HeroReveal className="ww-article-hero__inner">
+          <div className="ww-mono ww-article-hero__cat ww-hero-fade">
             <span className="ww-glow-dot" style={{ width: 7, height: 7 }} aria-hidden />
             {article.cat}
           </div>
-          <h1 className="ww-article-hero__title">{article.title}</h1>
-          <p className="ww-article-hero__dek">{article.dek}</p>
-          <div className="ww-mono ww-article-hero__meta">
+          <h1 className="ww-article-hero__title">
+            <span className="ww-hero-line">
+              <span>{article.title}</span>
+            </span>
+          </h1>
+          <p className="ww-article-hero__dek ww-hero-fade">{article.dek}</p>
+          <div className="ww-mono ww-article-hero__meta ww-hero-fade">
             <span>{article.date}</span>
             <span style={{ opacity: 0.4 }}>·</span>
             <span>
@@ -40,7 +45,7 @@ export function ArticlePageView({ slug }: { slug: string }) {
             <span style={{ opacity: 0.4 }}>·</span>
             <span>{article.author}</span>
           </div>
-        </div>
+        </HeroReveal>
       </section>
 
       <main className="ww-article-main">

@@ -6,6 +6,7 @@ import { MapPin } from "lucide-react";
 
 import { HeroGlobe } from "@/components/canvas/HeroGlobe";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { HeroReveal } from "@/components/ui/HeroReveal";
 
 const ROTATE_HOLD_MS = 3400;
 const ROTATE_FIRST_MS = 3800;
@@ -87,76 +88,75 @@ export function HomeHero() {
   return (
     <main className="ww-home-hero">
       <div className="ww-home-hero__inner">
-        <div className="ww-home-hero__copy">
-      <div style={{ overflow: "hidden", marginBottom: 26 }}>
+        <HeroReveal className="ww-home-hero__copy">
+          <div
+            className="ww-mono ww-hero-fade"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 26,
+              fontSize: "12.5px",
+              letterSpacing: "0.22em",
+              color: "var(--mist)",
+            }}
+          >
+            <span className="ww-glow-dot" style={{ width: 7, height: 7 }} aria-hidden />
+            {hero.eyebrow}
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+              <MapPin size={10} strokeWidth={2.2} aria-hidden />
+              {city}, QC
+            </span>
+          </div>
+
+          <h1 className="ww-home-hero__title">
+            <span className="ww-hero-line">
+              <span>{hero.h1Line1}</span>
+            </span>
+            {/* The h1 inherits its own 90ms slot from HeroReveal; the second
+                line steps once past it so the two lines cascade. */}
+            <span className="ww-hero-line" style={{ ["--hero-delay" as string]: "150ms" }}>
+              <span>
+                {hero.h1Line2Before}
+                {hero.h1MobileBreak ? <br className="ww-hero-break" aria-hidden /> : null}
+                <RotatingGradientWord words={hero.h1GradientWords} />
+              </span>
+            </span>
+          </h1>
+
+          <p className="ww-hero-fade ww-home-hero__lead">
+            {hero.leadBefore}
+            <strong style={{ color: "var(--teal)", fontWeight: 600 }}>{hero.leadCity}</strong>
+            {hero.leadAfter}
+          </p>
+
+          <div
+            className="ww-hero-fade"
+            style={{ display: "flex", flexWrap: "wrap", gap: 14, marginTop: 40 }}
+          >
+            <Link href={routes.contact} className="ww-cta-fill">
+              {hero.primaryCta}
+            </Link>
+            <Link href="#services" className="ww-cta-secondary">
+              {hero.secondaryCta}
+            </Link>
+          </div>
+
+          <div className="ww-hero-fade ww-mono ww-home-hero__meta">
+            {hero.meta.map((item, i) => (
+              <span key={item} className="ww-home-hero__meta-item">
+                {i > 0 ? <span className="ww-home-hero__meta-sep" aria-hidden /> : null}
+                {item}
+              </span>
+            ))}
+          </div>
+        </HeroReveal>
+
         <div
-          className="ww-mono ww-fade-up"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 10,
-            fontSize: "12.5px",
-            letterSpacing: "0.22em",
-            color: "var(--mist)",
-            animationDelay: "0.05s",
-          }}
+          className="ww-home-hero__globe ww-hero-fade"
+          style={{ ["--hero-delay" as string]: "260ms" }}
+          aria-hidden
         >
-          <span className="ww-glow-dot" style={{ width: 7, height: 7 }} aria-hidden />
-          {hero.eyebrow}
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
-            <MapPin size={10} strokeWidth={2.2} aria-hidden />
-            {city}, QC
-          </span>
-        </div>
-      </div>
-
-      <h1 className="ww-home-hero__title">
-        <span style={{ display: "block", overflow: "hidden", paddingBottom: "0.04em" }}>
-          <span className="ww-rise" style={{ display: "block", animationDelay: "0.12s" }}>
-            {hero.h1Line1}
-          </span>
-        </span>
-        <span style={{ display: "block", overflow: "hidden", paddingBottom: "0.04em" }}>
-          <span className="ww-rise" style={{ display: "block", animationDelay: "0.26s" }}>
-            {hero.h1Line2Before}
-            {hero.h1MobileBreak ? <br className="ww-hero-break" aria-hidden /> : null}
-            <RotatingGradientWord words={hero.h1GradientWords} />
-          </span>
-        </span>
-      </h1>
-
-      <p className="ww-fade-up ww-home-hero__lead" style={{ animationDelay: "0.5s" }}>
-        {hero.leadBefore}
-        <strong style={{ color: "var(--teal)", fontWeight: 600 }}>{hero.leadCity}</strong>
-        {hero.leadAfter}
-      </p>
-
-      <div
-        className="ww-fade-up"
-        style={{ display: "flex", flexWrap: "wrap", gap: 14, marginTop: 40, animationDelay: "0.64s" }}
-      >
-        <Link href={routes.contact} className="ww-cta-fill">
-          {hero.primaryCta}
-        </Link>
-        <Link href="#services" className="ww-cta-secondary">
-          {hero.secondaryCta}
-        </Link>
-      </div>
-
-      <div
-        className="ww-fade-up ww-mono ww-home-hero__meta"
-        style={{ animationDelay: "0.8s" }}
-      >
-        {hero.meta.map((item, i) => (
-          <span key={item} className="ww-home-hero__meta-item">
-            {i > 0 ? <span className="ww-home-hero__meta-sep" aria-hidden /> : null}
-            {item}
-          </span>
-        ))}
-      </div>
-        </div>
-
-        <div className="ww-home-hero__globe ww-fade-up" style={{ animationDelay: "0.4s" }} aria-hidden>
           <HeroGlobe />
         </div>
       </div>
