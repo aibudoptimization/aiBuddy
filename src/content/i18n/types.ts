@@ -212,13 +212,10 @@ export type Dictionary = {
       subtitle: string;
       more: string;
     };
-    visibility: {
-      eyebrow: string;
-      title: string;
-      lead: string;
-      micro: string;
-      primaryCta: string;
-      secondaryCta: string;
+    included: {
+      label: string;
+      items: string[];
+      cta: string;
     };
     ownership: {
       title: string;
@@ -237,6 +234,7 @@ export type Dictionary = {
       consultItems: string[];
       consultCta: string;
       factorsHeading: string;
+      factorsNoteStrong: string;
       factorsNote: string;
       factors: string[];
       payment: { no: string; title: string; desc: string }[];

@@ -1662,7 +1662,8 @@ canvas {
 
 .ww-consult-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* min() keeps the track from outgrowing the container on narrow phones. */
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 18px;
   margin-bottom: 46px;
 }
@@ -1674,6 +1675,19 @@ canvas {
   padding: 34px 32px;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 560px) {
+  .ww-consult-card,
+  .ww-quote-card {
+    padding: 26px 22px;
+  }
+
+  /* Full tracking breaks the pill mid-phrase ("SANS / ENGAGEMENT"). */
+  .ww-consult-badge {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
 }
 
 .ww-consult-card h3 {
@@ -1708,10 +1722,17 @@ canvas {
 
 .ww-consult-list__item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 11px;
   font-size: 15px;
   color: rgba(244, 243, 247, 0.85);
+}
+
+/* Identical to centring while these stay on one line, but stays correct if
+   one ever wraps. */
+.ww-consult-list__item > span:first-child {
+  margin-top: 6.5px;
+  margin-top: calc((1lh - 5px) / 2);
 }
 
 .ww-consult-founder {
@@ -1779,26 +1800,49 @@ canvas {
 
 .ww-quote-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0,·) so a long item can't blow one column wider than the other. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px 22px;
   margin-top: 22px;
 }
 
+/* Two columns inside a card leave ~120px per item on a phone, which wraps
+   every label onto three lines. Stack instead. */
+@media (max-width: 620px) {
+  .ww-quote-grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  /* Full tracking pushes this label onto a second line inside the card. */
+  .ww-quote-card__label {
+    letter-spacing: 0.1em;
+  }
+}
+
 .ww-quote-item {
   display: flex;
+  align-items: flex-start;
   gap: 10px;
   font-size: 14.5px;
   line-height: 1.4;
   color: rgba(244, 243, 247, 0.82);
 }
 
+/* These items wrap to two lines, so the dot centres on the FIRST line rather
+   than on the whole block. 5px is the GlowBullet diameter. */
+.ww-quote-item > span:first-child {
+  margin-top: 7.5px;
+  margin-top: calc((1lh - 5px) / 2);
+}
+
 .ww-quote-note {
   margin-top: 24px;
   padding-top: 22px;
   border-top: 1px solid rgba(244, 243, 247, 0.08);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.55;
-  color: rgba(244, 243, 247, 0.7);
+  color: rgba(244, 243, 247, 0.75);
 }
 
 .ww-quote-note span {
@@ -1806,20 +1850,26 @@ canvas {
   font-weight: 600;
 }
 
+/* Reassurance, this close to the ask. Cards would make it a fourth tier of
+   chrome after the two big ones above, so it runs as plain items instead. */
 .ww-payment-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px clamp(24px, 3.4vw, 46px);
+  padding-top: 28px;
+  border-top: 1px solid rgba(244, 243, 247, 0.09);
+}
+
+@media (max-width: 760px) {
+  .ww-payment-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 .ww-payment-note {
-  flex: 1 1 240px;
   display: flex;
   gap: 12px;
-  padding: 20px 22px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(244, 243, 247, 0.07);
 }
 
 .ww-payment-note > span {
@@ -1832,13 +1882,13 @@ canvas {
 .ww-payment-note__title {
   font-size: 15px;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .ww-payment-note__desc {
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: rgba(244, 243, 247, 0.55);
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(244, 243, 247, 0.6);
 }
 
 .ww-journal-grid {
@@ -4280,60 +4330,79 @@ canvas {
 }
 
 /* Visibility bridge */
-.ww-visibility {
-  position: relative;
-  z-index: 2;
-  margin: clamp(12px, 3vh, 36px) 0;
-  padding: clamp(48px, 8vh, 88px) 0;
-  background:
-    radial-gradient(90% 120% at 12% 40%, rgba(106, 168, 255, 0.14), transparent 55%),
-    linear-gradient(180deg, rgba(12, 12, 18, 0.15), rgba(7, 7, 11, 0.4));
-  border-top: 1px solid rgba(106, 168, 255, 0.14);
-  border-bottom: 1px solid rgba(106, 168, 255, 0.1);
+/* —— "Inclus dans tout ce qu'on livre": value stack above the price ask —— */
+
+.ww-included {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label link"
+    "list  list";
+  align-items: baseline;
+  row-gap: 20px;
+  column-gap: 28px;
+  padding: clamp(24px, 3.5vh, 34px) 0;
+  border-top: 1px solid rgba(244, 243, 247, 0.09);
+  border-bottom: 1px solid rgba(244, 243, 247, 0.09);
 }
 
-.ww-visibility__inner {
-  max-width: 720px;
+.ww-included__label {
+  grid-area: label;
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  color: var(--faint);
 }
 
-.ww-visibility__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  color: rgba(244, 243, 247, 0.62);
-  margin-bottom: 22px;
+.ww-included__link {
+  grid-area: link;
+  justify-self: end;
+  font-size: 11.5px;
+  color: rgba(244, 243, 247, 0.5);
+  text-decoration: none;
+  transition: color 0.25s ease;
 }
 
-.ww-visibility__title {
-  margin: 0;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  font-size: clamp(28px, 4.2vw, 48px);
+.ww-included__link:hover,
+.ww-included__link:focus-visible {
+  color: var(--teal);
 }
 
-.ww-visibility__lead {
-  margin: 18px 0 0;
-  font-size: clamp(15.5px, 1.4vw, 18px);
-  line-height: 1.55;
-  color: rgba(244, 243, 247, 0.68);
-  max-width: 52ch;
-}
-
-.ww-visibility__micro {
-  margin: 22px 0 0;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  color: var(--sky);
-}
-
-.ww-visibility__actions {
+.ww-included__list {
+  grid-area: list;
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 32px;
+  gap: 14px clamp(24px, 3.4vw, 46px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ww-included__item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 15.5px;
+  color: rgba(244, 243, 247, 0.82);
+}
+
+@media (max-width: 560px) {
+  .ww-included {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "list"
+      "link";
+    row-gap: 18px;
+  }
+
+  .ww-included__link {
+    justify-self: start;
+  }
+
+  .ww-included__list {
+    flex-direction: column;
+    gap: 13px;
+  }
 }
 
 /* Brand splash */
@@ -5063,21 +5132,6 @@ html[data-ww-intro]::before {
   border: 0;
 }
 
-.ww-line-reveal {
-  position: relative;
-}
-
-/* Accent underline — drawn statically now that nothing reveals on scroll. */
-.ww-line-reveal::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -10px;
-  width: 72px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--sky), transparent);
-}
 
 .ww-ownership-step__num {
   flex: none;
@@ -5355,11 +5409,6 @@ html[data-ww-intro]::before {
     padding: 24px 20px;
   }
 
-  .ww-visibility {
-    margin: 8px 0;
-    padding: clamp(36px, 7vh, 64px) 0;
-  }
-
   .ww-splash__skip {
     left: 50%;
     right: auto;
@@ -5375,17 +5424,7 @@ html[data-ww-intro]::before {
     justify-content: center;
   }
 
-  .ww-home-hero .ww-cta-fill,
-  .ww-visibility__actions .ww-cta-fill {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .ww-visibility__actions {
-    flex-direction: column;
-  }
-
-  .ww-visibility__actions .ww-cta-secondary {
+  .ww-home-hero .ww-cta-fill {
     width: 100%;
     justify-content: center;
   }

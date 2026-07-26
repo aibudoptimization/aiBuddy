@@ -216,13 +216,15 @@ export const fr: Dictionary = {
       subtitle: "Rien à remplacer. On s'intègre à ce que vous utilisez déjà.",
       more: "+ des dizaines d'autres",
     },
-    visibility: {
-      eyebrow: "Inclus dans tout ce qu'on livre",
-      title: "Être trouvé. Sur Google. Dans les réponses IA.",
-      lead: "SEO, GEO et AEO : chaque site et chaque contenu qu'on livre pose ces bases, pour que vos clients vous trouvent, pas seulement vos concurrents.",
-      micro: "Référencement · Réponses IA · Mesure",
-      primaryCta: "Consultation gratuite",
-      secondaryCta: "Comment ça marche →",
+    included: {
+      label: "Inclus dans tout ce qu'on livre",
+      items: [
+        "Référencement Google",
+        "Présence dans les réponses IA",
+        "Documentation complète",
+        "Formation à l'essentiel",
+      ],
+      cta: "Comment on vous rend trouvable →",
     },
     ownership: {
       title: "On construit. Vous possédez.",
@@ -255,9 +257,12 @@ export const fr: Dictionary = {
     },
     pricing: {
       titleLine1: "Combien ça coûte ?",
-      titleLine2: "Ça commence par une consultation gratuite.",
-      lead: "Pas de liste de prix : chaque projet est chiffré selon votre réalité. On comprend votre besoin, vous repartez avec un plan et un devis détaillé sous 48 h. Sans engagement.",
-      consultEyebrow: "Consultation gratuite · sans engagement",
+      // nbsp so the phone wrap breaks after "a", not before a lone "prix."
+      titleLine2: "Chaque projet a son prix.",
+      lead: "Pas de modèles tout faits, donc pas de forfaits. On regarde ce qui compte dans votre cas, et vous repartez avec un plan et un prix ferme sous 48 h.",
+      // nbsp: on phones the pill needs two lines, so force the break at the
+      // separator instead of splitting "sans engagement".
+      consultEyebrow: "Consultation gratuite · sans engagement",
       consultTitle: "Ce que vous obtenez",
       consultItems: [
         "Un plan d'action clair & priorisé",
@@ -265,14 +270,15 @@ export const fr: Dictionary = {
         "Un devis détaillé sous 48 h",
       ],
       consultCta: "Réserver ma consultation →",
-      factorsHeading: "Ce qui fait varier votre devis",
+      factorsHeading: "Ce qu'on regarde pour chiffrer",
+      factorsNoteStrong: "Bonne nouvelle :",
       factorsNote:
-        "Bonne nouvelle : plus vous avez déjà de matière, plus le projet est simple et moins il coûte.",
+        "plus vous avez déjà de matière, plus le projet est simple et moins il coûte.",
       factors: [
-        "Les outils & abonnements nécessaires",
+        "Les outils et abonnements nécessaires",
         "La taille de votre entreprise",
         "Le volume de données à traiter",
-        "L'usage de l'IA (tokens & modèle)",
+        "L'usage de l'IA (modèle et volume)",
         "Le niveau de personnalisation",
         "Le contenu déjà en place",
       ],
@@ -284,13 +290,13 @@ export const fr: Dictionary = {
         },
         {
           no: "02",
-          title: "Abonnements payés en direct",
-          desc: "Depuis vos comptes, sans marge cachée.",
+          title: "Sans marge cachée",
+          desc: "Vos abonnements se paient au prix courant. On ne prend rien au passage.",
         },
         {
           no: "03",
           title: "Support en option",
-          desc: "Seulement si vous le voulez.",
+          desc: "Aucun abonnement obligatoire après la livraison.",
         },
       ],
     },

@@ -74,7 +74,9 @@ export function HomePricingSection() {
               </div>
             ))}
           </div>
-          <p className="ww-quote-note">{p.factorsNote}</p>
+          <p className="ww-quote-note">
+            <span>{p.factorsNoteStrong}</span> {p.factorsNote}
+          </p>
         </div>
       </div>
 
