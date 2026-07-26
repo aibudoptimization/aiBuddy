@@ -859,30 +859,6 @@ canvas {
   background: var(--nav-hover-bg, rgba(75, 250, 200, 0.13));
 }
 
-.ww-si-track {
-  display: flex;
-  gap: 14px;
-  will-change: transform;
-  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-.ww-si-card {
-  flex: 0 0 calc((100% - 28px) / 3);
-  box-sizing: border-box;
-}
-
-@media (max-width: 880px) {
-  .ww-si-card {
-    flex: 0 0 calc((100% - 14px) / 2);
-  }
-}
-
-@media (max-width: 560px) {
-  .ww-si-card {
-    flex: 0 0 100%;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1318,7 +1294,8 @@ canvas {
 
 .ww-fit-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  /* min() keeps the track from outgrowing the container on ~360px phones. */
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: 18px;
 }
 
@@ -1326,6 +1303,12 @@ canvas {
   border: 1px solid rgba(244, 243, 247, 0.09);
   border-radius: 18px;
   padding: 32px 30px;
+}
+
+@media (max-width: 560px) {
+  .ww-fit-card {
+    padding: 26px 22px;
+  }
 }
 
 .ww-fit-card--yes {
@@ -1374,12 +1357,22 @@ canvas {
   line-height: 1.45;
 }
 
+.ww-fit-line + .ww-fit-line {
+  margin-top: 13px;
+}
+
 .ww-fit-line--yes {
   color: rgba(244, 243, 247, 0.82);
 }
 
+/* Optically centre the 5px glow dot on the first line of text. */
+.ww-fit-line--yes > span:first-child {
+  margin-top: 8px;
+}
+
+/* This card is a trust signal, not fine print: keep it readable. */
 .ww-fit-line--no {
-  color: rgba(244, 243, 247, 0.5);
+  color: rgba(244, 243, 247, 0.62);
 }
 
 .ww-fit-dash {
@@ -1387,7 +1380,41 @@ canvas {
   margin-top: 10px;
   width: 9px;
   height: 1px;
-  background: rgba(244, 243, 247, 0.3);
+  background: rgba(244, 243, 247, 0.36);
+}
+
+.ww-fit-resolve {
+  margin: 30px 0 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: rgba(244, 243, 247, 0.55);
+}
+
+/* Narrow screens: question and answer stack, so the underline stays on one
+   run instead of striping three wrapped lines. */
+@media (max-width: 560px) {
+  .ww-fit-resolve {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+  }
+}
+
+.ww-fit-resolve__link {
+  color: var(--snow);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(75, 250, 200, 0.4);
+  padding-bottom: 1px;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.ww-fit-resolve__link:hover,
+.ww-fit-resolve__link:focus-visible {
+  color: var(--teal);
+  border-color: var(--teal);
 }
 
 .ww-tools-title {
@@ -1518,75 +1545,119 @@ canvas {
 }
 
 .ww-ownership-grid {
+  /* Shared by the column gutter and by the rule that bridges it. */
+  --own-gap: clamp(22px, 2.6vw, 46px);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-}
-
-@media (max-width: 960px) {
-  .ww-ownership-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px 20px;
-  }
-
-  .ww-ownership-step__line span:last-child {
-    display: none;
-  }
-}
-
-@media (max-width: 560px) {
-  .ww-ownership-grid {
-    grid-template-columns: 1fr;
-  }
+  column-gap: var(--own-gap);
+  row-gap: 34px;
 }
 
 .ww-ownership-step h3 {
   margin: 0 0 8px;
-  font-size: 18px;
+  font-size: 19px;
+  line-height: 1.3;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
+/* Titles wrap to one or two lines depending on the column width. Reserving
+   two lines keeps every description on the same baseline across the row. */
+@media (min-width: 561px) {
+  .ww-ownership-step h3 {
+    min-height: 2.6em;
+  }
+}
+
 .ww-ownership-step p {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.55;
-  color: rgba(244, 243, 247, 0.6);
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(244, 243, 247, 0.64);
 }
 
 .ww-ownership-step__line {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
-.ww-ownership-step__line span:first-child {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--teal);
-}
-
-.ww-ownership-step__line span:last-child {
+.ww-ownership-step__bar {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, var(--teal), rgba(75, 250, 200, 0.15));
+  background: rgba(75, 250, 200, 0.3);
+  /* Reach across the gutter to meet the next number, so the row reads as a
+     single hairline punctuated by 01–04 instead of four floating dashes. */
+  margin-right: calc(var(--own-gap) * -1);
 }
 
-.ww-ownership-step__bar--end {
-  background: rgba(75, 250, 200, 0.15) !important;
+/* Row-enders don't bridge: the rail trails off instead. */
+.ww-ownership-step:nth-child(4n) .ww-ownership-step__bar {
+  margin-right: 0;
+  background: linear-gradient(90deg, rgba(75, 250, 200, 0.3), rgba(75, 250, 200, 0));
+}
+
+@media (max-width: 960px) {
+  .ww-ownership-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ww-ownership-step:nth-child(2n) .ww-ownership-step__bar {
+    margin-right: 0;
+    background: linear-gradient(90deg, rgba(75, 250, 200, 0.3), rgba(75, 250, 200, 0));
+  }
+}
+
+@media (max-width: 560px) {
+  .ww-ownership-grid {
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+  }
+
+  /* One column: every step ends its row. `:nth-child(n)` matches the
+     specificity of the 2n/4n rules above so this one wins. */
+  .ww-ownership-step:nth-child(n) .ww-ownership-step__bar {
+    margin-right: 0;
+    background: linear-gradient(90deg, rgba(75, 250, 200, 0.3), rgba(75, 250, 200, 0));
+  }
 }
 
 .ww-ownership-footer {
-  margin-top: 46px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px 32px;
+  flex-wrap: wrap;
+  margin-top: 44px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(244, 243, 247, 0.09);
+}
+
+.ww-ownership-footer__line {
+  margin: 0;
+  max-width: 620px;
   font-size: clamp(17px, 1.8vw, 22px);
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
-.ww-ownership-footer span {
+.ww-ownership-footer__line span {
   color: rgba(244, 243, 247, 0.55);
   font-weight: 400;
+}
+
+.ww-ownership-footer__link {
+  flex: none;
+  font-size: 11.5px;
+  color: rgba(244, 243, 247, 0.5);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.ww-ownership-footer__link:hover,
+.ww-ownership-footer__link:focus-visible {
+  color: var(--teal);
 }
 
 .ww-consult-grid {
@@ -5009,7 +5080,10 @@ html[data-ww-intro]::before {
 }
 
 .ww-ownership-step__num {
+  flex: none;
   display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 13px;
   color: var(--teal);
   text-shadow: 0 0 18px rgba(75, 250, 200, 0.35);
 }
@@ -5880,20 +5954,6 @@ html[data-ww-intro]::before {
   line-height: 1.5;
   font-weight: 600;
   opacity: 0.92;
-}
-
-.ww-si-card__link {
-  align-self: flex-start;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: rgba(244, 243, 247, 0.5);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.ww-si-card__link:hover,
-.ww-si-card__link:focus-visible {
-  color: var(--teal);
 }
 
 .ww-work-card {

@@ -202,14 +202,10 @@ export type Dictionary = {
       lead: string;
       fitTitle: string;
       notFitTitle: string;
-      slidesHeading: string;
-      prev: string;
-      next: string;
-      goToSlide: string;
-      slideLinkLabel: string;
-      slides: { no: string; text: string; pathKey: ServicePathKey }[];
       fit: string[];
       notFit: string[];
+      resolveLine: string;
+      resolveCta: string;
     };
     tools: {
       title: string;
@@ -227,7 +223,9 @@ export type Dictionary = {
     ownership: {
       title: string;
       lead: string;
-      footer: string;
+      footerStrong: string;
+      footerMuted: string;
+      footerCta: string;
       steps: { no: string; title: string; desc: string }[];
     };
     pricing: {

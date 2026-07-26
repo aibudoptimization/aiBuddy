@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
+
 import { EyebrowCanvas } from "@/components/canvas/EyebrowCanvas";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function HomeOwnershipSection() {
-  const { dict } = useLocale();
+  const { dict, routes } = useLocale();
   const o = dict.home.ownership;
   const eyebrow = "PROPRIÉTÉ";
 
@@ -26,11 +28,13 @@ export function HomeOwnershipSection() {
         {o.lead}
       </p>
       <div className="ww-ownership-grid">
-        {o.steps.map((step, i) => (
+        {o.steps.map((step) => (
           <div key={step.no} className="ww-ownership-step">
             <div className="ww-ownership-step__line">
               <span className="ww-ownership-step__num">{step.no}</span>
-              <span className={i === 3 ? "ww-ownership-step__bar--end" : undefined} />
+              {/* Bleeds into the column gutter so the four rules read as one
+                  continuous rail. CSS cancels the bleed on row-enders. */}
+              <span className="ww-ownership-step__bar" aria-hidden />
             </div>
             <h3>{step.title}</h3>
             <p>{step.desc}</p>
@@ -38,7 +42,12 @@ export function HomeOwnershipSection() {
         ))}
       </div>
       <div className="ww-ownership-footer">
-        {o.footer}
+        <p className="ww-ownership-footer__line">
+          {o.footerStrong} <span>{o.footerMuted}</span>
+        </p>
+        <Link href={routes.faq} className="ww-ownership-footer__link ww-mono">
+          {o.footerCta}
+        </Link>
       </div>
     </section>
   );

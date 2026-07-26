@@ -1,14 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { Check, X } from "lucide-react";
 
 import { EyebrowCanvas } from "@/components/canvas/EyebrowCanvas";
-import { AudienceCarousel } from "@/components/home/AudienceCarousel";
 import { GlowBullet } from "@/components/home/GlowBullet";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function HomeAudienceSection() {
-  const { dict } = useLocale();
+  const { dict, routes } = useLocale();
   const a = dict.home.audience;
   const eyebrow = "POUR QUI ?";
 
@@ -33,8 +33,6 @@ export function HomeAudienceSection() {
         {a.lead}
       </p>
 
-      <AudienceCarousel slides={a.slides} />
-
       <div className="ww-fit-grid">
         <div className="ww-fit-card ww-fit-card--yes">
           <div className="ww-fit-card__head">
@@ -53,7 +51,7 @@ export function HomeAudienceSection() {
         <div className="ww-fit-card">
           <div className="ww-fit-card__head">
             <span className="ww-fit-icon">
-              <X size={11} strokeWidth={3} color="rgba(244,243,247,0.4)" />
+              <X size={12} strokeWidth={3} color="rgba(244,243,247,0.62)" />
             </span>
             <h3 className="ww-fit-card__muted">{a.notFitTitle}</h3>
           </div>
@@ -65,6 +63,13 @@ export function HomeAudienceSection() {
           ))}
         </div>
       </div>
+
+      <p className="ww-fit-resolve">
+        <span>{a.resolveLine}</span>{" "}
+        <Link href={routes.contact} className="ww-fit-resolve__link">
+          {a.resolveCta}
+        </Link>
+      </p>
     </section>
   );
 }
