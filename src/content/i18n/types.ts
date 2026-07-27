@@ -64,7 +64,16 @@ export type ServiceRowIcon =
   | "headset"
   | "listFilter"
   | "bookOpen"
-  | "mailCheck";
+  | "mailCheck"
+  // intégration
+  | "webhook"
+  | "refreshCw"
+  | "database"
+  | "fileCheck"
+  | "store"
+  | "clipboardList"
+  | "calendarDays"
+  | "table";
 
 /** Title + one-line description, used for "included", "process" and "use case" rows. */
 export type ServiceRow = {

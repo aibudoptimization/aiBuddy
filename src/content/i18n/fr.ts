@@ -481,10 +481,10 @@ export const fr: Dictionary = {
       ],
       includedTitle: "Ce qui est inclus",
       included: [
-        { title: "Connexions API et webhooks", desc: "On relie vos applications par des liens fiables qui travaillent en arrière-plan." },
-        { title: "Synchronisation des données", desc: "Vos systèmes gardent la même information à jour, en continu." },
-        { title: "Migration propre des données", desc: "On déplace vos données d'un outil à l'autre sans perte ni doublon." },
-        { title: "Documentation et remise", desc: "On vous remet comptes, code et documentation, avec la pleine propriété." },
+        { icon: "webhook", title: "Connexions API et webhooks", desc: "On relie vos applications par des liens fiables qui travaillent en arrière-plan." },
+        { icon: "refreshCw", title: "Synchronisation des données", desc: "Vos systèmes gardent la même information à jour, en continu." },
+        { icon: "database", title: "Migration propre des données", desc: "On déplace vos données d'un outil à l'autre sans perte ni doublon." },
+        { icon: "fileCheck", title: "Documentation et remise", desc: "On vous remet comptes, code et documentation, avec la pleine propriété." },
       ],
       processTitle: "Comment on procède",
       process: [
@@ -495,10 +495,10 @@ export const fr: Dictionary = {
       ],
       useCasesTitle: "Des exemples concrets",
       useCases: [
-        { title: "Boutique et comptabilité", desc: "Chaque vente en ligne crée la facture et met vos chiffres à jour, sans ressaisie." },
-        { title: "Formulaire vers CRM", desc: "Un nouveau lead tombe directement dans votre CRM, complet et prêt à suivre." },
-        { title: "Calendrier et courriels", desc: "Vos rendez-vous et vos suivis restent synchronisés d'un outil à l'autre." },
-        { title: "Une seule source fiable", desc: "Vos données éparpillées se regroupent dans un tableur toujours à jour." },
+        { icon: "store", title: "Boutique et comptabilité", desc: "Chaque vente en ligne crée la facture et met vos chiffres à jour, sans ressaisie." },
+        { icon: "clipboardList", title: "Formulaire vers CRM", desc: "Un nouveau lead tombe directement dans votre CRM, complet et prêt à suivre." },
+        { icon: "calendarDays", title: "Calendrier et courriels", desc: "Vos rendez-vous et vos suivis restent synchronisés d'un outil à l'autre." },
+        { icon: "table", title: "Une seule source fiable", desc: "Vos données éparpillées se regroupent dans un tableur toujours à jour." },
       ],
       outcomesTitle: "Ce que vous y gagnez",
       outcomes: [

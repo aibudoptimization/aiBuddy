@@ -1,4 +1,5 @@
 import {
+  ArrowRight,
   CalendarCheck,
   Check,
   Clock,
@@ -32,16 +33,23 @@ function MockRow({
   icon,
   muted,
   state,
+  wideLabel,
 }: {
   label?: string;
   value: string;
   icon?: React.ReactNode;
   muted?: boolean;
   state?: RowState;
+  /** For tool names, which don't fit the default label column. */
+  wideLabel?: boolean;
 }) {
   return (
     <div className={`ww-mock-row${muted ? " is-muted" : ""}`}>
-      {label ? <span className="ww-mock-row__label ww-mono">{label}</span> : null}
+      {label ? (
+        <span className={`ww-mock-row__label ww-mono${wideLabel ? " is-wide" : ""}`}>
+          {label}
+        </span>
+      ) : null}
       <span className="ww-mock-row__chip">
         {icon ? <span className="ww-mock-row__icon">{icon}</span> : null}
         {value}
@@ -222,6 +230,86 @@ function GuardrailMock() {
   );
 }
 
+/* —— Intégration. The story here is topology: two tools joined, and one record
+   living in all of them at once rather than a copy per app. —— */
+
+/** Deux outils reliés, avec l'état du lien. */
+function MockLink({ from, to, state }: { from: string; to: string; state: string }) {
+  return (
+    <div className="ww-mock-link">
+      <span className="ww-mock-link__end">{from}</span>
+      <ArrowRight className="ww-mock-link__arrow" size={13} aria-hidden />
+      <span className="ww-mock-link__end">{to}</span>
+      <span className="ww-mock-link__state ww-mono">
+        <span className="ww-mock-pulse" aria-hidden />
+        {state}
+      </span>
+    </div>
+  );
+}
+
+/** Les liens qui tournent en arrière-plan. */
+function ConnectionsMock() {
+  return (
+    <>
+      <MockLink from="Boutique" to="Comptabilité" state="actif" />
+      <MockLink from="Formulaire" to="CRM" state="actif" />
+      <MockLink from="Calendrier" to="Courriel" state="actif" />
+      <MockFoot>
+        <span className="ww-mock-code ww-mono">POST /commande.creee</span>
+        200 · 180 ms
+      </MockFoot>
+    </>
+  );
+}
+
+/** Une même fiche, la même valeur partout. */
+function SyncMock() {
+  return (
+    <>
+      {/* The same value repeated across three tools is the whole point; a
+          separate "record" card above it just said it twice. */}
+      <MockRow wideLabel label="CRM" value="marie@boutique.ca" state="done" />
+      <MockRow wideLabel label="Boutique" value="marie@boutique.ca" state="done" />
+      <MockRow wideLabel label="Comptabilité" value="marie@boutique.ca" state="done" />
+      <MockFoot>
+        <span className="ww-mock-pulse" aria-hidden />
+        Corrigée une seule fois · propagée il y a 2 s
+      </MockFoot>
+    </>
+  );
+}
+
+/** Un déménagement de données, une fois terminé. */
+function MigrationMock() {
+  return (
+    <>
+      <MockLink from="Ancien CRM" to="Nouveau CRM" state="terminé" />
+      <div className="ww-mock-meter" aria-hidden>
+        <span />
+      </div>
+      <MockRow wideLabel label="Transférées" value="4 812 fiches" state="done" />
+      <MockRow wideLabel label="Doublons" value="Fusionnés, 0 restant" state="done" />
+      <MockFoot>Aucune perte : chaque fiche est comptée avant et après.</MockFoot>
+    </>
+  );
+}
+
+/** Ce qu'on vous remet à la fin. */
+function HandoverMock() {
+  return (
+    <>
+      <MockRow wideLabel label="Comptes" value="Transférés à votre nom" state="done" />
+      <MockRow wideLabel label="Code" value="Dépôt remis" state="done" />
+      <MockRow wideLabel label="Schémas" value="Chaque flux documenté" state="done" />
+      <MockFoot>
+        <span className="ww-mock-pulse" aria-hidden />
+        Propriétaire : votre entreprise
+      </MockFoot>
+    </>
+  );
+}
+
 type Mock = { label: string; Body: () => React.ReactElement };
 
 const MOCKS: Partial<Record<ServiceRowIcon, Mock>> = {
@@ -234,6 +322,10 @@ const MOCKS: Partial<Record<ServiceRowIcon, Mock>> = {
   plug: { label: "Trace d'exécution", Body: ToolTraceMock },
   penLine: { label: "Brouillon de réponse", Body: ToneMock },
   shieldCheck: { label: "Garde-fous actifs", Body: GuardrailMock },
+  webhook: { label: "Liens en service", Body: ConnectionsMock },
+  refreshCw: { label: "Fiche client · synchronisée", Body: SyncMock },
+  database: { label: "Migration terminée", Body: MigrationMock },
+  fileCheck: { label: "Dossier de remise", Body: HandoverMock },
 };
 
 export function hasMock(icon?: ServiceRowIcon) {
