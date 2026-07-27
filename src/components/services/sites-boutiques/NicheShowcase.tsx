@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { hexToRgb } from "@/lib/accents";
 
@@ -30,6 +30,21 @@ export function NicheShowcase({
   comingSoonLabel,
 }: NicheShowcaseProps) {
   const [active, setActive] = useState(0);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+
+  // Seuls les panneaux ouverts jouent : les six autres restent en pause, sinon
+  // les sept vidéos se téléchargent et se décodent en même temps.
+  useEffect(() => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+      if (i === active) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  }, [active]);
 
   return (
     <section className="ww-sites-niche">
@@ -111,9 +126,11 @@ export function NicheShowcase({
                     rel={isExternal(p.demoHref) ? "noopener noreferrer" : undefined}
                   >
                     <video
+                      ref={(el) => {
+                        videoRefs.current[i] = el;
+                      }}
                       className="ww-sites-panel__mock-video"
                       src={p.preview}
-                      autoPlay
                       loop
                       muted
                       playsInline
