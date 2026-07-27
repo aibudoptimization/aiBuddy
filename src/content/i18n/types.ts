@@ -45,6 +45,7 @@ export type FaqItem = {
  * rather than silently rendering nothing.
  */
 export type ServiceRowIcon =
+  // automatisation
   | "split"
   | "workflow"
   | "repeat"
@@ -54,7 +55,16 @@ export type ServiceRowIcon =
   | "receipt"
   | "inbox"
   | "calendarClock"
-  | "send";
+  | "send"
+  // agents IA
+  | "bot"
+  | "plug"
+  | "penLine"
+  | "shieldCheck"
+  | "headset"
+  | "listFilter"
+  | "bookOpen"
+  | "mailCheck";
 
 /** Title + one-line description, used for "included", "process" and "use case" rows. */
 export type ServiceRow = {

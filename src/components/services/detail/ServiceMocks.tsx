@@ -1,4 +1,14 @@
-import { Check, Clock, FileText, Mail, Send, Users } from "lucide-react";
+import {
+  CalendarCheck,
+  Check,
+  Clock,
+  FileText,
+  Mail,
+  Send,
+  UserRound,
+  Users,
+  X,
+} from "lucide-react";
 
 import type { ServiceRowIcon } from "@/content/i18n/types";
 
@@ -14,18 +24,20 @@ import type { ServiceRowIcon } from "@/content/i18n/types";
  * not restate the row heading beside it — that reads as an echo, not a caption.
  */
 
+type RowState = "done" | "pending" | "deny";
+
 function MockRow({
   label,
   value,
   icon,
   muted,
-  done,
+  state,
 }: {
   label?: string;
   value: string;
   icon?: React.ReactNode;
   muted?: boolean;
-  done?: boolean;
+  state?: RowState;
 }) {
   return (
     <div className={`ww-mock-row${muted ? " is-muted" : ""}`}>
@@ -34,13 +46,19 @@ function MockRow({
         {icon ? <span className="ww-mock-row__icon">{icon}</span> : null}
         {value}
       </span>
-      {done !== undefined ? (
-        <span className={`ww-mock-row__state${done ? " is-done" : ""}`} aria-hidden>
-          {done ? <Check size={11} strokeWidth={3} /> : null}
+      {state ? (
+        <span className={`ww-mock-row__state is-${state}`} aria-hidden>
+          {state === "done" ? <Check size={11} strokeWidth={3} /> : null}
+          {state === "deny" ? <X size={11} strokeWidth={3} /> : null}
         </span>
       ) : null}
     </div>
   );
+}
+
+/** A message, either from the client or drafted by the agent. */
+function MockBubble({ from, children }: { from: "client" | "agent"; children: React.ReactNode }) {
+  return <p className={`ww-mock-bubble is-${from}`}>{children}</p>;
 }
 
 function MockFoot({ children }: { children: React.ReactNode }) {
@@ -86,9 +104,9 @@ function SequenceMock() {
 function FollowUpMock() {
   return (
     <>
-      <MockRow label="J+7" value="Rappel envoyé" done />
-      <MockRow label="J+14" value="Relance envoyée" done />
-      <MockRow label="J+21" value="Alerte à vous" muted done={false} />
+      <MockRow label="J+7" value="Rappel envoyé" state="done" />
+      <MockRow label="J+14" value="Relance envoyée" state="done" />
+      <MockRow label="J+21" value="Alerte à vous" muted state="pending" />
       <MockFoot>L&apos;alerte part seulement si la facture est toujours impayée.</MockFoot>
     </>
   );
@@ -136,6 +154,74 @@ function RoutingMock() {
   );
 }
 
+/* —— Agents IA. Where the automatisation panels show fixed rails, these show
+   judgment: reading intent, picking a tool, choosing words, refusing. —— */
+
+/** Une demande floue, et ce que l'agent en comprend. */
+function IntentMock() {
+  return (
+    <>
+      <MockBubble from="client">
+        Bonjour, je voudrais booker une visite pour le 4½ sur Papineau cette semaine
+      </MockBubble>
+      <MockRow label="Intention" value="Prise de rendez-vous" />
+      <MockRow label="Extrait" value="4½ Papineau · cette semaine" />
+      <MockFoot>Comprend votre vocabulaire, pas celui d&apos;un gabarit.</MockFoot>
+    </>
+  );
+}
+
+/** L'agent choisit ses outils, une étape à la fois. */
+function ToolTraceMock() {
+  return (
+    <>
+      <MockRow
+        label="1"
+        value="Calendrier · créneaux libres"
+        icon={<CalendarCheck size={12} />}
+        state="done"
+      />
+      <MockRow label="2" value="CRM · fiche mise à jour" icon={<UserRound size={12} />} state="done" />
+      <MockRow label="3" value="Courriel · confirmation" icon={<Mail size={12} />} state="pending" />
+      <MockFoot>
+        <span className="ww-mock-pulse" aria-hidden />
+        L&apos;agent choisit l&apos;outil selon la demande.
+      </MockFoot>
+    </>
+  );
+}
+
+/** Une réponse rédigée dans votre voix. */
+function ToneMock() {
+  return (
+    <>
+      <MockBubble from="agent">
+        Bonjour ! J&apos;ai deux visites libres jeudi, 14 h ou 17 h. Laquelle vous convient ?
+      </MockBubble>
+      <div className="ww-mock-tags">
+        <span className="ww-mock-tag">Tutoiement</span>
+        <span className="ww-mock-tag">Chaleureux</span>
+        <span className="ww-mock-tag">Court</span>
+      </div>
+      {/* The copy promises a handover to a human; the panel should show it. */}
+      <MockRow label="Sinon" value="Transfert à votre équipe" icon={<UserRound size={12} />} />
+      <MockFoot>Relu selon vos règles de voix avant l&apos;envoi.</MockFoot>
+    </>
+  );
+}
+
+/** Ce que l'agent a le droit de faire, et où il s'arrête. */
+function GuardrailMock() {
+  return (
+    <>
+      <MockRow label="Autorisé" value="Répondre aux questions" state="done" />
+      <MockRow label="Autorisé" value="Réserver un rendez-vous" state="done" />
+      <MockRow label="Bloqué" value="Accorder un remboursement" muted state="deny" />
+      <MockFoot>Les cas bloqués partent à un humain, et tout est journalisé.</MockFoot>
+    </>
+  );
+}
+
 type Mock = { label: string; Body: () => React.ReactElement };
 
 const MOCKS: Partial<Record<ServiceRowIcon, Mock>> = {
@@ -144,6 +230,10 @@ const MOCKS: Partial<Record<ServiceRowIcon, Mock>> = {
   repeat: { label: "Relance en cours · facture #1042", Body: FollowUpMock },
   mail: { label: "Envoi programmé", Body: MailMock },
   route: { label: "Demande entrante", Body: RoutingMock },
+  bot: { label: "Message reçu · interprétation", Body: IntentMock },
+  plug: { label: "Trace d'exécution", Body: ToolTraceMock },
+  penLine: { label: "Brouillon de réponse", Body: ToneMock },
+  shieldCheck: { label: "Garde-fous actifs", Body: GuardrailMock },
 };
 
 export function hasMock(icon?: ServiceRowIcon) {

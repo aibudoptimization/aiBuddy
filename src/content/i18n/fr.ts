@@ -425,10 +425,10 @@ export const fr: Dictionary = {
       ],
       includedTitle: "Ce qu'on met en place",
       included: [
-        { title: "Un agent sur mesure", desc: "On conçoit l'agent autour de votre métier, de vos processus et de votre vocabulaire, pas d'un gabarit générique." },
-        { title: "Branché à vos outils", desc: "L'agent lit et agit dans votre stack existante, CRM, boîte courriel, calendrier, base de données." },
-        { title: "Calibré sur votre ton", desc: "Ses réponses respectent votre voix et vos limites, avec passage à un humain quand il le faut." },
-        { title: "Garde-fous et suivi", desc: "On pose des balises claires sur ce que l'agent peut faire, et on suit ses décisions pour l'ajuster." },
+        { icon: "bot", title: "Un agent sur mesure", desc: "On conçoit l'agent autour de votre métier, de vos processus et de votre vocabulaire, pas d'un gabarit générique." },
+        { icon: "plug", title: "Branché à vos outils", desc: "L'agent lit et agit dans votre stack existante, CRM, boîte courriel, calendrier, base de données." },
+        { icon: "penLine", title: "Calibré sur votre ton", desc: "Ses réponses respectent votre voix et vos limites, avec passage à un humain quand il le faut." },
+        { icon: "shieldCheck", title: "Garde-fous et suivi", desc: "On pose des balises claires sur ce que l'agent peut faire, et on suit ses décisions pour l'ajuster." },
       ],
       processTitle: "Comment on procède",
       process: [
@@ -439,10 +439,10 @@ export const fr: Dictionary = {
       ],
       useCasesTitle: "Où un agent aide vraiment",
       useCases: [
-        { title: "Support client 24/7", desc: "L'agent répond aux questions courantes, jour et nuit, et transfère les cas délicats à votre équipe." },
-        { title: "Qualification des demandes", desc: "Il trie les messages entrants, comprend le besoin et oriente chaque client vers la bonne suite." },
-        { title: "Assistant interne", desc: "Votre équipe interroge vos documents et vos données en langage naturel et obtient une réponse directe." },
-        { title: "Traitement des courriels", desc: "L'agent lit, comprend et prépare des réponses ou des brouillons rédigés dans votre ton." },
+        { icon: "headset", title: "Support client 24/7", desc: "L'agent répond aux questions courantes, jour et nuit, et transfère les cas délicats à votre équipe." },
+        { icon: "listFilter", title: "Qualification des demandes", desc: "Il trie les messages entrants, comprend le besoin et oriente chaque client vers la bonne suite." },
+        { icon: "bookOpen", title: "Assistant interne", desc: "Votre équipe interroge vos documents et vos données en langage naturel et obtient une réponse directe." },
+        { icon: "mailCheck", title: "Traitement des courriels", desc: "L'agent lit, comprend et prépare des réponses ou des brouillons rédigés dans votre ton." },
       ],
       outcomesTitle: "Ce que vous y gagnez",
       outcomes: [

@@ -639,6 +639,48 @@ canvas {
   border-color: transparent;
 }
 
+.ww-mock-row__state.is-deny {
+  color: rgba(244, 243, 247, 0.55);
+  border-color: rgba(244, 243, 247, 0.24);
+}
+
+/* Chat fragments: what the client wrote, what the agent drafted back. */
+.ww-mock-bubble {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.ww-mock-bubble.is-client {
+  border: 1px solid rgba(244, 243, 247, 0.09);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(244, 243, 247, 0.85);
+  border-bottom-left-radius: 4px;
+}
+
+.ww-mock-bubble.is-agent {
+  border: 1px solid rgba(var(--accent-rgb), 0.34);
+  background: rgba(var(--accent-rgb), 0.1);
+  color: rgba(244, 243, 247, 0.95);
+  border-bottom-right-radius: 4px;
+}
+
+.ww-mock-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ww-mock-tag {
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--accent-rgb), 0.26);
+  font-size: 11px;
+  color: rgba(var(--accent-rgb), 0.9);
+}
+
 .ww-mock-foot {
   display: flex;
   align-items: center;
