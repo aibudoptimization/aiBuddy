@@ -39,10 +39,29 @@ export type FaqItem = {
   a: string;
 };
 
+/**
+ * Icon names available to service rows. Keys map to lucide components in
+ * `serviceRowIcons`; keeping them as a union means a typo fails the build
+ * rather than silently rendering nothing.
+ */
+export type ServiceRowIcon =
+  | "split"
+  | "workflow"
+  | "repeat"
+  | "mail"
+  | "route"
+  | "userPlus"
+  | "receipt"
+  | "inbox"
+  | "calendarClock"
+  | "send";
+
 /** Title + one-line description, used for "included", "process" and "use case" rows. */
 export type ServiceRow = {
   title: string;
   desc: string;
+  /** Falls back to a plain accent dot when absent. */
+  icon?: ServiceRowIcon;
 };
 
 /** A result tile: an optional short stat plus a label. */

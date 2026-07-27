@@ -367,11 +367,11 @@ export const fr: Dictionary = {
       ],
       includedTitle: "Ce qu'on met en place",
       included: [
-        { title: "Déclencheurs et conditions", desc: "On définit ce qui lance chaque automatisation et les règles qui décident de la suite." },
-        { title: "Séquences et relais", desc: "On enchaîne les étapes pour qu'un scénario passe le relais au suivant sans intervention." },
-        { title: "Suivis et relances", desc: "On programme les rappels et les relances pour qu'aucun dossier ne tombe entre les craques." },
-        { title: "Courriels et infolettres", desc: "On monte vos séquences de courriels et vos envois d'infolettre, avec les listes qui se tiennent à jour toutes seules." },
-        { title: "Tri et routage", desc: "On classe et on dirige automatiquement les demandes, les données et les documents au bon endroit." },
+        { icon: "split", title: "Déclencheurs et conditions", desc: "On définit ce qui lance chaque automatisation et les règles qui décident de la suite." },
+        { icon: "workflow", title: "Séquences et relais", desc: "On enchaîne les étapes pour qu'un scénario passe le relais au suivant sans intervention." },
+        { icon: "repeat", title: "Suivis et relances", desc: "On programme les rappels et les relances pour qu'aucun dossier ne tombe entre les craques." },
+        { icon: "mail", title: "Courriels et infolettres", desc: "On monte vos séquences de courriels et vos envois d'infolettre, avec les listes qui se tiennent à jour toutes seules." },
+        { icon: "route", title: "Tri et routage", desc: "On classe et on dirige automatiquement les demandes, les données et les documents au bon endroit." },
       ],
       processTitle: "Comment ça se passe",
       process: [
@@ -382,11 +382,11 @@ export const fr: Dictionary = {
       ],
       useCasesTitle: "Exemples concrets",
       useCases: [
-        { title: "Onboarding client automatisé", desc: "Dès qu'un contrat est signé, la séquence d'accueil, les accès et les courriels partent tout seuls." },
-        { title: "Relances de factures impayées", desc: "Une facture en retard déclenche des rappels au bon moment, sans que vous ayez à y penser." },
-        { title: "Tri des demandes entrantes", desc: "Chaque demande est classée et dirigée vers la bonne personne selon des règles précises." },
-        { title: "Rappels de suivi après devis", desc: "Après un devis ou un rendez-vous, une relance planifiée garde vos prospects au chaud." },
-        { title: "Infolettre qui part toute seule", desc: "Vos contacts entrent dans la bonne liste selon ce qu'ils ont fait, et reçoivent le bon courriel au bon moment." },
+        { icon: "userPlus", title: "Onboarding client automatisé", desc: "Dès qu'un contrat est signé, la séquence d'accueil, les accès et les courriels partent tout seuls." },
+        { icon: "receipt", title: "Relances de factures impayées", desc: "Une facture en retard déclenche des rappels au bon moment, sans que vous ayez à y penser." },
+        { icon: "inbox", title: "Tri des demandes entrantes", desc: "Chaque demande est classée et dirigée vers la bonne personne selon des règles précises." },
+        { icon: "calendarClock", title: "Rappels de suivi après devis", desc: "Après un devis ou un rendez-vous, une relance planifiée garde vos prospects au chaud." },
+        { icon: "send", title: "Infolettre qui part toute seule", desc: "Vos contacts entrent dans la bonne liste selon ce qu'ils ont fait, et reçoivent le bon courriel au bon moment." },
       ],
       outcomesTitle: "Ce que vous y gagnez",
       outcomes: [

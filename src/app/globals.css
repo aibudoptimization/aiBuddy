@@ -477,6 +477,360 @@ canvas {
   margin-bottom: 14px;
 }
 
+/* Per-card anchor. Ten identical dots gave the eye nothing to skim by. */
+.ww-svc-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 14px;
+  border-radius: 11px;
+  border: 1px solid rgba(var(--accent-rgb), 0.26);
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--accent);
+}
+
+/* On a phone the stacked icon costs ~48px a card and the column is narrow
+   anyway, so it moves inline beside the title. */
+@media (max-width: 760px) {
+  .ww-svc-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 13px;
+    row-gap: 8px;
+    align-items: center;
+    padding: 18px 18px 20px;
+  }
+
+  .ww-svc-card .ww-svc-icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 0;
+  }
+
+  .ww-svc-card__title {
+    margin-bottom: 0;
+  }
+
+  .ww-svc-card__desc {
+    grid-column: 1 / -1;
+  }
+}
+
+/* —— Showcase rows: copy one side, a fragment of the product on the other —— */
+
+.ww-svc-rows {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 5vh, 64px);
+}
+
+/* The copy is a heading plus one sentence, so an even split left it looking
+   thin beside the panel. Narrower column reads as a deliberate caption. */
+.ww-svc-row {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+}
+
+/* Alternate sides. The panel leads on even rows, which is what stops the
+   section reading as a list. */
+.ww-svc-row:nth-child(even) .ww-svc-row__copy {
+  order: 2;
+}
+
+.ww-svc-row__title {
+  margin: 0 0 10px;
+  font-size: clamp(19px, 2.2vw, 23px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.ww-svc-row__desc {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(244, 243, 247, 0.62);
+  max-width: 46ch;
+}
+
+.ww-svc-row__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(var(--accent-rgb), 0.18);
+  background:
+    linear-gradient(158deg, rgba(var(--accent-rgb), 0.09), rgba(255, 255, 255, 0.012) 62%),
+    rgba(10, 10, 15, 0.5);
+}
+
+.ww-svc-row__panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 5px;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: rgba(244, 243, 247, 0.4);
+}
+
+.ww-svc-row__panel-no {
+  flex: none;
+  color: rgba(var(--accent-rgb), 0.6);
+}
+
+/* —— Mock primitives, shared by every panel —— */
+
+.ww-mock-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+}
+
+.ww-mock-row.is-muted {
+  opacity: 0.52;
+}
+
+.ww-mock-row__label {
+  flex: none;
+  width: 52px;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: rgba(244, 243, 247, 0.42);
+}
+
+.ww-mock-row__chip {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(244, 243, 247, 0.09);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(244, 243, 247, 0.88);
+}
+
+.ww-mock-row__icon {
+  display: inline-flex;
+  color: var(--accent);
+}
+
+.ww-mock-row__state {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 243, 247, 0.18);
+  color: var(--ink);
+}
+
+.ww-mock-row__state.is-done {
+  background: var(--accent);
+  border-color: transparent;
+}
+
+.ww-mock-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(244, 243, 247, 0.08);
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(244, 243, 247, 0.5);
+}
+
+.ww-mock-pulse {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 9px rgba(var(--accent-rgb), 0.8);
+}
+
+/* Stacked, so this panel keeps the same three-row rhythm as its neighbours.
+   Inline, it sat ~90px shorter and the alternation read as ragged. */
+.ww-mock-chain {
+  display: flex;
+  flex-direction: column;
+}
+
+.ww-mock-chain__node {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(244, 243, 247, 0.09);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 13.5px;
+  color: rgba(244, 243, 247, 0.88);
+}
+
+.ww-mock-chain__node.is-done {
+  color: rgba(244, 243, 247, 0.55);
+}
+
+.ww-mock-chain__node.is-live {
+  border-color: rgba(var(--accent-rgb), 0.42);
+  background: rgba(var(--accent-rgb), 0.09);
+  color: var(--accent);
+}
+
+.ww-mock-chain__link {
+  width: 1px;
+  height: 11px;
+  margin-left: 21px;
+  background: rgba(var(--accent-rgb), 0.4);
+}
+
+.ww-mock-mail {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 13px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(244, 243, 247, 0.09);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ww-mock-mail__subject {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ww-mock-mail__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.ww-mock-split {
+  display: flex;
+  justify-content: space-around;
+  height: 16px;
+  padding: 0 18%;
+}
+
+.ww-mock-split span {
+  width: 1px;
+  background: linear-gradient(rgba(var(--accent-rgb), 0.45), rgba(var(--accent-rgb), 0.12));
+}
+
+.ww-mock-dests {
+  display: flex;
+  gap: 7px;
+}
+
+.ww-mock-dest {
+  flex: 1;
+  padding: 8px 4px;
+  border-radius: 9px;
+  border: 1px solid rgba(244, 243, 247, 0.09);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 11.5px;
+  text-align: center;
+  color: rgba(244, 243, 247, 0.62);
+}
+
+.ww-mock-dest.is-live {
+  border-color: rgba(var(--accent-rgb), 0.42);
+  background: rgba(var(--accent-rgb), 0.09);
+  color: var(--accent);
+}
+
+@media (max-width: 860px) {
+  .ww-svc-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Stacked: copy always leads, whatever the desktop order was. */
+  .ww-svc-row:nth-child(even) .ww-svc-row__copy {
+    order: 0;
+  }
+}
+
+/* —— Use cases: a denser list, so it never reads as a second "included" —— */
+
+.ww-svc-uses {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(24px, 3.4vw, 48px);
+}
+
+.ww-svc-use {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+/* Both columns need a rule above them on the first row. */
+.ww-svc-use:nth-child(-n + 2) {
+  border-top: none;
+}
+
+.ww-svc-use .ww-svc-icon {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 0;
+  border-radius: 9px;
+}
+
+.ww-svc-use__body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.ww-svc-use__title {
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ww-svc-use__desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(244, 243, 247, 0.6);
+}
+
+@media (max-width: 760px) {
+  .ww-svc-uses {
+    grid-template-columns: 1fr;
+  }
+
+  .ww-svc-use:nth-child(-n + 2) {
+    border-top: 1px solid var(--hairline);
+  }
+
+  .ww-svc-use:first-child {
+    border-top: none;
+  }
+}
+
 .ww-svc-card__title {
   font-size: 16.5px;
   font-weight: 600;
@@ -490,27 +844,46 @@ canvas {
   color: rgba(244, 243, 247, 0.6);
 }
 
-/* Process steps */
+/* Process steps: a connected rail, not four loose boxes. The card chrome is
+   gone so this section reads differently from the two above it. */
 .ww-svc-steps {
+  --step-gap: clamp(20px, 2.6vw, 40px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--step-gap);
+  row-gap: 30px;
 }
 
 .ww-svc-step {
   position: relative;
-  padding: 22px 20px 24px;
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.018);
+  display: flex;
+  flex-direction: column;
 }
 
 .ww-svc-step__no {
-  font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
   color: var(--accent);
-  margin-bottom: 12px;
-  opacity: 0.9;
+  margin-bottom: 14px;
+}
+
+/* Reaches across the gutter to the next number so the row reads as one line. */
+.ww-svc-step__bar {
+  position: absolute;
+  top: 7px;
+  left: 30px;
+  right: calc(var(--step-gap) * -1);
+  height: 1px;
+  background: rgba(var(--accent-rgb), 0.28);
+}
+
+.ww-svc-step:last-child .ww-svc-step__bar,
+.ww-svc-step:nth-child(4n) .ww-svc-step__bar {
+  right: 0;
+  background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.28), transparent);
 }
 
 .ww-svc-step__title {
@@ -678,7 +1051,13 @@ canvas {
 
 @media (max-width: 860px) {
   .ww-svc-steps {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Two columns: every second step now ends its row. */
+  .ww-svc-step:nth-child(2n) .ww-svc-step__bar {
+    right: 0;
+    background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.28), transparent);
   }
 }
 
@@ -698,6 +1077,14 @@ canvas {
 @media (max-width: 480px) {
   .ww-svc-steps {
     grid-template-columns: 1fr;
+    row-gap: 24px;
+  }
+
+  /* One column: every step ends its row. `:nth-child(n)` matches the
+     specificity of the 2n/4n rules above so this one wins. */
+  .ww-svc-step:nth-child(n) .ww-svc-step__bar {
+    right: 0;
+    background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.28), transparent);
   }
 }
 
