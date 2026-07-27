@@ -73,7 +73,16 @@ export type ServiceRowIcon =
   | "store"
   | "clipboardList"
   | "calendarDays"
-  | "table";
+  | "table"
+  // conseil
+  | "search"
+  | "gauge"
+  | "map"
+  | "scale"
+  | "hand"
+  | "unplug"
+  | "helpCircle"
+  | "trendingUp";
 
 /** Title + one-line description, used for "included", "process" and "use case" rows. */
 export type ServiceRow = {

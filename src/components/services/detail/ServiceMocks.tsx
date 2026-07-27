@@ -310,6 +310,125 @@ function HandoverMock() {
   );
 }
 
+/* —— Conseil. The other three services sell a system that runs, so their
+   panels show motion. This one sells a document, so the panels are pages of
+   it: what was measured, what's blocking, the ranked plan, the price. —— */
+
+/** Une ligne de la feuille de route : rang, piste, verdict. */
+function MockTrack({
+  rank,
+  name,
+  meta,
+}: {
+  rank?: string;
+  name: string;
+  meta: React.ReactNode;
+}) {
+  return (
+    <div className="ww-mock-track">
+      {rank ? <span className="ww-mock-track__rank ww-mono">{rank}</span> : null}
+      <span className="ww-mock-track__name">{name}</span>
+      <span className="ww-mock-track__meta">{meta}</span>
+    </div>
+  );
+}
+
+/** Ce que le relevé a mesuré. */
+function AuditMock() {
+  return (
+    <>
+      <MockTrack name="Saisie des commandes" meta={<span className="ww-mono">6 h / sem</span>} />
+      <MockTrack name="Relances clients" meta={<span className="ww-mono">4 h / sem</span>} />
+      <MockTrack name="Rapports mensuels" meta={<span className="ww-mono">3 h / sem</span>} />
+      <MockFoot>
+        <span className="ww-mock-pulse" aria-hidden />
+        13 h par semaine, comptées chez vous et non estimées
+      </MockFoot>
+    </>
+  );
+}
+
+/** L'étape qui retient tout le reste. */
+function BottleneckMock() {
+  return (
+    <>
+      <div className="ww-mock-chain">
+        <span className="ww-mock-chain__node is-done">Devis préparé</span>
+        <span className="ww-mock-chain__link" aria-hidden />
+        <span className="ww-mock-chain__node is-warn">
+          Validation manuelle
+          <span className="ww-mock-chain__flag ww-mono">3 jours</span>
+        </span>
+        <span className="ww-mock-chain__link" aria-hidden />
+        <span className="ww-mock-chain__node">Envoi au client</span>
+      </div>
+      <MockFoot>Une seule étape retient toute la chaîne.</MockFoot>
+    </>
+  );
+}
+
+/** Le plan, classé par ce qui paie le plus vite. */
+function RoadmapMock() {
+  return (
+    <>
+      <MockTrack
+        rank="01"
+        name="Relances automatiques"
+        meta={
+          <>
+            <span className="ww-mock-badge is-high">Gain élevé</span>
+            <span className="ww-mock-badge">Effort faible</span>
+          </>
+        }
+      />
+      <MockTrack
+        rank="02"
+        name="Boutique vers comptabilité"
+        meta={
+          <>
+            <span className="ww-mock-badge is-high">Gain élevé</span>
+            <span className="ww-mock-badge">Effort moyen</span>
+          </>
+        }
+      />
+      <MockTrack
+        rank="03"
+        name="Agent de support"
+        meta={
+          <>
+            <span className="ww-mock-badge">Gain moyen</span>
+            <span className="ww-mock-badge">Effort élevé</span>
+          </>
+        }
+      />
+      {/* Carries the pricing promise now that the estimate row is gone. */}
+      <MockFoot>Classées par gain sur effort. Chacune chiffrée à part.</MockFoot>
+    </>
+  );
+}
+
+/**
+ * Une recommandation d'outil, avec ce qui a été écarté et pourquoi. Montrer
+ * le refus vaut mieux que promettre un conseil neutre : c'est le raisonnement
+ * qui prouve qu'on a comparé.
+ */
+function ToolChoiceMock() {
+  return (
+    <>
+      <MockRow wideLabel label="Contexte" value="Microsoft 365 · 6 personnes" />
+      <MockRow wideLabel label="Retenu" value="HubSpot, branché à votre 365" state="done" />
+      <MockRow
+        wideLabel
+        label="Écarté"
+        value="Salesforce, trop lourd pour 6"
+        muted
+        state="deny"
+      />
+      <MockFoot>Parfois la réponse est du sur mesure. Souvent non.</MockFoot>
+    </>
+  );
+}
+
 type Mock = { label: string; Body: () => React.ReactElement };
 
 const MOCKS: Partial<Record<ServiceRowIcon, Mock>> = {
@@ -326,6 +445,10 @@ const MOCKS: Partial<Record<ServiceRowIcon, Mock>> = {
   refreshCw: { label: "Fiche client · synchronisée", Body: SyncMock },
   database: { label: "Migration terminée", Body: MigrationMock },
   fileCheck: { label: "Dossier de remise", Body: HandoverMock },
+  search: { label: "Relevé de temps · 2 semaines", Body: AuditMock },
+  gauge: { label: "Flux devis · analysé", Body: BottleneckMock },
+  map: { label: "Plan remis · 3 pistes", Body: RoadmapMock },
+  scale: { label: "Recommandation · CRM", Body: ToolChoiceMock },
 };
 
 export function hasMock(icon?: ServiceRowIcon) {

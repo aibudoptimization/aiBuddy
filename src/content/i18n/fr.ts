@@ -537,10 +537,10 @@ export const fr: Dictionary = {
       ],
       includedTitle: "Ce que vous recevez",
       included: [
-        { title: "Analyse de vos processus", desc: "On cartographie comment le travail circule aujourd'hui, étape par étape." },
-        { title: "Goulots et gains rapides", desc: "On pointe ce qui vous ralentit et les quelques changements qui rapportent vite." },
-        { title: "Feuille de route priorisée", desc: "Une liste ordonnée : quoi faire en premier, ensuite, et pourquoi dans cet ordre." },
-        { title: "Estimation chiffrée par piste", desc: "Pour chaque priorité, un ordre de grandeur d'effort et de coût, sans mauvaise surprise." },
+        { icon: "search", title: "Analyse de vos processus", desc: "On cartographie comment le travail circule aujourd'hui, étape par étape." },
+        { icon: "gauge", title: "Goulots et gains rapides", desc: "On pointe ce qui vous ralentit et les quelques changements qui rapportent vite." },
+        { icon: "map", title: "Feuille de route priorisée", desc: "Une liste ordonnée : quoi faire en premier, ensuite, et pourquoi dans cet ordre." },
+        { icon: "scale", title: "Le choix des outils", desc: "Quel CRM, quelle plateforme, ou du sur mesure. On compare selon votre taille et ce que vous utilisez déjà, puis on tranche avec vous." },
       ],
       processTitle: "Comment ça se passe",
       process: [
@@ -551,16 +551,16 @@ export const fr: Dictionary = {
       ],
       useCasesTitle: "Quand ça vaut le coup",
       useCases: [
-        { title: "Trop de tâches à la main", desc: "Vous copiez, collez et relancez sans arrêt, et ça gruge vos journées." },
-        { title: "Des outils qui ne se parlent pas", desc: "Vos logiciels vivent chacun dans leur coin et vous faites le pont à la main." },
-        { title: "Envie d'automatiser, sans savoir par où", desc: "L'IA et l'automatisation vous tentent, mais vous ne savez pas quoi prioriser." },
-        { title: "La croissance coince", desc: "Plus de clients rime avec plus de chaos, et vos processus suivent mal." },
+        { icon: "hand", title: "Trop de tâches à la main", desc: "Vous copiez, collez et relancez sans arrêt, et ça gruge vos journées." },
+        { icon: "unplug", title: "Des outils qui ne se parlent pas", desc: "Vos logiciels vivent chacun dans leur coin et vous faites le pont à la main." },
+        { icon: "helpCircle", title: "Envie d'automatiser, sans savoir par où", desc: "L'IA et l'automatisation vous tentent, mais vous ne savez pas quoi prioriser." },
+        { icon: "trendingUp", title: "La croissance coince", desc: "Plus de clients rime avec plus de chaos, et vos processus suivent mal." },
       ],
       outcomesTitle: "Ce que vous en retirez",
       outcomes: [
-        { stat: "", label: "Feuille de route priorisée" },
-        { stat: "48 h", label: "Devis détaillé, sans engagement" },
-        { stat: "", label: "Le plan vous appartient" },
+        { stat: "Priorisé", label: "Vous savez quoi régler en premier, et pourquoi" },
+        { stat: "Sous 48 h", label: "Feuille de route et devis détaillé" },
+        { stat: "À vous", label: "Le plan vous appartient, même si vous arrêtez là" },
       ],
       faqTitle: "Questions fréquentes",
       faq: [
