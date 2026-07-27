@@ -21,6 +21,8 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --page-pad: clamp(28px, 5vw, 72px);
   --content-max: 1180px;
+  /* Pills only. Circles, dots, avatars and switch tracks stay fully round. */
+  --pill-radius: 12px;
 
   /* Standard card surface. Cards sit on the ambient background, so they need
      a real surface rather than a transparent film — this is the reference
@@ -716,44 +718,42 @@ canvas {
   text-transform: uppercase;
 }
 
+/* The site's primary button. Electrified on hover, same as the header CTA:
+   no overflow clip, because the arc ring sits on the border at inset -1px. */
 .ww-cta-fill {
   position: relative;
-  overflow: hidden;
-  z-index: 0;
   display: inline-flex;
   align-items: center;
   gap: 10px;
   font-weight: 600;
   font-size: 15.5px;
   padding: 15px 26px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   text-decoration: none;
   background: transparent;
   border: 1.5px solid var(--accent);
   color: var(--accent);
   transition:
-    color 0.35s ease,
-    box-shadow 0.35s ease;
+    color 0.25s,
+    background 0.25s,
+    box-shadow 0.3s var(--ease-out);
 }
 
-.ww-cta-fill::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.42s cubic-bezier(0.7, 0, 0.2, 1);
-  z-index: -1;
+/* Glow follows --accent, so a service page's button charges in that page's
+   colour rather than always teal. */
+.ww-cta-fill:hover,
+.ww-cta-fill:focus-visible {
+  color: #eafff8;
+  background: rgba(var(--accent-rgb), 0.08);
+  box-shadow:
+    0 0 13px rgba(var(--accent-rgb), 0.15),
+    inset 0 0 9px rgba(var(--accent-rgb), 0.05);
 }
 
-.ww-cta-fill:hover {
-  color: var(--ink);
-  box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.3);
-}
-
-.ww-cta-fill:hover::before {
-  transform: scaleX(1);
+.ww-cta-fill:active {
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), 0.24),
+    inset 0 0 12px rgba(var(--accent-rgb), 0.09);
 }
 
 .ww-cta-secondary {
@@ -764,7 +764,7 @@ canvas {
   font-weight: 500;
   font-size: 15.5px;
   padding: 15px 24px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   text-decoration: none;
   border: 1px solid rgba(244, 243, 247, 0.16);
 }
@@ -1280,7 +1280,7 @@ canvas {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 2px 8px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   border: 1px solid rgba(244, 243, 247, 0.2);
   color: rgba(244, 243, 247, 0.5);
 }
@@ -1485,7 +1485,7 @@ canvas {
   margin-top: 32px;
   padding: 8px 18px;
   border: 1px solid rgba(244, 243, 247, 0.14);
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   font-size: 13.5px;
   letter-spacing: 0.01em;
   color: rgba(244, 243, 247, 0.5);
@@ -1711,7 +1711,7 @@ canvas {
   color: var(--ink);
   background: var(--teal);
   padding: 6px 12px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   margin-bottom: 22px;
 }
 
@@ -1784,7 +1784,7 @@ canvas {
   font-weight: 600;
   font-size: 15.5px;
   padding: 14px 26px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   text-decoration: none;
 }
 
@@ -2058,7 +2058,7 @@ canvas {
   padding: 10px 17px 10px 14px;
   border: 1px solid rgba(75, 250, 200, 0.26);
   background: rgba(75, 250, 200, 0.05);
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   max-width: 100%;
   box-sizing: border-box;
   font-size: 13.5px;
@@ -2130,7 +2130,7 @@ canvas {
   font-weight: 600;
   font-size: 15.5px;
   padding: 15px 26px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   text-decoration: none;
   white-space: nowrap;
   box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.28);
@@ -2292,7 +2292,7 @@ canvas {
   align-items: center;
   gap: 8px;
   padding: 9px 14px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   border: 1px solid rgba(75, 250, 200, 0.35);
   background: rgba(75, 250, 200, 0.1);
   color: var(--snow);
@@ -2621,7 +2621,7 @@ canvas {
   align-items: center;
   gap: 8px;
   padding: 9px 13px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   border: 1px solid rgba(139, 124, 255, 0.35);
   background: rgba(139, 124, 255, 0.1);
   color: var(--snow);
@@ -2767,7 +2767,7 @@ canvas {
   font-weight: 600;
   letter-spacing: -0.01em;
   padding: 9px 16px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   transition: all 0.2s;
   color: rgba(244, 243, 247, 0.6);
   background: rgba(255, 255, 255, 0.03);
@@ -2924,7 +2924,7 @@ canvas {
   align-items: center;
   gap: 9px;
   padding: 8px 13px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   border: 1px solid;
   font-size: 11.5px;
   letter-spacing: 0.01em;
@@ -3263,7 +3263,7 @@ canvas {
   align-items: center;
   gap: 9px;
   padding: 8px 15px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   border: 1px solid rgba(244, 243, 247, 0.1);
   background: rgba(255, 255, 255, 0.02);
   font-size: 11px;
@@ -3587,7 +3587,7 @@ canvas {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 6px 12px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   background: rgba(7, 7, 11, 0.6);
   border: 1px solid rgba(244, 243, 247, 0.14);
 }
@@ -3852,7 +3852,7 @@ canvas {
   color: rgba(244, 243, 247, 0.7);
   padding: 7px 13px;
   border: 1px solid rgba(244, 243, 247, 0.16);
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   margin-bottom: 24px;
 }
 
@@ -4195,8 +4195,18 @@ canvas {
   color: var(--ink);
 }
 
-.ww-form__submit::before {
+/* Borrows .ww-cta-fill only for its geometry — it's a solid teal button, not
+   an outlined one, so it opts out of the arc and keeps its own hover. */
+.ww-form__submit::before,
+.ww-form__submit::after {
   display: none;
+}
+
+.ww-form__submit:hover,
+.ww-form__submit:focus-visible {
+  background: var(--teal);
+  color: var(--ink);
+  box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.32);
 }
 
 .ww-form__submit:disabled {
@@ -4698,7 +4708,7 @@ html[data-ww-intro]::before {
   text-decoration: none;
   border: 1px solid rgba(244, 243, 247, 0.18);
   padding: 9px 18px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   white-space: nowrap;
   transition:
     border-color 0.25s,
@@ -4708,8 +4718,12 @@ html[data-ww-intro]::before {
 }
 
 /* A charge running around the rim: a conic gradient clipped to a 1.5px ring
-   by two masks whose overlap is excluded. */
-.ww-header__cta::before {
+   by two masks whose overlap is excluded.
+   The header CTA hangs it on ::before, the primary button on ::after, so
+   either can host it without colliding. Colours come from --accent, which the
+   header inherits from :root (teal) and service pages override per service. */
+.ww-header__cta::before,
+.ww-cta-fill::after {
   content: "";
   position: absolute;
   inset: -1px;
@@ -4717,12 +4731,12 @@ html[data-ww-intro]::before {
   padding: 1.5px;
   background: conic-gradient(
     from var(--ww-arc),
-    rgba(75, 250, 200, 0) 0deg,
-    rgba(75, 250, 200, 0) 190deg,
-    rgba(75, 250, 200, 0.5) 268deg,
+    rgba(var(--accent-rgb), 0) 0deg,
+    rgba(var(--accent-rgb), 0) 190deg,
+    rgba(var(--accent-rgb), 0.5) 268deg,
     #eafff8 306deg,
-    rgba(75, 250, 200, 0.5) 340deg,
-    rgba(75, 250, 200, 0) 360deg
+    rgba(var(--accent-rgb), 0.5) 340deg,
+    rgba(var(--accent-rgb), 0) 360deg
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -4743,20 +4757,22 @@ html[data-ww-intro]::before {
   background: rgba(75, 250, 200, 0.08);
   color: #eafff8;
   box-shadow:
-    0 0 24px rgba(75, 250, 200, 0.28),
-    inset 0 0 14px rgba(75, 250, 200, 0.08);
+    0 0 13px rgba(75, 250, 200, 0.15),
+    inset 0 0 9px rgba(75, 250, 200, 0.05);
 }
 
 .ww-header__cta:hover::before,
-.ww-header__cta:focus-visible::before {
+.ww-header__cta:focus-visible::before,
+.ww-cta-fill:hover::after,
+.ww-cta-fill:focus-visible::after {
   opacity: 1;
   animation: ww-arc-spin 1.5s linear infinite;
 }
 
 .ww-header__cta:active {
   box-shadow:
-    0 0 34px rgba(75, 250, 200, 0.42),
-    inset 0 0 18px rgba(75, 250, 200, 0.14);
+    0 0 18px rgba(75, 250, 200, 0.24),
+    inset 0 0 12px rgba(75, 250, 200, 0.09);
 }
 
 @keyframes ww-arc-spin {
@@ -4767,7 +4783,9 @@ html[data-ww-intro]::before {
 
 @media (prefers-reduced-motion: reduce) {
   .ww-header__cta:hover::before,
-  .ww-header__cta:focus-visible::before {
+  .ww-header__cta:focus-visible::before,
+  .ww-cta-fill:hover::after,
+  .ww-cta-fill:focus-visible::after {
     animation: none;
   }
 }
@@ -5051,7 +5069,7 @@ html[data-ww-intro]::before {
   color: rgba(244, 243, 247, 0.7);
   padding: 7px 13px;
   border: 1px solid rgba(244, 243, 247, 0.16);
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   margin-bottom: 26px;
 }
 
@@ -5542,7 +5560,7 @@ html[data-ww-intro]::before {
 
 .ww-cookie-btn {
   flex: none;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   font-family: var(--font-grotesk);
   font-size: 14px;
   font-weight: 600;
@@ -5912,7 +5930,7 @@ html[data-ww-intro]::before {
   border: 1px solid rgba(75, 250, 200, 0.32);
   background: rgba(75, 250, 200, 0.08);
   padding: 5px 11px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
 }
 
 .ww-cookie-category__desc {
@@ -6175,7 +6193,7 @@ html[data-ww-intro]::before {
   width: 92px;
   height: 22px;
   margin-top: 4px;
-  border-radius: 999px;
+  border-radius: var(--pill-radius);
   background: var(--work-accent, var(--amber));
   opacity: 0.9;
 }
