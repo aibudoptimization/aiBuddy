@@ -1,9 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { DoorOpen, FileText, UserCheck, Wrench, type LucideIcon } from "lucide-react";
 
 import { EyebrowCanvas } from "@/components/canvas/EyebrowCanvas";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+
+/** Keyed by the step's `no` so the dict order drives the pairing. */
+const STEP_ICONS: Record<string, LucideIcon> = {
+  "01": UserCheck, // built on your own accounts
+  "02": FileText, // documented as we go
+  "03": Wrench, // we can run it for you
+  "04": DoorOpen, // you can leave whenever
+};
 
 export function HomeOwnershipSection() {
   const { dict, routes } = useLocale();
@@ -28,10 +37,14 @@ export function HomeOwnershipSection() {
         {o.lead}
       </p>
       <div className="ww-ownership-grid">
-        {o.steps.map((step) => (
+        {o.steps.map((step) => {
+          const Icon = STEP_ICONS[step.no] ?? UserCheck;
+          return (
           <div key={step.no} className="ww-ownership-step">
             <div className="ww-ownership-step__line">
-              <span className="ww-ownership-step__num">{step.no}</span>
+              <span className="ww-ownership-step__icon">
+                <Icon size={18} strokeWidth={1.9} aria-hidden />
+              </span>
               {/* Bleeds into the column gutter so the four rules read as one
                   continuous rail. CSS cancels the bleed on row-enders. */}
               <span className="ww-ownership-step__bar" aria-hidden />
@@ -39,7 +52,8 @@ export function HomeOwnershipSection() {
             <h3>{step.title}</h3>
             <p>{step.desc}</p>
           </div>
-        ))}
+          );
+        })}
       </div>
       <div className="ww-ownership-footer">
         <p className="ww-ownership-footer__line">

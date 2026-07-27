@@ -325,7 +325,8 @@ const ARTICLE_C: Article = {
   slug: "seo-geo-aeo",
   cat: "Visibilité",
   motif: "grid",
-  accent: "#6aa8ff",
+  // Keep in sync with JOURNAL_POSTS: same article, same accent.
+  accent: "#f0a94e",
   title: "Votre site web, le SEO, le GEO et l'AEO : la fondation invisible de votre croissance",
   dek: "Trois couches d'une même stratégie de visibilité, des résultats Google aux réponses de ChatGPT.",
   date: "21 janvier 2026",

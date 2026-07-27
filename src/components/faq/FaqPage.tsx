@@ -1,5 +1,6 @@
 "use client";
 
+import { FaqAccordionScope } from "@/components/faq/FaqAccordionScope";
 import { ServiceContactBlock } from "@/components/services/ServiceContactBlock";
 import { ServiceFaq } from "@/components/services/ServiceFaq";
 import { ServicePageLayout } from "@/components/services/ServicePageLayout";
@@ -36,9 +37,13 @@ export function FaqPage() {
         <h1 className="ww-service-title">{f.title}</h1>
         <p className="ww-service-lead">{f.lead}</p>
 
-        {groups.map((g) => (
-          <ServiceFaq key={g.title} title={g.title} items={g.items} openFirst={false} />
-        ))}
+        {/* One scope around all six groups: opening a question anywhere on the
+            page closes whatever was open, even in another group. */}
+        <FaqAccordionScope>
+          {groups.map((g) => (
+            <ServiceFaq key={g.title} title={g.title} items={g.items} />
+          ))}
+        </FaqAccordionScope>
 
         <ServiceContactBlock title={f.ctaTitle} description={f.ctaDescription} />
       </div>

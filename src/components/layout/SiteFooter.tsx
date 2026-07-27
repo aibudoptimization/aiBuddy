@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { BrandMark } from "@/components/layout/BrandMark";
+import { useFaqAccordion } from "@/components/faq/FaqAccordionScope";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { useCookieConsent } from "@/components/legal/CookieConsentContext";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL, navItems } from "@/lib/routes";
@@ -15,6 +16,8 @@ export function SiteFooter() {
   const items = navItems(dict.nav.services);
   const f = dict.footer;
   const { openPreferences } = useCookieConsent();
+  // Its own scope: the footer sits outside any page-level FAQ list.
+  const { openId, toggle } = useFaqAccordion();
 
   return (
     <footer
@@ -67,10 +70,14 @@ export function SiteFooter() {
               {f.faq.map((item) => (
                 <details
                   key={item.q}
-                  open={item.open}
+                  open={openId === item.q}
                   style={{ borderBottom: "1px solid rgba(244,243,247,0.08)" }}
                 >
                   <summary
+                    onClick={(event) => {
+                      event.preventDefault();
+                      toggle(item.q);
+                    }}
                     style={{
                       display: "flex",
                       alignItems: "center",

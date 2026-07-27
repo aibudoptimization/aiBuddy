@@ -4,18 +4,12 @@ import Link from "next/link";
 
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { getJournalPosts } from "@/content/journal";
+import { hexToRgb } from "@/lib/accents";
 
 export function HomeJournalSection() {
   const { dict, routes } = useLocale();
   const j = dict.home.journal;
   const posts = getJournalPosts().slice(0, 3);
-
-  const accents = ["#4bfac8", "#8b7cff", "#6aa8ff"] as const;
-  const hovers = [
-    "rgba(75,250,200,0.4)",
-    "rgba(139,124,255,0.45)",
-    "rgba(106,168,255,0.45)",
-  ] as const;
 
   return (
     <section
@@ -32,14 +26,16 @@ export function HomeJournalSection() {
         </Link>
       </div>
       <div className="ww-journal-grid">
-        {posts.map((post, i) => (
+        {posts.map((post) => (
           <div key={post.slug}>
             <Link
               href={routes.article(post.slug)}
               className="ww-journal-card"
               style={{
-                ["--journal-accent" as string]: accents[i] ?? post.accent,
-                ["--journal-hover-border" as string]: hovers[i] ?? "rgba(244,243,247,0.3)",
+                // Each card carries its own article's accent. This used to be
+                // a positional list, which is why the SEO piece read blue.
+                ["--journal-accent" as string]: post.accent,
+                ["--journal-hover-border" as string]: `rgba(${hexToRgb(post.accent)},0.45)`,
               }}
             >
               <span className="ww-mono ww-journal-card__tag">

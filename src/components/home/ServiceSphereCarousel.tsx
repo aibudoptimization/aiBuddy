@@ -2,12 +2,30 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  AppWindow,
+  Bot,
+  Compass,
+  Waypoints,
+  Workflow,
+  type LucideIcon,
+} from "lucide-react";
 
 import { GlowBullet } from "@/components/home/GlowBullet";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import type { ServicePathKey } from "@/content/i18n/types";
 import { createAmbientClock } from "@/lib/canvas/ambient";
 import { drawHelix } from "@/lib/canvas/helix";
 import { hexToRgb } from "@/lib/accents";
+
+/** Keyed by pathKey, not position, so reordering the deck can't mismatch. */
+const SERVICE_ICONS: Record<ServicePathKey, LucideIcon> = {
+  automatisation: Workflow,
+  agentsIa: Bot,
+  integration: Waypoints,
+  sitesBoutiques: AppWindow,
+  conseil: Compass,
+};
 
 const STEP = 72; // 360° / 5 cards
 const IDLE_MS = 4600;
@@ -334,7 +352,9 @@ export function ServiceSphereCarousel() {
         >
           <canvas ref={helixRef} className="ww-sphere__helix" />
         </div>
-        {cards.map((service, i) => (
+        {cards.map((service, i) => {
+          const Icon = SERVICE_ICONS[service.pathKey];
+          return (
           <div
             key={service.pathKey}
             ref={(el) => {
@@ -353,8 +373,8 @@ export function ServiceSphereCarousel() {
               aria-label={i === active ? undefined : `${services.goTo} ${service.title}`}
             >
               <div className="ww-service-card__meta">
-                <span className="ww-service-card__no" style={{ color: service.accent }}>
-                  {service.no}
+                <span className="ww-service-card__icon" style={{ color: service.accent }}>
+                  <Icon size={18} strokeWidth={1.9} aria-hidden />
                 </span>
                 <span className="ww-mono ww-service-card__tag">{service.tag}</span>
               </div>
@@ -377,7 +397,8 @@ export function ServiceSphereCarousel() {
               </div>
             </Link>
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

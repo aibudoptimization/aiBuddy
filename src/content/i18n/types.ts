@@ -37,7 +37,6 @@ export type WorkEntry = {
 export type FaqItem = {
   q: string;
   a: string;
-  open?: boolean;
 };
 
 /** Title + one-line description, used for "included", "process" and "use case" rows. */
@@ -123,7 +122,6 @@ export type Dictionary = {
   };
   chrome: {
     services: string;
-    approach: string;
     realisations: string;
     consultCta: string;
     allArticles: string;

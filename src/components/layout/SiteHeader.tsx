@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 import { BrandMark } from "@/components/layout/BrandMark";
@@ -18,13 +18,6 @@ function isJournalArticlePath(path: string) {
   return path.startsWith("/journal/") && path.length > "/journal/".length;
 }
 
-function scrollToHash(hash: string) {
-  const target = document.querySelector(hash);
-  if (target) {
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
-
 export function SiteHeader({ fixed = true }: SiteHeaderProps) {
   const pathname = usePathname();
   const { dict, routes } = useLocale();
@@ -32,7 +25,6 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
   const [navOpen, setNavOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isJournalArticle = isJournalArticlePath(pathname);
-  const homePath = routes.home;
 
   // Close any open menus when the route changes (state adjustment during render,
   // so the closed menus and the new page paint together).
@@ -69,13 +61,6 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
     };
   }, [navOpen]);
 
-  const handleHomeHashClick = (event: MouseEvent<HTMLAnchorElement>, hash: string) => {
-    if (pathname !== "/") return;
-    event.preventDefault();
-    scrollToHash(hash);
-    setMobileOpen(false);
-  };
-
   return (
     <header className={`ww-header${fixed ? " ww-header--fixed" : ""}`}>
       <div className="ww-header__inner">
@@ -99,7 +84,9 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
                 aria-expanded={navOpen}
                 aria-haspopup="true"
               >
-                {dict.chrome.services}
+                {/* Own span so the hover underline stops at the word and
+                    never runs under the chevron. */}
+                <span className="ww-header__link-btn__label">{dict.chrome.services}</span>
                 <ChevronDown size={10} strokeWidth={2.6} className="ww-nav-chev" />
               </button>
 
@@ -134,13 +121,6 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
 
             <Link href={routes.realisations} className="ww-header__link">
               {dict.chrome.realisations}
-            </Link>
-            <Link
-              href={`${homePath}#approche`}
-              className="ww-header__link"
-              onClick={(event) => handleHomeHashClick(event, "#approche")}
-            >
-              {dict.chrome.approach}
             </Link>
           </nav>
 
@@ -195,13 +175,6 @@ export function SiteHeader({ fixed = true }: SiteHeaderProps) {
             onClick={() => setMobileOpen(false)}
           >
             {dict.chrome.realisations}
-          </Link>
-          <Link
-            href={`${homePath}#approche`}
-            className="ww-mobile-drawer__link"
-            onClick={(event) => handleHomeHashClick(event, "#approche")}
-          >
-            {dict.chrome.approach}
           </Link>
           <Link
             href={routes.contact}

@@ -9,7 +9,6 @@ export const fr: Dictionary = {
   },
   chrome: {
     services: "Services",
-    approach: "Approche",
     realisations: "Réalisations",
     consultCta: "Consultation gratuite",
     allArticles: "Tous les articles",
@@ -49,7 +48,6 @@ export const fr: Dictionary = {
       {
         q: "Combien de temps prend un projet ?",
         a: "La plupart des mandats : 2 à 6 semaines. Échéancier clair dès la consultation.",
-        open: true,
       },
       {
         q: "Est-ce que je reste propriétaire ?",

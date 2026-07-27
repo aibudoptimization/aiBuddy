@@ -811,15 +811,16 @@ canvas {
   z-index: 60;
 }
 
+/* left:0 anchors the panel's left edge to the button's left edge. */
 .ww-nav-panel {
   position: absolute;
   top: calc(100% + 2px);
-  left: 50%;
+  left: 0;
   padding-top: 14px;
   z-index: 80;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -8px);
+  transform: translateY(-8px);
   pointer-events: none;
   transition:
     opacity 0.22s ease,
@@ -831,7 +832,7 @@ canvas {
 .ww-nav-panel.is-open {
   opacity: 1;
   visibility: visible;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
   pointer-events: auto;
 }
 
@@ -1218,10 +1219,11 @@ canvas {
   margin-bottom: 20px;
 }
 
-.ww-service-card__no {
-  font-family: var(--font-mono);
-  font-size: 13px;
+.ww-service-card__icon {
+  flex: none;
+  display: inline-flex;
   color: var(--teal);
+  filter: drop-shadow(0 0 10px currentcolor);
 }
 
 .ww-service-card__tag {
@@ -1872,11 +1874,12 @@ canvas {
   gap: 12px;
 }
 
-.ww-payment-note > span {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--teal);
+.ww-payment-note__icon {
   flex: none;
+  display: inline-flex;
+  margin-top: 1px;
+  color: var(--teal);
+  filter: drop-shadow(0 0 9px rgba(75, 250, 200, 0.4));
 }
 
 .ww-payment-note__title {
@@ -4650,9 +4653,15 @@ html[data-ww-intro]::before {
   color: var(--snow);
 }
 
-/* Under-word slide-in on hover */
+/* Under-word slide-in on hover. On the Services button the rule sits on the
+   label span, not the button, so it stops at the word and never runs under
+   the chevron. */
+.ww-header__link-btn__label {
+  position: relative;
+}
+
 .ww-header__link::after,
-.ww-header__link-btn::after {
+.ww-header__link-btn__label::after {
   content: "";
   position: absolute;
   left: 0;
@@ -4668,13 +4677,23 @@ html[data-ww-intro]::before {
 
 .ww-header__link:hover::after,
 .ww-header__link:focus-visible::after,
-.ww-header__link-btn:hover::after,
-.ww-header__link-btn:focus-visible::after,
-.ww-nav-wrap.is-open .ww-header__link-btn::after {
+.ww-header__link-btn:hover .ww-header__link-btn__label::after,
+.ww-header__link-btn:focus-visible .ww-header__link-btn__label::after,
+.ww-nav-wrap.is-open .ww-header__link-btn__label::after {
   transform: scaleX(1);
 }
 
+/* Animatable angle for the CTA's travelling arc. Without @property the
+   custom property is a plain string and the keyframe can't interpolate, so
+   the arc simply sits still — the glow and colour shift still land. */
+@property --ww-arc {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .ww-header__cta {
+  position: relative;
   color: var(--snow);
   text-decoration: none;
   border: 1px solid rgba(244, 243, 247, 0.18);
@@ -4683,12 +4702,74 @@ html[data-ww-intro]::before {
   white-space: nowrap;
   transition:
     border-color 0.25s,
-    background 0.25s;
+    background 0.25s,
+    color 0.25s,
+    box-shadow 0.3s var(--ease-out);
 }
 
-.ww-header__cta:hover {
+/* A charge running around the rim: a conic gradient clipped to a 1.5px ring
+   by two masks whose overlap is excluded. */
+.ww-header__cta::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--ww-arc),
+    rgba(75, 250, 200, 0) 0deg,
+    rgba(75, 250, 200, 0) 190deg,
+    rgba(75, 250, 200, 0.5) 268deg,
+    #eafff8 306deg,
+    rgba(75, 250, 200, 0.5) 340deg,
+    rgba(75, 250, 200, 0) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.ww-header__cta:hover,
+.ww-header__cta:focus-visible {
   border-color: rgba(75, 250, 200, 0.4);
-  background: rgba(75, 250, 200, 0.06);
+  background: rgba(75, 250, 200, 0.08);
+  color: #eafff8;
+  box-shadow:
+    0 0 24px rgba(75, 250, 200, 0.28),
+    inset 0 0 14px rgba(75, 250, 200, 0.08);
+}
+
+.ww-header__cta:hover::before,
+.ww-header__cta:focus-visible::before {
+  opacity: 1;
+  animation: ww-arc-spin 1.5s linear infinite;
+}
+
+.ww-header__cta:active {
+  box-shadow:
+    0 0 34px rgba(75, 250, 200, 0.42),
+    inset 0 0 18px rgba(75, 250, 200, 0.14);
+}
+
+@keyframes ww-arc-spin {
+  to {
+    --ww-arc: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ww-header__cta:hover::before,
+  .ww-header__cta:focus-visible::before {
+    animation: none;
+  }
 }
 
 .ww-header__cta-short {
@@ -5133,13 +5214,11 @@ html[data-ww-intro]::before {
 }
 
 
-.ww-ownership-step__num {
+.ww-ownership-step__icon {
   flex: none;
   display: inline-flex;
-  font-family: var(--font-mono);
-  font-size: 13px;
   color: var(--teal);
-  text-shadow: 0 0 18px rgba(75, 250, 200, 0.35);
+  filter: drop-shadow(0 0 9px rgba(75, 250, 200, 0.45));
 }
 
 .ww-tool-chip {

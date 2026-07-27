@@ -2,10 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { CalendarClock, LifeBuoy, Receipt, type LucideIcon } from "lucide-react";
 
 import { EyebrowCanvas } from "@/components/canvas/EyebrowCanvas";
 import { GlowBullet } from "@/components/home/GlowBullet";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+
+/** Keyed by the note's `no` so the dict order drives the pairing. */
+const PAYMENT_ICONS: Record<string, LucideIcon> = {
+  "01": CalendarClock, // staged instalments
+  "02": Receipt, // no hidden markup
+  "03": LifeBuoy, // optional support
+};
 
 export function HomePricingSection() {
   const { dict, routes } = useLocale();
@@ -81,15 +89,20 @@ export function HomePricingSection() {
       </div>
 
       <div className="ww-payment-grid">
-        {p.payment.map((note) => (
-          <div key={note.no} className="ww-payment-note">
-            <span>{note.no}</span>
-            <div>
-              <div className="ww-payment-note__title">{note.title}</div>
-              <div className="ww-payment-note__desc">{note.desc}</div>
+        {p.payment.map((note) => {
+          const Icon = PAYMENT_ICONS[note.no] ?? CalendarClock;
+          return (
+            <div key={note.no} className="ww-payment-note">
+              <span className="ww-payment-note__icon">
+                <Icon size={18} strokeWidth={1.9} aria-hidden />
+              </span>
+              <div>
+                <div className="ww-payment-note__title">{note.title}</div>
+                <div className="ww-payment-note__desc">{note.desc}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
